@@ -1,0 +1,54 @@
+<div class="row academy-row">
+  <div class="col-sm-2">
+    <div class="acedmy-plus">
+      <div class="btn btn-default col-lg-2 col-sm-2">
+        <b><i class="bi bi-plus-lg academy-plus-inner-text"></i></b><br />
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-10 academy-name">
+    <p>{{ academy?.academyName }}</p>
+  </div>
+</div>
+
+<div class="row">
+  <h4>{{ team?.teamName }}</h4>
+</div>
+
+<div class="row">
+  <hr />
+</div>
+<div class="row">
+  <form [formGroup]="leagueForm" (ngSubmit)="onFormSubmit()">
+    <div class="row d-flex justify-content-between" *ngIf="leagues">
+      <ng-container *ngFor="let league of leagues; let i = index">
+        <div class="col-lg-3 col-sm-3 col-xs-6">
+          <div class="league-lable">
+            <div class="list-group-item">
+              {{ league.leagueName }}
+              <input
+                class="form-check-input me-1"
+                type="checkbox"
+                value="false"
+                (change)="onCheckBox()"
+                [checked]="league.selected"
+                [(ngModel)]="league.selected"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div class="row d-flex justify-content-end">
+      <div class="col-4">
+        <div class="league-btn-lable">
+          <button type="submit" class="btn text-center">Sign in</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div style="position: absolute; bottom: 0; right: 0; background-color: transparent">
+  <button class="btn" style="font-size: 40px; color: black" (click)="redirectTo()">Back</button>
+</div>

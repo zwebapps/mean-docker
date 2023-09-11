@@ -1,0 +1,166 @@
+.academy-row {
+  height: 180px;
+  background: #FF5A5A;
+  padding: 10px;
+  margin-bottom: 35px;
+  .academy-name {
+    padding-top: 8px;
+    p {
+      color: #FFF;
+      font-family: NotoSansRegular;
+      font-size: 35px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+    }
+  }
+  .acedmy-plus {
+    position: absolute;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 45px;
+    padding-right: 35px;
+    border-radius: 75px;
+    width: 162px;
+    height: 156px;
+    background: white;
+    .btn-default {
+      b > i.academy-plus-inner-text {
+        color: #FF5A5A;
+        font-size: 30px;
+        font-weight: bold;
+      }
+
+    }
+  }
+}
+
+form {
+  .input-group {
+    border: 1px black solid;
+    padding: 20px;
+    border-radius: 75px;
+  }
+  ::placeholder {
+    color: rgba(0, 0, 0, 0.50);
+    font-family: NotoSansRegular;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
+  input.league-input {
+    border:none;
+    background-color: white;
+    border-radius: 50px;
+    position: relative;
+    border-radius: 35px;
+  }
+}
+input.form-control {
+  line-height: 93px;
+ }
+
+button.btn-default {
+  background: #000000;
+    border-radius: 50px !important;
+    width: 8%;
+    color: white;
+  b {
+    i {
+      font-size: 25px;
+      font-weight: bold;
+    }
+    .academy-plus-inner-text {
+      color: #FF5A5A;
+      font-size: 30px;
+      font-weight: bold;
+    }
+  }
+}
+.league-lable {
+  display: flex;
+  height: 53px;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  background: #000000;
+  border-radius: 30px;
+  margin: 15px;
+  padding: 15px;
+  .league-text {
+    color: #FFF;
+    text-align: center;
+    font-family: NotoSansRegular;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+  .list-group-item {
+    color: #FFF;
+    font-family: NotoSansRegular;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    input {
+      position: absolute;
+      right: 0;
+      border-radius: 25px;
+    }
+  }
+}
+.league-btn-lable {
+  display: flex;
+  height: 53px;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  background: #68eb43;
+  border-radius: 30px;
+  margin: 15px;
+  .btn {
+    color: #FFF;
+    text-align: center;
+    font-family: NotoSansRegular;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+  .list-group-item {
+    color: #FFF;
+    font-family: NotoSansRegular;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    input {
+      position: absolute;
+      right: 0;
+      border-radius: 25px;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  input.form-control {
+    line-height: 16px;
+    margin: 0 30px 0 0;
+    padding: 18px;
+    border-radius: 19px !important;
+    border: 1px solid #000;
+    background: #FFF;
+    width: 57%;
+  }
+
+  button.btn-default {
+    background: #000000;
+    border-radius: 66px !important;
+    width: 9%;
+    color: white;
+    b > i {
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+}

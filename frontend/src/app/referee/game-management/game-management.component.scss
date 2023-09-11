@@ -1,0 +1,21 @@
+form {
+  .form-group {
+    .control-label {
+      color: #000;
+      font-feature-settings: 'clig' off, 'liga' off;
+      font-family: NotoSansRegular;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 12.9px;
+      margin-bottom:20px;
+      margin-left: 5px;
+    }
+    .form-control {
+      background-color: transparent;
+      border-radius: 15px;
+      border: 1px black dotted;
+    }
+  }
+
+}

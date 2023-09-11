@@ -1,0 +1,50 @@
+<div class="row academy-row">
+  <div class="col-sm-2">
+    <div class="acedmy-plus">
+      <div class="btn btn-default col-lg-2 col-sm-2">
+        <b><i class="bi bi-plus-lg academy-plus-inner-text"></i></b><br />
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-10 academy-name">
+    <p>{{ academy?.academyName }}</p>
+  </div>
+</div>
+<div class="row">
+  <h4>Teams</h4>
+  <hr />
+</div>
+<div class="row m-3">
+  <form class="form-inline" [formGroup]="teamForm" (ngSubmit)="onSubmit()">
+    <div class="input-group mb-3">
+      <input
+        type="text"
+        class="form-control col-lg-9 col-sm-12 league-input"
+        placeholder="Add Name of Team"
+        aria-label="league"
+        formControlName="teamName"
+      />
+      <div></div>
+      <button type="submit" class="btn btn-default col-lg-2 col-sm-12">
+        <b><i class="bi bi-plus-lg"></i></b><br />
+      </button>
+    </div>
+  </form>
+</div>
+<div class="row">
+  <div class="mb-5">
+    <hr />
+  </div>
+  <div>
+    <div class="container">
+      <div class="row" *ngIf="teams">
+        <div class="league-lable col-lg-2 col-sm-6" *ngFor="let team of teams">
+          <span class="league-text" (click)="onTeamClick(team)">{{ team.teamName }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="position: absolute; bottom: 0; right: 0; background-color: transparent">
+  <button class="btn" style="font-size: 40px; color: black" (click)="redirectTo()">Back</button>
+</div>

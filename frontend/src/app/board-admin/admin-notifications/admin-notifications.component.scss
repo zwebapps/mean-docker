@@ -1,0 +1,30 @@
+.card {
+  height: 150px;
+  overflow-x: auto;
+  overflow-y: auto;
+  .card-body {
+    .card-text {
+      img {
+        width: 50px !important;
+        height: 50px !important;
+      }
+    }
+  }
+  .close-content {
+    position: absolute;
+    right: 5px;
+    top: 3px;
+    width: 40px;
+    display: none;
+  }
+  .status {
+    position: absolute;
+    right: 5px;
+    bottom: 3px;
+  }
+  &:hover {
+    .close-content {
+      display: block;
+    }
+  }
+}

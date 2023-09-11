@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-12 p-5">
+    <h4 class="mb-3">Academies</h4>
+  </div>
+  <hr />
+</div>
+<div class="row d-flex pt-5" *ngIf="academies">
+  <ng-container *ngFor="let academy of academies">
+    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
+      <div class="league-lable">
+        <span class="league-text" [routerLink]="['/admin/squads/academy/', academy._id]">{{ academy.academyName }}</span>
+      </div>
+    </div>
+  </ng-container>
+</div>

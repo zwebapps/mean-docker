@@ -1,0 +1,45 @@
+<div class="row">
+  <div class="col-12 m-5">
+    <h4>Academies</h4>
+  </div>
+  <hr />
+</div>
+<div class="row mt-5 justify-content-center">
+  <div class="col-lg-9 col-md-12 col-sm-12">
+    <form class="form-inline" [formGroup]="academyForm" (ngSubmit)="onSubmit()">
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          class="form-control col-lg-9 col-sm-12 league-input"
+          placeholder="Type name of Academy"
+          aria-label="academy"
+          formControlName="academyName"
+        />
+        <div></div>
+        <button type="submit" class="btn btn-default col-lg-2 col-sm-12">
+          <b><i class="bi bi-plus-lg"></i></b><br />
+        </button>
+        <!-- <span class="btn-text">Add League</span> -->
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row mb-5">
+  <div>
+    <hr />
+  </div>
+  <div>
+    <div class="container">
+      <div class="row" *ngIf="academies">
+        <div class="col-lg-3 col-md-3 col-sm-6 p-2 mt-2" *ngFor="let academy of academies">
+          <div class="league-lable">
+            <span class="league-text" [routerLink]="['academy', academy._id]">{{ academy.academyName }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div style ="position: absolute; bottom: 0;right:0; background-color: transparent;">
+  <button class="btn" style="font-size: 40px; color: black;" (click)="redirectTo()">Back</button>
+</div> -->

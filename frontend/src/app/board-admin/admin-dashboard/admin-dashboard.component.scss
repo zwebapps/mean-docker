@@ -1,0 +1,30 @@
+.card {
+  height: 200px;
+  background: none;
+  border: 1px solid black;
+  .card-body {
+    vertical-align: center;
+    div {
+      div {
+        p {
+          color: #000;
+          text-align: center;
+          font-family: Noto Sans;
+          font-size: 45px;
+          font-style: normal;
+          font-weight: 800;
+          line-height: normal;
+        }
+      }
+    }
+  }
+}
+.card-header {
+  color: #000;
+  text-align: center;
+  font-family: NotoSansRegular;
+  font-size: 24.896px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}

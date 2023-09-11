@@ -1,0 +1,133 @@
+form {
+margin: 65px !important;
+}
+input.form-control {
+  line-height: 75px;
+  margin: 0px 45px 0px 0px;
+  padding: 25px;
+  border-radius: 60px !important;
+  border: 1px solid #000;
+  background: #FFF;
+  width: 70%;
+}
+input::placeholder {
+  color: rgba(0, 0, 0, 0.50);
+  font-family: NotoSansRegular;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin-right: 5px;
+}
+
+
+button.btn-default {
+  background: #000000;
+  border-radius: 60px !important;
+  width: 120px;
+  color: white;
+  b > i {
+    font-size: 25px;
+    font-weight: bold;
+  }
+}
+.league-lable {
+  display: flex;
+  height: 53px;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  background: #000000;
+  border-radius: 30px;
+  margin: 16px;
+  .league-text {
+    color: #FFF;
+    text-align: center;
+    font-family: NotoSansRegular;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    button {
+      visibility: hidden;
+      position: relative;
+      left: 5px
+    }
+  }
+  &:hover {
+    .league-text {
+      button {
+        visibility: visible;
+      }
+    }
+  }
+}
+
+@media (max-width: 1316px) {
+  .league-lable {
+    padding-left: 10px;
+    margin: 16px;
+    .league-text {
+      padding-top: 5px;
+      font-size: 16px;
+    }
+    &:hover {
+      .league-text {
+        button {
+          visibility: visible;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 767px) {
+  form {
+    margin: 20px !important;
+    }
+  input.form-control {
+    line-height: 16px;
+    margin: 0 30px 0 0;
+    padding: 18px;
+    border-radius: 19px !important;
+    border: 1px solid #000;
+    background: #FFF;
+    width: 57%;
+  }
+  input::placeholder {
+    font-size: 18px;
+  }
+
+  button.btn-default {
+    background: #000000;
+    border-radius: 66px !important;
+    width: 55px;
+    color: white;
+    b > i {
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+}
+
+@media (max-width: 567px) {
+  input.form-control {
+    line-height: 16px;
+    margin: 0 30px 0 0;
+    padding: 18px;
+    border-radius: 19px !important;
+    border: 1px solid #000;
+    background: #FFF;
+    width: 57%;
+  }
+
+  button.btn-default {
+    background: #000000;
+    border-radius: 66px !important;
+    width: 12% !important;
+    color: white;
+    b > i {
+      font-size: 15px;
+      font-weight: bold;
+    }
+  }
+}

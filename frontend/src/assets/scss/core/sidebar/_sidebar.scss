@@ -1,0 +1,86 @@
+// Sidebar
+$sidebar-link-padding: 14px 15px;
+$sidebar-icon-size: 18px;
+$sidebar-first-level-padding: 0 0 10px 0;
+$sidebar-first-level-link-padding: 10px 15px;
+$sidebar-first-level-icon-size: 14px;
+
+/*******************
+Main sidebar
+******************/
+
+.left-sidebar {
+  position: absolute;
+  width: $sidebar-width-full;
+  height: 85%;
+  top: 0px;
+  z-index: 99;
+  background: $sidebar;
+  box-shadow: $shadow;
+  transition: 0.2s ease-in;
+  border-right: #414755 1px solid;
+}
+
+/*******************
+sidebar navigation
+******************/
+
+.sidebar-nav {
+  padding: 5px;
+  ul {
+    .sidebar-item {
+      width: 240px;
+      margin: 0 0 5px 0;
+      .sidebar-link {
+        color: $sidebar-text;
+        padding: $sidebar-link-padding;
+        display: flex;
+        white-space: nowrap;
+        align-items: center;
+        line-height: 25px;
+        opacity: 0.6;
+        i {
+          font-style: normal;
+          width: 35px;
+          line-height: 25px;
+          font-size: $sidebar-icon-size;
+          color: $sidebar-icons;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        &.active,
+        &:hover {
+          background: $black;
+          border-radius: 25px;
+          opacity: 1;
+          .feather {
+            color: $white;
+          }
+        }
+      }
+      &.active > .sidebar-link {
+        /*background: rgba(0, 0, 0, 0.04);*/
+        opacity: 1;
+      }
+    }
+  }
+}
+
+/*******************
+ common m-p removed
+******************/
+.sidebar-nav {
+
+  padding-top: 5px 0 5px;
+  ul {
+    margin: 0px;
+    padding: 0px;
+    li {
+      list-style: none;
+    }
+  }
+}
+.collapse.in {
+  display: block;
+}

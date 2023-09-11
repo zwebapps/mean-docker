@@ -1,0 +1,31 @@
+<div class="row academy-row">
+  <div class="col-12 d-flex">
+    <div class="col-lg-3 col-md-4 col-sm-4">
+      <div class="acedmy-plus">
+        <div class="btn btn-default col-lg-2 col-sm-2">
+          <b><i class="bi bi-plus-lg academy-plus-inner-text"></i></b><br />
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-9 col-md-8 col-sm-8">
+      <div class="academy-name">
+        <p *ngIf="academy">{{ academy.academyName }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row p-5">
+  <div class="col-12">
+    <h4>Teams</h4>
+  </div>
+</div>
+<hr />
+<div class="row d-flex justify-content-center" *ngIf="teams">
+  <ng-container *ngFor="let team of teams">
+    <div class="col-lg-3 col-md-4 col-sm-11 m-3">
+      <div class="league-lable w-100">
+        <span class="league-text" (click)="onTeamClick(team)">{{ team.teamName }}</span>
+      </div>
+    </div>
+  </ng-container>
+</div>

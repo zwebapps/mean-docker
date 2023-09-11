@@ -1,0 +1,78 @@
+<div class="row">
+  <ngx-datatable
+  #myTable
+  class="material"
+  [rows]="fixtures"
+  [columns]="columns"
+  [columnMode]="ColumnMode.force"
+  [footerHeight]="100"
+  [headerHeight]="50"
+  [limit]="10"
+  rowHeight="auto"
+>
+  <!-- Row Detail Template -->
+  <ngx-datatable-row-detail [rowHeight]="350" #myDetailRow (toggle)="onDetailToggle($event)">
+    <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+      <div class="fixture-team-details col-lg-12 col-md-12 col-sm-12 d-flex" style="overflow: hidden;">
+        <app-fixture-team-details [team]="row.homeTeam"></app-fixture-team-details>
+        <app-fixture-team-details [team]="row.awayTeam"></app-fixture-team-details>
+      </div>
+    </ng-template>
+  </ngx-datatable-row-detail>
+<ngx-datatable-column name="Fixture" prop="row" size="60">
+  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                                  {{rowIndex+1}}
+  </ng-template>
+</ngx-datatable-column>
+<ngx-datatable-column name="League" prop="row">
+  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                {{row.league?.leagueName}}
+  </ng-template>
+</ngx-datatable-column>
+<ngx-datatable-column name="Team 1" prop="row">
+  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                {{row.homeTeam?.teamName}}
+  </ng-template>
+</ngx-datatable-column>
+<ngx-datatable-column [width]=5>
+  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" id="competed">
+              VS
+  </ng-template>
+</ngx-datatable-column>
+<ngx-datatable-column name="Team 2" prop="row">
+  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+                {{row.awayTeam?.teamName}}
+  </ng-template>
+</ngx-datatable-column>
+<ngx-datatable-column name="Actions" prop="row" [width]=50>
+  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" class="d-flex" let-expanded="expanded">
+      <button type="button" class="btn d-inline"  (click)="toggleExpandRow(row)">
+        See Squad List
+        </button>
+  </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-footer>
+    <ng-template
+      ngx-datatable-footer-template
+      let-rowCount="rowCount"
+      let-pageSize="pageSize"
+      let-selectedCount="selectedCount"
+      let-curPage="curPage"
+      let-offset="offset"
+    >
+      <datatable-pager
+                      [pagerLeftArrowIcon]="'datatable-icon-left'"
+                      [pagerRightArrowIcon]="'datatable-icon-right'"
+                      [pagerPreviousIcon]="'datatable-icon-prev'"
+                      [pagerNextIcon]="'datatable-icon-skip'"
+                      [page]="curPage"
+                      [size]="pageSize"
+                      [count]="rowCount"
+                      [hidden]="!((rowCount / pageSize) > 1)"
+                      (change)="table.onFooterPage($event)">
+                  </datatable-pager>
+    </ng-template>
+  </ngx-datatable-footer>
+</ngx-datatable>
+</div>
+

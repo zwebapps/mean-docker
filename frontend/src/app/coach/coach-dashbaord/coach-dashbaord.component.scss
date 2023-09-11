@@ -1,0 +1,91 @@
+.academy-row {
+  height: 180px;
+  background: #FF5A5A;
+  padding: 10px;
+  margin-bottom: 35px;
+  .academy-name {
+    padding-top: 8px;
+    p {
+      color: #FFF;
+      font-family: NotoSansRegular;
+      font-size: 35px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+    }
+  }
+  .acedmy-plus {
+    position: absolute;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 45px;
+    padding-right: 35px;
+    border-radius: 75px;
+    width: 155px;
+    height: 156px;
+    background: white;
+    .btn-default {
+      b > i.academy-plus-inner-text {
+        color: #FF5A5A;
+        font-size: 30px;
+        font-weight: bold;
+      }
+
+    }
+  }
+}
+@media (max-width: 767px) {
+  .academy-row {
+    align-items: center;
+    .academy-name {
+      margin-left: 60px;
+      p {
+        font-size: 18px;
+      }
+    }
+    .acedmy-plus {
+      padding-top: 5px;
+      padding-right: 2px;
+      width: 55px;
+      height: 56px;
+      display: block;
+      position: relative;
+      .btn-default {
+        b > i.academy-plus-inner-text {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+}
+.card {
+  height: 200px;
+  background: none;
+  border: 1px solid black;
+  .card-body {
+    vertical-align: center;
+    div {
+      div {
+        p {
+          color: #000;
+          text-align: center;
+          font-family: Noto Sans;
+          font-size: 45px;
+          font-style: normal;
+          font-weight: 800;
+          line-height: normal;
+        }
+      }
+    }
+  }
+}
+.card-header {
+  color: #000;
+  text-align: center;
+  font-family: NotoSansRegular;
+  font-size: 24.896px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+

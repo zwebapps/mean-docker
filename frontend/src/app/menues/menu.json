@@ -1,0 +1,23 @@
+{
+  "superAdmin":{
+    "adminDashboard":"Dashbaord",
+    "userManagement": "User Management",
+    "leageManagement":"League Management",
+    "teamManagement":"Team Management",
+    "squadManagement":"Squad Management"
+  },
+  "admin":{
+     "adminDashboard":"Dashbaord",
+     "leageManagement":"League Management",
+     "teamManagement":"Team Management",
+     "squadManagement":"Squad Management"
+  },
+  "coaches":{
+     "adminDashboard":"Dashbaord",
+     "squadManagement":"Squad Management"
+  },
+  "refereee":{
+     "refereeDashboard":"Dashbaord",
+     "fixtureSetup":"Game Management"
+  }
+}

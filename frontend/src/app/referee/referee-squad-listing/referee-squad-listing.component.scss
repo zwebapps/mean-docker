@@ -1,0 +1,83 @@
+.ngx-datatable.material {
+  background: none !important;
+  box-shadow: none !important;
+}
+:host ::ng-deep .datatable-header-cell {
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  height: 100px !important;
+}
+:host ::ng-deep .datatable-body-cell {
+  padding: 10px !important;
+  border: 1px dotted #000 !important;
+  margin: 20px;
+  border-radius: 20px;
+}
+:host ::ng-deep .datatable-body-cell:nth-child(4) {
+  width: 20px !important;
+  border: none !important;
+}
+
+:host ::ng-deep .datatable-body-cell:nth-child(1) {
+  border: 1px solid #000 !important;
+  border-radius: 10px;
+  width: 20px !important;
+  border: none !important;
+}
+:host ::ng-deep .datatable-body-cell:last-child {
+  padding: 10px !important;
+  border: none !important;
+  margin: 20px;
+  border-radius: 20px;
+  background-color:  #000 !important;
+  color: #fefefe !important;
+}
+:host ::ng-deep .datatable-coloumn {
+ background-color: #000;
+}
+
+:host ::ng-deep .datatable-body-cell-label {
+  color: #070707;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  button {
+    color: #fefefe !important;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+// :host ::ng-deep .datatable-header-cell {
+//   background-color: #ccc;
+//   border: 2px solid #000;
+// }
+
+@media (max-width: 767px) {
+  .ngx-datatable.material {
+    width: 100%;
+    overflow-x: scroll;
+  }
+  :host ::ng-deep .datatable-header-cell {
+    font-size: 12px;
+  }
+  :host ::ng-deep .datatable-body-cell {
+    font-size: 12px;
+    margin: none !important;
+    padding: none !important;
+    width: 100%;
+  }
+
+  :host ::ng-deep .datatable-body-cell-label {
+    font-size: 9px;
+  }
+
+  :host ::ng-deep .datatable-body-cell:last-child {
+    border-radius: 5px;
+    width: 40px;
+    height: 20px;
+  }
+
+}

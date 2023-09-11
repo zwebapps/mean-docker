@@ -1,0 +1,338 @@
+<div class="row academy-row">
+  <div class="col-12 d-flex">
+    <div class="col-lg-3 col-md-4 col-sm-4">
+      <div class="acedmy-plus">
+        <div class="btn btn-default col-lg-2 col-sm-2">
+          <b><i class="bi bi-plus-lg academy-plus-inner-text"></i></b><br />
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-9 col-md-8 col-sm-8">
+      <div class="academy-name">
+        <p *ngIf="academy">{{ academy.academyName }}</p>
+        <p>TEAM: {{ team.teamName }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <h4>Leagues & Division</h4>
+  <hr />
+</div>
+<div class="row">
+  <form>
+    <div class="row d-flex justify-content-between m-3" *ngIf="leagues">
+      <ng-container *ngFor="let league of leagues; let i = index">
+        <div class="col-lg-3 col-sm-6 col-xs-6">
+          <div class="league-lable">
+            <div class="list-group-item">
+              {{ league.leagueName }}
+              <input
+                class="form-check-input me-1"
+                type="checkbox"
+                value="false"
+                (change)="onCheckBox(league)"
+                [checked]="league.selected"
+                [(ngModel)]="league.selected"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <!-- <div class="row d-flex justify-content-end">
+        <div class="col-4">
+          <div class="league-btn-lable">
+            <button type="submit" class="btn text-center">Sign in</button>
+          </div>
+        </div>
+      </div> -->
+  </form>
+</div>
+
+<div class="row">
+  <br />
+  <hr />
+</div>
+<div class="row text-center mb-4">
+  <div class="d-flex justify-content-end">
+    <div class="col-lg-6 col-sm-12 pe-5">
+      <h2 class="me-5">
+        {{ team.teamName }}
+      </h2>
+    </div>
+    <div class="col-lg-6 col-sm-12 text-end me-5">
+      <h2 *ngIf="selectedLeague">{{ selectedLeague.leagueName ? selectedLeague.leagueName : "No League Selected" }}</h2>
+    </div>
+  </div>
+</div>
+<div class="row m-2">
+  <h4>Coaches Details</h4>
+</div>
+<hr />
+<div class="row">
+  <div class="col-lg-3 col-sm-12 col-xs-12 col-md-3">
+    <div class="form-group">
+      <label for="name" class="control-label">Name</label>
+      <input
+        type="email"
+        value=""
+        class="form-control"
+        id="name"
+        [value]="coach.firatname ? coach.firatname + ' ' + coach.lastname : coach.username"
+        placeholder="Name"
+        disabled
+      />
+    </div>
+  </div>
+  <div class="col-lg-3 col-sm-12 col-xs-12 col-md-3">
+    <div class="form-group">
+      <label for="name" class="control-label">Email</label>
+      <input type="email" value="" class="form-control" id="name" [value]="coach?.email" placeholder="Email" disabled />
+    </div>
+  </div>
+  <div class="col-lg-3 col-sm-12 col-xs-12 col-md-3">
+    <div class="form-group">
+      <label for="name" class="control-label">Mobile</label>
+      <input
+        type="email"
+        value=""
+        class="form-control"
+        id="name"
+        [value]="coach.mobile ? coach.mobile : '+9711224322344'"
+        placeholder="Mobile"
+        disabled
+      />
+    </div>
+  </div>
+</div>
+<div class="row mt-5">
+  <hr />
+</div>
+<div class="row">
+  <h4>Squad</h4>
+</div>
+
+<div class="row squads p-5">
+  <div class="col-lg-9 col-sm-12 d-flex">
+    <div class="squads-lable col-lg-3 col-md-4 col-sm-12 mt-4" (click)="export()">
+      <span class="squads-text">Download CSV Template</span>
+    </div>
+    <div class="squads-lable col-lg-3 col-md-4 col-sm-12 mt-4">
+      <div class="input-container">
+        Uploads Players <small>(.csv / .xls)</small>
+        <input
+          type="file"
+          name="file"
+          (change)="onChange($event)"
+          accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+        />
+      </div>
+    </div>
+    <div class="squads-lable col-lg-3 col-md-4 col-sm-12 mt-4">
+      <div class="input-container">
+        BulK EID Uploads
+        <input type="file" name="file" (change)="getImages($event)" accept="image/*" multiple />
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3 col-sm-12 justify-content-around">
+    <div class="col-lg-12 col-sm-12 ms-2">
+      <p>To move a player or player doesn't have a EID</p>
+    </div>
+    <div class="squads-lable col-lg-12 col-sm-6" style="width: 250px; margin-left: 45px" (click)="onContactUs()">
+      <span class="squads-text">Contact Us</span>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <form [formGroup]="playerForm" class="justify-content-around" method="post" enctype="multipart/form-data" (ngSubmit)="onFormSubmit()">
+    <div class="row d-flex justify-content-between m-3">
+      <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2 p-2">
+        <label for="name" class="control-label">First Name</label>
+        <input
+          type="text"
+          [value]="784 - 1234 - 1234567 - 1"
+          class="form-control"
+          placeholder="First Name"
+          formControlName="firstName"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }"
+        />
+        <div *ngIf="submitted && f['firstName'].errors" class="invalid-feedback">
+          <div *ngIf="f['firstName'].errors['required']">
+            <small>First Name is required</small>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+        <label for="name" class="control-label">Surname</label>
+        <input
+          type="text"
+          value=""
+          class="form-control"
+          id="name"
+          placeholder="Surname"
+          formControlName="surName"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f['surName'].errors }"
+        />
+        <div *ngIf="submitted && f['surName'].errors" class="invalid-feedback">
+          <div *ngIf="f['surName'].errors['required']">
+            <small>Surname is required</small>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+        <label for="name" class="control-label">Date of birth</label>
+        <input
+          type="date"
+          value=""
+          class="form-control"
+          id="name"
+          placeholder="DOB"
+          formControlName="dob"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f['dob'].errors }"
+        />
+        <div *ngIf="submitted && f['dob'].errors" class="invalid-feedback">
+          <div *ngIf="f['dob'].errors['required']">
+            <small>Date of birth is required</small>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+        <label for="squadNo" class="control-label">Squad Number</label>
+        <input
+          type="number"
+          value=""
+          class="form-control"
+          id="squadNo"
+          placeholder="squadNo"
+          formControlName="squadNo"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f['squadNo'].errors }"
+        />
+        <div *ngIf="submitted && f['squadNo'].errors" class="invalid-feedback">
+          <div *ngIf="f['squadNo'].errors['required']">
+            <small>Squad no is required</small>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+        <label for="name" class="control-label">League</label>
+        <input
+          type="text"
+          value=""
+          class="form-control"
+          id="name"
+          placeholder="League"
+          formControlName="league"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f['league'].errors }"
+        />
+        <div *ngIf="submitted && f['league'].errors" class="invalid-feedback">
+          <div *ngIf="f['league'].errors['required']">
+            <small>League is required</small>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+        <label for="playerEidNo" class="control-label">Player ID Number</label>
+        <input
+          type="text"
+          value="784-1234-1234567-1"
+          name="playerEidNo"
+          class="form-control"
+          placeholder="784-1234-1234567-1"
+          formControlName="playerEidNo"
+          [ngClass]="{ 'is-invalid': submitted && f['playerEidNo'].errors }"
+          size="18"
+          (blur)="playerbyEmirateId($event)"
+        />
+        <div *ngIf="submitted && f['playerEidNo'].errors" class="invalid-feedback">
+          <div *ngIf="f['playerEidNo'].errors['required']">
+            <small>Player EID no and pattern should is required</small>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+        <label for="eidFront" class="control-label">EID Front</label>
+        <input
+          type="file"
+          value=""
+          class="form-control"
+          id="eidFront"
+          name="eidFront"
+          placeholder="EID Front"
+          (change)="uploadEmiratesID($event)"
+          formControlName="eidFront"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f['eidFront'].errors }"
+        />
+        <div *ngIf="submitted && f['eidFront'].errors" class="invalid-feedback">
+          <div *ngIf="f['eidFront'].errors['required']">
+            <small>EID Front is required</small>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+        <label for="eidBack" class="control-label">EID Back</label>
+        <input
+          type="file"
+          value=""
+          class="form-control"
+          id="eidBack"
+          name="eidBack"
+          placeholder="EID Back"
+          (change)="uploadEmiratesID($event)"
+          formControlName="eidBack"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f['eidBack'].errors }"
+        />
+        <div *ngIf="submitted && f['eidBack'].errors" class="invalid-feedback">
+          <div *ngIf="f['eidBack'].errors['required']">
+            <small>EID Back is required</small>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+        <label for="name" class="control-label">Playing a player up</label>
+        <input
+          type="number"
+          value=""
+          class="form-control"
+          id="name"
+          placeholder="League Age"
+          formControlName="playingUp"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': submitted && f['playingUp'].errors }"
+        />
+        <div *ngIf="submitted && f['playingUp'].errors" class="invalid-feedback">
+          <div *ngIf="f['playingUp'].errors['required']">
+            <small>Playing Up is required</small>
+          </div>
+        </div>
+      </div>
+      <div class="row d-flex justify-content-center">
+        <div class="form-group col-xs-12 col-md-3 col-lg-3 mt-2 align-items-end">
+          <div class="ms-3 w-100 league-lable">
+            <button type="submit" class="btn btn-defaul col-12 text-white" [disabled]="playerExists">Add player</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="row">
+  <br />
+  <hr />
+</div>
+<div class="row">
+  <app-coach-squad-list [players]="data" (delPlayer)="onDeletePlayer($event)"></app-coach-squad-list>
+</div>
+<div style="position: absolute; bottom: 55px; right: 0; background-color: transparent; z-index: 2">
+  <button class="btn" style="font-size: 40px; color: black" (click)="redirectTo()">Back</button>
+</div>

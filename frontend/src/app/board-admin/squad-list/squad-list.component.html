@@ -1,0 +1,70 @@
+<div class="row academy-row">
+  <div class="col-sm-2">
+    <div class="acedmy-plus">
+      <div class="btn btn-default col-lg-2 col-sm-2"><b><i class="bi bi-plus-lg academy-plus-inner-text"></i></b><br/>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-10 academy-name">
+    <p>{{academy?.academyName}}</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <h4>Coaches Details</h4>
+    <hr/>
+  </div>
+</div>
+<div class="row">
+<form>
+  <ng-container *ngFor="let coach of coaches">
+    <div class="col-sm-12 col-lg-12 d-flex">
+    <div class="form-group col-xs-3 col-md-3 m-3">
+        <label for="name" class="control-label">Name</label>
+        <input type="email" [value]="coach?.username" class="form-control" id="name" placeholder="Name" disabled>
+    </div>
+    <div class="form-group col-xs-3 col-md-3 m-3">
+        <label for="name" class="control-label">Email</label>
+        <input type="email" [value]="coach?.email" class="form-control" id="name" placeholder="Email" disabled>
+    </div>
+    <div class="form-group col-xs-3 col-md-3 m-3">
+        <label for="name" class="control-label">Mobile</label>
+        <input type="email" [value]="coach.contact" class="form-control" id="name" placeholder="Mobile" disabled>
+    </div>
+    </div>
+  </ng-container>
+</form>
+</div>
+<div class="row">
+  <div class="col-12">
+    <hr/>
+  </div>
+  <div class="col-12 d-flex p-5">
+    <div class="col-lg-6">
+      <h4>Squad</h4>
+    </div>
+    <div class="col-lg-6 d-flex justify-content-end">
+      <div class="col-lg-2 mt-2">
+        <h6>Filter by league: </h6>
+      </div>
+      <div class="col-lg-4">
+        <form [formGroup]="filterLeague">
+          <select class="form-select" name="league" formControlName="league"  aria-label="Default select" (change)="filterPlayers()">
+            <option value="0" selected>Select League</option>
+            <ng-container *ngFor="let league of leagues">
+              <option value="{{league._id}}">{{league.leagueName}}</option>
+            </ng-container>
+          </select>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <hr/>
+  </div>
+</div>
+<div class="row">
+  <app-admin-squad-list [players]="players" (delPlayer)="deletePlayer($event)" (approvePlayer)="approve($event)" [leaguesFilter]="leagues"></app-admin-squad-list>
+</div>
+
+
