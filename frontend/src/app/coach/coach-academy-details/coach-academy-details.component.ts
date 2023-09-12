@@ -138,7 +138,6 @@ export class CoachAcademyDetailsComponent {
   }
 
   onFormSubmit = () => {
-    debugger;
     this.submitted = true;
 
     if (this.playerForm.invalid) {

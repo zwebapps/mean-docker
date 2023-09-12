@@ -30,7 +30,6 @@ export class PlayerService {
     return this.http.get(`${API_URL}/player/academy/${id}`, { headers: this.headers });
   }
   upload(file: File): Observable<any> {
-    debugger;
     const formData = new FormData();
     // Store form name as "file" with file data
     formData.append("file", file);
