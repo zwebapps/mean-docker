@@ -1,4 +1,4 @@
-<div class="row academy-row">
+<div class="row academy-row p-2">
   <div class="col-sm-2">
     <div class="acedmy-plus">
       <div class="btn btn-default col-lg-2 col-sm-2">
@@ -7,20 +7,20 @@
     </div>
   </div>
   <div class="col-sm-10 academy-name">
-    <p>{{ academy?.academyName }}</p>
+    <p class="p-4">{{ academy?.academyName }}</p>
   </div>
 </div>
 
 <div class="row">
-  <h4>{{ team?.teamName }}</h4>
+  <h4 class="p-3">{{ team?.teamName }}</h4>
 </div>
 
 <div class="row">
   <hr />
 </div>
-<div class="row">
+<div class="row mt-2">
   <form [formGroup]="leagueForm" (ngSubmit)="onFormSubmit()">
-    <div class="row d-flex justify-content-between" *ngIf="leagues">
+    <div class="row d-flex justify-content-start" *ngIf="leagues">
       <ng-container *ngFor="let league of leagues; let i = index">
         <div class="col-lg-3 col-sm-3 col-xs-6">
           <div class="league-lable">
@@ -41,9 +41,9 @@
       </ng-container>
     </div>
     <div class="row d-flex justify-content-end">
-      <div class="col-4">
+      <div class="col-3 mt-3">
         <div class="league-btn-lable">
-          <button type="submit" class="btn text-center">Sign in</button>
+          <button type="submit" class="btn text-center">Add / Update</button>
         </div>
       </div>
     </div>

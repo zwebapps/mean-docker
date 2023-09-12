@@ -69,9 +69,9 @@ export class AcademyDetailComponent implements OnInit {
           if (res._id) {
             this.notifier.notify("success", "Team created successfully!");
             this.store.dispatch(TeamActions.loadTeams());
+            this.teamForm.reset();
           } else {
             this.notifier.notify("error", res.message);
-            this.teamForm.reset();
           }
         });
       }

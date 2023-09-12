@@ -1,6 +1,7 @@
 const  ObjectId = require('mongodb').ObjectId;
 const db = require("../models");
 const Academy = db.academy;
+const Team = db.team;
 
 /* Add new employee*/
 exports.createAcademy = async (req, resp, next) => {
@@ -175,11 +176,19 @@ exports.updateAcademy =  async (req, resp, next) => {
 /* Delete Academy based on id*/
 exports.deleteAcademy = async (req, resp, next) => {
   try {
+    if(req.params.id){
+    // delete all the teams under academy
+    const teams = await Team.deleteMany({ academy_id: ObjectId(req.params.id)});
     const academy = await Academy.findByIdAndDelete({ _id: ObjectId(req.params.id) });
     if(!academy) {
-      resp.status(404).json({ message:`No academy record found!`})
+      resp.status(200).json({ message:`No academy record found!`})
     }
-    resp.status(200).json({ message: `Academy ${academy.academyName} record deleted!`})
+    resp.status(200).json({ message: `Academy ${academy.academyName} with ${teams.deletedCount} teams was deleted!`})
+  } else {
+    resp.status(200).json({
+     type: 'error', message: 'record not found'
+     })
+  }
   } catch (error) {
     next(error);
   }

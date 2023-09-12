@@ -94,6 +94,7 @@ export class UserManagementComponent implements OnInit {
       this.displayEditForm = true;
       const role = this.userToEdit?.roles[0];
       if (role.name === "coach") {
+        this.toggleAcademySelection = true;
         this.academyService.getAcademyByCoachId(this.userToEdit._id).subscribe((res) => {
           if (res) {
             // Patch the values to form
@@ -109,6 +110,7 @@ export class UserManagementComponent implements OnInit {
           }
         });
       } else {
+        this.toggleAcademySelection = false;
         // Patch the values to form
         this.userForm.patchValue({
           username: this.userToEdit.username,
@@ -170,7 +172,7 @@ export class UserManagementComponent implements OnInit {
     if (this.userForm.value.academy) {
       this.academyService.updateAcademyCoach(this.userForm.value.academy, { coach: coachId }).subscribe((academy: any) => {
         if (academy) {
-          this.notifier.notify("success", "Coach created successfully!");
+          // this.notifier.notify("success", "Coach created successfully!");
           this.store.dispatch(UserActions.loadUsers());
           this.displayAddForm = false;
         }

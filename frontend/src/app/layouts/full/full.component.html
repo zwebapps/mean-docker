@@ -17,11 +17,7 @@
   <!-- ============================================================== -->
   <header class="topbar" data-navbarbg="skin5">
     <nav class="d-flex top-navbar navbar-expand-lg navbar-dark">
-      <div
-        class="navbar-header"
-        [ngClass]="expandLogo ? 'expand-logo' : ''"
-        data-logobg="skin5"
-      >
+      <div class="navbar-header" [ngClass]="expandLogo ? 'expand-logo' : ''" data-logobg="skin5">
         <!-- This is for the sidebar toggle which is visible on mobile only -->
         <a
           (click)="showMobileMenu = !showMobileMenu"
@@ -29,36 +25,23 @@
           href="javascript:void(0)"
         >
           <!-- <i [ngClass]="showMobileMenu ? 'bi bi-text-left fs-6' : 'bi bi-text-left fs-6'"></i> -->
-          <img
-          src="assets/images/logos/menu.png"
-          alt="homepage"
-          class="dark-logo"
-        />
+          <img src="assets/images/logos/menu.png" alt="homepage" class="dark-logo" />
         </a>
         <!-- ============================================================== -->
         <!-- Logo -->
         <!-- ============================================================== -->
-        <a class="navbar-brand" href="/">
+        <a class="navbar-brand" href="javascript:void(0)">
           <b class="logo-menu me-3" *ngIf="loggedInUser">
             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
             <!-- Light Logo icon -->
-            <img
-              src="assets/images/logos/menu.png"
-              alt="homepage"
-              class="dark-logo"
-            />
+            <img src="assets/images/logos/menu.png" alt="homepage" class="dark-logo" />
           </b>
           <!-- Logo icon -->
           <b class="logo-icon">
             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
             <!-- Light Logo icon -->
-            <img
-              src="assets/images/logos/yfl.png"
-              alt="homepage"
-              class="dark-logo"
-            />
+            <img src="assets/images/logos/yfl.png" alt="homepage" class="dark-logo" />
           </b>
-
         </a>
         <!-- ============================================================== -->
         <!-- End Logo -->
@@ -83,31 +66,16 @@
       <!-- ============================================================== -->
       <!-- End Logo -->
       <!-- ============================================================== -->
-      <div
-        class="navbar-collapse collapse"
-        id="navbarSupportedContent"
-        data-navbarbg="skin1"
-        [ngbCollapse]="!isCollapsed"
-      >
-        <app-navigation
-          (toggleSidebar)="toggleSidebarType()"
-          [loggedInUser]="loggedInUser"
-          class="w-100"
-        ></app-navigation>
+      <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin1" [ngbCollapse]="!isCollapsed">
+        <app-navigation (toggleSidebar)="toggleSidebarType()" [loggedInUser]="loggedInUser" class="w-100"></app-navigation>
       </div>
     </nav>
   </header>
   <!-- ============================================================== -->
   <!-- Left Sidebar - style you can find in sidebar.scss  -->
   <!-- ============================================================== -->
-  <aside
-    class="left-sidebar"
-    data-sidebarbg="skin5"
-    (mouseover)="Logo()"
-    (mouseout)="Logo()"
-    *ngIf="isLoggedIn"
-  >
-      <app-sidebar [userRole]="userRole"></app-sidebar>
+  <aside class="left-sidebar" data-sidebarbg="skin5" (mouseover)="Logo()" (mouseout)="Logo()" *ngIf="isLoggedIn">
+    <app-sidebar [userRole]="userRole"></app-sidebar>
   </aside>
   <!-- ============================================================== -->
   <!-- End Left Sidebar - style you can find in sidebar.scss  -->
@@ -115,11 +83,11 @@
   <!-- ============================================================== -->
   <!-- Page wrapper  -->
   <!-- ============================================================== -->
-  <div class="page-wrapper" [ngClass]="isLoggedIn || showMobileMenu? 'ml-250' : 'ml-0'">
+  <div class="page-wrapper" [ngClass]="isLoggedIn || showMobileMenu ? 'ml-250' : 'ml-0'">
     <!-- ============================================================== -->
     <!-- Container fluid  -->
     <!-- ============================================================== -->
-    <div class="container-fluid" style="padding: 0 15px;">
+    <div class="container-fluid" style="padding: 0 15px">
       <!-- ============================================================== -->
       <!-- Start Page Content -->
       <!-- ============================================================== -->
@@ -134,9 +102,7 @@
     <!-- ============================================================== -->
     <!-- footer -->
     <!-- ============================================================== -->
-    <footer class="footer text-center">
-      All Rights Reserved by Youth Football league.
-    </footer>
+    <footer class="footer text-center">All Rights Reserved by Youth Football league.</footer>
     <!-- ============================================================== -->
     <!-- End footer -->
     <!-- ============================================================== -->

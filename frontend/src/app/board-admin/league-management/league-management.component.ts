@@ -78,6 +78,7 @@ export class LeagueManagementComponent implements OnInit {
             return;
           } else {
             this.notifier.notify("success", "League created successfully!");
+            this.leagueForm.reset();
             this.store.dispatch(LeagueActions.loadLeagues());
           }
         });

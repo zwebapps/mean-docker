@@ -135,7 +135,7 @@ exports.deleteTeam = async (req, resp, next) => {
     if(!team){
       resp.status(200).send(`Team record not found!`)
     }
-    resp.status(200).send(`Team ${team.teamName} record deleted!`)
+    resp.status(200).send({ message : `Team ${team.teamName} record deleted!`})
   } else {
     resp.status(200).json({ message: 'Malformed Id provided' });
   }

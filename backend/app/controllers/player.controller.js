@@ -136,6 +136,9 @@ exports.createPlayer = async (req, resp, next) => {
         const isValidated = req.body[i]['eidNo'] && req.body[i]['eidNo'].split('-').length === 4;
         if(isValidated) {
           let player = await Player.findOne({ emiratesIdNo: req.body[i]['eidNo'] }); 
+          if(req.body[i]['playingUp']){
+            req.body[i]['playingUp'] = req.body[i]['playingUp'].map((league) => ObjectId(league));
+          }
           if (!player) {
             const playerNo = await getNextSequence("item_id");
             const playerData = new Player({
@@ -153,6 +156,7 @@ exports.createPlayer = async (req, resp, next) => {
               eidBack:  req.body[i]['eidBack'],
               playerStatus: req.body[i]['status'],
               user: ObjectId(req.body[i].user['createdBy']),
+              playingUp: req.body[i]['playingUp'],
               createdAt:  new Date()
             });
             insertedPlayers.push(req.body[i]);
@@ -170,6 +174,9 @@ exports.createPlayer = async (req, resp, next) => {
         let player = await Player.findOne({ emiratesIdNo: req.body['eidNo'] });    
         if (!player) {  
           const playerNo = await getNextSequence("item_id");
+          if(req.body['playingUp']){
+            req.body['playingUp'] = req.body['playingUp'].map((league) => ObjectId(league));
+          }
           const playerData = new Player({
             firstName: req.body['firstName'],
             lastName: req.body['surName'],
@@ -185,6 +192,7 @@ exports.createPlayer = async (req, resp, next) => {
             eidBack:  req.body['eidBack'],
             playerStatus: req.body['status'],
             user: ObjectId(req.body.user['createdBy']),
+            playingUp: req.body['playingUp'],
             createdAt:  new Date()
           });
   
@@ -212,7 +220,8 @@ exports.bulkUploadPlayers = async (req, resp, next) => {
         let insertedPlayers = [];
         let Players = await Player.find().exec();
         let fltPlayers = bkPlayers.filter(bk => !Players.find(p => p.emiratesIdNo === bk['EID No']));
-        for (let i = 0; i < fltPlayers.length; i++) {                    
+        for (let i = 0; i < fltPlayers.length; i++) {
+              fltPlayers[i]['Player ID Number'] = await getNextSequence("item_id");             
               const playerData = new Player({
                 firstName: fltPlayers[i]['First Name'],
                 lastName: fltPlayers[i]['Surname'],
@@ -238,6 +247,7 @@ exports.bulkUploadPlayers = async (req, resp, next) => {
         resp.status(200).json({ message: 'Malformed data provided' });
      }
     } catch (error) {
+      console.log(error);
       next(error);
     }
   };
@@ -353,9 +363,9 @@ exports.deletePlayer = async (req, resp, next) => {
   try {
     const player = await Player.findByIdAndDelete({ _id: ObjectId(req.params.id)});
     if(!player){
-      resp.status(200).json({message: `Player ${player.firstName} record deleted!`})
+      return resp.status(200).json({type : 'error', message: `Player record not found!`})
     }
-    resp.status(200).json({message: `Player ${player.firstName} record deleted!`})
+    resp.status(200).json({type : 'success',message: `Player ${player.firstName} record deleted!`})
   } catch (error) {
     next(error);
   }

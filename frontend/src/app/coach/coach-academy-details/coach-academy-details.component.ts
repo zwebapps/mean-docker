@@ -4,6 +4,7 @@ import { Store } from "@ngrx/store";
 import { ColumnMode } from "@swimlane/ngx-datatable";
 import { UserService } from "src/app/_services/user.service";
 import * as UserActions from "../../_store/actions/users.actions";
+import * as PlayerActions from "../../_store/actions/players.actions";
 import * as PlayerSelectors from "../../_store/selectors/players.selectors";
 import * as LeagueSelectors from "../../_store/selectors/leagues.selectors";
 import { TeamService } from "../../_services/team.service";
@@ -16,6 +17,7 @@ import * as TeamSelectors from "../../_store/selectors/teams.selectors";
 import * as AcademiesSelectors from "../../_store/selectors/academies.selectors";
 
 import * as XLSX from "xlsx";
+import { IDropdownSettings } from "ng-multiselect-dropdown";
 const { read, write, utils } = XLSX;
 
 @Component({
@@ -48,6 +50,9 @@ export class CoachAcademyDetailsComponent {
   public eidStaticNo = "784-1234-1234567-1";
   public file: File | undefined;
   public images: any = [];
+  public dropleagues: any = [];
+  public dropdownSettings: IDropdownSettings = {};
+  public playerPlayingUp: any = [];
   public eidImages: any = {
     eidFront: null,
     eidBack: null
@@ -79,11 +84,20 @@ export class CoachAcademyDetailsComponent {
       league: new FormControl(""),
       playerEidNo: new FormControl(""),
       eidFront: new FormControl(""),
-      eidBack: new FormControl(""),
-      playingUp: new FormControl("")
+      eidBack: new FormControl("")
     });
   }
   ngOnInit() {
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: "_id",
+      textField: "leagueName",
+      selectAllText: "Select All",
+      unSelectAllText: "UnSelect All",
+      itemsShowLimit: 3,
+      allowSearchFilter: true
+    };
+
     const eidPattern = new RegExp("^\\d\\d\\d\\-\\d\\d\\d\\d\\-\\d\\d\\d\\d\\d\\d\\d\\-\\d$", "gm");
     this.playerForm = this.formBuilder.group({
       firstName: ["", Validators.required],
@@ -93,9 +107,9 @@ export class CoachAcademyDetailsComponent {
       league: ["", Validators.required],
       playerEidNo: [null, [Validators.required, Validators.pattern(eidPattern), Validators.maxLength(18)]],
       eidFront: ["", Validators.required],
-      eidBack: ["", Validators.required],
-      playingUp: ["", Validators.required]
+      eidBack: ["", Validators.required]
     });
+    this.playerForm.controls.league.disable();
     // get the team id
     let teamId = this.activatedRoute.snapshot.params["id"];
     // Now get team by id
@@ -124,6 +138,7 @@ export class CoachAcademyDetailsComponent {
   }
 
   onFormSubmit = () => {
+    debugger;
     this.submitted = true;
 
     if (this.playerForm.invalid) {
@@ -153,6 +168,7 @@ export class CoachAcademyDetailsComponent {
         eidFront: this.eidImages.eidFront,
         eidBack: this.eidImages.eidBack,
         status: "Pending",
+        playingUp: this.playerPlayingUp,
         user: {
           createdBy: this.coach.id
         }
@@ -163,6 +179,9 @@ export class CoachAcademyDetailsComponent {
         if (res) {
           this.notifier.notify("success", res.message);
           this.playerForm.reset();
+          this.submitted = false;
+          this.store.dispatch(PlayerActions.loadPlayers());
+          this.getPlayersFromStore();
         }
       });
     }
@@ -208,18 +227,43 @@ export class CoachAcademyDetailsComponent {
   }
 
   deletePlayer(value: any) {
-    this.userService.deleteUser(value).subscribe((result: any) => {
-      this.store.dispatch(UserActions.loadUsers());
+    this.palyerService.deletePlayer(value).subscribe((result: any) => {
+      if (result) {
+        this.notifier.notify(result.type, result.message);
+        this.store.dispatch(PlayerActions.loadPlayers());
+        this.getPlayersFromStore();
+      }
     });
   }
   onCheckBox(lg: any) {
     this.selectedLeague = this.leagues.find((league: any) => league._id === lg._id);
+    this.playerForm.patchValue({
+      league: this.selectedLeague.name
+    });
     this.leagues = this.leagues.map((league: any) => {
       return {
         ...league,
         selected: lg._id === league._id ? true : false
       };
     });
+
+    this.dropleagues = this.leagues.filter((league: any) => !league.selected);
+    if (this.playerForm.controls.dob) {
+      const age = this.getCalculateAge(this.playerForm.controls.dob.value);
+      this.dropleagues = this.leagues.filter(
+        (league: any) => this.getAgeFromName(league.leagueName) > age && league._id !== this.selectedLeague._id
+      );
+    }
+  }
+  onItemSelect(item: any) {
+    if (this.playerPlayingUp.includes(item._id)) {
+      this.playerPlayingUp.splice(this.playerPlayingUp.indexOf(item._id), 1);
+    } else {
+      this.playerPlayingUp.push(item._id);
+    }
+  }
+  onSelectAll(items: any) {
+    this.playerPlayingUp.push(items.map((item: any) => item._id));
   }
   uploadEmiratesID(event: any) {
     const file: File = event.target.files[0];
@@ -350,7 +394,24 @@ export class CoachAcademyDetailsComponent {
     link.click();
     link.remove();
   }
-
+  getCalculateAge = (value) => {
+    const dob = new Date(value);
+    let ageDifMs = Date.now() - dob.getTime();
+    let ageDate = new Date(ageDifMs);
+    let age = Math.abs(ageDate.getUTCFullYear() - 1970);
+    return age;
+  };
+  calculateAge = (value: any) => {
+    const dob = new Date(value);
+    let ageDifMs = Date.now() - dob.getTime();
+    let ageDate = new Date(ageDifMs);
+    let age = Math.abs(ageDate.getUTCFullYear() - 1970);
+    if (this.selectedLeague) {
+      this.dropleagues = this.leagues.filter(
+        (league: any) => this.getAgeFromName(league.leagueName) > age && league._id !== this.selectedLeague._id
+      );
+    }
+  };
   redirectTo() {
     this.router.navigate(["/coach/teams"]);
   }

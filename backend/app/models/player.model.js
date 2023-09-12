@@ -61,6 +61,11 @@ const Player = mongoose.model(
         default: null,
         required: false
     },
+    playingUp: [{
+        type: mongoose.Schema.Types.ObjectId,
+        default: null,
+        required: false
+    }],
     user:  {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"

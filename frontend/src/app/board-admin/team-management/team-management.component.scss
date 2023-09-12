@@ -1,3 +1,7 @@
+.form-control:focus {
+  border: none !important;
+  border-color: none !important;
+}
 form {
   .input-group {
     border: 1px black solid;
@@ -10,17 +14,22 @@ form {
       font-style: normal;
       font-weight: 700;
       line-height: normal;
+      border: transparent !important;
     }
     input.league-input {
-      border: none;
       background-color: white;
       border-radius: 50px;
       position: relative;
       border-radius: 35px;
+      border-color: transparent;
     }
   }
   input.form-control {
     line-height: 93px;
+  }
+  input.form-control:focus {
+    border: none !important;
+    border-color: none !important;
   }
   div {
     button.btn-default {
