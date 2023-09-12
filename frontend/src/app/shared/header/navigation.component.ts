@@ -149,9 +149,10 @@ export class NavigationComponent implements OnInit, AfterViewInit {
   }
   getNotifications = () => {
     this.userService.getAllContents().subscribe((notifications: any) => {
-      console.log(notifications, ":::; notifications");
-      if (notifications.length > 0) {
-        this.unreadNotifications = notifications.filter((notify: any) => notify.status === "Pending");
+      if (!notifications.message) {
+        if (Array.isArray(notifications)) {
+          this.unreadNotifications = notifications.filter((notify: any) => notify.status === "Pending");
+        }
       }
     });
   };

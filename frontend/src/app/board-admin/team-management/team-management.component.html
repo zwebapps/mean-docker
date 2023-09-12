@@ -33,7 +33,10 @@
       <div class="row" *ngIf="academies">
         <div class="col-lg-3 col-md-3 col-sm-6 p-2 mt-2" *ngFor="let academy of academies">
           <div class="league-lable">
-            <span class="league-text" [routerLink]="['academy', academy._id]">{{ academy.academyName }}</span>
+            <span class="league-text" [routerLink]="['academy', academy._id]">{{ academy.academyName }} </span>
+            <button type="button" class="close btn btn-defaul" data-dismiss="alert" aria-label="Close" (click)="onDelete(academy._id)">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
         </div>
       </div>

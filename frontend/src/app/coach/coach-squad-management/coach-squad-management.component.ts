@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
-import { Store } from "@ngrx/store";
 import { NotifierService } from "angular-notifier";
 import { AcademyService } from "src/app/_services/academy.service";
 import { PlayerService } from "src/app/_services/player.service";
@@ -19,13 +18,9 @@ export class CoachSquadManagementComponent implements OnInit {
   public academy: any;
   public teams: any = [];
   constructor(
-    private playerService: PlayerService,
-    private userService: UserService,
-    private storageService: StorageService,
     notifier: NotifierService,
     private academyService: AcademyService,
     private teamService: TeamService,
-    private store: Store,
     private router: Router,
     public activatedRoute: ActivatedRoute,
     private storagService: StorageService
@@ -44,7 +39,6 @@ export class CoachSquadManagementComponent implements OnInit {
   getTeamsByAcademy(academyId: string) {
     this.teamService.getTeamsByAcademy(academyId).subscribe((res: any) => {
       if (res) {
-        debugger;
         this.teams = res;
       }
     });

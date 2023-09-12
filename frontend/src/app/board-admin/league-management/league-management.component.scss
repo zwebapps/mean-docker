@@ -1,5 +1,5 @@
 form {
-margin: 65px !important;
+  margin: 65px !important;
 }
 input.form-control {
   line-height: 75px;
@@ -7,11 +7,11 @@ input.form-control {
   padding: 25px;
   border-radius: 60px !important;
   border: 1px solid #000;
-  background: #FFF;
+  background: #fff;
   width: 70%;
 }
 input::placeholder {
-  color: rgba(0, 0, 0, 0.50);
+  color: rgba(0, 0, 0, 0.5);
   font-family: NotoSansRegular;
   font-size: 30px;
   font-style: normal;
@@ -19,7 +19,6 @@ input::placeholder {
   line-height: normal;
   margin-right: 5px;
 }
-
 
 button.btn-default {
   background: #000000;
@@ -41,7 +40,7 @@ button.btn-default {
   border-radius: 30px;
   margin: 16px;
   .league-text {
-    color: #FFF;
+    color: #fff;
     text-align: center;
     font-family: NotoSansRegular;
     font-size: 20px;
@@ -51,7 +50,7 @@ button.btn-default {
     button {
       visibility: hidden;
       position: relative;
-      left: 5px
+      left: 22px;
     }
   }
   &:hover {
@@ -83,14 +82,14 @@ button.btn-default {
 @media (max-width: 767px) {
   form {
     margin: 20px !important;
-    }
+  }
   input.form-control {
     line-height: 16px;
     margin: 0 30px 0 0;
     padding: 18px;
     border-radius: 19px !important;
     border: 1px solid #000;
-    background: #FFF;
+    background: #fff;
     width: 57%;
   }
   input::placeholder {
@@ -116,7 +115,7 @@ button.btn-default {
     padding: 18px;
     border-radius: 19px !important;
     border: 1px solid #000;
-    background: #FFF;
+    background: #fff;
     width: 57%;
   }
 

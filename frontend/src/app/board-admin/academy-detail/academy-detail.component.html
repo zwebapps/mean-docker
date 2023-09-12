@@ -38,8 +38,11 @@
   <div>
     <div class="container">
       <div class="row" *ngIf="teams">
-        <div class="league-lable col-lg-2 col-sm-6" *ngFor="let team of teams">
+        <div class="league-lable col-lg-3 col-sm-6" *ngFor="let team of teams">
           <span class="league-text" (click)="onTeamClick(team)">{{ team.teamName }}</span>
+          <button type="button" class="close btn btn-defaul" data-dismiss="alert" aria-label="Close" (click)="onDelete(team._id)">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
       </div>
     </div>
