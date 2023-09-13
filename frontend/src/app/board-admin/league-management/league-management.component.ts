@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import * as LeagueSelectors from "../../_store/selectors/leagues.selectors";
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { NotifierService } from "angular-notifier";
 import { AcademyService } from "src/app/_services/academy.service";
 import { StorageService } from "src/app/_services/storage.service";
@@ -24,7 +24,8 @@ export class LeagueManagementComponent implements OnInit {
   leagues: any = [];
   leagueToDel: string = null;
   leagueForm = new FormGroup({
-    leagueName: new FormControl("")
+    leagueName: new FormControl("", Validators.required),
+    leagueAge: new FormControl("", Validators.required)
   });
 
   constructor(
@@ -66,7 +67,7 @@ export class LeagueManagementComponent implements OnInit {
       if (this.leagueForm.value.leagueName) {
         const leagueData = {
           "League Name": this.leagueForm.value.leagueName,
-          "Age Limit": this.getAgeFromName(this.leagueForm.value.leagueName),
+          "Age Limit": this.leagueForm.value.leagueAge,
           user: {
             createdBy: user._id
           }

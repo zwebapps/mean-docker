@@ -24,6 +24,7 @@ import { ConfirmationDialogService } from "../_services/confirmation-dialog.serv
 import { NgxImageZoomModule } from "ngx-image-zoom";
 import { AdminNotificationsComponent } from "./admin-notifications/admin-notifications.component";
 import { AngularEditorModule } from "@kolkov/angular-editor";
+import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 
 /**
  * Custom angular notifier options
@@ -144,7 +145,8 @@ const adminRoutes: Routes = [
     FormsModule,
     AngularEditorModule,
     NotifierModule.withConfig(customNotifierOptions),
-    RouterModule.forChild(adminRoutes)
+    RouterModule.forChild(adminRoutes),
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [ConfirmationDialogService],
   exports: [RouterModule]

@@ -1,35 +1,37 @@
 form {
   margin: 65px !important;
-}
-input.form-control {
-  line-height: 75px;
-  margin: 0px 45px 0px 0px;
-  padding: 25px;
-  border-radius: 60px !important;
-  border: 1px solid #000;
-  background: #fff;
-  width: 70%;
-}
-input::placeholder {
-  color: rgba(0, 0, 0, 0.5);
-  font-family: NotoSansRegular;
-  font-size: 30px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  margin-right: 5px;
-}
-
-button.btn-default {
-  background: #000000;
-  border-radius: 60px !important;
-  width: 120px;
-  color: white;
-  b > i {
-    font-size: 25px;
-    font-weight: bold;
+  input.form-control {
+    line-height: 75px;
+    margin: 0px 45px 0px 0px;
+    padding: 25px;
+    border-radius: 60px !important;
+    border: 1px solid #000;
+    background: #fff;
+    width: 70%;
+  }
+  input::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+    font-family: NotoSansRegular;
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    margin-right: 5px;
+  }
+  button.btn-default {
+    background: #000000;
+    border-radius: 60px !important;
+    width: 50%;
+    height: 100%;
+    color: white;
+    line-height: 105px;
+    b > i {
+      font-size: 25px;
+      font-weight: bold;
+    }
   }
 }
+
 .league-lable {
   display: flex;
   height: 53px;

@@ -1,23 +1,23 @@
 <div class="col-xs-12 col-sm-12 col-lg-6 d-inline well">
   <div class="col-sm-12 city-heading table-responsive">
-    <h4>{{team.teamName}}</h4>
+    <h4>{{ team.teamName }}</h4>
   </div>
   <table class="table table-scroll table-striped">
-      <thead>
-          <tr>
-              <th>Squad No</th>
-              <th>Player Name</th>
-              <th>Date of Birth</th>
-              <th>Emirates ID</th>
-          </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let player of players">
-            <td>{{player.squadNo}}</td>
-            <td>{{player.firstName}} {{player.lastName}}</td>
-            <td>{{player.dob}}</td>
-            <td><img src="http://localhost:8080/static/{{player.eidFront}}" alt="emirates id" width="31" /></td>
-        </tr>
-      </tbody>
+    <thead>
+      <tr>
+        <th>Squad No</th>
+        <th>Player Name</th>
+        <th>Date of Birth</th>
+        <th>Emirates ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let player of players">
+        <td>{{ player.squadNo }}</td>
+        <td>{{ player.firstName }} {{ player.lastName }}</td>
+        <td>{{ player.dob | date : "shortDate" }}</td>
+        <td><img src="http://localhost:8080/static/{{ player.eidFront }}" alt="emirates id" width="31" /></td>
+      </tr>
+    </tbody>
   </table>
 </div>

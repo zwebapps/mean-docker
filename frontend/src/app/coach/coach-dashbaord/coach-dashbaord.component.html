@@ -1,14 +1,14 @@
 <div class="row academy-row">
   <div class="col-12 d-flex">
     <div class="col-lg-3 col-md-4 col-sm-4">
-      <div class="acedmy-plus">
+      <!-- <div class="acedmy-plus">
         <div class="btn btn-default col-lg-2 col-sm-2"><b><i class="bi bi-plus-lg academy-plus-inner-text"></i></b><br/>
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="col-lg-9 col-md-8 col-sm-8">
-      <div class=" academy-name">
-        <p *ngIf="academy">{{academy.academyName}}</p>
+      <div class="academy-name">
+        <p *ngIf="academy">{{ academy.academyName }}</p>
       </div>
     </div>
   </div>
@@ -16,27 +16,27 @@
 <div class="row justify-content-center mt-5">
   <div class="col-sm-6 col-md-6 col-lg-3">
     <div class="card-header text-center">Registered Players</div>
-      <div class="card">
-          <div class="card-body">
-              <div class="d-flex justify-content-center">
-                  <div style="margin-top: 18%;">
-                    <h3 class="mb-0 font-weight-bold">{{players.length}}</h3>
-                  </div>
-              </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex justify-content-center">
+          <div style="margin-top: 18%">
+            <h3 class="mb-0 font-weight-bold">{{ players.length }}</h3>
           </div>
+        </div>
       </div>
+    </div>
   </div>
   <div class="col-sm-12 col-md-12 col-lg-1"></div>
   <div class="col-sm-6 col-md-6 col-lg-3">
     <div class="card-header text-center">Registered Teams</div>
-      <div class="card">
-          <div class="card-body">
-              <div class="d-flex justify-content-center">
-                  <div style="margin-top: 18%;">
-                    <h3 class="mb-0 font-weight-bold">{{teams.length}}</h3>
-                  </div>
-              </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="d-flex justify-content-center">
+          <div style="margin-top: 18%">
+            <h3 class="mb-0 font-weight-bold">{{ teams.length }}</h3>
           </div>
+        </div>
       </div>
+    </div>
   </div>
 </div>

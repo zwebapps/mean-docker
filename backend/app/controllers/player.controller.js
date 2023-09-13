@@ -323,12 +323,15 @@ exports.updatePlayer =  async (req, resp, next) => {
     if (!fetchPlayer) return resp.status(404).json({ msg: 'Player record not found' });
     fetchPlayer = {
       ...fetchPlayer._doc,
-      ...req.body
+      ...req.body,
+      playingUp: req.body.playingUp.map((league) => ObjectId(league)),
+      dob: new Date(req.body.dob),
+      user : ObjectId(req.body.user.createdBy)
     }
 
     const updatedPlayer = await Player.findByIdAndUpdate(req.params.id, fetchPlayer, { new: true });
 
-    resp.status(200).json(updatedPlayer);
+    resp.status(200).json({player : updatedPlayer, message: 'Player updated successfully'});
 
   } catch (error) {
     next(error);

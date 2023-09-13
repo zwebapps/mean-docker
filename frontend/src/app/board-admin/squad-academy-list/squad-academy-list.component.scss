@@ -1,12 +1,12 @@
 .academy-row {
   height: 180px;
-  background: #FF5A5A;
+  background: #4f5467;
   padding: 10px;
   margin-bottom: 35px;
   .academy-name {
     padding-top: 8px;
     p {
-      color: #FFF;
+      color: #fff;
       font-family: NotoSansRegular;
       font-size: 35px;
       font-style: normal;
@@ -26,11 +26,10 @@
     background: white;
     .btn-default {
       b > i.academy-plus-inner-text {
-        color: #FF5A5A;
+        color: #ff5a5a;
         font-size: 30px;
         font-weight: bold;
       }
-
     }
   }
 }
@@ -42,7 +41,7 @@ form {
     border-radius: 75px;
   }
   ::placeholder {
-    color: rgba(0, 0, 0, 0.50);
+    color: rgba(0, 0, 0, 0.5);
     font-family: NotoSansRegular;
     font-size: 30px;
     font-style: normal;
@@ -50,7 +49,7 @@ form {
     line-height: normal;
   }
   input.league-input {
-    border:none;
+    border: none;
     background-color: white;
     border-radius: 50px;
     position: relative;
@@ -59,20 +58,20 @@ form {
 }
 input.form-control {
   line-height: 93px;
- }
+}
 
 button.btn-default {
   background: #000000;
-    border-radius: 50px !important;
-    width: 8%;
-    color: white;
+  border-radius: 50px !important;
+  width: 8%;
+  color: white;
   b {
     i {
       font-size: 25px;
       font-weight: bold;
     }
     .academy-plus-inner-text {
-      color: #FF5A5A;
+      color: #ff5a5a;
       font-size: 30px;
       font-weight: bold;
     }
@@ -88,7 +87,7 @@ button.btn-default {
   border-radius: 30px;
   margin: 16px;
   .league-text {
-    color: #FFF;
+    color: #fff;
     text-align: center;
     font-family: NotoSansRegular;
     font-size: 20px;
@@ -105,7 +104,7 @@ button.btn-default {
     padding: 18px;
     border-radius: 19px !important;
     border: 1px solid #000;
-    background: #FFF;
+    background: #fff;
     width: 57%;
   }
 

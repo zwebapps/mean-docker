@@ -84,7 +84,8 @@ export class CoachAcademyDetailsComponent {
       league: new FormControl(""),
       playerEidNo: new FormControl(""),
       eidFront: new FormControl(""),
-      eidBack: new FormControl("")
+      eidBack: new FormControl(""),
+      playingUp: new FormControl("")
     });
   }
   ngOnInit() {
@@ -173,7 +174,6 @@ export class CoachAcademyDetailsComponent {
         }
       };
 
-      console.log(playerObj);
       this.palyerService.createPlayer(playerObj).subscribe((res: any) => {
         if (res) {
           this.notifier.notify("success", res.message);
@@ -230,6 +230,7 @@ export class CoachAcademyDetailsComponent {
       if (result) {
         this.notifier.notify(result.type, result.message);
         this.store.dispatch(PlayerActions.loadPlayers());
+        this.data = [];
         this.getPlayersFromStore();
       }
     });
@@ -252,6 +253,10 @@ export class CoachAcademyDetailsComponent {
       this.dropleagues = this.leagues.filter(
         (league: any) => this.getAgeFromName(league.leagueName) > age && league._id !== this.selectedLeague._id
       );
+    }
+    if (this.selectedLeague) {
+      this.getPlayersFromStore();
+      this.data = this.data.filter((player: any) => player.league?._id === this.selectedLeague?._id);
     }
   }
   onItemSelect(item: any) {

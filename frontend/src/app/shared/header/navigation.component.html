@@ -34,15 +34,29 @@
   <!-- User profile and search -->
   <!-- ============================================================== -->
   <li class="nav-item" ngbDropdown placement="bottom-end">
-    <a ngbDropdownToggle class="nav-link waves-effect waves-dark pro-pic" href="javascript:void(0)"
-      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <a
+      ngbDropdownToggle
+      class="nav-link waves-effect waves-dark pro-pic"
+      href="javascript:void(0)"
+      data-toggle="dropdown"
+      aria-haspopup="true"
+      aria-expanded="false"
+    >
       <img src="assets/images/users/user.png" alt="user" class="rounded-circle" width="31" />
-      <span class="ms-2" *ngIf="loggedInUser"> {{loggedInUser?.username}}</span>
+      <span class="ms-2" *ngIf="loggedInUser"> {{ loggedInUser?.username }}</span>
     </a>
     <div class="dropdown-menu-right text-center" ngbDropdownMenu>
       <!-- <a class="dropdown-item" href="javascript:void(0)"> My Profile</a> -->
       <!-- <a class="dropdown-item" href="javascript:void(0)"> My Balance</a> -->
-      <a class="dropdown-item" href="javascript:void(0)" (click)="redirectToNotifications()"> Inbox <span class="badge bg-warning ms-2" *ngIf="unreadNotifications.length">{{unreadNotifications.length}}</span></a>
+      <a
+        class="dropdown-item"
+        href="javascript:void(0)"
+        (click)="redirectToNotifications()"
+        *ngIf="unreadNotifications.length && (loggedInUser?.roles[0] === 'ROLE_ADMIN' || loggedInUser?.roles[0] === 'ROLE_COACH')"
+      >
+        Inbox
+        <span class="badge bg-warning ms-2" *ngIf="unreadNotifications.length">{{ unreadNotifications.length }}</span></a
+      >
       <!-- <div class="dropdown-divider"></div> -->
       <!-- <a class="dropdown-item" href="javascript:void(0)"> Account Setting</a> -->
       <!-- <div class="dropdown-divider"></div> -->

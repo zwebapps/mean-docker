@@ -1,37 +1,36 @@
-import { RouteInfo, RouteUser } from './sidebar.metadata';
+import { RouteInfo, RouteUser } from "./sidebar.metadata";
 
 export const ROUTES: RouteUser[] = [
   {
-    role: 'ROLE_ADMIN',
-    routes:
-    [
+    role: "ROLE_ADMIN",
+    routes: [
       {
-        path: '/admin/dashboard',
-        title: 'Dashbaord',
-        icon: 'bi bi-speedometer2',
-        image: 'assets/images/bashboard.png',
-        active: 'assets/images/active-dashbaord.png',
-        class: '',
+        path: "/admin/dashboard",
+        title: "Dashbaord",
+        icon: "bi bi-speedometer2",
+        image: "assets/images/bashboard.png",
+        active: "assets/images/active-dashbaord.png",
+        class: "",
         extralink: false,
         submenu: []
       },
       {
-        path: '/admin/users',
-        title: 'Users Management',
-        icon: 'bi bi-speedometer2',
-        image: 'assets/images/user.png',
-        active: 'assets/images/user.png',
-        class: '',
+        path: "/admin/users",
+        title: "Users Management",
+        icon: "bi bi-speedometer2",
+        image: "assets/images/user.png",
+        active: "assets/images/user.png",
+        class: "",
         extralink: false,
         submenu: []
       },
       {
-        path: '/admin/leagues',
-        title: 'League Management',
-        icon: 'bi bi-speedometer2',
-        image: 'assets/images/leagues.png',
-        active: 'assets/images/active-leagues.png',
-        class: '',
+        path: "/admin/leagues",
+        title: "League Management",
+        icon: "bi bi-speedometer2",
+        image: "assets/images/leagues.png",
+        active: "assets/images/active-leagues.png",
+        class: "",
         extralink: false,
         submenu: []
       },
@@ -43,38 +42,39 @@ export const ROUTES: RouteUser[] = [
       //   extralink: false,
       //   submenu: []
       // },
+
       {
-        path: '/admin/squads',
-        title: 'Squad Management',
-        icon: 'bi bi-speedometer2',
-        image: 'assets/images/squads.png',
-        active: 'assets/images/active-squads.png',
-        class: '',
+        path: "/admin/academies",
+        title: "Team Management",
+        icon: "bi bi-speedometer2",
+        image: "assets/images/teams.png",
+        active: "assets/images/active-teams.png",
+        class: "",
         extralink: false,
         submenu: []
       },
       {
-        path: '/admin/academies',
-        title: 'Team Management',
-        icon: 'bi bi-speedometer2',
-        image: 'assets/images/teams.png',
-        active: 'assets/images/active-teams.png',
-        class: '',
+        path: "/admin/squads",
+        title: "Squad Management",
+        icon: "bi bi-speedometer2",
+        image: "assets/images/squads.png",
+        active: "assets/images/active-squads.png",
+        class: "",
         extralink: false,
         submenu: []
       }
     ]
   },
   {
-    role: 'ROLE_COACH',
+    role: "ROLE_COACH",
     routes: [
       {
-        path: '/coach/dashboard',
-        title: 'Dashboard',
-        icon: 'bi bi-speedometer2',
-        image: 'assets/images/bashboard.png',
-        active: 'assets/images/active-dashbaord.png',
-        class: '',
+        path: "/coach/dashboard",
+        title: "Dashboard",
+        icon: "bi bi-speedometer2",
+        image: "assets/images/bashboard.png",
+        active: "assets/images/active-dashbaord.png",
+        class: "",
         extralink: false,
         submenu: []
       },
@@ -95,15 +95,15 @@ export const ROUTES: RouteUser[] = [
       //   submenu: []
       // },
       {
-        path: '/coach/teams',
-        title: 'Squad Management',
-        icon: 'bi bi-hdd-stack',
-        image: 'assets/images/squads.png',
-        active: 'assets/images/active-squads.png',
-        class: '',
+        path: "/coach/teams",
+        title: "Squad Management",
+        icon: "bi bi-hdd-stack",
+        image: "assets/images/squads.png",
+        active: "assets/images/active-squads.png",
+        class: "",
         extralink: false,
         submenu: []
-      },
+      }
       // {
       //   path: '/component/card',
       //   title: 'Card',
@@ -155,28 +155,28 @@ export const ROUTES: RouteUser[] = [
     ]
   },
   {
-    role: 'ROLE_REFEREE',
+    role: "ROLE_REFEREE",
     routes: [
       {
-        path: '/referee/dashboard',
-        title: 'Fixture Setup',
-        icon: 'bi bi-speedometer2',
-        image: 'assets/images/bashboard.png',
-        active: 'assets/images/active-dashbaord.png',
-        class: '',
+        path: "/referee/dashboard",
+        title: "Fixture Setup",
+        icon: "bi bi-speedometer2",
+        image: "assets/images/bashboard.png",
+        active: "assets/images/active-dashbaord.png",
+        class: "",
         extralink: false,
         submenu: []
       },
       {
-        path: '/referee/mangegames',
-        title: 'Games Management',
-        icon: 'bi bi-pause-btn',
-        image: 'assets/images/squads.png',
-        active: 'assets/images/active-squads.png',
-        class: '',
+        path: "/referee/mangegames",
+        title: "Games Management",
+        icon: "bi bi-pause-btn",
+        image: "assets/images/squads.png",
+        active: "assets/images/active-squads.png",
+        class: "",
         extralink: false,
         submenu: []
-      },
+      }
       // {
       //   path: '/component/badges',
       //   title: 'Badges',

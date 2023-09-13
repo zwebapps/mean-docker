@@ -1,12 +1,12 @@
 .academy-row {
   height: 180px;
-  background: #FF5A5A;
+  background: #4f5467;
   padding: 10px;
   margin-bottom: 35px;
   .academy-name {
     padding-top: 8px;
     p {
-      color: #FFF;
+      color: #fff;
       font-family: NotoSansRegular;
       font-size: 35px;
       font-style: normal;
@@ -26,11 +26,10 @@
     background: white;
     .btn-default {
       b > i.academy-plus-inner-text {
-        color: #FF5A5A;
+        color: #ff5a5a;
         font-size: 30px;
         font-weight: bold;
       }
-
     }
   }
 }
@@ -88,4 +87,3 @@
   font-weight: 600;
   line-height: normal;
 }
-

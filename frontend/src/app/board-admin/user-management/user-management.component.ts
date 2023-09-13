@@ -164,6 +164,8 @@ export class UserManagementComponent implements OnInit {
             this.associateCoach(coachId);
           }
           this.notifier.notify("success", "User created successfully!");
+          this.userForm.reset();
+          this.store.dispatch(UserActions.loadUsers());
         }
       });
     }

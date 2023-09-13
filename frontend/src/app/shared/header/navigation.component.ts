@@ -151,7 +151,11 @@ export class NavigationComponent implements OnInit, AfterViewInit {
     this.userService.getAllContents().subscribe((notifications: any) => {
       if (!notifications.message) {
         if (Array.isArray(notifications)) {
-          this.unreadNotifications = notifications.filter((notify: any) => notify.status === "Pending");
+          if (this.loggedInUser?.roles?.includes("ROLE_ADMIN")) {
+            this.unreadNotifications = notifications.filter((notify: any) => notify.status === "Pending");
+          } else {
+            this.unreadNotifications = notifications.filter((notify: any) => notify.status === "Approved");
+          }
         }
       }
     });

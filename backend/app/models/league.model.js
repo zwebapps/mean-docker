@@ -9,7 +9,7 @@ const League = mongoose.model(
         required: true
     },
     leagueAgeLimit: {
-      type: Number,
+      type: String,
       required: true,
       required: true
     },

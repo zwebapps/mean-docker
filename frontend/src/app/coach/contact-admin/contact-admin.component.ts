@@ -97,8 +97,12 @@ export class ContactAdminComponent implements OnInit {
     if (this.form.valid) {
       this.userService.createContact(this.form.value).subscribe((res: any) => {
         if (res) {
-          this.notifier.notify("success", `${res.message}`);
+          this.notifier.notify("success", `Message sent successfully!`);
           this.form.reset();
+          this.user = this.storageService.getUser();
+          if (this.user) {
+            this.getAllContents(this.user?.id);
+          }
         }
       });
     }
@@ -116,7 +120,11 @@ export class ContactAdminComponent implements OnInit {
   deleteContent = (id: any) => {
     this.userService.deleteContent(id).subscribe((res: any) => {
       if (res) {
-        this.notifier.notify("success", "Content deleted successfully!");
+        this.notifier.notify("success", "Message deleted successfully!");
+        this.user = this.storageService.getUser();
+        if (this.user) {
+          this.getAllContents(this.user?.id);
+        }
       }
     });
   };

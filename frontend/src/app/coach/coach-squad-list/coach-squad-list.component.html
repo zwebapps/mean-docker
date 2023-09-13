@@ -1,5 +1,4 @@
 <div class="row">
-  {{ apiURL }}
   <ngx-datatable
     #myTable
     class="material"
@@ -23,7 +22,7 @@
     </ngx-datatable-column>
     <ngx-datatable-column name="DOB" prop="row">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-        {{ row.dob }}
+        {{ row.dob | date : "shortDate" }}
       </ng-template>
     </ngx-datatable-column>
     <ngx-datatable-column name="Squad Number" prop="row">
