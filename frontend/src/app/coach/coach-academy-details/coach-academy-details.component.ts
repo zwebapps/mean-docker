@@ -18,6 +18,7 @@ import * as AcademiesSelectors from "../../_store/selectors/academies.selectors"
 
 import * as XLSX from "xlsx";
 import { IDropdownSettings } from "ng-multiselect-dropdown";
+import { environment } from "src/environments/environment";
 const { read, write, utils } = XLSX;
 
 @Component({
@@ -62,6 +63,7 @@ export class CoachAcademyDetailsComponent {
   teams: any = [];
   academies: any = [];
   insertionStarted: boolean = false;
+  apiURL = environment.apiURL;
   constructor(
     private formBuilder: FormBuilder,
     private store: Store,
@@ -108,7 +110,8 @@ export class CoachAcademyDetailsComponent {
       league: ["", Validators.required],
       playerEidNo: [null, [Validators.required, Validators.pattern(eidPattern), Validators.maxLength(18)]],
       eidFront: ["", Validators.required],
-      eidBack: ["", Validators.required]
+      eidBack: ["", Validators.required],
+      playingUp: [""]
     });
     this.playerForm.controls.league.disable();
     // get the team id

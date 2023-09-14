@@ -13,6 +13,8 @@ import { NgxImageZoomModule } from "ngx-image-zoom";
 import { AngularEditorModule } from "@kolkov/angular-editor";
 import { ContactAdminComponent } from "./contact-admin/contact-admin.component";
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
+import { NgImageSliderModule } from "ng-image-slider";
+import { NgbDatepickerModule } from "@ng-bootstrap/ng-bootstrap";
 
 /**
  * Custom angular notifier options
@@ -71,6 +73,7 @@ const customNotifierOptions: NotifierOptions = {
     CommonModule,
     NgxDatatableModule,
     FormsModule,
+    NgbDatepickerModule,
     NotifierModule.withConfig(customNotifierOptions),
     NgMultiSelectDropDownModule.forRoot(),
     AngularEditorModule,
