@@ -1,12 +1,13 @@
-<div class="row">
-  <div class="col-lg-12 col-sm-12 p-5 d-flex heading-row">
+<div class="row page-title-bar">
+  <div class="col-lg-12 heading-row">
     <div class="col-lg-10 col-sm-9">
-      <h4>User Management</h4>
+      <h3 class="page-title">User Management</h3>
     </div>
     <div class="col-lg-12 col-sm-3">
       <button class="btn btn-primary" (click)="toggleForm()">Add New User</button>
     </div>
   </div>
+  <hr />
 </div>
 <div class="row p-3" *ngIf="displayAddForm">
   <div class="col-lg-12 col-sm-12 form-border">

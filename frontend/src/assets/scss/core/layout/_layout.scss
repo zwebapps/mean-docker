@@ -35,15 +35,22 @@ hr{
 Titlebar
 *******************/
 
+.heading-row{
+  padding: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .page-title-bar {
   .page-title{
+    margin: 0;
     color: $black;
     font-family: $font-family-sans-serif;
     font-size: $h3-font-size;
     font-weight: $font-weight-medium;
     line-height: normal;
   }
-  
 }
 
 /*******************
@@ -158,6 +165,14 @@ Vertical responsive layout
       .page-wrapper {
         padding: 0 15px;
       }
+    }
+  }
+  .heading-row{
+    padding: 1rem;
+  }
+  .page-title-bar {
+    .page-title{
+      font-size: map-get($font-sizes, 7);
     }
   }
 }
