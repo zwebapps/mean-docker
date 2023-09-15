@@ -166,6 +166,7 @@ export class UserManagementComponent implements OnInit {
           this.notifier.notify("success", "User created successfully!");
           this.userForm.reset();
           this.store.dispatch(UserActions.loadUsers());
+          this.submitted = false;
         }
       });
     }

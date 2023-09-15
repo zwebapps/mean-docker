@@ -280,6 +280,8 @@ export class CoachAcademyDetailsComponent {
         this.eidImages[inputName] = res.filename;
         try {
           this.notifier.notify("success", `${res.message}`);
+          this.store.dispatch(PlayerActions.loadPlayers());
+          this.getPlayersFromStore();
         } catch (error) {
           console.log(error);
         }
@@ -294,6 +296,8 @@ export class CoachAcademyDetailsComponent {
         if (res && res.count > 0) {
           try {
             this.notifier.notify("success", `Successfully uploaded ${res.count} images!`);
+            this.store.dispatch(PlayerActions.loadPlayers());
+            this.getPlayersFromStore();
           } catch (error) {
             console.log(error);
           }
@@ -380,6 +384,8 @@ export class CoachAcademyDetailsComponent {
           this.insertionStarted = false;
           if (res && res.players) {
             this.notifier.notify("success", res.message);
+            this.store.dispatch(PlayerActions.loadPlayers());
+            this.getPlayersFromStore();
           } else {
             this.notifier.notify("error", res.message);
           }
