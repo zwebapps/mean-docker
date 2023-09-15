@@ -4,7 +4,7 @@
     /*This is for the logo bg*/
     .topbar .top-navbar .navbar-header {
       &[data-logobg="skin5"] {
-        background: #414755;
+        background: #4C4C4C;
         .navbar-brand {
           .dark-logo {
             display: inline;
@@ -22,37 +22,36 @@
     .topbar .navbar-collapse,
     .topbar {
       &[data-navbarbg="skin5"] {
-        background: #414755;
+        background: #4C4C4C;
       }
     }
     /*This is for the sidebar bg*/
     .left-sidebar {
       &[data-sidebarbg="skin5"] {
-        // background: #414755;
+        // background: #4C4C4C;
         .sidebar-nav {
           ul {
-            // background: #414755;
+            // background: #4C4C4C;
             .sidebar-item {
               &.active {
                 > .sidebar-link {
                   color: #fff;
                   i {
-                    color: #414755;
+                    color: #4C4C4C;
                   }
                 }
               }
               .sidebar-link {
-                color: #414755;
                 .feather {
                   fill: rgba(41, 98, 255, 0.1);
                 }
                 &:hover {
                   .feather {
-                    color: #414755;
+                    color: #4C4C4C;
                   }
                 }
                 i {
-                  color: #414755;
+                  color: #4C4C4C;
                 }
               }
             }
