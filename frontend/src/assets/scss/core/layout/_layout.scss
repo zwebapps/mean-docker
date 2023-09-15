@@ -6,6 +6,12 @@
  * {
   font-family: NotoSansRegular;
  }
+hr{
+  border: 0;
+  height: 1px;
+  background: #333;
+  background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
 #main-wrapper {
   width: 100%;
   overflow: hidden;
@@ -15,6 +21,7 @@
   background: $theme-light;
   position: relative;
   transition: 0.2s ease-in;
+  padding: 0 50px;
 }
 
 .page-wrapper > .container-fluid {
@@ -22,6 +29,21 @@
   min-height: calc(100vh - 180px);
   max-width: $page-wrapper-max-width;
   margin: 0 auto;
+}
+
+/*******************
+Titlebar
+*******************/
+
+.page-title-bar {
+  .page-title{
+    color: $black;
+    font-family: $font-family-sans-serif;
+    font-size: $h3-font-size;
+    font-weight: $font-weight-medium;
+    line-height: normal;
+  }
+  
 }
 
 /*******************
@@ -125,6 +147,16 @@ Vertical responsive layout
           position: relative;
           top: $topbar-height;
         }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  #main-wrapper {
+    &[data-layout="vertical"][data-sidebartype="full"] {
+      .page-wrapper {
+        padding: 0 15px;
       }
     }
   }

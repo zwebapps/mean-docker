@@ -26,11 +26,11 @@ sidebar navigation
 ******************/
 
 .sidebar-nav {
-  padding: 5px;
+  padding: 10px;
   ul {
     .sidebar-item {
-      width: 240px;
-      margin: 0 0 5px 0;
+      width: 100%;
+      margin: 0 0 10px 0;
       .sidebar-link {
         font-weight: bold;
         color: $sidebar-text;
