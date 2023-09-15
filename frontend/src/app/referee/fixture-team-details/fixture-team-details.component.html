@@ -2,6 +2,18 @@
   <div class="col-sm-12 city-heading table-responsive">
     <h4>{{ team.teamName }}</h4>
   </div>
+  <ng-template #content let-modal size="950px">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Player Emirates ID</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <img [src]="imgSrc" />
+    </div>
+    <!-- <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div> -->
+  </ng-template>
   <table class="table table-scroll table-striped">
     <thead>
       <tr>
@@ -16,7 +28,9 @@
         <td>{{ player.squadNo }}</td>
         <td>{{ player.firstName }} {{ player.lastName }}</td>
         <td>{{ player.dob | date : "shortDate" }}</td>
-        <td><img src="http://localhost:8080/static/{{ player.eidFront }}" alt="emirates id" width="31" /></td>
+        <td>
+          <img src="{{ apiURL }}/static/{{ player.eidFront }}" width="100" (click)="open(content, player.eidFront)" />
+        </td>
       </tr>
     </tbody>
   </table>

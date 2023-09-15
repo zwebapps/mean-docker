@@ -22,3 +22,11 @@
 .table-scroll thead > tr > th {
   border: none;
 }
+
+.modal-body {
+  text-align: center;
+  img {
+    width: 700px;
+    border-radius: 25px;
+  }
+}
