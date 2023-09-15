@@ -8,6 +8,7 @@ import { NotifierService } from "angular-notifier";
 import { AcademyService } from "src/app/_services/academy.service";
 import { StorageService } from "src/app/_services/storage.service";
 import { TeamService } from "src/app/_services/team.service";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-squad-academy-list",
@@ -19,6 +20,7 @@ export class SquadAcademyListComponent implements OnInit {
   private notifier: NotifierService;
   public academies: any = [];
   public academy: any = {};
+  apiURL = environment.apiURL;
   constructor(
     notifier: NotifierService,
     private academyService: AcademyService,
@@ -45,13 +47,16 @@ export class SquadAcademyListComponent implements OnInit {
   }
   getTeamsByAcademy(academyId: string) {
     this.teamService.getTeamsByAcademy(academyId).subscribe((res: any) => {
-      if (res) {
+      if (!res.message) {
         this.teams = res;
       } else {
         this.notifier.notify("error", "Teams not found!");
       }
     });
   }
+  getImg = (image: string) => {
+    return `${this.apiURL}/static/${image}`;
+  };
   redirectTo() {
     this.router.navigate(["/admin/academies"]);
   }

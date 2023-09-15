@@ -16,6 +16,8 @@ exports.createAcademy = async (req, resp, next) => {
           if (!academy) { 
             const academyData = new Academy({
               academyName: req.body[i]['Academy Name'],   
+              logo: req.body[i]['Logo'],
+              color: req.body[i]['Color'],
               coach: [ ObjectId(req.body[i].user['createdBy'])],
               createdAt:  new Date()
             });
@@ -34,7 +36,9 @@ exports.createAcademy = async (req, resp, next) => {
         let academy = await Academy.findOne({ academyName: req.body['Academy Name'] });  
         if (!academy) {   
           const academyData = new Academy({
-            academyName: req.body['Academy Name'],           
+            academyName: req.body['Academy Name'],
+            logo: req.body['Logo'],
+            color: req.body['Color'],         
             coach: [ObjectId(req.body.user['createdBy'])],
             createdAt:  new Date()
           });

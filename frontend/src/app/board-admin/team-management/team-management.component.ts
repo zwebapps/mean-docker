@@ -10,6 +10,7 @@ import { Store } from "@ngrx/store";
 import { Router } from "@angular/router";
 import { UserService } from "src/app/_services/user.service";
 import { ConfirmationDialogService } from "src/app/_services/confirmation-dialog.service";
+import { PlayerService } from "src/app/_services/player.service";
 
 @Component({
   selector: "app-team-management",
@@ -20,8 +21,13 @@ export class TeamManagementComponent implements OnInit {
   private notifier: NotifierService;
   public academies: any = [];
   public academyToDel: any = [];
+  public academyLogo: any;
+  public editAcademy: boolean = false;
+  public academyToEdit: string = null;
   academyForm = new FormGroup({
-    academyName: new FormControl("")
+    academyName: new FormControl(""),
+    academyLogo: new FormControl(""),
+    academyColor: new FormControl("")
   });
 
   constructor(
@@ -31,7 +37,8 @@ export class TeamManagementComponent implements OnInit {
     private academyService: AcademyService,
     private store: Store,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private palyerService: PlayerService
   ) {
     this.notifier = notifier;
   }
@@ -45,58 +52,93 @@ export class TeamManagementComponent implements OnInit {
       this.academies = academy;
     });
   }
-
-  onSubmit() {
-    if (!this.academyForm.value.academyName) {
-      this.notifier.notify("error", "Academy name not provided!");
-      return;
-    } else {
-      const user = this.storageService.getUser();
-      if (this.academyForm.value.academyName) {
-        const academyData = {
-          "Academy Name": this.academyForm.value.academyName,
-          "Academy User Name": this.makeAcademyUserName(this.academyForm.value.academyName),
-          Email: `${this.makeAcademyUserName(this.academyForm.value.academyName)}@dummy.com`,
-          Password: `Password@${this.makeAcademyUserName(this.academyForm.value.academyName)}`,
-          user: {
-            createdBy: user.id
-          }
-        };
-        const userData = {
-          firstname: this.makeAcademyUserName(this.academyForm.value.academyName),
-          lastname: this.makeAcademyUserName(this.academyForm.value.academyName),
-          username: this.makeAcademyUserName(this.academyForm.value.academyName),
-          email: `${this.makeAcademyUserName(this.academyForm.value.academyName)}@dummy.com`,
-          password: `Password@${this.makeAcademyUserName(this.academyForm.value.academyName)}`,
-          role: "coach"
-        };
-        // check if academy exists
-        this.academyService.getAcademyByName({ name: this.academyForm.value.academyName }).subscribe((res: any) => {
-          if (!res.message) {
-            this.notifier.notify("error", "Academy Name already exists!");
-            return;
-          } else {
-            this.userService.createUser(userData).subscribe((user: any) => {
-              if (user) {
-                // add owner for new academy.
-                academyData.user = {
-                  createdBy: user._id
-                };
-                this.academyService.createAcademy(academyData).subscribe((res: any) => {
-                  if (res._id) {
-                    this.notifier.notify("success", "Academy created successfully!");
-                    this.academyForm.reset();
-                    this.store.dispatch(AcademyActions.loadAcademies());
-                  }
-                });
-              }
-            });
-          }
-        });
+  uploadLogo(event: any) {
+    const file: File = event.target.files[0];
+    const inputName = event.target.name;
+    this.palyerService.upload(file).subscribe((res: any) => {
+      if (res) {
+        this.academyLogo = res.filename;
+        console.log("logo update successsfully");
       }
+    });
+  }
+  onSubmit() {
+    if (!this.editAcademy) {
+      if (!this.academyForm.value.academyName) {
+        this.notifier.notify("error", "Academy name not provided!");
+        return;
+      } else {
+        const user = this.storageService.getUser();
+        if (this.academyForm.value.academyName) {
+          const academyData = {
+            "Academy Name": this.academyForm.value.academyName,
+            "Academy User Name": this.makeAcademyUserName(this.academyForm.value.academyName),
+            Email: `${this.makeAcademyUserName(this.academyForm.value.academyName)}@dummy.com`,
+            Password: `Password@${this.makeAcademyUserName(this.academyForm.value.academyName)}`,
+            Logo: this.academyLogo,
+            Color: this.academyForm.value.academyColor,
+            user: {
+              createdBy: user.id
+            }
+          };
+          const userData = {
+            firstname: this.makeAcademyUserName(this.academyForm.value.academyName),
+            lastname: this.makeAcademyUserName(this.academyForm.value.academyName),
+            username: this.makeAcademyUserName(this.academyForm.value.academyName),
+            email: `${this.makeAcademyUserName(this.academyForm.value.academyName)}@dummy.com`,
+            password: `Password@${this.makeAcademyUserName(this.academyForm.value.academyName)}`,
+            role: "coach"
+          };
+          // check if academy exists
+          this.academyService.getAcademyByName({ name: this.academyForm.value.academyName }).subscribe((res: any) => {
+            if (!res.message) {
+              this.notifier.notify("error", "Academy Name already exists!");
+              return;
+            } else {
+              this.userService.createUser(userData).subscribe((user: any) => {
+                if (user) {
+                  // add owner for new academy.
+                  academyData.user = {
+                    createdBy: user._id
+                  };
+                  this.academyService.createAcademy(academyData).subscribe((res: any) => {
+                    if (res._id) {
+                      this.notifier.notify("success", "Academy created successfully!");
+                      this.academyForm.reset();
+                      this.store.dispatch(AcademyActions.loadAcademies());
+                    }
+                  });
+                }
+              });
+            }
+          });
+        }
+      }
+    } else {
+      const academyData = {
+        academyName: this.academyForm.value.academyName,
+        logo: this.academyLogo,
+        color: this.academyForm.value.academyColor
+      };
+      this.academyService.updateAcademy(this.academyToEdit, academyData).subscribe((res: any) => {
+        if (res) {
+          this.notifier.notify("success", "Academy updated successfully!");
+          this.academyForm.reset();
+          this.store.dispatch(AcademyActions.loadAcademies());
+        }
+      });
     }
   }
-
+  onEditPatch(academy: any) {
+    this.editAcademy = true;
+    this.academyToEdit = academy._id;
+    this.academyForm.patchValue({
+      academyName: academy.academyName,
+      academyColor: academy.color
+    });
+    this.academyLogo = academy.logo;
+    console.log(this.academyForm.value);
+  }
   makeAcademyUserName(academyName: any) {
     if (academyName) {
       return academyName.replace(/\s/g, "").toLowerCase();

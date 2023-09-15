@@ -11,6 +11,7 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { TeamService } from "src/app/_services/team.service";
 import { ConfirmationDialogService } from "src/app/_services/confirmation-dialog.service";
 import * as TeamActions from "../../_store/actions/teams.actions";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-academy-detail",
@@ -25,6 +26,7 @@ export class AcademyDetailComponent implements OnInit {
   teamForm = new FormGroup({
     teamName: new FormControl("")
   });
+  apiURL = environment.apiURL;
   constructor(
     private storageService: StorageService,
     notifier: NotifierService,
@@ -77,6 +79,9 @@ export class AcademyDetailComponent implements OnInit {
       }
     }
   }
+  getImg = (image: string) => {
+    return `${this.apiURL}/static/${image}`;
+  };
   getTeamsByAcademy = (academyId: string): any => {
     this.teamService.getTeamsByAcademy(academyId).subscribe((res: any) => {
       if (!res.message) {
