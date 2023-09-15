@@ -8,6 +8,14 @@ const Academy = mongoose.model(
         unique : true,
         required: true
     },
+    logo: {
+      type: String,
+      unique : true
+    },
+    color: {
+      type: String,
+      unique : true
+    },
     coach: [{
           type: mongoose.Schema.Types.ObjectId,
           ref: "User"

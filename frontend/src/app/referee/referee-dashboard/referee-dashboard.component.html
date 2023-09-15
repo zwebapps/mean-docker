@@ -1,71 +1,105 @@
-
-  <div class="row m-3">
-    <h4>Fixture Setup</h4>
-  </div>
-  <div class="row">
-    <hr/>
-  </div>
-  <div class="row text-center">
-    <form [formGroup]="fixtureForm" (ngSubmit)="onFormSubmit()">
-      <div class="row justify-content-center">
-        <div class="col-lg-3 col-md-4 col-sm-12  mt-3">
-          <div class="form-group">
-            <select class="form-select" aria-label="Default select" disabled>
-              <option selected>League</option>
+<div class="row m-3">
+  <h4>Fixture Setup</h4>
+</div>
+<div class="row">
+  <hr />
+</div>
+<div class="row text-center">
+  <form [formGroup]="fixtureForm" (ngSubmit)="onFormSubmit()">
+    <div class="row justify-content-center">
+      <div class="col-lg-3 col-md-4 col-sm-12 mt-3">
+        <div class="form-group">
+          <select class="form-select" aria-label="Default select" disabled>
+            <option selected>League</option>
+          </select>
+          <div>
+            <select
+              class="form-select"
+              id="container"
+              name="league"
+              formControlName="league"
+              size="5"
+              aria-label="Default select multiple"
+              (change)="getLeague($event)"
+            >
+              <ng-container *ngFor="let league of leagues">
+                <option value="{{ league._id }}" class="mb-1">{{ league.leagueName }}</option>
+              </ng-container>
             </select>
-            <div>
-              <select class="form-select" id="container" name="league" formControlName="league" size="5" aria-label="Default select multiple" (change)="getLeague($event)">
-                <ng-container *ngFor="let league of leagues">
-                    <option value="{{league._id}}" class="mb-1">{{league.leagueName}}</option>
-                  </ng-container>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-12 mt-4 ">
-         <div class="form-group">
-           <select class="form-select" aria-label="Default select" disabled>
-             <option selected>Team 1</option>
-           </select>
-           <div>
-             <select class="form-select" id="container" name="homeTeam" formControlName="homeTeam" size="5" aria-label="Default select multiple">
-               <ng-container *ngFor="let team of teams">
-                 <option value="{{team._id}}" class="mb-1">{{team.teamName}}</option>
-               </ng-container>
-             </select>
-           </div>
-         </div>
-        </div>
-        <div class="col-lg-3 col-md-4 col-sm-12 mt-4">
-          <div class="form-group">
-            <select class="form-select" aria-label="Default select" disabled>
-              <option selected>Team 2</option>
-            </select>
-            <div>
-              <select class="form-select" id="container" name="awayTeam" formControlName="awayTeam" size="5" aria-label="Default select multiple">
-                <ng-container *ngFor="let team of teams">
-                  <option value="{{team._id}}" class="mb-1">{{team.teamName}}</option>
-                </ng-container>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-2 col-md-4 col-sm-12 mt-4">
-          <div class="form-group text-center">
-            <button type="submit" class="btn btn-primary" style="background: black; border-radius: 35px !important; width: 65px; height: 65px; border: none; font-size: 35px; font-weight: 600;">
-              <i class="bi bi-plus-lg academy-plus-inner-text rounded"></i>
-            </button>
-            <br/>
-            <label for="name" class="control-label" style="margin-top: 15px; font-size: 18px; font-weight: 600;">Add Fixture</label>
           </div>
         </div>
       </div>
-    </form>
-  </div>
-  <div class="row mt-5">
-    <hr/>
-  </div>
-  <div class="row">
-    <app-fixture-listing [fixtures]="fixtures" (delFixture)="deleteFixture($event)"></app-fixture-listing>
-  </div>
-
+      <div class="col-lg-3 col-md-4 col-sm-12 mt-4">
+        <div class="form-group">
+          <select class="form-select" aria-label="Default select" disabled>
+            <option selected>Team 1</option>
+          </select>
+          <div>
+            <select
+              class="form-select"
+              id="container"
+              name="homeTeam"
+              formControlName="homeTeam"
+              size="5"
+              aria-label="Default select multiple"
+              (change)="filterTeams($event, 'home')"
+            >
+              <ng-container *ngFor="let team of homeTeams">
+                <option value="{{ team._id }}" class="mb-1">{{ team.teamName }}</option>
+              </ng-container>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-4 col-sm-12 mt-4">
+        <div class="form-group">
+          <select class="form-select" aria-label="Default select" disabled>
+            <option selected>Team 2</option>
+          </select>
+          <div>
+            <select
+              class="form-select"
+              id="container"
+              name="awayTeam"
+              formControlName="awayTeam"
+              size="5"
+              aria-label="Default select multiple"
+              (change)="filterTeams($event, 'away')"
+            >
+              <ng-container *ngFor="let team of awayTeams">
+                <option value="{{ team._id }}" class="mb-1">{{ team.teamName }}</option>
+              </ng-container>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-2 col-md-4 col-sm-12 mt-4">
+        <div class="form-group text-center">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            style="
+              background: black;
+              border-radius: 35px !important;
+              width: 65px;
+              height: 65px;
+              border: none;
+              font-size: 35px;
+              font-weight: 600;
+            "
+          >
+            <i class="bi bi-plus-lg academy-plus-inner-text rounded"></i>
+          </button>
+          <br />
+          <label for="name" class="control-label" style="margin-top: 15px; font-size: 18px; font-weight: 600">Add Fixture</label>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="row mt-5">
+  <hr />
+</div>
+<div class="row">
+  <app-fixture-listing [fixtures]="fixtures" (delFixture)="deleteFixture($event)"></app-fixture-listing>
+</div>

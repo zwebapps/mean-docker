@@ -6,7 +6,34 @@
 </div>
 <div class="row mt-5 justify-content-center">
   <div class="col-lg-9 col-md-12 col-sm-12">
-    <form class="form-inline" [formGroup]="academyForm" (ngSubmit)="onSubmit()">
+    <form class="form-inline" [formGroup]="academyForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+      <div class="row d-flex">
+        <div class="col-lg-6 col-sm-6">
+          <div class="input-group mb-3">
+            <input
+              type="color"
+              class="form-control"
+              placeholder="select academy color"
+              aria-label="academy"
+              formControlName="academyColor"
+            />
+          </div>
+        </div>
+        <div class="col-lg-6 col-sm-6">
+          <div class="input-group mb-3">
+            <input
+              type="file"
+              class="form-control"
+              placeholder="select academy color"
+              aria-label="academy"
+              (change)="uploadLogo($event)"
+              accept="image/*"
+              formControlName="academyLogo"
+              style="line-height: 16px"
+            />
+          </div>
+        </div>
+      </div>
       <div class="input-group mb-3">
         <input
           type="text"
@@ -36,6 +63,9 @@
             <span class="league-text" [routerLink]="['academy', academy._id]">{{ academy.academyName }} </span>
             <button type="button" class="close btn btn-defaul" data-dismiss="alert" aria-label="Close" (click)="onDelete(academy._id)">
               <span aria-hidden="true">&times;</span>
+            </button>
+            <button type="button" class="close btn btn-defaul" data-dismiss="alert" aria-label="Close" (click)="onEditPatch(academy)">
+              <span aria-hidden="true" style="display: block; color: antiquewhite"> <i class="bi bi-pencil-square"></i></span>
             </button>
           </div>
         </div>

@@ -1,113 +1,124 @@
 <div class="row text-center">
+  <ng-template #content let-modal size="950px">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Player Emirates ID</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <img [src]="imgSrc" />
+    </div>
+    <!-- <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div> -->
+  </ng-template>
   <ngx-datatable
-  #myTable
-  class="material"
-  [rows]="players"
-  [columns]="columns"
-  [columnMode]="ColumnMode.force"
-  [footerHeight]="100"
-  [headerHeight]="50"
-  [limit]="10"
-  rowHeight="auto"
->
-<ngx-datatable-column name="Name" prop="row">
-  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                                  {{row?.playerNo}}
-  </ng-template>
-</ngx-datatable-column>
-<ngx-datatable-column name="Name" prop="row">
-  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                                  {{row.firstName}}   {{row.lastName}}
-  </ng-template>
-</ngx-datatable-column>
-<!-- <ngx-datatable-column name="Sir Name" prop="row">
+    #myTable
+    class="material"
+    [rows]="players"
+    [columns]="columns"
+    [columnMode]="ColumnMode.force"
+    [footerHeight]="100"
+    [headerHeight]="50"
+    [limit]="10"
+    rowHeight="auto"
+  >
+    <ngx-datatable-column name="Name" prop="row">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+        {{ row?.playerNo }}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Name" prop="row">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+        {{ row.firstName }} {{ row.lastName }}
+      </ng-template>
+    </ngx-datatable-column>
+    <!-- <ngx-datatable-column name="Sir Name" prop="row">
   <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
                 {{row.lastName}}
   </ng-template>
 </ngx-datatable-column> -->
-<ngx-datatable-column name="DOB" prop="row">
-  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                {{row.dob | date:'dd/MM/yyyy'}}
-  </ng-template>
-</ngx-datatable-column>
-<ngx-datatable-column name="Squad Number" prop="row" size="50">
-  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" >
-                {{row.squadNo}}
-  </ng-template>
-</ngx-datatable-column>
-<ngx-datatable-column name="League" prop="row">
-  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                {{row?.league?.leagueName}}
-  </ng-template>
-</ngx-datatable-column>
-<ngx-datatable-column name="Player ID Number" prop="row">
-  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-                {{row.emiratesIdNo}}
-  </ng-template>
-</ngx-datatable-column>
-<ngx-datatable-column name="EID" prop="row">
-  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" height="200">
-    <!-- <ngx-image-magnifier [image]="getImage(row.eidFront)" [width]="200" [lensWidth]='100'>
+    <ngx-datatable-column name="DOB" prop="row">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+        {{ row.dob | date : "dd/MM/yyyy" }}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Squad Number" prop="row" size="50">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+        {{ row.squadNo }}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="League" prop="row">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+        {{ row?.league?.leagueName }}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Player ID Number" prop="row">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+        {{ row.emiratesIdNo }}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="EID" prop="row">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" height="200">
+        <!-- <ngx-image-magnifier [image]="getImage(row.eidFront)" [width]="200" [lensWidth]='100'>
     </ngx-image-magnifier> -->
-    <!-- <lib-ngx-image-zoom
+        <!-- <lib-ngx-image-zoom
     [thumbImage]="getImage(row.eidFront)"
     [fullImage]="getImage(row.eidFront)"
     zoomMode="hover"
 ></lib-ngx-image-zoom> -->
-
-    <img src="http://localhost:8080/static/{{row.eidFront}}" width="50"/>
-  </ng-template>
-</ngx-datatable-column>
-<ngx-datatable-column name="Player Status" prop="row">
-  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-               <span *ngIf="row.playerStatus && row.playerStatus === 'Approved'" class="text-success">
-                {{row.playerStatus}}
-               </span>
-               <span *ngIf="row.playerStatus && row.playerStatus === 'Pending'" class="text-danger">
-                {{row.playerStatus}}
-               </span>
-
-  </ng-template>
-</ngx-datatable-column>
-<ngx-datatable-column name="Actions" prop="row">
-  <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" class="d-flex">
-      <button type="button" class="btn btn-sm btn-primary d-inline m-1" title="Edit"
-          (click)="edit(row['_id']) "><i class="bi bi-pencil-square"></i>
-      </button>
-      <button type="button" class="btn btn-sm btn-info d-inline m-1" title="Approve"
-          (click)="appPlayer(row['_id'])"><i class="bi bi-check"></i>
-      </button>
-      <button type="button" class="btn btn-sm btn-danger d-inline m-1" title="Delete"
-      (click)="delete(row['_id'])"><i class="bi bi-trash"></i>
-  </button>
-  </ng-template>
-         </ngx-datatable-column>
-  <ngx-datatable-footer *ngIf="true">
-    <ng-template
-      ngx-datatable-footer-template
-      let-rowCount="rowCount"
-      let-pageSize="pageSize"
-      let-selectedCount="selectedCount"
-      let-curPage="curPage"
-      let-offset="offset"
-    >
-      <datatable-pager
-                      [pagerLeftArrowIcon]="'datatable-icon-left'"
-                      [pagerRightArrowIcon]="'datatable-icon-right'"
-                      [pagerPreviousIcon]="'datatable-icon-prev'"
-                      [pagerNextIcon]="'datatable-icon-skip'"
-                      [page]="curPage"
-                      [size]="pageSize"
-                      [count]="rowCount"
-                      [hidden]="!((rowCount / pageSize) > 1)"
-                      (change)="table.onFooterPage($event)">
-                  </datatable-pager>
-    </ng-template>
-  </ngx-datatable-footer>
-</ngx-datatable>
+        <!--
+    <img src="http://localhost:8080/static/{{row.eidFront}}" width="50"/> -->
+        <img src="{{ apiURL }}/static/{{ row.eidFront }}" width="100" (click)="open(content, row.eidBack)" />
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Player Status" prop="row">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+        <span *ngIf="row.playerStatus && row.playerStatus === 'Approved'" class="text-success">
+          {{ row.playerStatus }}
+        </span>
+        <span *ngIf="row.playerStatus && row.playerStatus === 'Pending'" class="text-danger">
+          {{ row.playerStatus }}
+        </span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Actions" prop="row">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" class="d-flex">
+        <button type="button" class="btn btn-sm btn-primary d-inline m-1" title="Edit" (click)="edit(row['_id'])">
+          <i class="bi bi-pencil-square"></i>
+        </button>
+        <button type="button" class="btn btn-sm btn-info d-inline m-1" title="Approve" (click)="appPlayer(row['_id'])">
+          <i class="bi bi-check"></i>
+        </button>
+        <button type="button" class="btn btn-sm btn-danger d-inline m-1" title="Delete" (click)="delete(row['_id'])">
+          <i class="bi bi-trash"></i>
+        </button>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-footer *ngIf="true">
+      <ng-template
+        ngx-datatable-footer-template
+        let-rowCount="rowCount"
+        let-pageSize="pageSize"
+        let-selectedCount="selectedCount"
+        let-curPage="curPage"
+        let-offset="offset"
+      >
+        <datatable-pager
+          [pagerLeftArrowIcon]="'datatable-icon-left'"
+          [pagerRightArrowIcon]="'datatable-icon-right'"
+          [pagerPreviousIcon]="'datatable-icon-prev'"
+          [pagerNextIcon]="'datatable-icon-skip'"
+          [page]="curPage"
+          [size]="pageSize"
+          [count]="rowCount"
+          [hidden]="!(rowCount / pageSize > 1)"
+          (change)="table.onFooterPage($event)"
+        >
+        </datatable-pager>
+      </ng-template>
+    </ngx-datatable-footer>
+  </ngx-datatable>
 </div>
 <div class="row">
-  <div class="col-12">
-
-  </div>
+  <div class="col-12"></div>
 </div>
