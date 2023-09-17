@@ -14,8 +14,8 @@
   <ngx-datatable-row-detail [rowHeight]="350" #myDetailRow (toggle)="onDetailToggle($event)">
     <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
       <div class="fixture-team-details col-lg-12 col-md-12 col-sm-12 d-flex" style="overflow: hidden;">
-        <app-fixture-team-details [team]="row.homeTeam"></app-fixture-team-details>
-        <app-fixture-team-details [team]="row.awayTeam"></app-fixture-team-details>
+        <app-fixture-team-details class="fixture-team-table" [team]="row.homeTeam"></app-fixture-team-details>
+        <app-fixture-team-details class="fixture-team-table" [team]="row.awayTeam"></app-fixture-team-details>
       </div>
     </ng-template>
   </ngx-datatable-row-detail>

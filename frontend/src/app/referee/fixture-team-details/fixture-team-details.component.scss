@@ -30,3 +30,27 @@
     border-radius: 25px;
   }
 }
+
+@media (max-width: 787px) {
+  .ngx-datatable.material {
+    width: 100%;
+    overflow-x: scroll;
+  }
+  :host ::ng-deep .fixture-team-details{
+      display: block !important;
+      overflow: visible !important;
+  }
+  :host ::ng-deep .ngx-datatable .datatable-body .datatable-row-detail {
+    overflow-y: hidden;
+  }
+  :host ::ng-deep .datatable-row-detail {
+    height: auto !important;
+    min-height: 500px !important;
+  }
+  :host ::ng-deep .table-scroll tbody {
+    position: relative !important;
+    overflow-y: scroll;
+    height: 250px;
+    width: 100%;
+  }
+}

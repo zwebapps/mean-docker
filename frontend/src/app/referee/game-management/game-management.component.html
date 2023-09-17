@@ -1,12 +1,8 @@
-
-  <div class="row">
-    <div class="m-5">
-      <h4>Game Management</h4>
-    </div>
-  </div>
-
-<div class="row">
-  <hr/>
+<div class="row page-title-bar">
+  <div class="col-lg-12 heading-row">
+    <h3 class="page-title">Game Management</h3>
+  </div
+  ><hr>
 </div>
 <div class="row">
   <app-referee-squad-listing [fixtures]="fixtures" (fixtureDetail)="getFixtureDetails($event)" (delUser)="deletePlayer($event)"></app-referee-squad-listing>
