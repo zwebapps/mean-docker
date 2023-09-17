@@ -10,13 +10,11 @@
     <p class="p-4">{{ academy?.academyName }}</p>
   </div>
 </div>
-
-<div class="row">
-  <h4 class="p-3">{{ team?.teamName }}</h4>
-</div>
-
-<div class="row">
-  <hr />
+<div class="row page-title-bar">
+  <div class="col-lg-12 heading-row">
+    <h3 class="page-title">{{ team?.teamName }}</h3>
+  </div
+  ><hr>
 </div>
 <div class="row mt-2">
   <form [formGroup]="leagueForm" (ngSubmit)="onFormSubmit()">
