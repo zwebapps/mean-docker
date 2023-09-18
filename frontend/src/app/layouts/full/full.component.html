@@ -19,7 +19,7 @@
     <nav class="d-flex top-navbar navbar-expand-lg navbar-dark">
       <div class="navbar-header" [ngClass]="expandLogo ? 'expand-logo' : ''" data-logobg="skin5">
         <!-- This is for the sidebar toggle which is visible on mobile only -->
-        <a
+        <a *ngIf="isLoggedIn"
           (click)="showMobileMenu = !showMobileMenu"
           class="nav-toggler waves-effect waves-light d-block d-lg-none"
           href="javascript:void(0)"
@@ -49,7 +49,7 @@
         <!-- ============================================================== -->
         <!-- Toggle which is visible on mobile only -->
         <!-- ============================================================== -->
-        <a
+        <a *ngIf="isLoggedIn"
           class="topbartoggler d-block d-lg-none waves-effect waves-light"
           href="javascript:void(0)"
           data-toggle="collapse"
@@ -99,14 +99,14 @@
     <!-- ============================================================== -->
     <!-- End Container fluid  -->
     <!-- ============================================================== -->
-    <!-- ============================================================== -->
-    <!-- footer -->
-    <!-- ============================================================== -->
-    <footer class="footer text-center">All Rights Reserved by Youth Football league.</footer>
-    <!-- ============================================================== -->
-    <!-- End footer -->
-    <!-- ============================================================== -->
   </div>
+  <!-- ============================================================== -->
+  <!-- footer -->
+  <!-- ============================================================== -->
+  <footer class="footer text-center">All Rights Reserved by Youth Football League.</footer>
+  <!-- ============================================================== -->
+  <!-- End footer -->
+  <!-- ============================================================== -->
   <!-- ============================================================== -->
   <!-- End Page wrapper  -->
   <!-- ============================================================== -->

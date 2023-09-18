@@ -1,15 +1,13 @@
 <div class="col-md-12">
   <notifier-container></notifier-container>
-  <div class="card card-container">
-    <!-- <img
-      id="profile-img"
-      src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-      class="profile-img-card"
-    /> -->
+  <div class="login-box">
+  <div class="login-logo">
+    <img width="120" src="assets/images/logos/yfl.png"><span>Player Management System</span>
+  </div>
+  <div class="card">
+    <div class="card-body login-card-body">
     <div class="align-items-center w-100 text-center">
-      <p class="sign-bold">Sign in</p>
-      <p></p>
-      <p>Player Management System</p>
+      <p class="sign-bold">Sign In</p>      
     </div>
     <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
       <div class="form-group">
@@ -55,7 +53,8 @@
         <div class="text-primary float-end" (click)="userChoice('reset')">Forgot Password</div>
       </div>
     </form>
-
+  </div>
+  </div>
     <div class="alert alert-success" *ngIf="isLoggedIn">Logged in as {{ roles }}.</div>
   </div>
 </div>

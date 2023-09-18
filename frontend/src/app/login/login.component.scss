@@ -3,25 +3,57 @@ label {
   margin-top: 10px;
 }
 
-.card-container.card {
-  max-width: 400px !important;
-  padding: 40px 40px;
+.login-box {
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  border-radius: 8px;
+  width: 420px;
+  margin: 10% auto;
+  .login-logo {
+    margin: 0;
+    border-radius: 8px 8px 0 0;
+    padding: 10px 0;
+    background: #165BAA;
+    color:#fff;
+    text-align: center;
+    span{
+      font-size:18px;
+      line-height: 1.2;
+    }
+    img{
+      margin-right:15px;
+    }
+  }
 }
 
-.card {
-  background-color: #f7f7f7;
-  padding: 20px 25px 30px;
-  margin: 0 auto 25px;
-  margin-top: 50px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+.login-box {
+  .card-body {
+    flex: 1 1 auto;
+    padding: 1.25rem;
+  }
+  .login-card-body {
+    border-radius: 0 0 8px 8px;
+  }
+  .login-card-body, .register-card-body {
+    background: #fff;
+    padding: 20px;
+    border-top: 0;
+    color: #666;
+  }
   form {
+    label{
+      font-size:18px;
+      padding-bottom:5px;
+    }
+    .form-control{
+      padding:15px;
+    }
     .form-group {
       margin-top: 15px;
+      .btn{
+        margin-top:15px;
+        font-size:18px;
+        padding:15px;
+      }
     }
   }
 }
