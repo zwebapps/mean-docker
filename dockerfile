@@ -5,7 +5,8 @@ FROM node:16-alpine as builder
 COPY frontend/package.json frontend/package-lock.json ./
 
 ## Storing node modules on a separate layer will prevent unnecessary npm installs at each build
-RUN npm ci && mkdir /app && mv ./node_modules ./app
+## RUN npm ci && mkdir /app && mv ./node_modules ./app
+RUN npm i --legacy-peer-deps && mkdir /app && mv ./node_modules ./app
 
 WORKDIR /app
 
