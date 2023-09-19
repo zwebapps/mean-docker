@@ -5,7 +5,8 @@ FROM node:18.9.0-alpine3.16
 COPY package.json package-lock.json ./
 
 
-RUN npm ci && mkdir /backend && mv ./node_modules ./backend
+## RUN npm ci && mkdir /backend && mv ./node_modules ./backend
+RUN npm i --legacy-peer-deps && mkdir /app && mv ./node_modules ./app
 
 # RUN npm ci
 
