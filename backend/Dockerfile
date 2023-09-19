@@ -8,7 +8,8 @@ RUN npm set strict-ssl false
 
 
 ## installing and Storing node modules on a separate layer will prevent unnecessary npm installs at each build
-RUN npm ci && mkdir /app && mv ./node_modules ./app
+## RUN npm ci && mkdir /app && mv ./node_modules ./app
+RUN npm i --legacy-peer-deps && mkdir /app && mv ./node_modules ./app
 
 # Change directory so that our commands run inside this new directory
 WORKDIR /app
