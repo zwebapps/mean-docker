@@ -1,10 +1,12 @@
 import { CommonModule } from "@angular/common";
-import { Component, AfterViewInit, EventEmitter, Output, OnInit, Input } from "@angular/core";
+import { Component, AfterViewInit, EventEmitter, Output, OnInit, Input, Inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { NgbDropdownModule, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { AuthService } from "src/app/_services/auth.service";
 import { StorageService } from "src/app/_services/storage.service";
 import { UserService } from "src/app/_services/user.service";
+import { PLATFORM_ID } from "@angular/core";
+import { isPlatformBrowser } from "@angular/common";
 
 declare var $: any;
 
@@ -23,6 +25,7 @@ export class NavigationComponent implements OnInit, AfterViewInit {
   public showSearch = false;
 
   constructor(
+    @Inject(PLATFORM_ID) private platformId: any,
     private modalService: NgbModal,
     private authService: AuthService,
     private storageService: StorageService,
@@ -139,8 +142,9 @@ export class NavigationComponent implements OnInit, AfterViewInit {
     this.authService.logout().subscribe({
       next: (res) => {
         this.storageService.clean();
-
-        window.location.reload();
+        if (isPlatformBrowser(this.platformId)) {
+          window.location.reload();
+        }
       },
       error: (err) => {
         console.log(err);

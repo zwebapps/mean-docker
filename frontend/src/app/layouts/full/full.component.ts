@@ -1,11 +1,13 @@
 import { CommonModule } from "@angular/common";
-import { Component, OnInit, HostListener, AfterContentChecked, OnChanges, AfterViewInit } from "@angular/core";
+import { Component, OnInit, HostListener, AfterContentChecked, OnChanges, AfterViewInit, Inject } from "@angular/core";
 import { Router, RouterModule } from "@angular/router";
 import { NavigationComponent } from "src/app/shared/header/navigation.component";
 import { SidebarComponent } from "src/app/shared/sidebar/sidebar.component";
 import { NgbCollapseModule } from "@ng-bootstrap/ng-bootstrap";
 import { StorageService } from "src/app/_services/storage.service";
 import { UserService } from "src/app/_services/user.service";
+import { PLATFORM_ID } from "@angular/core";
+import { isPlatformBrowser } from "@angular/common";
 
 //declare var $: any;
 
@@ -17,7 +19,12 @@ import { UserService } from "src/app/_services/user.service";
   styleUrls: ["./full.component.scss"]
 })
 export class FullComponent implements OnInit {
-  constructor(public router: Router, private storageService: StorageService, private userService: UserService) {}
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: any,
+    public router: Router,
+    private storageService: StorageService,
+    private userService: UserService
+  ) {}
   public isCollapsed = false;
   public innerWidth: number = 0;
   public defaultSidebar: string = "";
@@ -55,11 +62,13 @@ export class FullComponent implements OnInit {
   }
 
   handleSidebar() {
-    this.innerWidth = window.innerWidth;
-    if (this.innerWidth < 1170) {
-      this.sidebartype = "full";
-    } else {
-      this.sidebartype = this.defaultSidebar;
+    if (isPlatformBrowser(this.platformId)) {
+      this.innerWidth = window.innerWidth;
+      if (this.innerWidth < 1170) {
+        this.sidebartype = "full";
+      } else {
+        this.sidebartype = this.defaultSidebar;
+      }
     }
   }
 

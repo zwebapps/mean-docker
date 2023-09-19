@@ -106,61 +106,65 @@ app.listen(PORT, () => {
 function initial() {
   Role.deleteMany({}).then((rest) => {
     console.log(rest.deletedCount,'deleting all')
-  Role.estimatedDocumentCount((err, count) => {
+    Role.estimatedDocumentCount((err, count) => {
       if(!err && count === 0) {
-          new Role({
-            name: "admin"
-          }).save(err => {
-            if (err) {
-              console.log("error", err);
-            }
-            console.log("added 'admin' to roles collection");
-            User.estimatedDocumentCount((err, count) => {
-              if (!err && count === 0) {
-                Role.findOne({ name: 'admin' }).then((role)=> {
-                  new User({
-                    firstname: 'yfl',
-                    lastname: 'admin',
-                    username: 'yfladmin',
-                    contact: '+971553762217',
-                    password: bcrypt.hashSync('Admin@yfl', 8),
-                    email: 'admin@yfl.com',
-                    roles: [ObjectId(role._id)]
-                  }).save(err => {
-                    if (err) {
-                      console.log("error", err);
-                    }
-                    console.log("added 'admin user' to users collection");
-                  })
-                });
-              }
-            });
-          });
-    
-          new Role({
-            name: "coach"
-          }).save(err => {
-            if (err) {
-              console.log("error", err);
-            }
-    
-            console.log("added 'coach' to roles collection");
-          });
-    
-          new Role({
-            name: "referee"
-          }).save(err => {
-            if (err) {
-              console.log("error", err);
-            }
-    
-            console.log("added 'referee' to roles collection");
-          });
-        
+        new Role({
+          _id: ObjectId("5895b74ca84c675de0d3338d"),
+          name: "admin"
+        }).save(err => {
+          if (err) {
+            console.log("error", err);
+          }
+          console.log("added 'admin' to roles collection");
+        });
+  
+        new Role({
+          _id: ObjectId("5895b74da84c675de0d3338e"),
+          name: "coach"
+        }).save(err => {
+          if (err) {
+            console.log("error", err);
+          }
+  
+          console.log("added 'coach' to roles collection");
+        });
+  
+        new Role({
+          _id: ObjectId("5895b74ea84c675de0d3338f"),
+          name: "referee"
+        }).save(err => {
+          if (err) {
+            console.log("error", err);
+          }
+          console.log("added 'referee' to roles collection");
+        });
       }
     });
   });
 
+  Role.find({}).then((roles) => {
+    console.log(roles,'roles');
+  })
+   // creating user
+   User.deleteMany({}).then((rest) => {
+    console.log(rest.deletedCount,'deleting all users')
+    new User({
+      firstname: 'yfl',
+      lastname: 'admin',
+      username: 'yfladmin',
+      contact: '+971553762217',
+      password: bcrypt.hashSync('Admin@yfl', 8),
+      email: 'admin@yfl.com',
+      roles: [ObjectId("5895b74ca84c675de0d3338d")]
+    }).save(err => {
+      if (err) {
+        console.log("error", err);
+      }
+      console.log("added 'admin user' to users collection");
+    });
+  });
+
+  
   Increment.estimatedDocumentCount((err, count) => {
     if (!err && count === 0) {
       new Increment({ name: "item_id" , sequence_value : 0 }).save(err => {

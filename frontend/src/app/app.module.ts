@@ -42,6 +42,7 @@ import { NotifierModule, NotifierOptions } from "angular-notifier";
 // Import the library
 import { NgxImageZoomModule } from "ngx-image-zoom";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { provideClientHydration } from "@angular/platform-browser";
 
 const environment = {
   production: false
@@ -141,6 +142,7 @@ const customNotifierOptions: NotifierOptions = {
     ])
   ],
   providers: [
+    provideClientHydration(),
     AuthGuardService,
     {
       provide: LocationStrategy,
