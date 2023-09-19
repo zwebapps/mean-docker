@@ -9,7 +9,7 @@ export const ROUTES: RouteUser[] = [
         title: "Dashbaord",
         icon: "bi bi-speedometer2",
         image: "assets/images/bashboard.png",
-        active: "assets/images/active-dashbaord.png",
+        active: "assets/images/bashbaord.png",
         class: "",
         extralink: false,
         submenu: []
@@ -18,8 +18,8 @@ export const ROUTES: RouteUser[] = [
         path: "/admin/users",
         title: "Users Management",
         icon: "bi bi-speedometer2",
-        image: "assets/images/user.png",
-        active: "assets/images/user.png",
+        image: "assets/images/squads.png",
+        active: "assets/images/squads.png",
         class: "",
         extralink: false,
         submenu: []
@@ -29,7 +29,7 @@ export const ROUTES: RouteUser[] = [
         title: "League Management",
         icon: "bi bi-speedometer2",
         image: "assets/images/leagues.png",
-        active: "assets/images/active-leagues.png",
+        active: "assets/images/leagues.png",
         class: "",
         extralink: false,
         submenu: []
@@ -48,7 +48,7 @@ export const ROUTES: RouteUser[] = [
         title: "Team Management",
         icon: "bi bi-speedometer2",
         image: "assets/images/teams.png",
-        active: "assets/images/active-teams.png",
+        active: "assets/images/teams.png",
         class: "",
         extralink: false,
         submenu: []
@@ -58,7 +58,7 @@ export const ROUTES: RouteUser[] = [
         title: "Squad Management",
         icon: "bi bi-speedometer2",
         image: "assets/images/squads.png",
-        active: "assets/images/active-squads.png",
+        active: "assets/images/squads.png",
         class: "",
         extralink: false,
         submenu: []
@@ -73,7 +73,7 @@ export const ROUTES: RouteUser[] = [
         title: "Dashboard",
         icon: "bi bi-speedometer2",
         image: "assets/images/bashboard.png",
-        active: "assets/images/active-dashbaord.png",
+        active: "assets/images/bashbaord.png",
         class: "",
         extralink: false,
         submenu: []
@@ -99,7 +99,7 @@ export const ROUTES: RouteUser[] = [
         title: "Squad Management",
         icon: "bi bi-hdd-stack",
         image: "assets/images/squads.png",
-        active: "assets/images/active-squads.png",
+        active: "assets/images/squads.png",
         class: "",
         extralink: false,
         submenu: []
@@ -162,7 +162,7 @@ export const ROUTES: RouteUser[] = [
         title: "Fixture Setup",
         icon: "bi bi-speedometer2",
         image: "assets/images/bashboard.png",
-        active: "assets/images/active-dashbaord.png",
+        active: "assets/images/bashbaord.png",
         class: "",
         extralink: false,
         submenu: []
@@ -172,7 +172,7 @@ export const ROUTES: RouteUser[] = [
         title: "Games Management",
         icon: "bi bi-pause-btn",
         image: "assets/images/squads.png",
-        active: "assets/images/active-squads.png",
+        active: "assets/images/squads.png",
         class: "",
         extralink: false,
         submenu: []

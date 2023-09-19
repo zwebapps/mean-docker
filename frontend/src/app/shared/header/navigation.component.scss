@@ -9,11 +9,13 @@
 
   ul.navbar-nav {
     li.nav-item {
-      a.headingtitle {
+      span.headingtitle {
         font-family: NotoSansRegular;
         color: #FFF;
         text-align: center;
-        font-size: 45px !important;
+        padding-top:10px;
+        display: inline-block;
+        font-size: 30px !important;
         font-style: normal;
         font-weight: 600;
         line-height: normal;
