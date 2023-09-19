@@ -11,11 +11,15 @@
   rowHeight="auto"
 >
   <!-- Row Detail Template -->
-  <ngx-datatable-row-detail [rowHeight]="350" #myDetailRow (toggle)="onDetailToggle($event)">
+  <ngx-datatable-row-detail [rowHeight]="'auto'" #myDetailRow (toggle)="onDetailToggle($event)">
     <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
-      <div class="fixture-team-details col-lg-12 col-md-12 col-sm-12 d-flex" style="overflow: hidden;">
+      <div class="row">
+      <div class="col-lg-6 col-md-12 col-sm-12">
         <app-fixture-team-details class="fixture-team-table" [team]="row.homeTeam"></app-fixture-team-details>
+      </div>
+      <div class="col-lg-6 col-md-12 col-sm-12">
         <app-fixture-team-details class="fixture-team-table" [team]="row.awayTeam"></app-fixture-team-details>
+      </div>
       </div>
     </ng-template>
   </ngx-datatable-row-detail>
