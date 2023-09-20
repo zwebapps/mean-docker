@@ -62,7 +62,7 @@ export class FullComponent implements OnInit {
   }
 
   handleSidebar() {
-    if (isPlatformBrowser(this.platformId)) {
+    if (typeof window !== "undefined") {
       this.innerWidth = window.innerWidth;
       if (this.innerWidth < 1170) {
         this.sidebartype = "full";

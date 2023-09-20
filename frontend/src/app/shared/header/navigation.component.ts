@@ -142,7 +142,7 @@ export class NavigationComponent implements OnInit, AfterViewInit {
     this.authService.logout().subscribe({
       next: (res) => {
         this.storageService.clean();
-        if (isPlatformBrowser(this.platformId)) {
+        if (typeof window !== "undefined") {
           window.location.reload();
         }
       },

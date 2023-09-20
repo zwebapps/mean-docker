@@ -58,7 +58,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   reloadPage(): void {
-    window.location.reload();
+    if (typeof window !== "undefined") {
+      window.location.reload();
+    }
   }
 
   userChoice(choice: any): void {
