@@ -4,12 +4,12 @@ const fs = require("fs");
 const path = require("path");
 
 // Use the browser index.html as template for the mock window
-const template = fs.readFileSync(path.join(join(process.cwd(), "dist/frontend/browser"), "index.html")).toString();
+// const template = fs.readFileSync(path.join(join(process.cwd(), "dist/frontend/browser"), "index.html")).toString();
 
 // Shim for the global window and document objects.
-const window = domino.createWindow(template);
-global["window"] = window;
-global["document"] = window.document;
+// const window = domino.createWindow(template);
+// global["window"] = window;
+// global["document"] = window.document;
 
 import { ngExpressEngine } from "@nguniversal/express-engine";
 import * as express from "express";
@@ -24,6 +24,10 @@ export function app(): express.Express {
   const server = express();
   const distFolder = join(process.cwd(), "dist/frontend/browser");
   const indexHtml = existsSync(join(distFolder, "index.original.html")) ? "index.original.html" : "index";
+
+  const window = domino.createWindow(indexHtml);
+  global["window"] = window;
+  global["document"] = window.document;
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
   server.engine(
