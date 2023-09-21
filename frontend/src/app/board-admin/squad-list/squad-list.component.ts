@@ -13,6 +13,7 @@ import { TeamService } from "src/app/_services/team.service";
 import { PlayerService } from "src/app/_services/player.service";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { IDropdownSettings } from "ng-multiselect-dropdown";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-squad-list",
@@ -38,6 +39,7 @@ export class SquadListComponent implements OnInit {
   public playerForm: FormGroup;
   public dropdownSettings: IDropdownSettings = {};
   public submitted: boolean = false;
+  apiURL = environment.apiURL;
   public eidImages: any = {
     eidFront: null,
     eidBack: null
@@ -82,11 +84,12 @@ export class SquadListComponent implements OnInit {
       squadNo: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(3)]],
       dob: ["", Validators.required],
       league: ["", Validators.required],
-      playerEidNo: [null, [Validators.required, Validators.pattern(eidPattern), Validators.maxLength(18)]],
+      playerEidNo: ["", [Validators.required, Validators.pattern(eidPattern), Validators.maxLength(18)]],
       eidFront: ["", Validators.required],
       eidBack: ["", Validators.required],
       playingUp: ["", Validators.required]
     });
+
     this.playerForm.controls.league.disable();
     this.playerForm.controls.eidFront.disable();
     this.playerForm.controls.eidBack.disable();
@@ -119,6 +122,10 @@ export class SquadListComponent implements OnInit {
     this.selectedPlayingUp.push(items.map((item: any) => item._id));
   }
 
+  getImg = (image: string) => {
+    return `${this.apiURL}/static/${image}`;
+  };
+
   editPlayer = (value: any) => {
     this.showPlayerEditForm = true;
     this.playerToEdit = this.players.find((player: any) => player._id === value);
@@ -135,6 +142,8 @@ export class SquadListComponent implements OnInit {
         eidBack: this.playerToEdit.eidBack,
         playingUp: this.selectedPlayingUp
       });
+
+      this.playerForm.controls.dob.disable();
     }
   };
   submitEditPlayer = () => {
@@ -180,6 +189,7 @@ export class SquadListComponent implements OnInit {
     return nameArray.find((nm: any) => !isNaN(nm));
   }
   getPlayersFromStore(leagueId?: any) {
+    this.leagues = [];
     this.store.select(PlayerSelectors.getPlayers).subscribe((players) => {
       if (players.length > 0) {
         players.forEach((player) => (player?.league && !this.alreadyExists(player?.league) ? this.leagues.push(player?.league) : null));
@@ -264,7 +274,9 @@ export class SquadListComponent implements OnInit {
   }
   userById(id: any) {
     this.userService.getUserById(id).subscribe((result: any) => {
-      this.coaches = result;
+      if (!result.message) {
+        this.coaches = result;
+      }
     });
   }
   approve(id: any) {

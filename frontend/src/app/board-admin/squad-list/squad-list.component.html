@@ -1,10 +1,8 @@
 <div class="row academy-row">
   <div class="col-sm-2">
-    <!-- <div class="acedmy-plus">
-      <div class="btn btn-default col-lg-2 col-sm-2">
-        <b><i class="bi bi-plus-lg academy-plus-inner-text"></i></b><br />
-      </div>
-    </div> -->
+    <div class="acedmy-plus">
+      <div class="acedmy-plus"><img [src]="getImg(academy?.logo)" class="rounded" /><br /></div>
+    </div>
   </div>
   <div class="col-sm-10 academy-name">
     <p>{{ academy?.academyName }}</p>
@@ -53,8 +51,10 @@
         <form [formGroup]="filterLeague">
           <select class="form-select" name="league" formControlName="league" aria-label="Default select" (change)="filterPlayers()">
             <option value="0" selected>Select League</option>
-            <ng-container *ngFor="let league of leagues">
-              <option value="{{ league._id }}">{{ league.leagueName }}</option>
+            <ng-container *ngIf="leagues">
+              <ng-container *ngFor="let league of leagues">
+                <option value="{{ league._id }}">{{ league.leagueName }}</option>
+              </ng-container>
             </ng-container>
           </select>
         </form>
@@ -107,7 +107,7 @@
         <label for="name" class="control-label">Date of birth</label>
         <input
           type="date"
-          value=""
+          [value]=""
           class="form-control"
           id="name"
           placeholder="DOB"

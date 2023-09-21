@@ -22,9 +22,9 @@
     [limit]="10"
     rowHeight="auto"
   >
-    <ngx-datatable-column name="Name" prop="row">
+    <ngx-datatable-column name="Sr. no" prop="row">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-        {{ row?.playerNo }}
+        {{ row?.playerNo + 1 }}
       </ng-template>
     </ngx-datatable-column>
     <ngx-datatable-column name="Name" prop="row">
@@ -52,23 +52,19 @@
         {{ row?.league?.leagueName }}
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="Player ID Number" prop="row">
+    <ngx-datatable-column name="EID Number" prop="row">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
         {{ row.emiratesIdNo }}
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="EID" prop="row">
+    <ngx-datatable-column name="EID Front" prop="row">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" height="200">
-        <!-- <ngx-image-magnifier [image]="getImage(row.eidFront)" [width]="200" [lensWidth]='100'>
-    </ngx-image-magnifier> -->
-        <!-- <lib-ngx-image-zoom
-    [thumbImage]="getImage(row.eidFront)"
-    [fullImage]="getImage(row.eidFront)"
-    zoomMode="hover"
-></lib-ngx-image-zoom> -->
-        <!--
-    <img src="http://localhost:8080/static/{{row.eidFront}}" width="50"/> -->
-        <img src="{{ apiURL }}/static/{{ row.eidFront }}" width="100" (click)="open(content, row.eidBack)" />
+        <img src="{{ apiURL }}/static/{{ row.eidFront }}" width="100" (click)="open(content, row.eidFront)" />
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="EID Back" prop="row">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" height="200">
+        <img src="{{ apiURL }}/static/{{ row.eidBack }}" width="100" (click)="open(content, row.eidBack)" />
       </ng-template>
     </ngx-datatable-column>
     <ngx-datatable-column name="Player Status" prop="row">

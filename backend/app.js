@@ -146,25 +146,25 @@ function initial() {
     console.log(roles,'roles');
   })
    // creating user
-   User.deleteMany({}).then((rest) => {
-    console.log(rest.deletedCount,'deleting all users')
-    new User({
-      firstname: 'yfl',
-      lastname: 'admin',
-      username: 'yfladmin',
-      contact: '+971553762217',
-      password: bcrypt.hashSync('Admin@yfl', 8),
-      email: 'admin@yfl.com',
-      roles: [ObjectId("5895b74ca84c675de0d3338d")]
-    }).save(err => {
-      if (err) {
-        console.log("error", err);
-      }
-      console.log("added 'admin user' to users collection");
-    });
-  });
-
-  
+   User.findOne({ username: 'yfladmin'}).exec().then((users) => {
+    if(!users){
+      new User({
+        firstname: 'yfl',
+        lastname: 'admin',
+        username: 'yfladmin',
+        contact: '+971553762217',
+        password: bcrypt.hashSync('Admin@yfl', 8),
+        email: 'admin@yfl.com',
+        roles: [ObjectId("5895b74ca84c675de0d3338d")]
+      }).save(err => {
+        if (err) {
+          console.log("error", err);
+        }
+        console.log("added 'admin user' to users collection");
+      });
+    }
+  })
+ 
   Increment.estimatedDocumentCount((err, count) => {
     if (!err && count === 0) {
       new Increment({ name: "item_id" , sequence_value : 0 }).save(err => {
