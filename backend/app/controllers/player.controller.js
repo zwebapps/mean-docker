@@ -221,7 +221,8 @@ exports.bulkUploadPlayers = async (req, resp, next) => {
         let Players = await Player.find().exec();
         let fltPlayers = bkPlayers.filter(bk => !Players.find(p => p.emiratesIdNo === bk['EID No']));
         for (let i = 0; i < fltPlayers.length; i++) {
-              fltPlayers[i]['Player ID Number'] = await getNextSequence("item_id");             
+              fltPlayers[i]['Player ID Number'] = await getNextSequence("item_id");    
+              fltPlayers[i]['DOB'] =  fltPlayers[i]['DOB'].includes("/") ? fltPlayers[i]['DOB'].split("/").reverse().join("-") : fltPlayers[i]['DOB']       
               const playerData = new Player({
                 firstName: fltPlayers[i]['First Name'],
                 lastName: fltPlayers[i]['Surname'],

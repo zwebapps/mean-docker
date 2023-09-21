@@ -28,6 +28,7 @@ const { read, write, utils } = XLSX;
 })
 export class CoachAcademyDetailsComponent {
   @ViewChild("myTable") table: any;
+  @ViewChild("csvUpload") csvUploadVar: ElementRef;
   excelData: any = [
     [1, 2],
     [3, 4]
@@ -140,7 +141,12 @@ export class CoachAcademyDetailsComponent {
       console.log(res, "saved files on nodejs");
     });
   }
-
+  getImg = (image: string) => {
+    return `${this.apiURL}/static/${image}`;
+  };
+  resetCsvUploads() {
+    this.csvUploadVar.nativeElement.value = "";
+  }
   onFormSubmit = () => {
     this.submitted = true;
 
@@ -152,9 +158,7 @@ export class CoachAcademyDetailsComponent {
       return;
     } else {
       const ageInYear = this.getAge(this.playerForm.value.dob);
-      // const selectedLeague = this.leagues.find((league: any) => league.selected);
-      // const leagueAgeLimit = this.getAgeFromName(this.selectedLeague.leagueName);
-      if (this.selectedLeague.leagueAgeLimit < ageInYear) {
+      if (this.getCalculateAge(this.selectedLeague.leagueAgeLimit) < ageInYear) {
         this.notifier.notify("error", "You are not eligible for this league!");
         return;
       }
@@ -239,7 +243,11 @@ export class CoachAcademyDetailsComponent {
     });
   }
   onCheckBox(lg: any) {
-    this.selectedLeague = this.leagues.find((league: any) => league._id === lg._id);
+    this.playerForm.patchValue({
+      playingUp: ""
+    });
+
+    this.selectedLeague = lg;
     this.playerForm.patchValue({
       league: this.selectedLeague.name
     });
@@ -251,10 +259,10 @@ export class CoachAcademyDetailsComponent {
     });
 
     this.dropleagues = this.leagues.filter((league: any) => !league.selected);
-    if (this.playerForm.controls.dob) {
+    if (this.playerForm.controls.dob.valid) {
       const age = this.getCalculateAge(this.playerForm.controls.dob.value);
       this.dropleagues = this.leagues.filter(
-        (league: any) => this.getAgeFromName(league.leagueName) > age && league._id !== this.selectedLeague._id
+        (league: any) => this.getCalculateAge(league.leagueAgeLimit) > age && league._id !== this.selectedLeague._id
       );
     }
     if (this.selectedLeague) {
@@ -356,6 +364,12 @@ export class CoachAcademyDetailsComponent {
   }
 
   onChange(evt: any) {
+    if (!this.selectedLeague) {
+      this.notifier.notify("error", "Please select a league!");
+      this.resetCsvUploads();
+      return;
+    }
+    console.log(this.team, this.academy);
     this.insertionStarted = true;
     let workBook: any = null;
     let jsonData = null;
@@ -363,33 +377,46 @@ export class CoachAcademyDetailsComponent {
     const file = evt.target.files[0];
     reader.onload = (event) => {
       const data = reader.result;
-      workBook = XLSX.read(data, { type: "binary" });
+      workBook = XLSX.read(data, { type: "binary", cellDates: true });
       jsonData = workBook.SheetNames.reduce((initial: any, name: any) => {
         const sheet = workBook.Sheets[name];
         initial[name] = XLSX.utils.sheet_to_json(sheet);
         return initial;
       }, {});
       const dataString: any = JSON.parse(JSON.stringify(jsonData));
+
       dataString["Sheet1"] = dataString["Sheet1"].map((player: any) => {
         return {
           ...player,
-          Team: this.teams.find((team: any) => team.teamName === player.Team)?._id,
-          Academy: this.academies.find((academy: any) => academy.name === player.academy)?._id,
-          League: this.leagues.find((league: any) => league.name === player.league)?._id,
+          DOB: player.DOB.includes("/")
+            ? new Date(player.DOB.split("/").reverse().join("-")).toLocaleDateString()
+            : new Date(player.DOB).toLocaleDateString(),
+          Team: this.team._id,
+          Academy: this.academy._id,
+          League: this.selectedLeague._id,
           User: this.coach
         };
       });
-      if (dataString["Sheet1"].length) {
+      // check to filter players elder than selected league
+      dataString["Sheet1"] = dataString["Sheet1"].filter(
+        (player: any) => this.getCalculateAge(this.selectedLeague.leagueAgeLimit) >= this.getCalculateAge(player.DOB)
+      );
+      if (dataString["Sheet1"].length > 0) {
+        this.notifier.notify("info", `Importing players...`);
         this.palyerService.importPlayers(dataString["Sheet1"]).subscribe((res: any) => {
           this.insertionStarted = false;
           if (res && res.players) {
-            this.notifier.notify("success", res.message);
+            this.notifier.notify("success", `${res.players.length} Players created`);
             this.store.dispatch(PlayerActions.loadPlayers());
             this.getPlayersFromStore();
           } else {
             this.notifier.notify("error", res.message);
           }
         });
+      } else {
+        this.notifier.notify("error", "No players is eligible for selected league!");
+        this.resetCsvUploads();
+        return;
       }
     };
     reader.readAsBinaryString(file);
@@ -407,21 +434,27 @@ export class CoachAcademyDetailsComponent {
     link.click();
     link.remove();
   }
-  getCalculateAge = (value) => {
-    const dob = new Date(value);
-    let ageDifMs = Date.now() - dob.getTime();
-    let ageDate = new Date(ageDifMs);
-    let age = Math.abs(ageDate.getUTCFullYear() - 1970);
-    return age;
+  getCalculateAge = (value: any) => {
+    if (value) {
+      if (value.includes("/")) {
+        value = value.split("/").reverse().join("-");
+      }
+      const dob = new Date(value);
+      let ageDifMs = Date.now() - dob.getTime();
+      let ageDate = new Date(ageDifMs);
+      let age = Math.abs(ageDate.getUTCFullYear() - 1970);
+      // console.log(age, "::::::", value);
+      return age;
+    }
   };
-  calculateAge = (value: any) => {
+  getMaxAgeLeagues = (value: any) => {
     const dob = new Date(value);
     let ageDifMs = Date.now() - dob.getTime();
     let ageDate = new Date(ageDifMs);
     let age = Math.abs(ageDate.getUTCFullYear() - 1970);
     if (this.selectedLeague) {
       this.dropleagues = this.leagues.filter(
-        (league: any) => this.getAgeFromName(league.leagueName) > age && league._id !== this.selectedLeague._id
+        (league: any) => this.getCalculateAge(league.leagueAgeLimit) > age && league._id !== this.selectedLeague._id
       );
     }
   };

@@ -8,6 +8,9 @@ import * as AcademyActions from "../../_store/actions/academies.actions";
 import * as AcademySelectors from "../../_store/selectors/academies.selectors";
 import { Store } from "@ngrx/store";
 import { Router } from "@angular/router";
+
+// importing actions
+import * as UserActions from "../../_store/actions/users.actions";
 import { UserService } from "src/app/_services/user.service";
 import { ConfirmationDialogService } from "src/app/_services/confirmation-dialog.service";
 import { PlayerService } from "src/app/_services/player.service";
@@ -106,6 +109,7 @@ export class TeamManagementComponent implements OnInit {
                       this.notifier.notify("success", "Academy created successfully!");
                       this.academyForm.reset();
                       this.store.dispatch(AcademyActions.loadAcademies());
+                      this.store.dispatch(UserActions.loadUsers());
                     }
                   });
                 }

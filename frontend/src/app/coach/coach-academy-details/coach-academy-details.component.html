@@ -3,7 +3,7 @@
     <div class="col-lg-3 col-md-4 col-sm-4">
       <div class="acedmy-plus">
         <div class="btn btn-default col-lg-2 col-sm-2">
-          <b><i class="bi bi-plus-lg academy-plus-inner-text"></i></b><br />
+          <div class="acedmy-plus"><img [src]="getImg(academy?.logo)" class="rounded" /><br /></div>
         </div>
       </div>
     </div>
@@ -15,7 +15,6 @@
     </div>
   </div>
 </div>
-
 <div class="row page-title-bar">
   <div class="col-lg-12 heading-row">
     <h3 class="page-title">Leagues & Divisions</h3>
@@ -125,6 +124,7 @@
       <div class="input-container">
         Uploads Players <small>(.csv / .xls)</small>
         <input
+          #csvUpload
           type="file"
           name="file"
           (change)="onChange($event)"
@@ -196,7 +196,7 @@
           placeholder="DOB"
           formControlName="dob"
           class="form-control"
-          (blur)="calculateAge($event.target.value)"
+          (blur)="getMaxAgeLeagues($event.target.value)"
           [ngClass]="{ 'is-invalid': submitted && f['dob'].errors }"
         />
         <div *ngIf="submitted && f['dob'].errors" class="invalid-feedback">

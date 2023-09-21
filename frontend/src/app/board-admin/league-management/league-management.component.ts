@@ -23,6 +23,7 @@ export class LeagueManagementComponent implements OnInit {
   private notifier: NotifierService;
   leagues: any = [];
   leagueToDel: string = null;
+  maxDate: Date = new Date();
   leagueForm = new FormGroup({
     leagueName: new FormControl("", Validators.required),
     leagueAge: new FormControl("", Validators.required)

@@ -34,7 +34,7 @@
 //   }
 // }
 .academy-row {
-  background: #165BAA;
+  background: #165baa;
   padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
@@ -51,21 +51,16 @@
     }
   }
   .acedmy-plus {
-    background: #4f5467;
-    border: 5px solid #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: table;
     border-radius: 100%;
     width: 150px;
     height: 150px;
-    background: white;
+    background: transparent;
     overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    img{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
     .btn-default {
       b > i.academy-plus-inner-text {

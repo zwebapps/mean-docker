@@ -37,7 +37,7 @@
         {{ row.dob | date : "shortDate" }}
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="Squad Number" prop="row">
+    <ngx-datatable-column name="Squad" prop="row">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
         {{ row.squadNo }}
       </ng-template>
@@ -52,7 +52,12 @@
         {{ row.emiratesIdNo }}
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="Player EID" prop="row">
+    <ngx-datatable-column name="EID Front" prop="row">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+        <img src="{{ apiURL }}/static/{{ row.eidFront }}" width="100" (click)="open(content, row.eidFront)" />
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="EID Back" prop="row">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
         <img src="{{ apiURL }}/static/{{ row.eidBack }}" width="100" (click)="open(content, row.eidBack)" />
       </ng-template>
