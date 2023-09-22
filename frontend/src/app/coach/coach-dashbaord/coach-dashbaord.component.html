@@ -1,16 +1,9 @@
-<div class="row academy-row">
-  <div class="col-12 d-flex">
-    <div class="col-lg-3 col-md-4 col-sm-4">
-      <!-- <div class="acedmy-plus">
-        <div class="btn btn-default col-lg-2 col-sm-2"><b><i class="bi bi-plus-lg academy-plus-inner-text"></i></b><br/>
-        </div>
-      </div> -->
-    </div>
-    <div class="col-lg-9 col-md-8 col-sm-8">
-      <div class="academy-name">
-        <p *ngIf="academy">{{ academy.academyName }}</p>
-      </div>
-    </div>
+<div class="row academy-row" [style.background-color]="academy?.color">
+  <div class="col-12 col-lg-2">
+    <div class="acedmy-plus m-auto"><img [src]="getImg(academy?.logo)" class="img-fluid" /><br /></div>
+  </div>
+  <div class="col-12 col-lg-10 academy-name">
+    <p *ngIf="academy">{{ academy.academyName }}</p>
   </div>
 </div>
 <div class="row justify-content-center mt-5">

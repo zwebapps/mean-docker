@@ -1,9 +1,8 @@
 <div class="row academy-row" [style.background-color]="academy?.color">
-  <div class="col-sm-2">
-    <!-- <div class="acedmy-plus" [style.background-image]="getImg(academy?.logo)"></div> -->
-    <div class="acedmy-plus"><img [src]="getImg(academy?.logo)" class="img-fluid" /><br /></div>
+  <div class="col-12 col-lg-2">
+    <div class="acedmy-plus m-auto"><img [src]="getImg(academy?.logo)" class="img-fluid" /><br /></div>
   </div>
-  <div class="col-sm-10 academy-name">
+  <div class="col-12 col-lg-10 academy-name">
     <p>{{ academy?.academyName }}</p>
   </div>
 </div>

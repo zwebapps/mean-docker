@@ -5,3 +5,13 @@
     border-radius: 25px;
   }
 }
+@media (max-width: 768px) {
+  .ngx-table-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ngx-table-container .ngx-table-cell {
+    flex-basis: 100%; // Each column occupies full width
+  }
+}

@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { StorageService } from 'src/app/_services/storage.service';
 import { AcademyService } from 'src/app/_services/academy.service';
 import { TeamService } from 'src/app/_services/team.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-coach-dashbaord',
@@ -17,6 +18,7 @@ export class CoachDashbaordComponent implements OnInit {
   teams: any = [];
   loggedInCoach: any;
   academy: any;
+  apiURL = environment.apiURL;
   constructor(private store: Store, private activatedRoute: ActivatedRoute,private storageService: StorageService, private academyService: AcademyService, private teamService: TeamService) {
 
   }
@@ -44,5 +46,7 @@ export class CoachDashbaordComponent implements OnInit {
      }
     })
   }
-
+  getImg = (image: string) => {
+    return `${this.apiURL}/static/${image}`;
+  };
 }
