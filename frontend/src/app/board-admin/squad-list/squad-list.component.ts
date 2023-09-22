@@ -5,6 +5,7 @@ import { UserService } from "src/app/_services/user.service";
 import * as PlayerActions from "../../_store/actions/players.actions";
 import * as UserActions from "../../_store/actions/users.actions";
 import * as PlayerSelectors from "../../_store/selectors/players.selectors";
+import * as LeagueSelectors from "../../_store/selectors/leagues.selectors";
 import { NotifierService } from "angular-notifier";
 import { StorageService } from "src/app/_services/storage.service";
 import { AcademyService } from "src/app/_services/academy.service";
@@ -105,8 +106,16 @@ export class SquadListComponent implements OnInit {
         }
       }
       this.getPlayersFromStore();
+      this.getLeaguesFromStore();
     });
   }
+  getLeaguesFromStore = () => {
+    this.store.select(LeagueSelectors.getLeagues).subscribe((leagues) => {
+      if (Array.isArray(leagues)) {
+        this.leagues = leagues;
+      }
+    });
+  };
   get f() {
     return this.playerForm.controls;
   }
@@ -189,7 +198,7 @@ export class SquadListComponent implements OnInit {
     return nameArray.find((nm: any) => !isNaN(nm));
   }
   getPlayersFromStore(leagueId?: any) {
-    this.leagues = [];
+    // this.leagues = [];
     this.store.select(PlayerSelectors.getPlayers).subscribe((players) => {
       if (players.length > 0) {
         players.forEach((player) => (player?.league && !this.alreadyExists(player?.league) ? this.leagues.push(player?.league) : null));

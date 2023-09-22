@@ -42,11 +42,16 @@
         {{ row.dob | date : "dd/MM/yyyy" }}
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="Squad Number" prop="row" size="50">
+    <ngx-datatable-column name="Squad No" prop="row" size="50">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+        {{ row?.team?.teamName }}
+      </ng-template>
+    </ngx-datatable-column>
+    <!-- <ngx-datatable-column name="Squad No" prop="row" size="50">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
         {{ row.squadNo }}
       </ng-template>
-    </ngx-datatable-column>
+    </ngx-datatable-column> -->
     <ngx-datatable-column name="League" prop="row">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
         {{ row?.league?.leagueName }}
