@@ -25,6 +25,6 @@ WORKDIR /app
 # Expose the port the app runs in
 EXPOSE 4000
 
-USER node
+USER root
 
 CMD ["node", "dist/frontend/server/main.js"]
