@@ -7,18 +7,15 @@
     height: fit-content;
     font-family: NotoSansRegular;
     .top-navbar {
-      min-height: 124px;
+      min-height: 120px;
+      align-items: center;
     }
     .navbar-header {
-      line-height: 124px;
       .navbar-brand {
         width: 197px;
-        height: 76px;
         margin-left: 20px;
-        margin-top: 12px;
-        margin-bottom: 12px;
         .logo-icon {
-          height: 100px;
+          height: 90px;
           img{
             height:100%;
           }
@@ -27,7 +24,7 @@
     }
   }
   .left-sidebar {
-    top: 124px;
+    top: 120px;
     position: absolute;
   }
 #navbarSupportedContent {

@@ -20,7 +20,6 @@
       .navbar-brand {
         display: flex;
         align-items: center;
-        margin: 0px;
         padding: $topbar-navbrand-padding;
         .dark-logo {
           display: none;
@@ -119,7 +118,7 @@ Topbar Responsive
 @media (max-width: 991px) {
   .topbar .navbar-collapse {
     position: relative;
-    top: 124px;
+    top: 120px;
   }
   .topbar .top-navbar .navbar-header {
     position: fixed;
