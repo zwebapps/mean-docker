@@ -6,7 +6,7 @@ export const ROUTES: RouteUser[] = [
     routes: [
       {
         path: "/admin/dashboard",
-        title: "Dashbaord",
+        title: "Dashboard",
         icon: "bi bi-speedometer2",
         image: "assets/images/bashboard.png",
         active: "assets/images/bashbaord.png",
