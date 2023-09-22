@@ -6,7 +6,8 @@ label {
 .login-box {
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
   border-radius: 8px;
-  width: 420px;
+  width: 100%;
+  max-width: 420px;
   margin: 5% auto;
   .login-logo {
     margin: 0;
@@ -69,11 +70,22 @@ label {
 }
 
 .sign-bold {
-color: var(--all-colors-text-primary-color-text-primary, #282828);
-font-feature-settings: 'clig' off, 'liga' off;
-font-family: NotoSansRegular;
-font-size: 24px;
-font-style: normal;
-font-weight: 500;
-line-height: 36px; /* 150% */
+  color: var(--all-colors-text-primary-color-text-primary, #282828);
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-family: NotoSansRegular;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 36px; /* 150% */
+}
+
+@media screen and (max-width: 480px) {
+  .login-logo{
+    img {
+      margin:0 auto 10px auto
+    }
+    span {
+    display: block;
+  }
+  }
 }

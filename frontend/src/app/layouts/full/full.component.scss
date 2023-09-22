@@ -13,10 +13,16 @@
       line-height: 124px;
       .navbar-brand {
         width: 197px;
-        height: 100px;
+        height: 76px;
         margin-left: 20px;
         margin-top: 12px;
         margin-bottom: 12px;
+        .logo-icon {
+          height: 100px;
+          img{
+            height:100%;
+          }
+        }
       }
     }
   }
