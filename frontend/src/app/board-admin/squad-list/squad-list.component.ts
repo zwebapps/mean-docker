@@ -52,12 +52,9 @@ export class SquadListComponent implements OnInit {
   constructor(
     private playerService: PlayerService,
     private userService: UserService,
-    private storageService: StorageService,
     notifier: NotifierService,
-    private academyService: AcademyService,
     private teamService: TeamService,
     private store: Store,
-    private router: Router,
     private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder
   ) {
