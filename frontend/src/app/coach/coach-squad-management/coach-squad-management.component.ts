@@ -6,6 +6,7 @@ import { PlayerService } from "src/app/_services/player.service";
 import { StorageService } from "src/app/_services/storage.service";
 import { TeamService } from "src/app/_services/team.service";
 import { UserService } from "src/app/_services/user.service";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-coach-squad-management",
@@ -17,6 +18,7 @@ export class CoachSquadManagementComponent implements OnInit {
   private loggedInCoach: any = {};
   public academy: any;
   public teams: any = [];
+  apiURL = environment.apiURL;
   constructor(
     notifier: NotifierService,
     private academyService: AcademyService,
@@ -47,4 +49,7 @@ export class CoachSquadManagementComponent implements OnInit {
   onTeamClick(team: any) {
     this.router.navigate([`/coach/squads/${team._id}`]);
   }
+  getImg = (image: string) => {
+    return `${this.apiURL}/static/${image}`;
+  };
 }

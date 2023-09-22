@@ -1,10 +1,8 @@
-<div class="row academy-row">
-  <div class="col-sm-2">
-    <div class="acedmy-plus">
-      <div class="acedmy-plus"><img [src]="getImg(academy?.logo)" class="rounded" /><br /></div>
-    </div>
+<div class="row academy-row" [style.background-color]="academy?.color">
+  <div class="col-12 col-lg-2">
+    <div class="acedmy-plus m-auto"><img [src]="getImg(academy?.logo)" class="img-fluid" /><br /></div>
   </div>
-  <div class="col-sm-10 academy-name">
+  <div class="col-12 col-lg-10 academy-name">
     <p>{{ academy?.academyName }}</p>
     <p>{{ currentTeam.teamName }}</p>
   </div>
@@ -18,16 +16,16 @@
 <div class="row">
   <form class="p-3">
     <ng-container *ngFor="let coach of coaches">
-      <div class="col-sm-12 col-lg-12 d-flex">
-        <div class="form-group col-xs-3 col-md-3 m-3">
+      <div class="row">
+        <div class="form-group col-12 col-lg-3 mb-3">
           <label for="name" class="control-label">Name</label>
           <input type="email" [value]="coach?.username" class="form-control" id="name" placeholder="Name" disabled />
         </div>
-        <div class="form-group col-xs-3 col-md-3 m-3">
+        <div class="form-group col-12 col-lg-3 mb-3">
           <label for="name" class="control-label">Email</label>
           <input type="email" [value]="coach?.email" class="form-control" id="name" placeholder="Email" disabled />
         </div>
-        <div class="form-group col-xs-3 col-md-3 m-3">
+        <div class="form-group col-12 col-lg-3 mb-3">
           <label for="name" class="control-label">Mobile</label>
           <input type="email" [value]="coach.contact" class="form-control" id="name" placeholder="Mobile" disabled />
         </div>
@@ -39,11 +37,15 @@
   <div class="col-12">
     <hr />
   </div>
-  <div class="col-12 d-flex p-4">
-    <div class="col-lg-6">
-      <h4>Squad</h4>
+  <div class="row">
+    <div class="col-12 col-lg-6">
+      <div class="row page-title-bar">
+        <div class="col-lg-12">
+          <h3 class="page-title">Squad</h3>
+        </div>
+      </div>
     </div>
-    <div class="col-lg-6 d-flex justify-content-end">
+    <div class="col-12 col-lg-6 d-flex justify-content-end">
       <div class="col-lg-2 mt-2">
         <h6>Filter by league:</h6>
       </div>
