@@ -1,8 +1,8 @@
 <div class="row academy-row" [style.background-color]="academy?.color">
-  <div class="col-sm-2">
-    <div class="acedmy-plus"><img [src]="getImg(academy?.logo)" class="img-fluid" /><br /></div>
+  <div class="col-12 col-lg-2">
+    <div class="acedmy-plus m-auto"><img [src]="getImg(academy?.logo)" class="img-fluid" /><br /></div>
   </div>
-  <div class="col-sm-10 academy-name">
+  <div class="col-12 col-lg-10 academy-name">
     <p>{{ academy?.academyName }}</p>
   </div>
 </div>
@@ -12,7 +12,7 @@
   </div>
   <hr />
 </div>
-<div class="row m-3">
+<div class="row">
   <form class="form-inline" [formGroup]="teamForm" (ngSubmit)="onSubmit()">
     <div class="input-group mb-3">
       <input
@@ -36,7 +36,7 @@
   <div>
     <div class="container">
       <div class="row" *ngIf="teams">
-        <div class="league-lable col-lg-3 col-sm-6 m-2" *ngFor="let team of teams">
+        <div class="league-lable col-lg-3 col-sm-6 mb-2" *ngFor="let team of teams">
           <span class="league-text" (click)="onTeamClick(team)">{{ team.teamName }}</span>
           <button type="button" class="close btn btn-defaul" data-dismiss="alert" aria-label="Close" (click)="onDelete(team._id)">
             <span aria-hidden="true">&times;</span>

@@ -1,7 +1,6 @@
 .academy-row {
   background: #165BAA;
   padding: 1rem 2rem;
-  display: flex;
   justify-content: space-between;
   align-items: center;
   .academy-name {
@@ -22,8 +21,8 @@
     justify-content: space-between;
     align-items: center;
     border-radius: 100%;
-    width: 150px;
-    height: 150px;
+    width: 120px;
+    height: 120px;
     background: white;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -45,9 +44,10 @@
   .academy-row {
     align-items: center;
     .academy-name {
-      margin-left: 60px;
+      text-align: center !important;
       p {
         font-size: 18px;
+        text-align: center !important;
       }
     }
     .acedmy-plus {
