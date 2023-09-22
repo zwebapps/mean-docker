@@ -71,7 +71,9 @@ export class FullComponent implements OnInit {
       }
     }
   }
-
+  toggleSidebar() {
+    this.showMobileMenu = !this.showMobileMenu;
+  }
   toggleSidebarType() {
     switch (this.sidebartype) {
       case "full":
