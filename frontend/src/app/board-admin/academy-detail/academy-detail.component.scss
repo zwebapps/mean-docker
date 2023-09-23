@@ -131,6 +131,16 @@ form {
       }
     }
   }
+  .input-group{
+    border:0px !important;
+    input[type="text"] {
+      border: 1px solid #000 !important;
+      margin-bottom:10px;
+      border-radius: 75px !important;
+      width:100% !important;
+      margin-right:0;
+    }
+  }
   input.form-control {
     line-height: 16px;
     margin: 0 30px 0 0;
@@ -144,7 +154,7 @@ form {
   button.btn-default {
     background: #000000;
     border-radius: 66px !important;
-    width: 57px;
+    width: 100% !important;
     color: white;
     b > i {
       font-size: 15px;
