@@ -16,6 +16,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms"
 import { IDropdownSettings } from "ng-multiselect-dropdown";
 import { environment } from "src/environments/environment";
 
+import * as moment from "moment";
+
 @Component({
   selector: "app-squad-list",
   templateUrl: "./squad-list.component.html",
@@ -49,6 +51,8 @@ export class SquadListComponent implements OnInit {
   public showPlayerEditForm: boolean = false;
   public playerToEdit: any = {};
   public selectedPlayingUp: any = [];
+  public selectedLeagues: any = [];
+  public eidNo: any = "";
   constructor(
     private playerService: PlayerService,
     private userService: UserService,
@@ -88,7 +92,7 @@ export class SquadListComponent implements OnInit {
       playingUp: ["", Validators.required]
     });
 
-    this.playerForm.controls.league.disable();
+    // this.playerForm.controls.league.disable();
     this.playerForm.controls.eidFront.disable();
     this.playerForm.controls.eidBack.disable();
 
@@ -117,15 +121,19 @@ export class SquadListComponent implements OnInit {
     return this.playerForm.controls;
   }
 
-  onItemSelect(item: any) {
-    if (this.selectedPlayingUp.includes(item._id)) {
-      this.selectedPlayingUp.splice(this.selectedPlayingUp.indexOf(item._id), 1);
-    } else {
-      this.selectedPlayingUp.push(item._id);
+  onItemSelect(item: any, type: any) {
+    if (type === "playingUp") {
+      if (this.selectedPlayingUp.includes(item._id)) {
+        this.selectedPlayingUp.splice(this.selectedPlayingUp.indexOf(item._id), 1);
+      } else {
+        this.selectedPlayingUp.push(item._id);
+      }
     }
   }
-  onSelectAll(items: any) {
-    this.selectedPlayingUp.push(items.map((item: any) => item._id));
+  onSelectAll(items: any, type: any) {
+    if (type === "playingUp") {
+      this.selectedPlayingUp.push(items.map((item: any) => item._id));
+    }
   }
 
   getImg = (image: string) => {
@@ -142,22 +150,29 @@ export class SquadListComponent implements OnInit {
         surName: this.playerToEdit.lastName,
         squadNo: this.playerToEdit.squadNo,
         dob: this.formatDate(this.playerToEdit.dob),
-        league: this.playerToEdit.league?.leagueName,
+        league: this.playerToEdit.league?._id,
         playerEidNo: this.playerToEdit.emiratesIdNo,
         eidFront: this.playerToEdit.eidFront,
         eidBack: this.playerToEdit.eidBack,
         playingUp: this.selectedPlayingUp
       });
-
-      this.playerForm.controls.dob.disable();
+      this.eidNo = this.playerToEdit.emiratesIdNo;
+      // this.playerForm.controls.dob.disable();
     }
   };
   submitEditPlayer = () => {
+    let plSelectedLeague = this.leagues.find((league: any) => league._id === this.playerForm.value.league);
+    let isIlligible = moment(plSelectedLeague.leagueAgeLimit).isSameOrBefore(this.playerForm.value.dob);
+    if (!isIlligible) {
+      this.notifier.notify("error", "Player is not eligible for selected league!");
+      return;
+    }
     if (this.playerForm.valid) {
       const playerObj = {
         firstName: this.playerForm.value.firstName,
         surName: this.playerForm.value.surName,
         dob: this.playerForm.value.dob,
+        league: this.playerForm.value.league,
         squadNo: this.playerForm.value.squadNo,
         emiratesIdNo: this.playerForm.value.playerEidNo,
         playerStatus: this.playerToEdit.playerStatus,
@@ -177,6 +192,27 @@ export class SquadListComponent implements OnInit {
       });
     }
   };
+  appendHiphen(event: any) {
+    let value = event.target.value;
+    // let keyCode = event.keyCode;
+    // console.log(keyCode, "keyCode");
+    if (value.length === 3) {
+      if (value.charAt(value.length - 1) !== "-") {
+        this.eidNo = `${value}-`;
+      }
+    }
+    if (value.length === 8) {
+      if (value.charAt(value.length - 1) !== "-") {
+        this.eidNo = `${value}-`;
+      }
+    }
+
+    if (value.length === 16) {
+      if (value.charAt(value.length - 1) !== "-") {
+        this.eidNo = `${value}-`;
+      }
+    }
+  }
   getCalculateAge = (value) => {
     const dob = new Date(value);
     let ageDifMs = Date.now() - dob.getTime();
@@ -281,7 +317,9 @@ export class SquadListComponent implements OnInit {
   userById(id: any) {
     this.userService.getUserById(id).subscribe((result: any) => {
       if (!result.message) {
-        this.coaches = result;
+        this.coaches = Array.isArray(result) ? result : [result];
+      } else {
+        this.notifier.notify("error", "Coach not found");
       }
     });
   }

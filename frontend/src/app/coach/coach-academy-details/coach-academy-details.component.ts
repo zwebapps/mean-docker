@@ -17,6 +17,7 @@ import * as TeamSelectors from "../../_store/selectors/teams.selectors";
 import * as AcademiesSelectors from "../../_store/selectors/academies.selectors";
 
 import * as XLSX from "xlsx";
+import * as moment from "moment";
 import { IDropdownSettings } from "ng-multiselect-dropdown";
 import { environment } from "src/environments/environment";
 const { read, write, utils } = XLSX;
@@ -36,6 +37,7 @@ export class CoachAcademyDetailsComponent {
   wopts: XLSX.WritingOptions = { bookType: "xlsx", type: "array" };
   fileName: string = "SheetJS.xlsx";
   private notifier: NotifierService;
+  eidNo: any = "";
   options = {};
   data: any = [];
   columns: any = [{ prop: "firstname" }, { name: "lastname" }, { name: "dob" }, { name: "email" }];
@@ -157,8 +159,8 @@ export class CoachAcademyDetailsComponent {
       this.notifier.notify("error", "League is not selected!");
       return;
     } else {
-      const ageInYear = this.getAge(this.playerForm.value.dob);
-      if (this.getCalculateAge(this.selectedLeague.leagueAgeLimit) < ageInYear) {
+      let isIlligible = moment(this.selectedLeague.leagueAgeLimit).isSameOrBefore(this.playerForm.value.dob);
+      if (!isIlligible) {
         this.notifier.notify("error", "You are not eligible for this league!");
         return;
       }
@@ -406,7 +408,7 @@ export class CoachAcademyDetailsComponent {
         this.palyerService.importPlayers(dataString["Sheet1"]).subscribe((res: any) => {
           this.insertionStarted = false;
           if (res && res.players) {
-            this.notifier.notify("success", `${res.players.length} Players created`);
+            this.notifier.notify("success", `${res.players.length} Players added`);
             this.store.dispatch(PlayerActions.loadPlayers());
             this.getPlayersFromStore();
           } else {
@@ -425,6 +427,27 @@ export class CoachAcademyDetailsComponent {
     this.router.navigate(["/coach/contacts"]);
   };
 
+  appendHiphen(event: any) {
+    let value = event.target.value;
+    // let keyCode = event.keyCode;
+    // console.log(keyCode, "keyCode");
+    if (value.length === 3) {
+      if (value.charAt(value.length - 1) !== "-") {
+        this.eidNo = `${value}-`;
+      }
+    }
+    if (value.length === 8) {
+      if (value.charAt(value.length - 1) !== "-") {
+        this.eidNo = `${value}-`;
+      }
+    }
+
+    if (value.length === 16) {
+      if (value.charAt(value.length - 1) !== "-") {
+        this.eidNo = `${value}-`;
+      }
+    }
+  }
   export(): void {
     let link = document.createElement("a");
     link.setAttribute("type", "hidden");
