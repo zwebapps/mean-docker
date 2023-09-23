@@ -20,7 +20,7 @@ COPY . /app/
 # Expose the port the app runs in
 EXPOSE 3000
 
-USER node
+USER root
 
 # Serve the app
 CMD ["npm", "start"]
