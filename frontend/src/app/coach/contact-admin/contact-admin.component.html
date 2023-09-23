@@ -2,25 +2,27 @@
   <div class="col-lg-12">
     <h1>Contact Admin</h1>
   </div>
-  <div class="col-lg-12">
-    <div class="editor m-5">
+  <div class="col-12 col-lg-12">
+    <div class="editor">
       <form [formGroup]="form" (submit)="submitContents()">
-        <div class="col-lg-9 col-sm-12 mb-5">
-          <label for="name" class="control-label mb-2">Subject</label>
-          <input type="text" [value]="" class="form-control" placeholder="Heading" formControlName="heading" class="form-control" />
-        </div>
-        <div class="col-lg-12 col-sm-12">
-          <angular-editor
-            formControlName="content"
-            [(ngModel)]="htmlContent"
-            [config]="config"
-            (ngModelChange)="onChange($event)"
-            (blur)="onBlur($event)"
-          ></angular-editor>
-        </div>
-        <div class="col-lg-9 col-sm-12 mb-5 mt-5 d-flex justify-content-center">
-          <div class="col-lg-3 col-sm-6">
-            <button type="submit" class="btn btn-primary col-12 text-white">Submit</button>
+        <div class="row">
+          <div class="col-12 col-lg-9 mb-5">
+            <label for="name" class="control-label mb-2">Subject</label>
+            <input type="text" [value]="" class="form-control" placeholder="Heading" formControlName="heading" class="form-control" />
+          </div>
+          <div class="col-12 col-lg-9">
+            <angular-editor
+              formControlName="content"
+              [(ngModel)]="htmlContent"
+              [config]="config"
+              (ngModelChange)="onChange($event)"
+              (blur)="onBlur($event)"
+            ></angular-editor>
+          </div>
+          <div class="col-12 col-lg-9 mb-5 mt-5 d-flex justify-content-center">
+            <div class="col-sm-6 col-lg-3">
+              <button type="submit" class="btn btn-primary col-12 text-white">Submit</button>
+            </div>
           </div>
         </div>
       </form>
@@ -28,24 +30,26 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-lg-9 col-sm-12 m-5" *ngIf="contents">
+  <ng-container *ngIf="contents">
     <ng-container *ngFor="let card of contents">
-      <div class="card mb-3 border border-primary">
-        <button type="button" class="btn btn-danger close-content" aria-label="Close" (click)="deleteContent(card._id)">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <div class="card-body">
-          <h5 class="card-title">{{ card.heading }}</h5>
+      <div class="col-12 col-lg-9">
+        <div class="card mb-3 border border-primary">
+          <button type="button" class="btn btn-danger close-content" aria-label="Close" (click)="deleteContent(card._id)">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="card-body">
+            <h5 class="card-title">{{ card.heading }}</h5>
 
-          <p class="card-text" [innerHtml]="card.content"></p>
-          <p class="card-text">
-            <small class="text-muted">{{ card.reply ? card.reply : "Admin did not given reply yet" }}</small>
-          </p>
-          <a href="#" class="btn btn-success">{{ card.status }}</a>
+            <p class="card-text" [innerHtml]="card.content"></p>
+            <p class="card-text">
+              <small class="text-muted">{{ card.reply ? card.reply : "Admin did not given reply yet" }}</small>
+            </p>
+            <a href="#" class="btn btn-success">{{ card.status }}</a>
+          </div>
         </div>
       </div>
     </ng-container>
-  </div>
+  </ng-container>
 </div>
 <div style="position: absolute; bottom: 0; right: 0; background-color: transparent">
   <button class="btn" style="font-size: 40px; color: black" (click)="redirectTo()">Back</button>

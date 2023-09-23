@@ -23,7 +23,7 @@ export class ContactAdminComponent implements OnInit {
     editable: true,
     spellcheck: true,
     height: "25rem",
-    width: "75%",
+    width: "100%",
     minHeight: "5rem",
     placeholder: "Enter text here...",
     translate: "no",
