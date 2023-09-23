@@ -15,7 +15,7 @@
 </div>
 <div class="row">
   <form>
-    <div class="row d-flex justify-content-between m-3" *ngIf="leagues">
+    <div class="row justify-content-between" *ngIf="leagues">
       <ng-container *ngFor="let league of leagues; let i = index">
         <div class="col-lg-3 col-sm-6 col-xs-6">
           <div class="league-lable">
@@ -144,7 +144,7 @@
 </div>
 <div class="row">
   <form [formGroup]="playerForm" class="justify-content-around" method="post" enctype="multipart/form-data" (ngSubmit)="onFormSubmit()">
-    <div class="row d-flex justify-content-between m-3">
+    <div class="row justify-content-between">
       <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2 p-2">
         <label for="name" class="control-label">First Name</label>
         <input

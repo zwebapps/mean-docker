@@ -46,22 +46,11 @@
     align-items: center;
     .academy-name {
       padding-top: 0px;
-      margin-left: 60px;
+      font-size: 16px;
       p {
-        font-size: 25px;
-      }
-    }
-    .acedmy-plus {
-      padding-top: 5px;
-      padding-right: 2px;
-      width: 55px;
-      height: 56px;
-      display: block;
-      position: relative;
-      .btn-default {
-        b > i.academy-plus-inner-text {
-          font-size: 20px;
-        }
+        font-size: 16px;
+        text-align: center;
+        margin-top:10px;
       }
     }
   }

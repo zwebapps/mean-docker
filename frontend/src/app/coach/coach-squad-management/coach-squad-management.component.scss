@@ -40,27 +40,17 @@
     }
   }
 }
+
 @media (max-width: 767px) {
   .academy-row {
     align-items: center;
     .academy-name {
-      text-align: center !important;
+      padding-top: 0px;
+      font-size: 16px;
       p {
-        font-size: 18px;
-        text-align: center !important;
-      }
-    }
-    .acedmy-plus {
-      padding-top: 5px;
-      padding-right: 2px;
-      width: 55px;
-      height: 56px;
-      display: block;
-      position: relative;
-      .btn-default {
-        b > i.academy-plus-inner-text {
-          font-size: 20px;
-        }
+        font-size: 16px;
+        text-align: center;
+        margin-top:10px;
       }
     }
   }
@@ -117,7 +107,6 @@ button.btn-default {
   flex-shrink: 0;
   background: #000000;
   border-radius: 30px;
-  margin: 16px;
   .league-text {
     color: #fff;
     text-align: center;
