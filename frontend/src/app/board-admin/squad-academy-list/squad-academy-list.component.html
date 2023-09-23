@@ -16,7 +16,7 @@
   <div class="row" *ngIf="teams">
     <ng-container *ngFor="let team of teams">
       <div class="col-lg-3 col-sm-6">
-        <div class="league-lable">
+        <div class="league-lable btn">
           <span class="league-text" [routerLink]="['/admin/squads/squadlist/', team._id]">{{ team.teamName }}</span>
         </div>
       </div>
@@ -24,5 +24,5 @@
   </div>
 </div>
 <div style="position: absolute; bottom: 0; right: 0; background-color: transparent">
-  <button class="btn" style="font-size: 40px; color: black" (click)="redirectTo()">Back</button>
+  <button class="btn btn-back" (click)="redirectTo()">Back</button>
 </div>

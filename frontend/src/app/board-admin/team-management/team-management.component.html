@@ -4,12 +4,12 @@
   </div>
   <hr />
 </div>
-<div class="row mt-5 justify-content-center">
-  <div class="col-lg-9 col-md-12 col-sm-12">
+<div class="row mt-3 justify-content-center">
+  <div class="col-12">
     <form class="form-inline" [formGroup]="academyForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
-      <div class="row d-flex">
-        <div class="col-lg-6 col-sm-6">
-          <div class="input-group mb-3">
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-3">
+          <div class="input-group d-flex align-items-center mb-3">
             <label for="academyColor" class="mr-3">Team Color: </label>
             <input
               type="color"
@@ -20,7 +20,7 @@
             />
           </div>
         </div>
-        <div class="col-lg-6 col-sm-6">
+        <div class="col-12 col-md-6 col-lg-3">
           <div class="input-group mb-3">
             <label for="academyLogo" class="mr-3">Academy Logo: </label>
             <input
@@ -35,20 +35,21 @@
             />
           </div>
         </div>
-      </div>
-      <div class="input-group mb-3">
-        <input
-          type="text"
-          class="form-control col-lg-9 col-sm-12 league-input"
-          placeholder="Type name of Academy"
-          aria-label="academy"
-          formControlName="academyName"
-        />
-        <div></div>
-        <button type="submit" class="btn btn-default col-lg-2 col-sm-12">
-          <b><i class="bi bi-plus-lg"></i></b><br />
-        </button>
-        <!-- <span class="btn-text">Add League</span> -->
+        <div class="col-12 col-md-12 col-lg-6 mb-3">
+          <div class="input-group p-2">
+          <input
+            type="text"
+            class="form-control col-lg-9 col-sm-12 league-input"
+            placeholder="Type name of Academy"
+            aria-label="academy"
+            formControlName="academyName"
+          />
+          <button type="submit" class="btn btn-default col-lg-2 col-sm-12">
+            <b><i class="bi bi-plus-lg"></i></b><br />
+          </button>
+          </div>
+          <!-- <span class="btn-text">Add League</span> -->
+        </div>
       </div>
     </form>
   </div>
@@ -61,7 +62,7 @@
     <div class="container">
       <div class="row" *ngIf="academies">
         <div class="col-lg-3 col-md-3 col-sm-6 p-2 mt-2" *ngFor="let academy of academies">
-          <div class="league-lable">
+          <div class="league-lable btn">
             <span class="league-text" [routerLink]="['academy', academy._id]">{{ academy.academyName }} </span>
             <button type="button" class="close btn btn-defaul" data-dismiss="alert" aria-label="Close" (click)="onDelete(academy._id)">
               <span aria-hidden="true">&times;</span>
@@ -76,5 +77,5 @@
   </div>
 </div>
 <!-- <div style ="position: absolute; bottom: 0;right:0; background-color: transparent;">
-  <button class="btn" style="font-size: 40px; color: black;" (click)="redirectTo()">Back</button>
+  <button class="btn btn-back" (click)="redirectTo()">Back</button>
 </div> -->

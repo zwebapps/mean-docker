@@ -1,6 +1,7 @@
 .form-control:focus {
   border: none !important;
   border-color: none !important;
+  box-shadow:none !important;
 }
 form {
   .input-group {
@@ -10,7 +11,7 @@ form {
     ::placeholder {
       color: rgba(0, 0, 0, 0.5);
       font-family: NotoSansRegular;
-      font-size: 30px;
+      font-size: 20px;
       font-style: normal;
       font-weight: 700;
       line-height: normal;
@@ -44,6 +45,7 @@ form {
     }
   }
 }
+
 .league-lable {
   display: inline-block;
   width: 100%;
@@ -72,6 +74,23 @@ form {
     float: right;
     bottom: 30px;
   }
+}
+
+input[type="color"], input[type="file"] {
+	border-radius: 0px !important;
+  padding: 4px !important;
+  height:30px;
+  line-height: 30px;
+  margin-left:10px !important;
+}
+
+input[type="file"] {
+	border-radius: 0px !important;
+}
+
+input.league-input:focus {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 @media (max-width: 767px) {

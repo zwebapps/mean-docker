@@ -136,7 +136,7 @@
     </div>
   </div>
   <div class="col-12 col-md-6 col-lg-4 justify-content-around">
-    <div class="squads-lable col-12" (click)="onContactUs()">
+    <div class="btn squads-lable col-12" (click)="onContactUs()">
       <span class="squads-text">Contact Us</span>
     </div>
     <div class="col-12">
@@ -356,5 +356,5 @@
   <app-coach-squad-list [players]="data" (delPlayer)="onDeletePlayer($event)"></app-coach-squad-list>
 </div>
 <div style="position: absolute; bottom: 0; right: 0; background-color: transparent; z-index: 2">
-  <button class="btn" style="font-size: 40px; color: black" (click)="redirectTo()">Back</button>
+  <button class="btn btn-back" (click)="redirectTo()">Back</button>
 </div>

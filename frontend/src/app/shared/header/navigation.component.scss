@@ -1,24 +1,30 @@
-
-@media (min-width: 767px) {
-  ul.navbar-nav.width-90 {
-    flex-basis: 90%;
+ul.navbar-nav.width-90 {
+  flex-basis: 90%;
+}
+ul.navbar-nav.width-10{
+  flex-basis: 10%;
+}
+ul.navbar-nav {
+  li.nav-item {
+    span.headingtitle {
+      font-family: NotoSansRegular;
+      color: #FFF;
+      text-align: center;
+      padding-top:10px;
+      display: inline-block;
+      font-size: 30px !important;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+    }
   }
-  ul.navbar-nav.width-10{
-    flex-basis: 10%;
-  }
+}
 
+@media (max-width: 767px) {
   ul.navbar-nav {
     li.nav-item {
       span.headingtitle {
-        font-family: NotoSansRegular;
-        color: #FFF;
-        text-align: center;
-        padding-top:10px;
-        display: inline-block;
-        font-size: 30px !important;
-        font-style: normal;
-        font-weight: 600;
-        line-height: normal;
+        font-size: 20px;
       }
     }
   }

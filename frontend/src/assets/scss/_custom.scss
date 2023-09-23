@@ -1,1 +1,25 @@
 // In this scss you can overwrite all our scss, we suggested you to add your scss into this, so whenever the update comes it will not affect your code.
+
+.btn-back{
+    background: #A155B9;
+    padding:1rem 3rem;
+    border-radius: 30px 0 0 30px;
+    margin: 15px;
+    color:#fff;
+    font-family: NotoSansRegular;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-right: 0 !important;
+}
+
+.btn-back:hover{
+    background: #A155B9;
+    color:#fff;
+}
+
+.btn-back::before {
+    content: '\e5e4'; /* Unicode for the arrow-left icon */
+    font-family: 'bootstrap-icons';
+  }

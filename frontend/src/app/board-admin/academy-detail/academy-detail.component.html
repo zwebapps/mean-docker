@@ -14,7 +14,7 @@
 </div>
 <div class="row">
   <form class="form-inline" [formGroup]="teamForm" (ngSubmit)="onSubmit()">
-    <div class="input-group mb-3">
+    <div class="input-group p-2 mb-3">
       <input
         type="text"
         class="form-control col-lg-9 col-sm-12 league-input"
@@ -36,7 +36,7 @@
   <div>
     <div class="container">
       <div class="row" *ngIf="teams">
-        <div class="league-lable col-lg-3 col-sm-6 mb-2" *ngFor="let team of teams">
+        <div class="league-lable btn col-lg-3 col-sm-6 mb-2" *ngFor="let team of teams">
           <span class="league-text" (click)="onTeamClick(team)">{{ team.teamName }}</span>
           <button type="button" class="close btn btn-defaul" data-dismiss="alert" aria-label="Close" (click)="onDelete(team._id)">
             <span aria-hidden="true">&times;</span>
@@ -47,5 +47,5 @@
   </div>
 </div>
 <div style="position: absolute; bottom: 0; right: 0; background-color: transparent">
-  <button class="btn" style="font-size: 40px; color: black" (click)="redirectTo()">Back</button>
+  <button class="btn btn-back" (click)="redirectTo()">Back</button>
 </div>

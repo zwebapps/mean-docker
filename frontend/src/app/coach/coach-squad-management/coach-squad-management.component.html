@@ -12,10 +12,10 @@
   </div
   ><hr>
 </div>
-<div class="row justify-content-center" *ngIf="teams">
+<div class="row d-flex justify-content-center" *ngIf="teams">
   <ng-container *ngFor="let team of teams">
-    <div class="col-lg-3 col-md-4 col-sm-11 mb-3">
-      <div class="league-lable w-100">
+    <div class="col-lg-3 col-md-4 col-sm-11 m-3">
+      <div class="league-lable btn w-100">
         <span class="league-text" (click)="onTeamClick(team)">{{ team.teamName }}</span>
       </div>
     </div>
