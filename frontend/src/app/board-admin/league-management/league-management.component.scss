@@ -78,7 +78,7 @@ form {
     }
   }
 }
-@media (max-width: 767px) {
+@media (max-width: 667px) {
   input.form-control {
     line-height: 16px;
     padding: 18px;
@@ -88,14 +88,15 @@ form {
     width: 100%;
   }
   input::placeholder {
-    font-size: 18px;
+    font-size: 18px !important;
+    background-color: #fff;
   }
 
   button.btn-default {
     background: #000000;
     border-radius: 66px !important;
     color: white;
-    margin:0 auto;
+    margin: 0 auto;
     b > i {
       font-size: 15px;
       font-weight: bold;

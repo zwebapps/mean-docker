@@ -3,10 +3,10 @@
 /*==============================================================
  For all pages
  ============================================================== */
- * {
+* {
   font-family: NotoSansRegular;
- }
-hr{
+}
+hr {
   border: 0;
   height: 1px;
   background: #333;
@@ -24,7 +24,7 @@ hr{
 }
 
 .page-wrapper > .container-fluid {
-  padding: 20px;
+  // padding: 20px;
   min-height: calc(100vh - 180px);
   max-width: $page-wrapper-max-width;
   margin: 0 auto;
@@ -34,7 +34,7 @@ hr{
 Titlebar
 *******************/
 
-.heading-row{
+.heading-row {
   padding: 2rem;
   display: flex;
   justify-content: space-between;
@@ -42,7 +42,7 @@ Titlebar
 }
 
 .page-title-bar {
-  .page-title{
+  .page-title {
     margin: 0;
     color: $black;
     font-family: $font-family-sans-serif;
@@ -166,15 +166,15 @@ Vertical responsive layout
   #main-wrapper {
     &[data-layout="vertical"][data-sidebartype="full"] {
       .page-wrapper {
-        padding: 0 15px 100px 15px;
+        padding: 0px;
       }
     }
   }
-  .heading-row{
+  .heading-row {
     padding: 1rem;
   }
   .page-title-bar {
-    .page-title{
+    .page-title {
       font-size: map-get($font-sizes, 4);
     }
   }

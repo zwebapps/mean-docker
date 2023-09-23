@@ -37,6 +37,7 @@ export class RefereeDashboardComponent implements OnInit {
   public fixtureForm: FormGroup;
   public selectedLeague: any = null;
   public allTeams: any = [];
+  public refereeDetails: any = {};
   constructor(
     private userService: UserService,
     private storageService: StorageService,
@@ -53,6 +54,8 @@ export class RefereeDashboardComponent implements OnInit {
     this.fixtureForm = new FormGroup({});
   }
   ngOnInit(): void {
+    // get ref details
+    this.refereeDetails = this.storageService.getUser();
     this.fixtureForm = new FormGroup({
       league: new FormControl(""),
       homeTeam: new FormControl(""),
@@ -75,8 +78,10 @@ export class RefereeDashboardComponent implements OnInit {
 
     // now get the leagues and map
     this.store.select(FixtureSelectors.getFixtures).subscribe((fixtures) => {
-      if (fixtures) {
-        this.fixtures = fixtures;
+      if (Array.isArray(fixtures)) {
+        this.fixtures = fixtures.filter((fix) => fix.user_id?._id === this.refereeDetails.id);
+      } else {
+        this.notifier.notify("error", "Fixtures not yet added");
       }
     });
   }
@@ -122,7 +127,7 @@ export class RefereeDashboardComponent implements OnInit {
   getFixturesFromStore() {
     // now get the leagues and map
     this.store.select(FixtureSelectors.getFixtures).subscribe((fixtures) => {
-      if (fixtures) {
+      if (Array.isArray(fixtures)) {
         this.fixtures = fixtures;
       }
     });

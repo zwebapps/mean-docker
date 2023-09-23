@@ -44,7 +44,7 @@ exports.createFixture = async (req, resp, next) => {
 exports.getAllFixture =  async (req, resp, next) => {
 
   try {
-    const fixture = await Fixture.find({}).populate(["league", "homeTeam", "awayTeam"]);
+    const fixture = await Fixture.find({}).populate(["league", "homeTeam", "awayTeam", "user_id"]);
     resp.status(200).json( fixture.length > 0 ? fixture : { message: 'No fixture found' });
   } catch (error) {
     next(error);

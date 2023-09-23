@@ -3,12 +3,14 @@
   box-shadow: none !important;
 }
 :host ::ng-deep .datatable-header-cell {
+  width: 80%;
   font-size: 16px;
   font-weight: 600;
   text-align: center;
   height: 100px !important;
 }
 :host ::ng-deep .datatable-body-cell {
+  width: 100%;
   padding: 10px !important;
   border: 1px dotted #000 !important;
   margin: 20px;
@@ -20,6 +22,7 @@
 }
 
 :host ::ng-deep .datatable-body-cell:nth-child(1) {
+  width: 100%;
   border: 1px solid #000 !important;
   border-radius: 10px;
   width: 20px !important;
@@ -30,11 +33,11 @@
   border: none !important;
   margin: 20px;
   border-radius: 20px;
-  background-color:  #000 !important;
+  background-color: #000 !important;
   color: #fefefe !important;
 }
 :host ::ng-deep .datatable-coloumn {
- background-color: #000;
+  background-color: #000;
 }
 
 :host ::ng-deep .datatable-body-cell-label {
@@ -42,6 +45,7 @@
   text-align: center;
   font-size: 16px;
   font-weight: 600;
+  width: 100%;
   button {
     color: #fefefe !important;
     text-align: center;
@@ -55,29 +59,46 @@
 //   border: 2px solid #000;
 // }
 
-@media (max-width: 767px) {
+@media (max-width: 667px) {
+  :host ::ng-deep .datatable-body-row {
+    height: 85px !important;
+  }
+  :host ::ng-deep .datatable-header-cell-label {
+    padding: 5px !important;
+    margin: 10px;
+  }
+
+  :host ::ng-deep .datatable-body-cell-label {
+    font-size: 12px !important;
+    button {
+      font-size: 12px !important;
+    }
+  }
   .ngx-datatable.material {
     width: 100%;
     overflow-x: scroll;
   }
   :host ::ng-deep .datatable-header-cell {
-    font-size: 12px;
+    width: 100%;
+    font-size: 12px !important;
   }
   :host ::ng-deep .datatable-body-cell {
-    font-size: 12px;
+    font-size: 12px !important;
     margin: none !important;
     padding: none !important;
     width: 100%;
   }
 
   :host ::ng-deep .datatable-body-cell-label {
-    font-size: 9px;
+    button: {
+      font-size: 12px !important;
+    }
   }
 
   :host ::ng-deep .datatable-body-cell:last-child {
+    font-size: 12px !important;
     border-radius: 5px;
     width: 40px;
-    height: 20px;
+    height: 15px;
   }
-
 }

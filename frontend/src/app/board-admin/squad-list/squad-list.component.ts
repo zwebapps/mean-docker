@@ -60,7 +60,8 @@ export class SquadListComponent implements OnInit {
     private teamService: TeamService,
     private store: Store,
     private activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {
     this.notifier = notifier;
     this.filterLeague = new FormGroup({
@@ -337,5 +338,8 @@ export class SquadListComponent implements OnInit {
         this.store.dispatch(PlayerActions.loadPlayers());
       }
     });
+  }
+  redirectTo() {
+    this.router.navigate(["/admin/academies"]);
   }
 }

@@ -1,16 +1,16 @@
 ul.navbar-nav.width-90 {
   flex-basis: 90%;
 }
-ul.navbar-nav.width-10{
+ul.navbar-nav.width-10 {
   flex-basis: 10%;
 }
 ul.navbar-nav {
   li.nav-item {
     span.headingtitle {
       font-family: NotoSansRegular;
-      color: #FFF;
+      color: #fff;
       text-align: center;
-      padding-top:10px;
+      padding-top: 10px;
       display: inline-block;
       font-size: 30px !important;
       font-style: normal;
@@ -20,11 +20,11 @@ ul.navbar-nav {
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 667px) {
   ul.navbar-nav {
     li.nav-item {
       span.headingtitle {
-        font-size: 20px;
+        font-size: 15px !important;
       }
     }
   }
