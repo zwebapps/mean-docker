@@ -24,7 +24,7 @@
       </div>
     </ng-template>
   </ngx-datatable-row-detail>
-<ngx-datatable-column name="Fixture" prop="row" size="60">
+<ngx-datatable-column name="Fixture" prop="row">
   <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
                                   {{rowIndex+1}}
   </ng-template>
@@ -39,7 +39,7 @@
                 {{row.homeTeam?.teamName}}
   </ng-template>
 </ngx-datatable-column>
-<ngx-datatable-column [width]=5>
+<ngx-datatable-column>
   <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" id="competed">
               VS
   </ng-template>
@@ -49,7 +49,7 @@
                 {{row.awayTeam?.teamName}}
   </ng-template>
 </ngx-datatable-column>
-<ngx-datatable-column name="Actions" prop="row" [width]=50>
+<ngx-datatable-column name="Actions" prop="row">
   <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" class="d-flex" let-expanded="expanded">
       <button type="button" class="btn d-inline"  (click)="toggleExpandRow(row)">
         See Squad List
