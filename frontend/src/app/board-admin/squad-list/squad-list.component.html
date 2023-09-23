@@ -169,7 +169,7 @@
         <input
           type="text"
           [(ngModel)]="eidNo"
-          value=""
+          [value]="playerToEdit.emiratesIdNo"
           name="playerEidNo"
           id="playerEidNo"
           class="form-control"
@@ -232,8 +232,8 @@
           [settings]="dropdownSettings"
           [(ngModel)]="selectedPlayingUp"
           [data]="leagues"
-          (onSelect)="onItemSelect($event, 'playingUp')"
-          (onSelectAll)="onSelectAll($event, 'playingUp')"
+          (onSelect)="onItemSelect($event)"
+          (onSelectAll)="onSelectAll($event)"
           formControlName="playingUp"
         >
         </ng-multiselect-dropdown>

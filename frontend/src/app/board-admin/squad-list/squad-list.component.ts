@@ -89,7 +89,7 @@ export class SquadListComponent implements OnInit {
       playerEidNo: ["", [Validators.required, Validators.pattern(eidPattern), Validators.maxLength(18)]],
       eidFront: ["", Validators.required],
       eidBack: ["", Validators.required],
-      playingUp: ["", Validators.required]
+      playingUp: [""]
     });
 
     // this.playerForm.controls.league.disable();
@@ -121,19 +121,15 @@ export class SquadListComponent implements OnInit {
     return this.playerForm.controls;
   }
 
-  onItemSelect(item: any, type: any) {
-    if (type === "playingUp") {
-      if (this.selectedPlayingUp.includes(item._id)) {
-        this.selectedPlayingUp.splice(this.selectedPlayingUp.indexOf(item._id), 1);
-      } else {
-        this.selectedPlayingUp.push(item._id);
-      }
+  onItemSelect(item: any) {
+    if (this.selectedPlayingUp.includes(item._id)) {
+      this.selectedPlayingUp.splice(this.selectedPlayingUp.indexOf(item._id), 1);
+    } else {
+      this.selectedPlayingUp.push(item._id);
     }
   }
   onSelectAll(items: any, type: any) {
-    if (type === "playingUp") {
-      this.selectedPlayingUp.push(items.map((item: any) => item._id));
-    }
+    this.selectedPlayingUp.push(items.map((item: any) => item._id));
   }
 
   getImg = (image: string) => {
@@ -153,9 +149,13 @@ export class SquadListComponent implements OnInit {
         league: this.playerToEdit.league?._id,
         playerEidNo: this.playerToEdit.emiratesIdNo,
         eidFront: this.playerToEdit.eidFront,
-        eidBack: this.playerToEdit.eidBack,
-        playingUp: this.selectedPlayingUp
+        eidBack: this.playerToEdit.eidBack
       });
+      if (this.selectedPlayingUp.length > 0) {
+        this.playerForm.patchValue({
+          playingUp: this.selectedPlayingUp
+        });
+      }
       this.eidNo = this.playerToEdit.emiratesIdNo;
       // this.playerForm.controls.dob.disable();
     }
@@ -166,6 +166,13 @@ export class SquadListComponent implements OnInit {
     if (!isIlligible) {
       this.notifier.notify("error", "Player is not eligible for selected league!");
       return;
+    }
+    // emiratesIdNo is filled
+    if (this.playerForm.controls.playerEidNo.value) {
+      this.playerForm.get("playerEidNo").updateValueAndValidity();
+    }
+    if (this.playerForm.controls.playingUp.value) {
+      this.playerForm.get("playingUp").updateValueAndValidity();
     }
     if (this.playerForm.valid) {
       const playerObj = {
@@ -198,12 +205,12 @@ export class SquadListComponent implements OnInit {
     // console.log(keyCode, "keyCode");
     if (value.length === 3) {
       if (value.charAt(value.length - 1) !== "-") {
-        this.eidNo = `${value}-`;
+        this.playerToEdit.emiratesIdNo = `${value}-`;
       }
     }
     if (value.length === 8) {
       if (value.charAt(value.length - 1) !== "-") {
-        this.eidNo = `${value}-`;
+        this.playerToEdit.emiratesIdNo = `${value}-`;
       }
     }
 
