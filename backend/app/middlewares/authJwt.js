@@ -6,18 +6,23 @@ const Role = db.role;
 
 verifyToken = (req, res, next) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
-    jwt.verify(token,
-            config.secret,
-            (err, decoded) => {
-              if (err) {
-                return res.status(401).send({
-                  message: "Unauthorized!",
-                });
-              }
-              req.userId = decoded.id;
-              next();
-            });
+    const { authorization } = req.headers;
+    if(authorization){
+      const token = authorization.split(" ")[1];
+      jwt.verify(token,
+              config.secret,
+              (err, decoded) => {
+                if (err) {
+                  return res.status(401).send({
+                    message: "Unauthorized!",
+                  });
+                }
+                req.userId = decoded.id;
+                next();
+              });
+    } else {
+      res.status(401).json({ message: "No token provided" });
+    }
 } catch (error) {
     res.status(401).json({ message: "No token provided" });
 }
