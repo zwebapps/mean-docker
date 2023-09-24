@@ -3,6 +3,7 @@ import { AuthService } from "../_services/auth.service";
 import { StorageService } from "../_services/storage.service";
 import { Router } from "@angular/router";
 import { NotifierService } from "angular-notifier";
+import { NgxUiLoaderService } from "ngx-ui-loader";
 
 @Component({
   selector: "app-login",
@@ -20,7 +21,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
   errorMessage = "";
   roles: string[] = [];
 
-  constructor(private router: Router, private authService: AuthService, private storageService: StorageService, notifier: NotifierService) {
+  constructor(
+    private ngxService: NgxUiLoaderService,
+    private router: Router,
+    private authService: AuthService,
+    private storageService: StorageService,
+    notifier: NotifierService
+  ) {
     this.notifier = notifier;
   }
 
@@ -33,8 +40,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
   onSubmit(): void {
     const { username, password } = this.form;
     try {
+      this.ngxService.start();
       this.authService.login(username, password).subscribe({
         next: (data) => {
+          this.ngxService.stop();
           this.storageService.setSession(data.token);
           // delete token from data
           this.storageService.saveUser({ email: data.email, id: data.id, roles: data.roles, username: data.username });

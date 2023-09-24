@@ -6,6 +6,7 @@ import { EventBusService } from "./_shared/event-bus.service";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { environment } from "./../environments/environment";
+import { NgxUiLoaderService } from "ngx-ui-loader";
 
 // importing actions
 import * as UserActions from "./_store/actions/users.actions";
@@ -36,7 +37,9 @@ export class AppComponent {
 
   // user from store
   users$: any;
+
   constructor(
+    private ngxService: NgxUiLoaderService,
     private storageService: StorageService,
     private authService: AuthService,
     private eventBusService: EventBusService,
@@ -56,6 +59,7 @@ export class AppComponent {
       this.showModeratorBoard = this.roles.includes("ROLE_MODERATOR");
       this.username = user.username;
 
+      this.ngxService.start();
       // gettinga all listings for store
       if (this.showAdminBoard) {
         this.store.dispatch(UserActions.loadUsers());
@@ -67,6 +71,7 @@ export class AppComponent {
       this.store.dispatch(AcademyActions.loadAcademies());
       this.store.dispatch(PlayerActions.loadPlayers());
       this.store.dispatch(NotificationActions.loadNotifications());
+      this.ngxService.stop();
     }
 
     this.eventBusSub = this.eventBusService.on("logout", () => {

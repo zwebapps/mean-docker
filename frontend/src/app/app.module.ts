@@ -43,11 +43,21 @@ import { NotifierModule, NotifierOptions } from "angular-notifier";
 import { NgxImageZoomModule } from "ngx-image-zoom";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { provideClientHydration } from "@angular/platform-browser";
+import { NgxUiLoaderModule, NgxUiLoaderHttpModule, NgxUiLoaderConfig, SPINNER, POSITION, PB_DIRECTION } from "ngx-ui-loader";
 
 const environment = {
   production: false
 };
 
+const ngxUiLoaderConfig: NgxUiLoaderConfig = {
+  bgsColor: "red",
+  bgsPosition: POSITION.bottomCenter,
+  bgsSize: 40,
+  bgsType: SPINNER.rectangleBounce, // background spinner type
+  fgsType: SPINNER.chasingDots, // foreground spinner type
+  pbDirection: PB_DIRECTION.leftToRight, // progress bar direction
+  pbThickness: 5 // progress bar thickness
+};
 /**
  * Custom angular notifier options
  */
@@ -108,6 +118,8 @@ const customNotifierOptions: NotifierOptions = {
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: "serverApp" }),
+    NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
+    NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
     AppRoutingModule,
     BrowserAnimationsModule,
     NgxImageZoomModule,

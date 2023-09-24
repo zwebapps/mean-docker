@@ -62,6 +62,7 @@
     "ngx-image-magnifier": "^0.1.0",
     "ngx-image-zoom": "^2.1.0",
     "ngx-toastr": "^16.2.0",
+    "ngx-ui-loader": "^13.0.0",
     "npm-check-updates": "^16.10.12",
     "rxjs": "~7.8.0",
     "sweetalert2": "^11.7.25",
