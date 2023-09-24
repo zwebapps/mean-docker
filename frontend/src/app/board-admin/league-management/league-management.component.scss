@@ -127,6 +127,11 @@ form {
     }
   }
 }
+@media (max-width: 991px) {
+  .league-submit-btn {
+    justify-content: center;
+  }
+}
 
 @media (max-width: 667px) {
   input.form-control {
