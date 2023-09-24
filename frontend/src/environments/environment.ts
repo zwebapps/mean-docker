@@ -6,10 +6,10 @@ export const environment = {
   production: false,
   title: "Local Environment Heading",
   apiEndpoint: "/backend",
-  apiURL: "http://212-115-110-26.cloud-xip.com:3000"
+  apiURL: "http://yflpms.com:3000"
 };
 
-// "http://113-30-191-231.cloud-xip.com:3000"
+//  "http://212-115-110-26.cloud-xip.com:3000"
 
 /*
  * For easier debugging in development mode, you can import the following file
