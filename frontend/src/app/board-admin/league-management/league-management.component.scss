@@ -1,11 +1,12 @@
 form {
   input.form-control {
     line-height: 40px;
-    padding: 25px;
+    padding: 25px 20px 25px 0px;
     border-radius: 60px !important;
     border: 1px solid #000;
     background: hsl(0, 0%, 100%);
     width: 100%;
+    text-align: center;
   }
   input::placeholder {
     color: rgba(0, 0, 0, 0.5);
@@ -15,6 +16,7 @@ form {
     font-weight: 700;
     line-height: normal;
     margin-right: 5px;
+    align-items: center;
   }
   button.btn-default {
     background: #000000;
@@ -61,13 +63,20 @@ form {
     }
   }
 }
-
-@media (max-width: 1316px) {
+@media (max-width: 1430px) {
+  form {
+    input.form-control {
+      font-size: 15px !important;
+    }
+    input::placeholder {
+      font-size: 15px;
+    }
+  }
   .league-lable {
     margin: 10px;
     .league-text {
-      padding-top: 5px;
-      font-size: 16px;
+      font-size: 14px;
+      display: inline-table;
     }
     &:hover {
       .league-text {
@@ -78,6 +87,47 @@ form {
     }
   }
 }
+@media (max-width: 1316px) {
+  form {
+    input.form-control {
+      font-size: 16px !important;
+    }
+    input::placeholder {
+      font-size: 16px;
+    }
+  }
+  .league-lable {
+    margin: 10px;
+    .league-text {
+      font-size: 14px;
+      display: inline-table;
+    }
+    &:hover {
+      .league-text {
+        button {
+          visibility: visible;
+        }
+      }
+    }
+  }
+}
+@media (max-width: 1147px) {
+  .league-lable {
+    margin: 10px;
+    .league-text {
+      font-size: 16px;
+      display: inline-table;
+    }
+    &:hover {
+      .league-text {
+        button {
+          visibility: visible;
+        }
+      }
+    }
+  }
+}
+
 @media (max-width: 667px) {
   input.form-control {
     line-height: 16px;
