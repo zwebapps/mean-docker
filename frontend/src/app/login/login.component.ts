@@ -55,13 +55,16 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.redirectPage();
         },
         error: (err) => {
+          this.ngxService.stop();
           this.notifier.notify("error", "Login failed");
         },
         complete: () => {
+          this.ngxService.stop();
           this.notifier.notify("error", "login failed");
         }
       });
     } catch (err: any) {
+      this.ngxService.stop();
       this.notifier.notify("error", "login failed");
     }
   }

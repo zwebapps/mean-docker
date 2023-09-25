@@ -28,16 +28,16 @@ export const Approutes: Routes = [
         path: "login",
         component: LoginComponent
       },
-      {
-        path: "home",
-        canActivate: [AuthGuard],
-        component: HomeComponent
-      },
-      {
-        path: "index",
-        canActivate: [AuthGuard],
-        component: HomeComponent
-      },
+      // {
+      //   path: "home",
+      //   canActivate: [AuthGuard],
+      //   component: HomeComponent
+      // },
+      // {
+      //   path: "index",
+      //   canActivate: [AuthGuard],
+      //   component: HomeComponent
+      // },
       {
         path: "admin",
         canActivate: [AuthGuard],
@@ -86,19 +86,19 @@ export const Approutes: Routes = [
         canActivate: [AuthGuard],
         loadChildren: () => import("./referee/referee.module").then((m) => m.RefereeModule)
       },
-      {
-        path: "dashboard",
-        canActivate: [AuthGuard],
-        loadChildren: () => import("./dashboard/dashboard.module").then((m) => m.DashboardModule)
-      },
-      {
-        path: "about",
-        loadChildren: () => import("./about/about.module").then((m) => m.AboutModule)
-      },
-      {
-        path: "component",
-        loadChildren: () => import("./component/component.module").then((m) => m.ComponentsModule)
-      },
+      // {
+      //   path: "dashboard",
+      //   canActivate: [AuthGuard],
+      //   loadChildren: () => import("./dashboard/dashboard.module").then((m) => m.DashboardModule)
+      // },
+      // {
+      //   path: "about",
+      //   loadChildren: () => import("./about/about.module").then((m) => m.AboutModule)
+      // },
+      // {
+      //   path: "component",
+      //   loadChildren: () => import("./component/component.module").then((m) => m.ComponentsModule)
+      // },
       {
         path: "404",
         component: ErrorPageComponent

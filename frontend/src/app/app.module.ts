@@ -44,6 +44,7 @@ import { NgxImageZoomModule } from "ngx-image-zoom";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { provideClientHydration } from "@angular/platform-browser";
 import { NgxUiLoaderModule, NgxUiLoaderHttpModule, NgxUiLoaderConfig, SPINNER, POSITION, PB_DIRECTION } from "ngx-ui-loader";
+import { ErrorPageComponent } from "./error-page/error-page.component";
 
 const environment = {
   production: false
@@ -104,6 +105,7 @@ const customNotifierOptions: NotifierOptions = {
 
 @NgModule({
   declarations: [
+    ErrorPageComponent,
     AppComponent,
     SpinnerComponent,
     LoginComponent,

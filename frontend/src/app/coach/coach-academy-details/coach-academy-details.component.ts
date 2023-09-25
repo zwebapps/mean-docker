@@ -124,12 +124,21 @@ export class CoachAcademyDetailsComponent {
       if (!res.message) {
         this.academy = res.academy_id;
         this.team = res;
+        this.leagues = res.leagues;
+        if (this.leagues.length > 0) {
+          this.leagues = this.leagues.map((league: any) => {
+            return {
+              ...league,
+              selected: false
+            };
+          });
+        }
         this.getPlayersFromStore();
       } else {
         this.notifier.notify("Error", "Academy not found!");
       }
     });
-    this.getLeaguesFromStore();
+    // this.getLeaguesFromStore();
     this.getAcademiesFromStore();
     this.getTeamsFromStore();
     // get logged in coach
@@ -196,7 +205,11 @@ export class CoachAcademyDetailsComponent {
   };
   getPlayersFromStore() {
     this.store.select(PlayerSelectors.getPlayers).subscribe((players) => {
-      this.data = players.filter((player) => player.team && player.team._id === this.team._id);
+      this.data = players.filter((player) => player.academy);
+      this.data = this.data.filter(
+        (player: any) =>
+          player.team && player.team._id === this.team._id && player.team.academy_id && player.team.academy_id === this.academy._id
+      );
     });
   }
   getLeaguesFromStore() {
@@ -280,7 +293,7 @@ export class CoachAcademyDetailsComponent {
     }
   }
   onSelectAll(items: any) {
-    this.playerPlayingUp.push(items.map((item: any) => item._id));
+    this.playerPlayingUp = items.map((item: any) => item._id);
   }
   uploadEmiratesID(event: any) {
     const file: File = event.target.files[0];
