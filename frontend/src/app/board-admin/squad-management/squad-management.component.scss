@@ -36,7 +36,7 @@ button.btn-default {
 }
 .league-lable {
   display: flex;
-  height: 53px;
+  min-height: 53px;
   flex-direction: column;
   justify-content: center;
   flex-shrink: 0;

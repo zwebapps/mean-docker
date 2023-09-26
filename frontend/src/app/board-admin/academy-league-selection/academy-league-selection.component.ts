@@ -37,7 +37,16 @@ export class AcademyLeagueSelectionComponent implements OnInit {
     // now get the leagues and map
     this.store.select(LeagueSelectors.getLeagues).subscribe((leagues) => {
       if (leagues) {
-        this.leagues = leagues;
+        this.leagues = leagues.slice().sort((a, b) => {
+          const aNumber = parseInt(a?.leagueName.split(" ")[1]);
+          const bNumber = parseInt(b?.leagueName.split(" ")[1]);
+
+          if (isNaN(aNumber) || isNaN(bNumber)) {
+            return a?.leagueName.localeCompare(b?.leagueName);
+          }
+
+          return aNumber - bNumber;
+        });
       }
     });
     let id = this.activatedRoute.snapshot.params["id"];

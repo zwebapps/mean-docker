@@ -20,7 +20,7 @@
               formControlName="league"
               size="5"
               aria-label="Default select multiple"
-              (change)="getLeague($event)"
+              (change)="getTeamsForLeague($event)"
             >
               <ng-container *ngFor="let league of leagues">
                 <option value="{{ league._id }}" class="mb-1">{{ league.leagueName }}</option>
@@ -42,8 +42,8 @@
               formControlName="homeTeam"
               size="5"
               aria-label="Default select multiple"
-              (change)="filterTeams($event, 'home')"
             >
+              <!-- (change)="filterTeams($event, 'home')" -->
               <ng-container *ngFor="let team of homeTeams">
                 <option value="{{ team._id }}" class="mb-1">{{ team.teamName }}</option>
               </ng-container>
@@ -64,8 +64,8 @@
               formControlName="awayTeam"
               size="5"
               aria-label="Default select multiple"
-              (change)="filterTeams($event, 'away')"
             >
+              <!-- (change)="filterTeams($event, 'away')" -->
               <ng-container *ngFor="let team of awayTeams">
                 <option value="{{ team._id }}" class="mb-1">{{ team.teamName }}</option>
               </ng-container>

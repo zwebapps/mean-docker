@@ -139,10 +139,10 @@ export class RefereeDashboardComponent implements OnInit {
       this.store.dispatch(UserActions.loadUsers());
     });
   }
-  getLeague(event: any) {
+  getTeamsForLeague(event: any) {
     this.selectedLeague = event.target.value;
     if (this.selectedLeague) {
-      // reset teams and filter again
+      // // reset teams and filter again
       this.homeTeams = this.allTeams;
       this.awayTeams = this.allTeams;
 
