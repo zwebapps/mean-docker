@@ -22,7 +22,7 @@ exports.moderatorBoard = (req, res) => {
 
 exports.getAllUsers = (req, res) => {
   // get users
-   User.find().populate("roles").exec((err, users) => {
+   User.find().populate("roles").sort({ createdAt: -1 }).exec((err, users) => {
     if(err){
       return res.status(500).send({ message: err });
     }

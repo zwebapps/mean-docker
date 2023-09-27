@@ -14,7 +14,6 @@ const Academy = mongoose.model(
     },
     color: {
       type: String,
-      unique : true
     },
     coach: [{
           type: mongoose.Schema.Types.ObjectId,

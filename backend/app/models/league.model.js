@@ -11,7 +11,6 @@ const League = mongoose.model(
     leagueAgeLimit: {
       type: String,
       required: true,
-      required: true
     },
     user_id: {
       type: mongoose.Schema.Types.ObjectId,

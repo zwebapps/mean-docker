@@ -113,14 +113,20 @@ export class TeamManagementComponent implements OnInit {
                   academyData.user = {
                     createdBy: user._id
                   };
-                  this.academyService.createAcademy(academyData).subscribe((res: any) => {
-                    if (res._id) {
-                      this.notifier.notify("success", "Academy created successfully!");
-                      this.academyForm.reset();
-                      this.store.dispatch(AcademyActions.loadAcademies());
-                      this.store.dispatch(UserActions.loadUsers());
+                  this.academyService.createAcademy(academyData).subscribe(
+                    (res: any) => {
+                      debugger;
+                      if (res._id) {
+                        this.notifier.notify("success", "Academy created successfully!");
+                        this.academyForm.reset();
+                        this.store.dispatch(AcademyActions.loadAcademies());
+                        this.store.dispatch(UserActions.loadUsers());
+                      }
+                    },
+                    (err: any) => {
+                      this.notifier.notify("error", "Please try again!");
                     }
-                  });
+                  );
                 }
               });
             }
@@ -133,13 +139,18 @@ export class TeamManagementComponent implements OnInit {
         logo: this.academyLogo,
         color: this.academyForm.value.academyColor
       };
-      this.academyService.updateAcademy(this.academyToEdit, academyData).subscribe((res: any) => {
-        if (res) {
-          this.notifier.notify("success", "Academy updated successfully!");
-          this.academyForm.reset();
-          this.store.dispatch(AcademyActions.loadAcademies());
+      this.academyService.updateAcademy(this.academyToEdit, academyData).subscribe(
+        (res: any) => {
+          if (res) {
+            this.notifier.notify("success", "Academy updated successfully!");
+            this.academyForm.reset();
+            this.store.dispatch(AcademyActions.loadAcademies());
+          }
+        },
+        (err: any) => {
+          this.notifier.notify("error", "Please try again!");
         }
-      });
+      );
     }
   }
   onEditPatch(academy: any) {
@@ -179,13 +190,18 @@ export class TeamManagementComponent implements OnInit {
 
   deleteSelection(value: any) {
     if (value) {
-      this.academyService.deleteAcademy(this.academyToDel).subscribe((result: any) => {
-        if (result.message) {
-          this.notifier.notify("success", result.message);
-          this.store.dispatch(AcademyActions.loadAcademies());
-          this.getAcademiesFromStore();
+      this.academyService.deleteAcademy(this.academyToDel).subscribe(
+        (result: any) => {
+          if (result.message) {
+            this.notifier.notify("success", result.message);
+            this.store.dispatch(AcademyActions.loadAcademies());
+            this.getAcademiesFromStore();
+          }
+        },
+        (err: any) => {
+          this.notifier.notify("error", "Please try again!");
         }
-      });
+      );
     }
   }
 }

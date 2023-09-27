@@ -42,14 +42,19 @@ export class AcademyDetailComponent implements OnInit {
 
   ngOnInit(): void {
     let id = this.activatedRoute.snapshot.params["id"];
-    this.academyService.getAcademyById(id).subscribe((res: any) => {
-      if (res) {
-        this.academy = res;
-        this.getTeamsByAcademy(this.academy._id);
-      } else {
-        this.notifier.notify("error", "Academy not found!");
+    this.academyService.getAcademyById(id).subscribe(
+      (res: any) => {
+        if (res) {
+          this.academy = res;
+          this.getTeamsByAcademy(this.academy._id);
+        } else {
+          this.notifier.notify("error", "Academy not found!");
+        }
+      },
+      (err) => {
+        this.notifier.notify("error", "Please try again!");
       }
-    });
+    );
   }
   onSubmit() {
     if (!this.teamForm.value.teamName) {
@@ -83,16 +88,22 @@ export class AcademyDetailComponent implements OnInit {
     return `${this.apiURL}/static/${image}`;
   };
   getTeamsByAcademy = (academyId: string): any => {
-    this.teamService.getTeamsByAcademy(academyId).subscribe((res: any) => {
-      if (!res.message) {
-        this.teams = res;
-      } else {
-        this.teams = [];
+    this.teamService.getTeamsByAcademy(academyId).subscribe(
+      (res: any) => {
+        if (Array.isArray(res)) {
+          this.teams = res;
+        } else {
+          this.notifier.notify("error", res.message);
+          this.teams = [];
+        }
+        // else {
+        //   this.notifier.notify("error", res.message);
+        // }
+      },
+      (err) => {
+        this.notifier.notify("error", "Please try again!");
       }
-      // else {
-      //   this.notifier.notify("error", res.message);
-      // }
-    });
+    );
   };
   onTeamClick = (team: any) => {
     this.router.navigate([`/admin/academy/team/${team._id}`]);

@@ -260,30 +260,40 @@ export class SquadListComponent implements OnInit {
   uploadEmiratesID(event: any) {
     const file: File = event.target.files[0];
     const inputName = event.target.name;
-    this.playerService.upload(file).subscribe((res: any) => {
-      if (res) {
-        this.eidImages[inputName] = res.filename;
-        try {
-          this.notifier.notify("success", `${res.message}`);
-        } catch (error) {
-          console.log(error);
+    this.playerService.upload(file).subscribe(
+      (res: any) => {
+        if (res) {
+          this.eidImages[inputName] = res.filename;
+          try {
+            this.notifier.notify("success", `${res.message}`);
+          } catch (error) {
+            console.log(error);
+          }
         }
+      },
+      (err) => {
+        this.notifier.notify("error", "Please try again!");
       }
-    });
+    );
   }
   playerbyEmirateId(event: any) {
     const id = event.target.value;
     if (id && id.length > 17) {
       const pattern = new RegExp("^\\d\\d\\d\\-\\d\\d\\d\\d\\-\\d\\d\\d\\d\\d\\d\\d\\-\\d$", "gm");
       if (pattern.test(id)) {
-        this.playerService.getPlayerbyEmirateId(id).subscribe((res) => {
-          if (res._id || res._emiratesIdNo) {
-            this.playerExists = true;
-            // this.notifier.notify("error", "Player having this Emirates ID already exists!");
-          } else {
-            this.playerExists = false;
+        this.playerService.getPlayerbyEmirateId(id).subscribe(
+          (res) => {
+            if (res._id || res._emiratesIdNo) {
+              this.playerExists = true;
+              // this.notifier.notify("error", "Player having this Emirates ID already exists!");
+            } else {
+              this.playerExists = false;
+            }
+          },
+          (err) => {
+            this.notifier.notify("error", "Please try again!");
           }
-        });
+        );
       }
     }
   }
@@ -315,29 +325,44 @@ export class SquadListComponent implements OnInit {
   }
 
   deletePlayer(value: any) {
-    this.playerService.deletePlayer(value).subscribe((result: any) => {
-      if (result) {
-        this.notifier.notify(result.type, result.message);
+    this.playerService.deletePlayer(value).subscribe(
+      (result: any) => {
+        if (result) {
+          this.notifier.notify(result.type, result.message);
+        }
+        this.store.dispatch(PlayerActions.loadPlayers());
+      },
+      (err) => {
+        this.notifier.notify("error", "Please try again!");
       }
-      this.store.dispatch(PlayerActions.loadPlayers());
-    });
+    );
   }
   userById(id: any) {
-    this.userService.getUserById(id).subscribe((result: any) => {
-      if (!result.message) {
-        this.coaches = Array.isArray(result) ? result : [result];
-      } else {
-        this.notifier.notify("error", "Coach not found");
+    this.userService.getUserById(id).subscribe(
+      (result: any) => {
+        if (!result.message) {
+          this.coaches = Array.isArray(result) ? result : [result];
+        } else {
+          this.notifier.notify("error", "Coach not found");
+        }
+      },
+      (err) => {
+        this.notifier.notify("error", "Please try again!");
       }
-    });
+    );
   }
   approve(id: any) {
-    this.playerService.approvePlayer(id, { playerStatus: "Approved" }).subscribe((result: any) => {
-      if (result) {
-        this.notifier.notify("success", "Player status is approved");
-        this.store.dispatch(PlayerActions.loadPlayers());
+    this.playerService.approvePlayer(id, { playerStatus: "Approved" }).subscribe(
+      (result: any) => {
+        if (result) {
+          this.notifier.notify("success", "Player status is approved");
+          this.store.dispatch(PlayerActions.loadPlayers());
+        }
+      },
+      (err) => {
+        this.notifier.notify("error", "Please try again!");
       }
-    });
+    );
   }
   redirectTo() {
     this.router.navigate(["/admin/academies"]);

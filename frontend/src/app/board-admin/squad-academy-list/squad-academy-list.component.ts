@@ -33,26 +33,36 @@ export class SquadAcademyListComponent implements OnInit {
 
   ngOnInit(): void {
     let id = this.activatedRoute.snapshot.params["id"];
-    this.academyService.getAcademyById(id).subscribe((res: any) => {
-      if (res) {
-        this.academy = res;
-      } else {
-        this.notifier.notify("error", "Academy not found!");
+    this.academyService.getAcademyById(id).subscribe(
+      (res: any) => {
+        if (res) {
+          this.academy = res;
+        } else {
+          this.notifier.notify("error", "Academy not found!");
+        }
+      },
+      (err) => {
+        this.notifier.notify("error", "Please try again!");
       }
-    });
+    );
     this.getTeamsByAcademy(id);
   }
   onTeamClick(team: any) {
     this.router.navigate([`/admin/academy/team/${team._id}`]);
   }
   getTeamsByAcademy(academyId: string) {
-    this.teamService.getTeamsByAcademy(academyId).subscribe((res: any) => {
-      if (!res.message) {
-        this.teams = res;
-      } else {
-        this.notifier.notify("error", "Teams not found!");
+    this.teamService.getTeamsByAcademy(academyId).subscribe(
+      (res: any) => {
+        if (!res.message) {
+          this.teams = res;
+        } else {
+          this.notifier.notify("error", "Teams not found!");
+        }
+      },
+      (err) => {
+        this.notifier.notify("error", "Please try again!");
       }
-    });
+    );
   }
   getImg = (image: string) => {
     return `${this.apiURL}/static/${image}`;

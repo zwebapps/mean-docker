@@ -75,9 +75,14 @@ export class UserManagementComponent implements OnInit {
   }
 
   getUsersFromStore() {
-    this.store.select(UserSelectors.getUsers).subscribe((users) => {
-      this.data = users.filter((user: any) => user.username !== this.loggedInUser.username);
-    });
+    this.store.select(UserSelectors.getUsers).subscribe(
+      (users) => {
+        this.data = users.filter((user: any) => user.username !== this.loggedInUser.username);
+      },
+      (error) => {
+        this.notifier.notify("error", "Please try again!");
+      }
+    );
   }
   toggleAcademy = (event: any) => {
     const role = event.target.value;
@@ -95,20 +100,25 @@ export class UserManagementComponent implements OnInit {
       const role = this.userToEdit?.roles[0];
       if (role.name === "coach") {
         this.toggleAcademySelection = true;
-        this.academyService.getAcademyByCoachId(this.userToEdit._id).subscribe((res) => {
-          if (res) {
-            // Patch the values to form
-            this.userForm.patchValue({
-              username: this.userToEdit.username,
-              firstname: this.userToEdit.firstname,
-              lastname: this.userToEdit.lastname,
-              contact: this.userToEdit?.contact,
-              email: this.userToEdit.email,
-              role: this.userToEdit?.roles[0]?.name,
-              academy: res?._id
-            });
+        this.academyService.getAcademyByCoachId(this.userToEdit._id).subscribe(
+          (res) => {
+            if (res) {
+              // Patch the values to form
+              this.userForm.patchValue({
+                username: this.userToEdit.username,
+                firstname: this.userToEdit.firstname,
+                lastname: this.userToEdit.lastname,
+                contact: this.userToEdit?.contact,
+                email: this.userToEdit.email,
+                role: this.userToEdit?.roles[0]?.name,
+                academy: res?._id
+              });
+            }
+          },
+          (error) => {
+            this.notifier.notify("error", "Please try again!");
           }
-        });
+        );
       } else {
         this.toggleAcademySelection = false;
         // Patch the values to form
@@ -126,18 +136,28 @@ export class UserManagementComponent implements OnInit {
   }
 
   getAcademyByCoach = (id: any): any => {
-    this.academyService.getAcademyByCoachId(id).subscribe((res) => {
-      return res;
-    });
+    this.academyService.getAcademyByCoachId(id).subscribe(
+      (res) => {
+        return res;
+      },
+      (error) => {
+        this.notifier.notify("error", "Please try again!");
+      }
+    );
   };
 
   deleteUser(value: any) {
-    this.userService.deleteUser(value).subscribe((result: any) => {
-      if (result) {
-        this.notifier.notify("success", "User deleted successfully!");
-        this.store.dispatch(UserActions.loadUsers());
+    this.userService.deleteUser(value).subscribe(
+      (result: any) => {
+        if (result) {
+          this.notifier.notify("success", "User deleted successfully!");
+          this.store.dispatch(UserActions.loadUsers());
+        }
+      },
+      (error) => {
+        this.notifier.notify("error", "Please try again!");
       }
-    });
+    );
   }
   get f() {
     return this.userForm.controls;
@@ -157,29 +177,39 @@ export class UserManagementComponent implements OnInit {
         email: this.userForm.value.email,
         role: this.userForm.value.role
       };
-      this.userService.createUser(userObj).subscribe((result: any) => {
-        if (result) {
-          if (this.userForm.value.academy) {
-            let coachId = result._id;
-            this.associateCoach(coachId);
+      this.userService.createUser(userObj).subscribe(
+        (result: any) => {
+          if (result) {
+            if (this.userForm.value.academy) {
+              let coachId = result._id;
+              this.associateCoach(coachId);
+            }
+            this.notifier.notify("success", "User created successfully!");
+            this.userForm.reset();
+            this.store.dispatch(UserActions.loadUsers());
+            this.submitted = false;
           }
-          this.notifier.notify("success", "User created successfully!");
-          this.userForm.reset();
-          this.store.dispatch(UserActions.loadUsers());
-          this.submitted = false;
+        },
+        (error) => {
+          this.notifier.notify("error", "Please try again!");
         }
-      });
+      );
     }
   };
   associateCoach(coachId: any) {
     if (this.userForm.value.academy) {
-      this.academyService.updateAcademyCoach(this.userForm.value.academy, { coach: coachId }).subscribe((academy: any) => {
-        if (academy) {
-          // this.notifier.notify("success", "Coach created successfully!");
-          this.store.dispatch(UserActions.loadUsers());
-          this.displayAddForm = false;
+      this.academyService.updateAcademyCoach(this.userForm.value.academy, { coach: coachId }).subscribe(
+        (academy: any) => {
+          if (academy) {
+            // this.notifier.notify("success", "Coach created successfully!");
+            this.store.dispatch(UserActions.loadUsers());
+            this.displayAddForm = false;
+          }
+        },
+        (error) => {
+          this.notifier.notify("error", "Please try again!");
         }
-      });
+      );
     }
   }
   onFormSubmit = () => {
@@ -193,16 +223,21 @@ export class UserManagementComponent implements OnInit {
       this.notifier.notify("error", "Please fill all the required fields!");
       return;
     } else {
-      this.userService.updateUser(this.userToEdit._id, this.userForm.value).subscribe((result: any) => {
-        if (!result.message) {
-          this.notifier.notify("success", "User updated successfully!");
-          this.store.dispatch(UserActions.loadUsers());
-          this.displayEditForm = false;
-          this.associateCoach(this.userToEdit._id);
-        } else {
-          this.notifier.notify("error", "User updating failed!");
+      this.userService.updateUser(this.userToEdit._id, this.userForm.value).subscribe(
+        (result: any) => {
+          if (!result.message) {
+            this.notifier.notify("success", "User updated successfully!");
+            this.store.dispatch(UserActions.loadUsers());
+            this.displayEditForm = false;
+            this.associateCoach(this.userToEdit._id);
+          } else {
+            this.notifier.notify("error", "User updating failed!");
+          }
+        },
+        (error) => {
+          this.notifier.notify("error", "Please try again!");
         }
-      });
+      );
     }
   };
 
