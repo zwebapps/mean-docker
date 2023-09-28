@@ -120,37 +120,58 @@ export class CoachAcademyDetailsComponent {
     // get the team id
     let teamId = this.activatedRoute.snapshot.params["id"];
     // Now get team by id
-    this.teamService.getTeamById(teamId).subscribe((res: any) => {
-      if (!res.message) {
-        this.academy = res.academy_id;
-        this.team = res;
-        this.leagues = res.leagues;
-        if (this.leagues.length > 0) {
-          this.leagues = this.leagues.map((league: any) => {
-            return {
-              ...league,
-              selected: false
-            };
-          });
+    this.teamService.getTeamById(teamId).subscribe(
+      (res: any) => {
+        if (!res.message) {
+          this.academy = res.academy_id;
+          this.team = res;
+          this.leagues = res.leagues;
+          if (this.leagues.length > 0) {
+            this.leagues = this.leagues.map((league: any) => {
+              return {
+                ...league,
+                selected: false
+              };
+            });
+          }
+          this.getPlayersFromStore();
+        } else {
+          this.notifier.notify("Error", "Academy not found!");
         }
-        this.getPlayersFromStore();
-      } else {
+      },
+      (error: any) => {
         this.notifier.notify("Error", "Academy not found!");
       }
-    });
+    );
     // this.getLeaguesFromStore();
     this.getAcademiesFromStore();
     this.getTeamsFromStore();
     // get logged in coach
     this.coach = this.storageService.getUser();
-
+    if (this.storageService.getUser()) {
+      const coachId = this.storageService.getUser()?.id;
+      this.userService.getUserById(coachId).subscribe(
+        (res: any) => {
+          if (res) {
+            this.coach = res;
+          }
+        },
+        (err) => {
+          this.notifier.notify("error", "Please try again!");
+        }
+      );
+    }
     // get all the saved files
-    this.palyerService.getListFiles().subscribe((res: any) => {
-      if (res) {
-        this.images = res;
+    this.palyerService.getListFiles().subscribe(
+      (res: any) => {
+        if (res) {
+          this.images = res;
+        }
+      },
+      (err) => {
+        this.notifier.notify("error", "Please try again!");
       }
-      console.log(res, "saved files on nodejs");
-    });
+    );
   }
   getImg = (image: string) => {
     return `${this.apiURL}/static/${image}`;
@@ -192,70 +213,108 @@ export class CoachAcademyDetailsComponent {
         }
       };
 
-      this.palyerService.createPlayer(playerObj).subscribe((res: any) => {
-        if (res) {
-          this.notifier.notify("success", res.message);
-          this.playerForm.reset();
-          this.submitted = false;
-          this.store.dispatch(PlayerActions.loadPlayers());
-          this.getPlayersFromStore();
+      this.palyerService.createPlayer(playerObj).subscribe(
+        (res: any) => {
+          if (res) {
+            this.notifier.notify("success", res.message);
+            this.playerForm.reset();
+            this.submitted = false;
+            this.store.dispatch(PlayerActions.loadPlayers());
+            this.getPlayersFromStore();
+            if (this.selectedLeague) {
+              this.data = this.data.filter((player: any) => player.league?._id === this.selectedLeague?._id);
+            }
+          }
+        },
+        (err) => {
+          this.notifier.notify("error", "Please try again!");
         }
-      });
+      );
     }
   };
   getPlayersFromStore() {
-    this.store.select(PlayerSelectors.getPlayers).subscribe((players) => {
-      this.data = players.filter((player) => player.academy);
-      this.data = this.data.filter(
-        (player: any) =>
-          player.team && player.team._id === this.team._id && player.team.academy_id && player.team.academy_id === this.academy._id
-      );
-    });
+    this.store.select(PlayerSelectors.getPlayers).subscribe(
+      (players) => {
+        this.data = players.filter((player) => player.academy);
+        this.data = this.data.filter(
+          (player: any) =>
+            player.team && player.team._id === this.team._id && player.team.academy_id && player.team.academy_id === this.academy._id
+        );
+      },
+      (err) => {
+        this.notifier.notify("error", "Please try again!");
+      }
+    );
   }
   getLeaguesFromStore() {
     // getting leagues
-    this.store.select(LeagueSelectors.getLeagues).subscribe((leagues) => {
-      if (leagues) {
-        this.leagues = leagues.map((league: any) => {
-          return {
-            ...league,
-            selected: false
-          };
-        });
+    this.store.select(LeagueSelectors.getLeagues).subscribe(
+      (leagues) => {
+        if (leagues) {
+          this.leagues = leagues.map((league: any) => {
+            return {
+              ...league,
+              selected: false
+            };
+          });
+        }
+      },
+      (err) => {
+        this.notifier.notify("error", "Please try again!");
       }
-    });
+    );
   }
   getTeamsFromStore() {
     // getting leagues
-    this.store.select(TeamSelectors.getTeams).subscribe((teams) => {
-      if (teams) {
-        this.teams = teams;
+    this.store.select(TeamSelectors.getTeams).subscribe(
+      (teams) => {
+        if (teams) {
+          this.teams = teams;
+        }
+      },
+      (err) => {
+        this.notifier.notify("error", "Please try again!");
       }
-    });
+    );
   }
   getAcademiesFromStore() {
     // getting leagues
-    this.store.select(AcademiesSelectors.getAcademies).subscribe((academies) => {
-      if (academies) {
-        this.academies = academies;
+    this.store.select(AcademiesSelectors.getAcademies).subscribe(
+      (academies) => {
+        if (academies) {
+          this.academies = academies;
+        }
+      },
+      (err) => {
+        this.notifier.notify("error", "Please try again!");
       }
-    });
+    );
   }
   edit(value: any) {
-    this.userService.deleteUser(value).subscribe((result: any) => {
-      this.store.dispatch(UserActions.loadUsers());
-    });
+    this.userService.deleteUser(value).subscribe(
+      (result: any) => {
+        this.store.dispatch(UserActions.loadUsers());
+      },
+      (err) => {
+        this.notifier.notify("error", "Please try again!");
+      }
+    );
   }
 
   deletePlayer(value: any) {
-    this.palyerService.deletePlayer(value).subscribe((result: any) => {
-      if (result) {
-        this.notifier.notify(result.type, result.message);
-        this.store.dispatch(PlayerActions.loadPlayers());
-        this.data = [];
-        this.getPlayersFromStore();
+    this.palyerService.deletePlayer(value).subscribe(
+      (result: any) => {
+        if (result) {
+          this.notifier.notify(result.type, result.message);
+          this.store.dispatch(PlayerActions.loadPlayers());
+          this.data = [];
+          this.getPlayersFromStore();
+        }
+      },
+      (err) => {
+        this.notifier.notify("error", "Please try again!");
       }
-    });
+    );
   }
   onCheckBox(lg: any) {
     this.playerForm.patchValue({
@@ -266,19 +325,25 @@ export class CoachAcademyDetailsComponent {
     this.playerForm.patchValue({
       league: this.selectedLeague.name
     });
+
     this.leagues = this.leagues.map((league: any) => {
       return {
         ...league,
         selected: lg._id === league._id ? true : false
       };
     });
-
+    // filter leagues to display elder leagues
     this.dropleagues = this.leagues.filter((league: any) => !league.selected);
     if (this.playerForm.controls.dob.valid) {
-      const age = this.getCalculateAge(this.playerForm.controls.dob.value);
+      // filter on selected league and dob
       this.dropleagues = this.leagues.filter(
-        (league: any) => this.getCalculateAge(league.leagueAgeLimit) > age && league._id !== this.selectedLeague._id
+        (league: any) =>
+          moment(this.playerForm.controls.dob.value).isAfter(league.leagueAgeLimit) &&
+          moment(this.selectedLeague.leagueAgeLimit).isAfter(league.leagueAgeLimit)
       );
+    } else {
+      // filter only selected league
+      this.dropleagues = this.leagues.filter((league: any) => moment(this.selectedLeague.leagueAgeLimit).isAfter(league.leagueAgeLimit));
     }
     if (this.selectedLeague) {
       this.getPlayersFromStore();
@@ -298,18 +363,23 @@ export class CoachAcademyDetailsComponent {
   uploadEmiratesID(event: any) {
     const file: File = event.target.files[0];
     const inputName = event.target.name;
-    this.palyerService.upload(file).subscribe((res: any) => {
-      if (res) {
-        this.eidImages[inputName] = res.filename;
-        try {
-          this.notifier.notify("success", `${res.message}`);
-          this.store.dispatch(PlayerActions.loadPlayers());
-          this.getPlayersFromStore();
-        } catch (error) {
-          console.log(error);
+    this.palyerService.upload(file).subscribe(
+      (res: any) => {
+        if (res) {
+          this.eidImages[inputName] = res.filename;
+          try {
+            this.notifier.notify("success", `${res.message}`);
+            this.store.dispatch(PlayerActions.loadPlayers());
+            this.getPlayersFromStore();
+          } catch (error) {
+            console.log(error);
+          }
         }
+      },
+      (err) => {
+        this.notifier.notify("error", "Please try again!");
       }
-    });
+    );
   }
   getImages = (event: any) => {
     const file: File[] = event.target.files;
@@ -366,14 +436,19 @@ export class CoachAcademyDetailsComponent {
     if (id && id.length > 17) {
       const pattern = new RegExp("^\\d\\d\\d\\-\\d\\d\\d\\d\\-\\d\\d\\d\\d\\d\\d\\d\\-\\d$", "gm");
       if (pattern.test(id)) {
-        this.palyerService.getPlayerbyEmirateId(id).subscribe((res) => {
-          if (res._id || res._emiratesIdNo) {
-            this.playerExists = true;
-            this.notifier.notify("error", "Player having this Emirates ID already exists!");
-          } else {
-            this.playerExists = false;
+        this.palyerService.getPlayerbyEmirateId(id).subscribe(
+          (res) => {
+            if (res._id || res._emiratesIdNo) {
+              this.playerExists = true;
+              this.notifier.notify("error", "Player having this Emirates ID already exists!");
+            } else {
+              this.playerExists = false;
+            }
+          },
+          (err) => {
+            console.log("Emirates id is wrong", err);
           }
-        });
+        );
       }
     }
   }
@@ -418,16 +493,21 @@ export class CoachAcademyDetailsComponent {
       );
       if (dataString["Sheet1"].length > 0) {
         this.notifier.notify("info", `Importing players...`);
-        this.palyerService.importPlayers(dataString["Sheet1"]).subscribe((res: any) => {
-          this.insertionStarted = false;
-          if (res && res.players) {
-            this.notifier.notify("success", `${res.players.length} Players added`);
-            this.store.dispatch(PlayerActions.loadPlayers());
-            this.getPlayersFromStore();
-          } else {
-            this.notifier.notify("error", res.message);
+        this.palyerService.importPlayers(dataString["Sheet1"]).subscribe(
+          (res: any) => {
+            this.insertionStarted = false;
+            if (res && res.players) {
+              this.notifier.notify("success", `${res.players.length} Players added`);
+              this.store.dispatch(PlayerActions.loadPlayers());
+              this.getPlayersFromStore();
+            } else {
+              this.notifier.notify("error", res.message);
+            }
+          },
+          (err) => {
+            this.notifier.notify("error", "Please try again!");
           }
-        });
+        );
       } else {
         this.notifier.notify("error", "No players is eligible for selected league!");
         this.resetCsvUploads();
@@ -489,8 +569,11 @@ export class CoachAcademyDetailsComponent {
     let ageDate = new Date(ageDifMs);
     let age = Math.abs(ageDate.getUTCFullYear() - 1970);
     if (this.selectedLeague) {
+      // filter on selected league and dob
       this.dropleagues = this.leagues.filter(
-        (league: any) => this.getCalculateAge(league.leagueAgeLimit) > age && league._id !== this.selectedLeague._id
+        (league: any) =>
+          moment(this.playerForm.controls.dob.value).isAfter(league.leagueAgeLimit) &&
+          moment(this.selectedLeague.leagueAgeLimit).isAfter(league.leagueAgeLimit)
       );
     }
   };

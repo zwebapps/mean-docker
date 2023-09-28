@@ -262,7 +262,7 @@ exports.bulkUploadPlayers = async (req, resp, next) => {
 /* GET all players listing. */
 exports.getAllPlayers = (req, res) => {
   try {
-    Player.find().populate("league").populate("academy").populate("team").populate("user").exec((err, players) => {
+    Player.find({}).populate("league").populate("academy").populate("team").populate("user").sort({ createdAt: -1}).exec((err, players) => {
       if(err){
         return res.status(500).send({ message: err });
       }

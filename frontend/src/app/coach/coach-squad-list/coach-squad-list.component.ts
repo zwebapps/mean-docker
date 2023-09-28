@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output, ViewChild } from "@angular/core
 import { Store } from "@ngrx/store";
 import { ColumnMode } from "@swimlane/ngx-datatable";
 import { UserService } from "src/app/_services/user.service";
-import * as PlayerSelectors from "../../_store/selectors/players.selectors";
+import * as LeagueSelectors from "../../_store/selectors/leagues.selectors";
 import { Router } from "@angular/router";
 import { environment } from "src/environments/environment";
 import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
@@ -17,6 +17,7 @@ export class CoachSquadListComponent {
   @Output() delPlayer = new EventEmitter<string>();
   options = {};
   @Input() players: any = [];
+  leagues: any = [];
   columns: any = [{ prop: "firstname" }, { name: "lastname" }, { name: "username" }, { name: "email" }];
   loadingIndicator = true;
   reorderable = true;
@@ -26,7 +27,9 @@ export class CoachSquadListComponent {
   public imgSrc: any = null;
   constructor(private modalService: NgbModal, private store: Store, private userService: UserService, private router: Router) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getLeaguesFromStore();
+  }
 
   open(content: any, imgSrc: any) {
     this.imgSrc = `${this.apiURL}/static/${imgSrc}`;
@@ -39,7 +42,19 @@ export class CoachSquadListComponent {
       }
     );
   }
-
+  getLeaguesFromStore() {
+    // getting leagues
+    this.store.select(LeagueSelectors.getLeagues).subscribe((leagues) => {
+      if (leagues) {
+        this.leagues = leagues;
+      }
+    });
+  }
+  getLeague(leagueID: any) {
+    if (leagueID) {
+      return this.leagues.find((lg: any) => lg._id === leagueID);
+    }
+  }
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return "by pressing ESC";

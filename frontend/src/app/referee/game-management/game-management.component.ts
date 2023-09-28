@@ -8,6 +8,7 @@ import * as FixtureSelectors from "../../_store/selectors/fixures.selectors";
 import * as FixureActions from "../../_store/actions/fixures.actions";
 import { FixtureService } from "src/app/_services/fixture.service";
 import { NotifierService } from "angular-notifier";
+import * as moment from "moment";
 
 @Component({
   selector: "app-game-management",
@@ -46,19 +47,28 @@ export class GameManagementComponent implements OnInit {
   }
 
   edit(value: any) {
-    console.log(value);
-    this.userService.deleteUser(value).subscribe((result: any) => {
-      console.log(result);
-      this.store.dispatch(UserActions.loadUsers());
-    });
+    this.userService.deleteUser(value).subscribe(
+      (result: any) => {
+        console.log(result);
+        this.store.dispatch(UserActions.loadUsers());
+      },
+      (error) => {
+        this.notifier.notify("error", "Please try again!");
+      }
+    );
   }
 
   deleteFixture(value: any) {
-    this.fixtureService.deleteFixture(value).subscribe((result: any) => {
-      if (result) {
-        this.notifier.notify("success", "Fixture deleted successfully");
-        this.fetchFixtures();
+    this.fixtureService.deleteFixture(value).subscribe(
+      (result: any) => {
+        if (result) {
+          this.notifier.notify("success", "Fixture deleted successfully");
+          this.fetchFixtures();
+        }
+      },
+      (error) => {
+        this.notifier.notify("error", "Please try again!");
       }
-    });
+    );
   }
 }

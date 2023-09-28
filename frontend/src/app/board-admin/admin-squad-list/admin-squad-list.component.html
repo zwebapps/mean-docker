@@ -40,7 +40,7 @@
 </ngx-datatable-column> -->
     <ngx-datatable-column name="DOB" prop="row">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-        {{ row.dob | date : "dd/MM/yyyy" }}
+        {{ row.dob | date : "dd.MM.yyyy" }}
       </ng-template>
     </ngx-datatable-column>
     <ngx-datatable-column name="Squad No" prop="row" size="50">

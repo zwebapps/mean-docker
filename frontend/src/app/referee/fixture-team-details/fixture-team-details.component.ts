@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from "@angular/core";
 import { PlayerService } from "src/app/_services/player.service";
 import { environment } from "src/environments/environment";
 import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { NotifierService } from "angular-notifier";
 
 @Component({
   selector: "app-fixture-team-details",
@@ -9,12 +10,16 @@ import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
   styleUrls: ["./fixture-team-details.component.scss"]
 })
 export class FixtureTeamDetailsComponent implements OnInit {
+  private notifier: NotifierService;
   @Input() team: any;
+  @Input() league: any;
   apiURL = environment.apiURL;
   closeResult: string = "";
   public imgSrc: any = null;
   public players: any = [];
-  constructor(private modalService: NgbModal, private playerService: PlayerService) {}
+  constructor(notifier: NotifierService, private modalService: NgbModal, private playerService: PlayerService) {
+    this.notifier = notifier;
+  }
   ngOnInit(): void {
     if (this.team) {
       this.getPlayersByTeam(this.team._id);
@@ -44,10 +49,19 @@ export class FixtureTeamDetailsComponent implements OnInit {
   }
 
   getPlayersByTeam(id: any) {
-    this.playerService.getPlayerByTeamId(id).subscribe((res: any) => {
-      if (res) {
-        this.players = res;
+    this.playerService.getPlayerByTeamId(id).subscribe(
+      (res: any) => {
+        if (Array.isArray(res)) {
+          // filters players based on league for which they are added
+          this.players = res.filter((player) => player.league && player?.league?._id === this.league?._id);
+        } else {
+          this.notifier.notify("error", "Players not found!");
+        }
+      },
+      (err) => {
+        console.log(err);
+        this.notifier.notify("error", "Please try again!");
       }
-    });
+    );
   }
 }

@@ -35,7 +35,7 @@
     </ngx-datatable-column>
     <ngx-datatable-column name="DOB" prop="row">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-        {{ row.dob | date : "shortDate" }}
+        {{ row.dob | date : "dd.MM.yyyy" }}
       </ng-template>
     </ngx-datatable-column>
     <ngx-datatable-column name="Squad" prop="row">
@@ -71,6 +71,15 @@
         <span *ngIf="row.playerStatus && row.playerStatus === 'Pending'" class="text-danger">
           {{ row.playerStatus }}
         </span>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Playing Up" prop="row">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+        <ng-container *ngIf="row.playingUp">
+          <ng-container *ngFor="let league of row.playingUp">
+            <p *ngIf="league" style="font-size: 12px">{{ getLeague(league)?.leagueName }}</p>
+          </ng-container>
+        </ng-container>
       </ng-template>
     </ngx-datatable-column>
     <ngx-datatable-column name="Actions" prop="row">

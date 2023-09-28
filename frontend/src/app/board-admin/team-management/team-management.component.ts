@@ -115,7 +115,6 @@ export class TeamManagementComponent implements OnInit {
                   };
                   this.academyService.createAcademy(academyData).subscribe(
                     (res: any) => {
-                      debugger;
                       if (res._id) {
                         this.notifier.notify("success", "Academy created successfully!");
                         this.academyForm.reset();

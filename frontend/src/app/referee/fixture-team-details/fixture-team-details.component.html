@@ -27,9 +27,12 @@
       <tr *ngFor="let player of players">
         <td>{{ player.squadNo }}</td>
         <td>{{ player.firstName }} {{ player.lastName }}</td>
-        <td>{{ player.dob | date : "shortDate" }}</td>
+        <td>{{ player.dob | date : "dd.MM.yyyy" }}</td>
         <td>
-          <img src="{{ apiURL }}/static/{{ player.eidFront }}" width="100" (click)="open(content, player.eidFront)" />
+          <div class="d-flex">
+            <img src="{{ apiURL }}/static/{{ player.eidFront }}" width="100" (click)="open(content, player.eidFront)" />
+            <img src="{{ apiURL }}/static/{{ player.eidBack }}" width="100" (click)="open(content, player.eidBack)" />
+          </div>
         </td>
       </tr>
     </tbody>
