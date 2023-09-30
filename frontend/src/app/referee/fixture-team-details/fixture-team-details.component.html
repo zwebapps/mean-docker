@@ -17,6 +17,7 @@
   <table class="table table-scroll table-striped">
     <thead>
       <tr>
+        <th>Player No</th>
         <th>Squad No</th>
         <th>Player Name</th>
         <th>Date of Birth</th>
@@ -25,6 +26,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let player of players">
+        <td>{{ player.playerNo }}</td>
         <td>{{ player.squadNo }}</td>
         <td>{{ player.firstName }} {{ player.lastName }}</td>
         <td>{{ player.dob | date : "dd.MM.yyyy" }}</td>

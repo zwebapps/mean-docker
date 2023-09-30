@@ -52,8 +52,10 @@ export class FixtureTeamDetailsComponent implements OnInit {
     this.playerService.getPlayerByTeamId(id).subscribe(
       (res: any) => {
         if (Array.isArray(res)) {
-          // filters players based on league for which they are added
-          this.players = res.filter((player) => player.league && player?.league?._id === this.league?._id);
+          // filters players based on league for which they are added or playing up also
+          this.players = res.filter(
+            (player) => (player.league && player?.league?._id === this.league?._id) || player?.playingUp?.includes(this.league?._id)
+          );
         } else {
           this.notifier.notify("error", "Players not found!");
         }
