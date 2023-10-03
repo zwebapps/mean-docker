@@ -365,6 +365,6 @@ export class SquadListComponent implements OnInit {
     );
   }
   redirectTo() {
-    this.router.navigate(["/admin/academies"]);
+    this.router.navigate(["/admin/squads"]);
   }
 }

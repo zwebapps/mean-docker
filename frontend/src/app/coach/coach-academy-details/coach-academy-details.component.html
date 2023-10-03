@@ -270,6 +270,7 @@
           (change)="uploadEmiratesID($event)"
           formControlName="eidFront"
           class="form-control"
+          accept="image/*"
           [ngClass]="{ 'is-invalid': submitted && f['eidFront'].errors }"
         />
         <div *ngIf="submitted && f['eidFront'].errors" class="invalid-feedback">
@@ -290,6 +291,7 @@
           (change)="uploadEmiratesID($event)"
           formControlName="eidBack"
           class="form-control"
+          accept="image/*"
           [ngClass]="{ 'is-invalid': submitted && f['eidBack'].errors }"
         />
         <div *ngIf="submitted && f['eidBack'].errors" class="invalid-feedback">

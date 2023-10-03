@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { ColumnMode } from "@swimlane/ngx-datatable";
 import { UserService } from "src/app/_services/user.service";
@@ -7,6 +7,7 @@ import { PlayerService } from "src/app/_services/player.service";
 import { NotifierService } from "angular-notifier";
 import { environment } from "src/environments/environment";
 import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: "app-admin-squad-list",
@@ -29,7 +30,13 @@ export class AdminSquadListComponent {
   public imgSrc: any = null;
   public closeResult: string = "";
   apiURL = environment.apiURL;
-  constructor(private modalService: NgbModal, private store: Store, private userService: UserService, notifier: NotifierService) {
+  constructor(
+    private sanitizer: DomSanitizer,
+    private modalService: NgbModal,
+    private store: Store,
+    private userService: UserService,
+    notifier: NotifierService
+  ) {
     this.notifier = notifier;
   }
 
@@ -47,6 +54,13 @@ export class AdminSquadListComponent {
   getImage(image: any) {
     return "http://localhost:8080/static/" + image;
   }
+  getSantizedUrl = (url: any) => {
+    const result = `${this.apiURL}/static/${url}`;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(result);
+  };
+  getSantizedpopUpUrl = (url: any) => {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  };
 
   open(content: any, imgSrc: any) {
     this.imgSrc = `${this.apiURL}/static/${imgSrc}`;
