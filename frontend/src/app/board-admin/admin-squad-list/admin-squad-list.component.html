@@ -7,7 +7,7 @@
     <div class="modal-body">
       <img *ngIf="!imgSrc.includes('.pdf')" [src]="imgSrc" class="img-fluid" />
       <iframe
-        *ngIf="imgSrc.includes('.pdf')"
+        *ngIf="imgSrc && imgSrc.includes('.pdf')"
         [src]="getSantizedpopUpUrl(imgSrc)"
         style="width: 650px; height: 400px"
         frameborder="0"
@@ -72,14 +72,14 @@
     <ngx-datatable-column name="EID Front" prop="row">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" height="100">
         <img
-          *ngIf="!row.eidFront.includes('.pdf')"
+          *ngIf="row.eidFront && !row.eidFront.includes('.pdf')"
           src="{{ apiURL }}/static/{{ row.eidFront }}"
           width="100"
           (click)="open(content, row.eidFront)"
         />
         <div (click)="open(content, row.eidBack)">
           <iframe
-            *ngIf="row.eidFront.includes('.pdf')"
+            *ngIf="row.eidFront && row.eidFront.includes('.pdf')"
             [src]="getSantizedUrl(row.eidFront)"
             width="100"
             height="100"
@@ -95,14 +95,14 @@
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" height="200">
         <!-- <img src="{{ apiURL }}/static/{{ row.eidBack }}" width="100" (click)="open(content, row.eidBack)" /> -->
         <img
-          *ngIf="!row.eidBack.includes('.pdf')"
+          *ngIf="row.eidBack && !row.eidBack.includes('.pdf')"
           src="{{ apiURL }}/static/{{ row.eidBack }}"
           width="100"
           (click)="open(content, row.eidBack)"
         />
         <div (click)="open(content, row.eidBack)">
           <iframe
-            *ngIf="row.eidBack.includes('.pdf')"
+            *ngIf="row.eidBack && row.eidBack.includes('.pdf')"
             frameBorder="0"
             [src]="getSantizedUrl(row.eidBack)"
             width="100"
