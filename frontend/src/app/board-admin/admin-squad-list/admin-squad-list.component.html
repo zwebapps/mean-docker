@@ -77,7 +77,7 @@
           width="100"
           (click)="open(content, row.eidFront)"
         />
-        <div (click)="open(content, row.eidBack)">
+        <div (click)="open(content, row.eidFront)">
           <iframe
             *ngIf="row.eidFront && row.eidFront.includes('.pdf')"
             [src]="getSantizedUrl(row.eidFront)"

@@ -6,6 +6,7 @@ import * as LeagueSelectors from "../../_store/selectors/leagues.selectors";
 import { Router } from "@angular/router";
 import { environment } from "src/environments/environment";
 import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: "app-coach-squad-list",
@@ -25,7 +26,13 @@ export class CoachSquadListComponent {
   apiURL = environment.apiURL;
   closeResult = "";
   public imgSrc: any = null;
-  constructor(private modalService: NgbModal, private store: Store, private userService: UserService, private router: Router) {}
+  constructor(
+    private sanitizer: DomSanitizer,
+    private modalService: NgbModal,
+    private store: Store,
+    private userService: UserService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.getLeaguesFromStore();
@@ -42,6 +49,13 @@ export class CoachSquadListComponent {
       }
     );
   }
+  getSantizedpopUpUrl = (url: any) => {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  };
+  getSantizedUrl = (url: any) => {
+    const result = `${this.apiURL}/static/${url}`;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(result);
+  };
   getLeaguesFromStore() {
     // getting leagues
     this.store.select(LeagueSelectors.getLeagues).subscribe((leagues) => {
