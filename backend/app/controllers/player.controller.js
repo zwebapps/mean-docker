@@ -173,15 +173,16 @@ exports.createPlayer = async (req, resp, next) => {
         // check if the same eid is already in the database
         let player = await Player.findOne({ emiratesIdNo: req.body['eidNo'] });    
         if (!player) {  
-          let playerNo = await getNextSequence("item_id");
+          let playerNo = null
           let isNoExist = null;
           do {
+           playerNo = await getNextSequence("item_id");
            isNoExist = await Player.findOne({ playerNo: playerNo }).exec();
-            playerNo = await getNextSequence("item_id");
           } while (isNoExist)
           if(req.body['playingUp']){
             req.body['playingUp'] = req.body['playingUp'].map((league) => ObjectId(league));
           }
+
           const playerData = new Player({
             firstName: req.body['firstName'],
             lastName: req.body['surName'],
@@ -200,6 +201,7 @@ exports.createPlayer = async (req, resp, next) => {
             playingUp: req.body['playingUp'],
             createdAt:  new Date()
           });
+         
   
           const savedPlayer = await playerData.save();
           resp.status(200).json({ player: savedPlayer, message: 'Player created successfully' });
