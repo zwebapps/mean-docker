@@ -35,7 +35,7 @@ export class CoachDashbaordComponent implements OnInit {
   ngOnInit(): void {
     // get the logged in coach
     this.loggedInCoach = this.storageService.getUser();
-    if (this.loggedInCoach) {
+    if (this.loggedInCoach && this.loggedInCoach.roles.includes("ROLE_COACH")) {
       this.academyService.getAcademyByCoachId(this.loggedInCoach.id).subscribe(
         (res: any) => {
           if (res) {

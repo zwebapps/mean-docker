@@ -9,7 +9,7 @@
         <div class="form-group col-lg-3 col-sm-12 col-xs-12 m-2">
           <label for="container" class="control-label">Status</label>
           <select class="form-select" id="container" name="roles" aria-label="Default select" formControlName="status">
-            <option value="" selected>Select Status</option>
+            <option value="">Select Status</option>
             <option value="Pending">Pending</option>
             <option value="Approved">Approved</option>
             <option value="Rejected">Rejected</option>
@@ -31,7 +31,7 @@
       </div>
       <div class="col-lg-9 col-sm-12 mb-5 mt-5 d-flex justify-content-center">
         <div class="col-lg-3 col-sm-6">
-          <button type="submit" class="btn btn-primary col-12 text-white">Reply Notification</button>
+          <button type="submit" class="btn btn-primary col-12 text-white">Reply/ Update Notification</button>
         </div>
       </div>
     </form>
@@ -48,7 +48,8 @@
           <h5 class="card-title">{{ card.heading }}</h5>
           <!-- <p class="card-text" [innerHtml]="card.content"></p> -->
           <p class="card-text">
-            <small class="text-muted">{{ card.reply ? card.reply : "Admin did not given reply yet" }}</small>
+            <small class="text-muted" *ngIf="card.reply">{{ card.reply }}</small>
+            <small class="text-warning" *ngIf="!card.reply">{{ "Admin did not given reply yet" }}</small>
           </p>
           <!-- <a href="#" class="btn btn-success status">{{card.status}}</a>
         <a href="#" class="btn btn-success status">{{card.status}}</a> -->
@@ -62,14 +63,7 @@
             <button type="button" class="btn btn-rounded btn-sm btn-success" *ngIf="card.status === 'Approved'">
               {{ card.status }}
             </button>
-            <button
-              type="button"
-              class="btn btn-rounded btn-sm btn-success"
-              (click)="editNotification(card)"
-              *ngIf="card.status !== 'Approved'"
-            >
-              Reply
-            </button>
+            <button type="button" class="btn btn-rounded btn-sm btn-success" (click)="editNotification(card)">Reply / Update</button>
           </div>
         </div>
       </div>

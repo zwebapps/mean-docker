@@ -76,6 +76,7 @@ export class AdminNotificationsComponent implements OnInit {
         if (res) {
           this.notifier.notify("success", `${res.message}`);
           this.getAllContents();
+          this.notificationForm = false;
         }
       });
     } else {
@@ -102,6 +103,7 @@ export class AdminNotificationsComponent implements OnInit {
       this.htmlContent = notification.content;
       this.form.patchValue({
         heading: notification.heading,
+        status: notification.status ? notification.status : "",
         content: notification.content,
         reply: notification.reply,
         user: notification.user

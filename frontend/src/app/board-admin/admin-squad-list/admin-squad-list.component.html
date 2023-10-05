@@ -59,12 +59,12 @@
         {{ row.squadNo }}
       </ng-template>
     </ngx-datatable-column> -->
-    <ngx-datatable-column name="League" prop="row">
+    <ngx-datatable-column name="League" prop="row" width="200">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
         {{ row?.league?.leagueName }}
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="EID Number" prop="row">
+    <ngx-datatable-column name="EID Number" prop="row" width="200">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
         {{ row.emiratesIdNo }}
       </ng-template>
@@ -124,8 +124,8 @@
         </span>
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="Actions" prop="row">
-      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" class="inline-flex">
+    <ngx-datatable-column name="Actions" prop="row" width="170">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" class="d-flex">
         <button type="button" class="btn btn-sm btn-primary d-inline m-1" title="Edit" (click)="edit(row['_id'])">
           <i class="bi bi-pencil-square"></i>
         </button>
@@ -135,6 +135,15 @@
         <button type="button" class="btn btn-sm btn-danger d-inline m-1" title="Delete" (click)="delete(row['_id'])">
           <i class="bi bi-trash"></i>
         </button>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Playing Up" prop="row">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+        <ng-container *ngIf="row.playingUp">
+          <ng-container *ngFor="let league of row.playingUp">
+            <p *ngIf="league" style="font-size: 12px">{{ getLeague(league)?.leagueName }}</p>
+          </ng-container>
+        </ng-container>
       </ng-template>
     </ngx-datatable-column>
     <ngx-datatable-footer *ngIf="true">

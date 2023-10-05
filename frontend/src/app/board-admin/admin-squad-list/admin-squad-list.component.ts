@@ -22,6 +22,7 @@ export class AdminSquadListComponent {
   @Output() editPlayer = new EventEmitter<string>();
   options = {};
   @Input() players: any = [];
+  @Input() leagues: any = [];
   @Input() leaguesFilter: any = [];
   columns: any = [{ prop: "firstname" }, { name: "lastname" }, { name: "username" }, { name: "email" }];
   loadingIndicator = true;
@@ -61,7 +62,11 @@ export class AdminSquadListComponent {
   getSantizedpopUpUrl = (url: any) => {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   };
-
+  getLeague(leagueID: any) {
+    if (leagueID) {
+      return this.leagues.find((lg: any) => lg._id === leagueID);
+    }
+  }
   open(content: any, imgSrc: any) {
     this.imgSrc = `${this.apiURL}/static/${imgSrc}`;
     this.modalService.open(content, { ariaLabelledBy: "modal-basic-title", size: "lg" }).result.then(

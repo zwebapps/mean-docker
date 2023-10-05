@@ -6,6 +6,7 @@ import * as PlayerActions from "../../_store/actions/players.actions";
 import * as UserActions from "../../_store/actions/users.actions";
 import * as PlayerSelectors from "../../_store/selectors/players.selectors";
 import * as LeagueSelectors from "../../_store/selectors/leagues.selectors";
+import * as TeamSelectors from "../../_store/selectors/teams.selectors";
 import { NotifierService } from "angular-notifier";
 import { StorageService } from "src/app/_services/storage.service";
 import { AcademyService } from "src/app/_services/academy.service";
@@ -87,6 +88,7 @@ export class SquadListComponent implements OnInit {
       squadNo: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(3)]],
       dob: ["", Validators.required],
       league: ["", Validators.required],
+      team: ["", Validators.required],
       playerEidNo: ["", [Validators.required, Validators.pattern(eidPattern), Validators.maxLength(18)]],
       eidFront: ["", Validators.required],
       eidBack: ["", Validators.required],
@@ -109,8 +111,17 @@ export class SquadListComponent implements OnInit {
       }
       this.getPlayersFromStore();
       this.getLeaguesFromStore();
+      this.getTeamsFromStore();
     });
   }
+  getTeamsFromStore = () => {
+    this.store.select(TeamSelectors.getTeams).subscribe((teams) => {
+      if (Array.isArray(teams)) {
+        // filter teams for current academy
+        this.teams = teams.filter((team: any) => team.academy_id?._id === this.academy._id);
+      }
+    });
+  };
   getLeaguesFromStore = () => {
     this.store.select(LeagueSelectors.getLeagues).subscribe((leagues) => {
       if (Array.isArray(leagues)) {
@@ -148,6 +159,7 @@ export class SquadListComponent implements OnInit {
         squadNo: this.playerToEdit.squadNo,
         dob: this.formatDate(this.playerToEdit.dob),
         league: this.playerToEdit.league?._id,
+        team: this.playerToEdit.team?._id,
         playerEidNo: this.playerToEdit.emiratesIdNo,
         eidFront: this.playerToEdit.eidFront,
         eidBack: this.playerToEdit.eidBack
@@ -181,6 +193,7 @@ export class SquadListComponent implements OnInit {
         surName: this.playerForm.value.surName,
         dob: this.playerForm.value.dob,
         league: this.playerForm.value.league,
+        team: this.playerForm.value.team,
         squadNo: this.playerForm.value.squadNo,
         emiratesIdNo: this.playerForm.value.playerEidNo,
         playerStatus: this.playerToEdit.playerStatus,
@@ -189,7 +202,6 @@ export class SquadListComponent implements OnInit {
           createdBy: this.playerToEdit.user?._id
         }
       };
-
       this.playerService.updatePlayer(this.playerToEdit._id, playerObj).subscribe((result: any) => {
         console.log(result);
         if (result) {
