@@ -125,6 +125,6 @@ export class AdminNotificationsComponent implements OnInit {
     });
   };
   redirectTo() {
-    this.router.navigate(["/coach/dashboard"]);
+    this.router.navigate(["/admin/dashboard"]);
   }
 }
