@@ -125,9 +125,10 @@ exports.updateUser =  async (req, resp, next) => {
 
 exports.createContact = async (req, res) => {
   // get users
-  if( req.body && req.body['heading'] && req.body['content'].length > 0) {     
+  if( req.body && req.body['heading'] && req.body['content'].length > 0) {
+    const heading = `${new Date().toISOString()}_${req.body['heading']}`;  
       const contactData = new Contact({
-        heading: req.body['heading'],
+        heading: heading,
         content: req.body['content'],       
         user: ObjectId(req.body.user['id']),
         status: 'Pending',
@@ -183,7 +184,7 @@ exports.contentDelete = async (req, resp, next) => {
 }
 exports.getAllContacts = (req, res) => {
   // get users
-   Contact.find().populate("user").exec((err, users) => {
+   Contact.find({}).populate("user").exec((err, users) => {
     if(err){
       return res.status(500).send({ message: err });
     }

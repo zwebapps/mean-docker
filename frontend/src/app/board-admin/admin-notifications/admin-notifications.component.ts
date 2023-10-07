@@ -89,6 +89,11 @@ export class AdminNotificationsComponent implements OnInit {
     // console.log(this.form.value.content)
   }
 
+  getHeading(heading: any) {
+    if (heading) {
+      return heading.includes("_") ? heading.split("_")[1] : heading;
+    }
+  }
   onBlur(event: any) {
     // console.log('blur ' + event);
     // console.log(this.form.value.content)
@@ -102,7 +107,7 @@ export class AdminNotificationsComponent implements OnInit {
       this.notification = notification;
       this.htmlContent = notification.content;
       this.form.patchValue({
-        heading: notification.heading,
+        heading: this.getHeading(notification.heading),
         status: notification.status ? notification.status : "",
         content: notification.content,
         reply: notification.reply,

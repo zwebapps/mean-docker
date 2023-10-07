@@ -45,7 +45,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
         <div class="card-body">
-          <h5 class="card-title">{{ card.heading }}</h5>
+          <h5 class="card-title">{{ getHeading(card.heading) }}</h5>
           <!-- <p class="card-text" [innerHtml]="card.content"></p> -->
           <p class="card-text">
             <small class="text-muted" *ngIf="card.reply">{{ card.reply }}</small>

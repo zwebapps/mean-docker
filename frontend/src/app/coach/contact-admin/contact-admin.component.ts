@@ -69,6 +69,12 @@ export class ContactAdminComponent implements OnInit {
       this.getAllContents(this.user?.id);
     }
   }
+
+  getHeading(heading: any) {
+    if (heading) {
+      return heading.includes("_") ? heading.split("_")[1] : heading;
+    }
+  }
   uploadFiles(event: any) {
     const file: File = event.target.files[0];
     this.palyerService.upload(file).subscribe((res: any) => {
