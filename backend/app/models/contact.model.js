@@ -4,8 +4,7 @@ const Contact = mongoose.model(
   "Contact",
   new mongoose.Schema({
     heading: {
-      type: String,
-      unique : true,
+      type: String,      
       required: true
     },
     content: {
