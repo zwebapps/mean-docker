@@ -3,7 +3,6 @@ import { Store } from "@ngrx/store";
 import { ColumnMode } from "@swimlane/ngx-datatable";
 import { UserService } from "src/app/_services/user.service";
 import * as PlayerSelectors from "../../_store/selectors/players.selectors";
-import { PlayerService } from "src/app/_services/player.service";
 import { NotifierService } from "angular-notifier";
 import { environment } from "src/environments/environment";
 import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
@@ -53,7 +52,7 @@ export class AdminSquadListComponent {
     this.editPlayer.emit(value);
   }
   getImage(image: any) {
-    return "http://localhost:8080/static/" + image;
+    return `${this.apiURL}/static/${image}`;
   }
   getSantizedUrl = (url: any) => {
     const result = `${this.apiURL}/static/${url}`;

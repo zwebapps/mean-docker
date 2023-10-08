@@ -51,7 +51,12 @@ export class SquadListComponent implements OnInit {
   playerExists: boolean = false;
   public showPlayerEditForm: boolean = false;
   public playerToEdit: any = {};
+  // for playing up dropdown
   public selectedPlayingUp: any = [];
+  // for all playing up leagues
+  public playingUpleagues: any = [];
+
+  // for selected league
   public selectedLeagues: any = [];
   public eidNo: any = "";
   constructor(
@@ -152,6 +157,12 @@ export class SquadListComponent implements OnInit {
     this.showPlayerEditForm = true;
     this.playerToEdit = this.players.find((player: any) => player._id === value);
     if (this.playerToEdit) {
+      // filter leagues
+      this.playingUpleagues = this.leagues.filter(
+        (league: any) =>
+          moment(this.playerToEdit.dob).isAfter(league.leagueAgeLimit) &&
+          moment(this.playerToEdit.league.leagueAgeLimit).isAfter(league.leagueAgeLimit)
+      );
       this.selectedPlayingUp = this.leagues.filter((leagues: any) => this.playerToEdit.playingUp.includes(leagues._id));
       this.playerForm.patchValue({
         firstName: this.playerToEdit.firstName,
@@ -250,8 +261,8 @@ export class SquadListComponent implements OnInit {
     let nameArray = leagueName.match(/(\d+)/);
     return nameArray.find((nm: any) => !isNaN(nm));
   }
-  getPlayersFromStore(leagueId?: any) {
-    // this.leagues = [];
+  getPlayersFromStore(leagueId?: any, academy?: any) {
+    debugger;
     this.store.select(PlayerSelectors.getPlayers).subscribe((players) => {
       if (players.length > 0) {
         players.forEach((player) => (player?.league && !this.alreadyExists(player?.league) ? this.leagues.push(player?.league) : null));
@@ -324,9 +335,11 @@ export class SquadListComponent implements OnInit {
     return this.leagues.find((l: any) => l._id == league._id) ? true : false;
   }
   filterPlayers() {
+    debugger;
     let leagueId = this.filterLeague.value.league;
+    let academyId = this.filterLeague.value.academy;
     if (leagueId) {
-      this.getPlayersFromStore(leagueId);
+      this.getPlayersFromStore(leagueId, academyId);
     }
   }
 
