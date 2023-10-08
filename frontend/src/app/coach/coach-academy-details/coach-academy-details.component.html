@@ -354,6 +354,25 @@
   <br />
   <hr />
 </div>
+<div class="row page-title-bar">
+  <div class="col-lg-8">
+    <h3 class="page-title">Filters</h3>
+  </div>
+  <div class="col-lg-4">
+    <div class="form-group m-2">
+      <ng-multiselect-dropdown
+        [placeholder]="'EID'"
+        [settings]="eidDropdownSettings"
+        [data]="dropEID"
+        (onSelect)="onEidSelect($event)"
+        (onSelectAll)="onSelectAll($event)"
+        (onDeSelect)="onDeSelect($event)"
+      >
+      </ng-multiselect-dropdown>
+    </div>
+  </div>
+  <hr />
+</div>
 <div class="row">
   <app-coach-squad-list [players]="data" (delPlayer)="onDeletePlayer($event)"></app-coach-squad-list>
 </div>

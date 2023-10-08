@@ -38,5 +38,6 @@ app.get("/player/getuploads/:id", authJwt.isAuthenticated, player.download);
 
 app.post("/player/multiupload", authJwt.isAuthenticated, player.multiUpload);
 
+app.post("/player/approvemulitple", authJwt.isAuthenticated, player.approveMulitplePlayers);
 
 };

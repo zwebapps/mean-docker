@@ -345,7 +345,29 @@ exports.updatePlayer =  async (req, resp, next) => {
     next(error);
   }
 };
+exports.approveMulitplePlayers = async (req, resp, next) => {
+  try {
+    console.log(req.body)
+    const players = req.body;
+    let i = 0;
+    while(i < players.length) {
+      let fetchPlayer = await Player.find({_id: ObjectId(players[i])});
 
+      if (fetchPlayer) {
+        fetchPlayer = {
+          ...fetchPlayer,
+          playerStatus: 'Approved'
+        }
+        await Player.findByIdAndUpdate(players[i], fetchPlayer, { new: true });
+      }
+      i++;
+    }
+    resp.status(200).json({ message: 'Players updated successfully'});
+
+  } catch (error) {
+    next(error);
+  }
+};
 /* Edit existing employee based on id*/
 exports.approvePlayer =  async (req, resp, next) => {
 

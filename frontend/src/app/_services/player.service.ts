@@ -77,4 +77,8 @@ export class PlayerService {
   importPlayers(players: any): Observable<any> {
     return this.http.post(`${API_URL}/player/bulkuploads`, players, { headers: this.headers });
   }
+
+  updateMultiplePlayers(players: any): Observable<any> {
+    return this.http.post(`${API_URL}/player/approvemulitple`, players, { headers: this.headers });
+  }
 }

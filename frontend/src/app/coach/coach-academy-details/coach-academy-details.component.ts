@@ -56,6 +56,7 @@ export class CoachAcademyDetailsComponent {
   public images: any = [];
   public dropleagues: any = [];
   public dropdownSettings: IDropdownSettings = {};
+  public eidDropdownSettings: IDropdownSettings = {};
   public playerPlayingUp: any = [];
   public eidImages: any = {
     eidFront: null,
@@ -67,6 +68,7 @@ export class CoachAcademyDetailsComponent {
   academies: any = [];
   insertionStarted: boolean = false;
   apiURL = environment.apiURL;
+  dropEID: any = [];
   constructor(
     private formBuilder: FormBuilder,
     private store: Store,
@@ -98,6 +100,15 @@ export class CoachAcademyDetailsComponent {
       singleSelection: false,
       idField: "_id",
       textField: "leagueName",
+      selectAllText: "Select All",
+      unSelectAllText: "UnSelect All",
+      itemsShowLimit: 3,
+      allowSearchFilter: true
+    };
+    this.eidDropdownSettings = {
+      singleSelection: false,
+      idField: "_id",
+      textField: "emiratesIdNo",
       selectAllText: "Select All",
       unSelectAllText: "UnSelect All",
       itemsShowLimit: 3,
@@ -240,6 +251,7 @@ export class CoachAcademyDetailsComponent {
           (player: any) =>
             player.team && player.team._id === this.team._id && player.team.academy_id && player.team.academy_id === this.academy._id
         );
+        this.dropEID = this.data;
       },
       (err) => {
         this.notifier.notify("error", "Please try again!");
@@ -356,6 +368,12 @@ export class CoachAcademyDetailsComponent {
     } else {
       this.playerPlayingUp.push(item._id);
     }
+  }
+  onEidSelect(item: any) {
+    this.data = this.data.filter((player: any) => player.emiratesIdNo === item.emiratesIdNo);
+  }
+  onDeSelect(items: any) {
+    this.getPlayersFromStore();
   }
   onSelectAll(items: any) {
     this.playerPlayingUp = items.map((item: any) => item._id);

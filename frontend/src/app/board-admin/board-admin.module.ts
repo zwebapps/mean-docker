@@ -25,6 +25,7 @@ import { NgxImageZoomModule } from "ngx-image-zoom";
 import { AdminNotificationsComponent } from "./admin-notifications/admin-notifications.component";
 import { AngularEditorModule } from "@kolkov/angular-editor";
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
+import { NgbModule, NgbNavModule } from "@ng-bootstrap/ng-bootstrap";
 
 /**
  * Custom angular notifier options
@@ -138,8 +139,9 @@ const adminRoutes: Routes = [
     AdminNotificationsComponent
   ],
   imports: [
-    NgxImageZoomModule,
     CommonModule,
+    NgxImageZoomModule,
+    NgbNavModule,
     NgxDatatableModule,
     ReactiveFormsModule,
     FormsModule,

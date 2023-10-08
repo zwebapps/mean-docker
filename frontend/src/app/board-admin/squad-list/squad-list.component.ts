@@ -7,9 +7,8 @@ import * as UserActions from "../../_store/actions/users.actions";
 import * as PlayerSelectors from "../../_store/selectors/players.selectors";
 import * as LeagueSelectors from "../../_store/selectors/leagues.selectors";
 import * as TeamSelectors from "../../_store/selectors/teams.selectors";
+import * as AcademySelectors from "../../_store/selectors/academies.selectors";
 import { NotifierService } from "angular-notifier";
-import { StorageService } from "src/app/_services/storage.service";
-import { AcademyService } from "src/app/_services/academy.service";
 import { Router, ActivatedRoute } from "@angular/router";
 import { TeamService } from "src/app/_services/team.service";
 import { PlayerService } from "src/app/_services/player.service";
@@ -26,6 +25,7 @@ import * as moment from "moment";
 })
 export class SquadListComponent implements OnInit {
   @ViewChild("myTable") table: any;
+  active = 1;
   options = {};
   players: any = [];
   columns: any = [{ prop: "firstname" }, { name: "lastname" }, { name: "dob" }, { name: "email" }];
@@ -40,6 +40,8 @@ export class SquadListComponent implements OnInit {
   public coaches: any = [];
   public leagues: any = [];
   filterLeague: FormGroup;
+  squadForm: FormGroup;
+  displayAllPlayers: boolean = false;
   public playerForm: FormGroup;
   public dropdownSettings: IDropdownSettings = {};
   public submitted: boolean = false;
@@ -71,7 +73,12 @@ export class SquadListComponent implements OnInit {
   ) {
     this.notifier = notifier;
     this.filterLeague = new FormGroup({
-      league: new FormControl("0")
+      league: new FormControl("0"),
+      academy: new FormControl("0")
+    });
+    this.squadForm = new FormGroup({
+      league: new FormControl("0"),
+      academy: new FormControl("0")
     });
   }
 
@@ -117,8 +124,49 @@ export class SquadListComponent implements OnInit {
       this.getPlayersFromStore();
       this.getLeaguesFromStore();
       this.getTeamsFromStore();
+      this.getAcademiesFromStore();
     });
   }
+  setPlayersList = () => {
+    this.displayAllPlayers = !this.displayAllPlayers;
+    this.filterLeague.reset();
+    this.filterLeague = new FormGroup({
+      league: new FormControl("0"),
+      academy: new FormControl("0")
+    });
+    this.getPlayersFromStore();
+  };
+  activatePlayers = () => {
+    console.log(this.players);
+    let selectedPlayers = this.players.filter((player: any) => player.playerStatus === "Pending");
+    if (!selectedPlayers.length) {
+      this.notifier.notify("error", "All players already activated!");
+      return;
+    }
+    this.playerService.updateMultiplePlayers(selectedPlayers.map((players: any) => players._id)).subscribe(
+      (res: any) => {
+        if (res && res.message) {
+          this.notifier.notify("success", res.message);
+          this.filterLeague = new FormGroup({
+            league: new FormControl("0"),
+            academy: new FormControl("0")
+          });
+          this.store.dispatch(PlayerActions.loadPlayers());
+        }
+      },
+      (err) => {
+        this.notifier.notify("error", "Please try again!");
+      }
+    );
+  };
+  getAcademiesFromStore = () => {
+    this.store.select(AcademySelectors.getAcademies).subscribe((academies) => {
+      if (Array.isArray(academies)) {
+        // filter teams for current academy
+        this.academies = academies;
+      }
+    });
+  };
   getTeamsFromStore = () => {
     this.store.select(TeamSelectors.getTeams).subscribe((teams) => {
       if (Array.isArray(teams)) {
@@ -262,19 +310,51 @@ export class SquadListComponent implements OnInit {
     return nameArray.find((nm: any) => !isNaN(nm));
   }
   getPlayersFromStore(leagueId?: any, academy?: any) {
-    debugger;
+    if (!leagueId) {
+      leagueId = null;
+    }
+    if (!academy) {
+      academy = null;
+    }
     this.store.select(PlayerSelectors.getPlayers).subscribe((players) => {
       if (players.length > 0) {
         players.forEach((player) => (player?.league && !this.alreadyExists(player?.league) ? this.leagues.push(player?.league) : null));
-        if (!leagueId || leagueId == 0) {
-          this.players = players.filter(
-            (player) => player?.team?._id == this.currentTeam._id && player?.team?.academy_id === this.academy._id
-          );
+        if (!this.displayAllPlayers) {
+          if (leagueId) {
+            this.players = players.filter(
+              (player: any) =>
+                player?.team?._id == this.currentTeam._id && player?.academy?._id == this.academy?._id && player?.league?._id == leagueId
+            );
+          } else {
+            this.players = players.filter(
+              (player: any) => player?.team?._id == this.currentTeam._id && player?.team?.academy_id === this.academy._id
+            );
+          }
         } else {
-          this.players = players.filter(
-            (player) =>
-              player?.team?._id == this.currentTeam._id && player?.academy?._id == this.academy?._id && player?.league?._id == leagueId
-          );
+          this.players = players;
+        }
+      }
+    });
+  }
+  filterAllPlayers() {
+    let leagueId = null;
+    let academy = null;
+    if (this.filterLeague.value.league && this.filterLeague.value.league !== "0") {
+      leagueId = this.filterLeague.value.league;
+    }
+    if (this.filterLeague.value.academy && this.filterLeague.value.academy !== "0") {
+      academy = this.filterLeague.value.academy;
+    }
+    this.store.select(PlayerSelectors.getPlayers).subscribe((players) => {
+      if (players.length > 0) {
+        if (leagueId && !academy) {
+          this.players = players.filter((player: any) => player?.league?._id === leagueId);
+        } else if (!leagueId && academy) {
+          this.players = players.filter((player: any) => player?.academy?._id === academy);
+        } else if (leagueId && academy) {
+          this.players = players.filter((player: any) => player?.academy?._id == academy && player?.league?._id == leagueId);
+        } else {
+          this.players = players;
         }
       }
     });
@@ -335,7 +415,6 @@ export class SquadListComponent implements OnInit {
     return this.leagues.find((l: any) => l._id == league._id) ? true : false;
   }
   filterPlayers() {
-    debugger;
     let leagueId = this.filterLeague.value.league;
     let academyId = this.filterLeague.value.academy;
     if (leagueId) {
