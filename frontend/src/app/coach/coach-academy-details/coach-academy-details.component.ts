@@ -109,6 +109,8 @@ export class CoachAcademyDetailsComponent {
     });
     // edit form
     this.editPlayerForm = new FormGroup({
+      firstName: new FormControl(""),
+      surName: new FormControl(""),
       playingUp: new FormControl(""),
       playingUpTeam: new FormControl(""),
       dob: new FormControl("")
@@ -512,6 +514,8 @@ export class CoachAcademyDetailsComponent {
     this.selectedPlayingLeagues = this.leagues.filter((league: any) => player.playingUp.includes(league._id));
     this.selectedPlayingUpTeams = this.teams.filter((team: any) => player.playingUpTeam.includes(team._id));
     this.editPlayerForm.patchValue({
+      firstName: player.firstName,
+      surName: player.lastName,
       dob: new Date(player.dob).toLocaleDateString("en-GB")
     });
     if (this.playerToEdit) {
@@ -521,7 +525,11 @@ export class CoachAcademyDetailsComponent {
           moment(player.dob).isAfter(league.leagueAgeLimit) && moment(player.league.leagueAgeLimit).isAfter(league.leagueAgeLimit)
       );
     }
+
+    this.editPlayerForm.controls.firstName.disable();
+    this.editPlayerForm.controls.surName.disable();
     this.editPlayerForm.controls.dob.disable();
+
     this.displayAddPlayer = false;
     this.displayEditPlayer = true;
   }

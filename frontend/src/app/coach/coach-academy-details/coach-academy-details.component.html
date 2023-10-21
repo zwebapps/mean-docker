@@ -349,8 +349,24 @@
     enctype="multipart/form-data"
     (ngSubmit)="onUpdatePlayer()"
   >
-    <div class="row justify-content-between">
-      <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+    <div class="row justify-content-center">
+      <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-3">
+        <label for="name" class="control-label">First Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          placeholder="First Name"
+          formControlName="firstName"
+          class="form-control"
+          disabled
+        />
+      </div>
+      <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-3">
+        <label for="name" class="control-label">Last Name</label>
+        <input type="text" class="form-control" id="name" placeholder="Last Name" formControlName="surName" class="form-control" disabled />
+      </div>
+      <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-3">
         <label for="name" class="control-label">Date of birth</label>
         <input
           type="text"
@@ -364,7 +380,7 @@
         />
       </div>
 
-      <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+      <div class="form-group col-sm-12 col-xs-12 col-md-4 col-lg-4 m-2">
         <label for="playingup" class="control-label">Playing Up League</label>
         <ng-multiselect-dropdown
           [class]="'form-control'"

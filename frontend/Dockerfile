@@ -1,5 +1,5 @@
 # Create image based off of the official Node 10 image
-FROM node:current-bullseye as builder
+FROM node:19-bullseye as builder
 
 # Copy dependency definitions
 COPY package.json package-lock.json ./
