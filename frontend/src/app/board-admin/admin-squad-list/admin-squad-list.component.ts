@@ -22,6 +22,7 @@ export class AdminSquadListComponent {
   options = {};
   @Input() players: any = [];
   @Input() leagues: any = [];
+  @Input() teams: any = [];
   @Input() leaguesFilter: any = [];
   columns: any = [{ prop: "firstname" }, { name: "lastname" }, { name: "username" }, { name: "email" }];
   loadingIndicator = true;
@@ -64,6 +65,11 @@ export class AdminSquadListComponent {
   getLeague(leagueID: any) {
     if (leagueID) {
       return this.leagues.find((lg: any) => lg._id === leagueID);
+    }
+  }
+  getTeam(teamID: any) {
+    if (teamID) {
+      return this.teams.find((team: any) => team._id === teamID);
     }
   }
   open(content: any, imgSrc: any) {

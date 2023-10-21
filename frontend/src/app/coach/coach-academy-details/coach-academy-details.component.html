@@ -133,6 +133,11 @@
           <input type="file" name="file" (change)="getImages($event)" accept="image/*" multiple />
         </div>
       </div> -->
+      <div class="col-12 col-md-6 col-lg-4 mb-3">
+        <div class="btn squads-lable col-12" (click)="togglePlayerForm()">
+          <span class="squads-text">Add Player</span>
+        </div>
+      </div>
     </div>
   </div>
   <div class="col-12 col-md-6 col-lg-4 justify-content-around">
@@ -144,7 +149,7 @@
     </div>
   </div>
 </div>
-<div class="row">
+<div class="row" *ngIf="displayAddPlayer">
   <form [formGroup]="playerForm" class="justify-content-around" method="post" enctype="multipart/form-data" (ngSubmit)="onFormSubmit()">
     <div class="row justify-content-between">
       <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2 p-2">
@@ -301,20 +306,10 @@
         </div>
       </div>
       <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
-        <label for="playingup" class="control-label">Playing Up</label>
-        <!-- <input
-          type="number"
-          value=""
-          class="form-control"
-          id="name"
-          placeholder="League Age"
-          formControlName="playingUp"
-          class="form-control"
-          [ngClass]="{ 'is-invalid': submitted && f['playingUp'].errors }"
-        /> -->
+        <label for="playingup" class="control-label">Playing Up League</label>
         <ng-multiselect-dropdown
           [class]="'form-control'"
-          [placeholder]="'Player Playing up'"
+          [placeholder]="'Playing up league'"
           [settings]="dropdownSettings"
           [data]="dropleagues"
           (onSelect)="onItemSelect($event)"
@@ -322,28 +317,85 @@
           formControlName="playingUp"
         >
         </ng-multiselect-dropdown>
-        <!-- <select
-          id="container"
-          name="playingup"
-          class="form-control select"
-          aria-label="Default select"
-          multiple
-          formControlName="playingUp"
-          [ngClass]="{ 'is-invalid': submitted && f['playingUp'].errors }"
+      </div>
+      <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+        <label for="playingup" class="control-label">Playing Up Team</label>
+        <ng-multiselect-dropdown
+          [class]="'form-control'"
+          [placeholder]="'Playing up team'"
+          [settings]="dropdownTeamSettings"
+          [data]="dropteams"
+          (onSelect)="onTeamSelect($event)"
+          (onSelectAll)="onSelectAll($event)"
+          formControlName="playingUpTeam"
         >
-          <option value="" selected>Select Leagues up</option>
-          <option value="league.leagueName" *ngFor="let league of dropleagues">{{ league.leagueName }}</option>
-        </select> -->
-        <!-- <div *ngIf="submitted && f['playingUp'].errors" class="invalid-feedback">
-          <div *ngIf="f['playingUp'].errors['required']">
-            <small>Playing Up is required</small>
-          </div>
-        </div> -->
+        </ng-multiselect-dropdown>
       </div>
       <div class="row d-flex justify-content-center">
         <div class="form-group col-xs-12 col-md-3 col-lg-3 mt-2 align-items-end">
           <div class="ms-3 w-100 league-lable">
-            <button type="submit" class="btn btn-defaul col-12 text-white" [disabled]="playerExists">Add player</button>
+            <button type="submit" class="btn btn-defaul col-12 text-white" [disabled]="playerExists">Add Player</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="row" *ngIf="displayEditPlayer">
+  <form
+    [formGroup]="editPlayerForm"
+    class="justify-content-around"
+    method="post"
+    enctype="multipart/form-data"
+    (ngSubmit)="onUpdatePlayer()"
+  >
+    <div class="row justify-content-between">
+      <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+        <label for="name" class="control-label">Date of birth</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          placeholder="DOB"
+          formControlName="dob"
+          class="form-control"
+          (blur)="getMaxAgeLeagues($event.target.value)"
+          disabled
+        />
+      </div>
+
+      <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+        <label for="playingup" class="control-label">Playing Up League</label>
+        <ng-multiselect-dropdown
+          [class]="'form-control'"
+          [placeholder]="'Playing up league'"
+          [settings]="dropdownSettings"
+          [data]="dropleagues"
+          [(ngModel)]="selectedPlayingLeagues"
+          (onSelect)="onItemSelect($event)"
+          (onSelectAll)="onSelectAll($event)"
+          formControlName="playingUp"
+        >
+        </ng-multiselect-dropdown>
+      </div>
+      <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+        <label for="playingup" class="control-label">Playing Up Team</label>
+        <ng-multiselect-dropdown
+          [class]="'form-control'"
+          [placeholder]="'Playing up team'"
+          [settings]="dropdownTeamSettings"
+          [data]="dropteams"
+          [(ngModel)]="selectedPlayingUpTeams"
+          (onSelect)="onTeamSelect($event)"
+          (onSelectAll)="onSelectAll($event)"
+          formControlName="playingUpTeam"
+        >
+        </ng-multiselect-dropdown>
+      </div>
+      <div class="row d-flex justify-content-center">
+        <div class="form-group col-xs-12 col-md-3 col-lg-3 mt-2 align-items-end">
+          <div class="ms-3 w-100 league-lable">
+            <button type="submit" class="btn btn-defaul col-12 text-white" [disabled]="playerExists">Update Player</button>
           </div>
         </div>
       </div>
@@ -374,7 +426,12 @@
   <hr />
 </div>
 <div class="row">
-  <app-coach-squad-list [players]="data" (delPlayer)="onDeletePlayer($event)"></app-coach-squad-list>
+  <app-coach-squad-list
+    [players]="data"
+    (delPlayer)="onDeletePlayer($event)"
+    (editPlayer)="updatePlayer($event)"
+    [teams]="teams"
+  ></app-coach-squad-list>
 </div>
 <div style="position: absolute; bottom: 0; right: 0; background-color: transparent; z-index: 2">
   <button class="btn btn-back" (click)="redirectTo()">Back</button>

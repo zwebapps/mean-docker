@@ -86,8 +86,8 @@
           enctype="multipart/form-data"
           (ngSubmit)="submitEditPlayer()"
         >
-          <div class="row d-flex justify-content-between m-1">
-            <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-1">
+          <div class="row d-flex justify-content-around">
+            <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
               <label for="name" class="control-label">First Name</label>
               <input
                 type="text"
@@ -104,7 +104,7 @@
                 </div>
               </div>
             </div>
-            <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-1">
+            <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
               <label for="name" class="control-label">Surname</label>
               <input
                 type="text"
@@ -122,7 +122,7 @@
                 </div>
               </div>
             </div>
-            <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-1">
+            <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
               <label for="name" class="control-label">Date of birth</label>
               <input
                 type="date"
@@ -141,7 +141,7 @@
                 </div>
               </div>
             </div>
-            <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-1">
+            <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
               <label for="squadNo" class="control-label">Squad Number</label>
               <input
                 type="number"
@@ -159,7 +159,7 @@
                 </div>
               </div>
             </div>
-            <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-1">
+            <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
               <label for="name" class="control-label">League</label>
               <select
                 class="form-select form-control"
@@ -180,7 +180,7 @@
                 </div>
               </div>
             </div>
-            <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-1">
+            <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
               <label for="name" class="control-label">Team</label>
               <select
                 class="form-select form-control"
@@ -202,7 +202,7 @@
               </div>
             </div>
 
-            <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-1">
+            <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
               <label for="playerEidNo" class="control-label">EID No</label>
               <input
                 type="text"
@@ -224,7 +224,7 @@
                 </div>
               </div>
             </div>
-            <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-1">
+            <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
               <label for="eidFront" class="control-label">EID Front</label>
               <input
                 type="text"
@@ -243,7 +243,7 @@
                 </div>
               </div>
             </div>
-            <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-1">
+            <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
               <label for="eidBack" class="control-label">EID Back</label>
               <input
                 type="text"
@@ -262,17 +262,31 @@
                 </div>
               </div>
             </div>
-            <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-1">
-              <label for="playingup" class="control-label">Playing a player up</label>
+            <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+              <label for="playingup" class="control-label">Playing Up League</label>
               <ng-multiselect-dropdown
                 [class]="'form-control'"
-                [placeholder]="'Player Playing up'"
+                [placeholder]="'Playing up league'"
                 [settings]="dropdownSettings"
                 [(ngModel)]="selectedPlayingUp"
                 [data]="playingUpleagues"
                 (onSelect)="onItemSelect($event)"
                 (onSelectAll)="onSelectAll($event)"
                 formControlName="playingUp"
+              >
+              </ng-multiselect-dropdown>
+            </div>
+            <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+              <label for="playingup" class="control-label">Playing Up Team</label>
+              <ng-multiselect-dropdown
+                [class]="'form-control'"
+                [placeholder]="'Playing up team'"
+                [settings]="dropdownTeamSettings"
+                [(ngModel)]="selectedPlayingUpTeam"
+                [data]="dropteams"
+                (onSelect)="onTeamSelect($event)"
+                (onSelectAll)="onSelectAll($event)"
+                formControlName="playingUpTeam"
               >
               </ng-multiselect-dropdown>
             </div>
@@ -296,6 +310,7 @@
           (approvePlayer)="approve($event)"
           [leaguesFilter]="leagues"
           [leagues]="leagues"
+          [teams]="teams"
           (editPlayer)="editPlayer($event)"
         ></app-admin-squad-list>
       </div>

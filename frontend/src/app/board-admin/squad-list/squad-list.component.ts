@@ -44,6 +44,7 @@ export class SquadListComponent implements OnInit {
   displayAllPlayers: boolean = false;
   public playerForm: FormGroup;
   public dropdownSettings: IDropdownSettings = {};
+  public dropdownTeamSettings: IDropdownSettings = {};
   public submitted: boolean = false;
   apiURL = environment.apiURL;
   public eidImages: any = {
@@ -55,8 +56,13 @@ export class SquadListComponent implements OnInit {
   public playerToEdit: any = {};
   // for playing up dropdown
   public selectedPlayingUp: any = [];
+  public selectedPlayingUpTeam: any = [];
+
+  public dropteams: any = [];
+
   // for all playing up leagues
   public playingUpleagues: any = [];
+  public playerPlayingUpTeam: any = [];
 
   // for selected league
   public selectedLeagues: any = [];
@@ -84,9 +90,19 @@ export class SquadListComponent implements OnInit {
 
   ngOnInit() {
     this.dropdownSettings = {
-      singleSelection: false,
+      singleSelection: true,
       idField: "_id",
       textField: "leagueName",
+      selectAllText: "Select All",
+      unSelectAllText: "UnSelect All",
+      itemsShowLimit: 3,
+      allowSearchFilter: true
+    };
+
+    this.dropdownTeamSettings = {
+      singleSelection: true,
+      idField: "_id",
+      textField: "teamName",
       selectAllText: "Select All",
       unSelectAllText: "UnSelect All",
       itemsShowLimit: 3,
@@ -104,7 +120,8 @@ export class SquadListComponent implements OnInit {
       playerEidNo: ["", [Validators.required, Validators.pattern(eidPattern), Validators.maxLength(18)]],
       eidFront: ["", Validators.required],
       eidBack: ["", Validators.required],
-      playingUp: [""]
+      playingUp: [""],
+      playingUpTeam: [""]
     });
 
     // this.playerForm.controls.league.disable();
@@ -192,6 +209,18 @@ export class SquadListComponent implements OnInit {
     } else {
       this.selectedPlayingUp.push(item._id);
     }
+    this.dropteams = this.teams.filter((team: any) => this.isLeagueAllowed(this.selectedPlayingUp, team.leagues));
+    console.log(this.dropteams);
+    this.dropteams = this.dropteams.filter((team: any) => team.academy_id._id === this.academy._id);
+  }
+
+  isLeagueAllowed(playerPlayingUp: any, leagues: any) {
+    return leagues.some((league: any) => playerPlayingUp.includes(league._id));
+  }
+  onTeamSelect(item: any) {
+    this.playerPlayingUpTeam = [];
+    console.log(item);
+    this.playerPlayingUpTeam.push(item._id);
   }
   onSelectAll(items: any, type: any) {
     this.selectedPlayingUp.push(items.map((item: any) => item._id));
@@ -212,6 +241,9 @@ export class SquadListComponent implements OnInit {
           moment(this.playerToEdit.league.leagueAgeLimit).isAfter(league.leagueAgeLimit)
       );
       this.selectedPlayingUp = this.leagues.filter((leagues: any) => this.playerToEdit.playingUp.includes(leagues._id));
+      if (this.playerToEdit.playingUpTeam && this.playerToEdit.playingUpTeam.length > 0) {
+        this.selectedPlayingUpTeam = this.teams.filter((team: any) => this.playerToEdit.playingUpTeam.includes(team._id));
+      }
       this.playerForm.patchValue({
         firstName: this.playerToEdit.firstName,
         surName: this.playerToEdit.lastName,
@@ -226,6 +258,11 @@ export class SquadListComponent implements OnInit {
       if (this.selectedPlayingUp.length > 0) {
         this.playerForm.patchValue({
           playingUp: this.selectedPlayingUp
+        });
+      }
+      if (this.playerPlayingUpTeam.length > 0) {
+        this.playerForm.patchValue({
+          playingUpTeam: this.playerPlayingUpTeam
         });
       }
       this.eidNo = this.playerToEdit.emiratesIdNo;
@@ -257,6 +294,7 @@ export class SquadListComponent implements OnInit {
         emiratesIdNo: this.playerForm.value.playerEidNo,
         playerStatus: this.playerToEdit.playerStatus,
         playingUp: this.selectedPlayingUp.map((league: any) => league._id),
+        playingUpTeam: this.selectedPlayingUpTeam.map((league: any) => league._id),
         user: {
           createdBy: this.playerToEdit.user?._id
         }

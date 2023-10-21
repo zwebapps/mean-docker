@@ -48,6 +48,7 @@ export class CoachAcademyDetailsComponent {
   public team: any = {};
   public leagues: any = [];
   public playerForm: FormGroup;
+  public editPlayerForm: FormGroup;
   public coach: any = {};
   public selectedLeague: any = null;
   public submitted: boolean = false;
@@ -55,9 +56,12 @@ export class CoachAcademyDetailsComponent {
   public file: File | undefined;
   public images: any = [];
   public dropleagues: any = [];
+  public dropteams: any = [];
   public dropdownSettings: IDropdownSettings = {};
+  public dropdownTeamSettings: IDropdownSettings = {};
   public eidDropdownSettings: IDropdownSettings = {};
   public playerPlayingUp: any = [];
+  public playerPlayingUpTeam: any = [];
   public eidImages: any = {
     eidFront: null,
     eidBack: null
@@ -69,6 +73,14 @@ export class CoachAcademyDetailsComponent {
   insertionStarted: boolean = false;
   apiURL = environment.apiURL;
   dropEID: any = [];
+
+  displayAddPlayer: boolean = false;
+  displayEditPlayer: boolean = false;
+
+  selectedPlayingLeagues: any = [];
+  selectedPlayingUpTeams: any = [];
+  playerToEdit: any = {};
+
   constructor(
     private formBuilder: FormBuilder,
     private store: Store,
@@ -92,14 +104,30 @@ export class CoachAcademyDetailsComponent {
       playerEidNo: new FormControl(""),
       eidFront: new FormControl(""),
       eidBack: new FormControl(""),
-      playingUp: new FormControl("")
+      playingUp: new FormControl(""),
+      playingUpTeam: new FormControl("")
+    });
+    // edit form
+    this.editPlayerForm = new FormGroup({
+      playingUp: new FormControl(""),
+      playingUpTeam: new FormControl(""),
+      dob: new FormControl("")
     });
   }
   ngOnInit() {
     this.dropdownSettings = {
-      singleSelection: false,
+      singleSelection: true,
       idField: "_id",
       textField: "leagueName",
+      selectAllText: "Select All",
+      unSelectAllText: "UnSelect All",
+      itemsShowLimit: 3,
+      allowSearchFilter: true
+    };
+    this.dropdownTeamSettings = {
+      singleSelection: true,
+      idField: "_id",
+      textField: "teamName",
       selectAllText: "Select All",
       unSelectAllText: "UnSelect All",
       itemsShowLimit: 3,
@@ -125,7 +153,8 @@ export class CoachAcademyDetailsComponent {
       playerEidNo: [null, [Validators.required, Validators.pattern(eidPattern), Validators.maxLength(18)]],
       eidFront: ["", Validators.required],
       eidBack: ["", Validators.required],
-      playingUp: [""]
+      playingUp: [""],
+      playingUpTeam: [""]
     });
     this.playerForm.controls.league.disable();
     // get the team id
@@ -219,6 +248,7 @@ export class CoachAcademyDetailsComponent {
         eidBack: this.eidImages.eidBack,
         status: "Pending",
         playingUp: this.playerPlayingUp,
+        playingUpTeam: this.playerPlayingUpTeam,
         user: {
           createdBy: this.coach.id
         }
@@ -243,6 +273,30 @@ export class CoachAcademyDetailsComponent {
       );
     }
   };
+  onUpdatePlayer() {
+    const playingUp = this.editPlayerForm.controls.playingUp.value;
+    const playingUpTeam = this.editPlayerForm.controls.playingUpTeam.value;
+    if (playingUp && playingUpTeam) {
+      const playerData = {
+        playingUp: playingUp.map((league: any) => league._id),
+        playingUpTeam: playingUpTeam.map((team: any) => team._id),
+        dob: this.playerToEdit.dob,
+        user: {
+          createdBy: this.coach._id
+        }
+      };
+      if (playerData) {
+        this.palyerService.updatePlayer(this.playerToEdit._id, playerData).subscribe((res: any) => {
+          if (res.message) {
+            this.notifier.notify("success", res.message);
+            this.editPlayerForm.reset();
+            this.displayEditPlayer = false;
+            this.store.dispatch(PlayerActions.loadPlayers());
+          }
+        });
+      }
+    }
+  }
   getPlayersFromStore() {
     this.store.select(PlayerSelectors.getPlayers).subscribe(
       (players) => {
@@ -363,11 +417,24 @@ export class CoachAcademyDetailsComponent {
     }
   }
   onItemSelect(item: any) {
+    this.playerPlayingUp = [];
+    this.dropteams = [];
     if (this.playerPlayingUp.includes(item._id)) {
       this.playerPlayingUp.splice(this.playerPlayingUp.indexOf(item._id), 1);
     } else {
       this.playerPlayingUp.push(item._id);
     }
+    this.dropteams = this.teams.filter((team: any) => this.isLeagueAllowed(this.playerPlayingUp[0], team.leagues));
+    console.log(this.dropteams);
+    this.dropteams = this.dropteams.filter((team: any) => team.academy_id._id === this.academy._id);
+  }
+  isLeagueAllowed(playerPlayingUp: any, leagues: any) {
+    return leagues.some((league: any) => league._id === playerPlayingUp);
+  }
+  onTeamSelect(item: any) {
+    this.playerPlayingUpTeam = [];
+    console.log(item);
+    this.playerPlayingUpTeam.push(item._id);
   }
   onEidSelect(item: any) {
     this.data = this.data.filter((player: any) => player.emiratesIdNo === item.emiratesIdNo);
@@ -439,6 +506,29 @@ export class CoachAcademyDetailsComponent {
 
   onDeletePlayer(leagueId: any) {
     this.openConfirmationDialog(leagueId);
+  }
+  updatePlayer(player: any) {
+    this.playerToEdit = player;
+    this.selectedPlayingLeagues = this.leagues.filter((league: any) => player.playingUp.includes(league._id));
+    this.selectedPlayingUpTeams = this.teams.filter((team: any) => player.playingUpTeam.includes(team._id));
+    this.editPlayerForm.patchValue({
+      dob: new Date(player.dob).toLocaleDateString("en-GB")
+    });
+    if (this.playerToEdit) {
+      // filter on selected league and dob
+      this.dropleagues = this.leagues.filter(
+        (league: any) =>
+          moment(player.dob).isAfter(league.leagueAgeLimit) && moment(player.league.leagueAgeLimit).isAfter(league.leagueAgeLimit)
+      );
+    }
+    this.editPlayerForm.controls.dob.disable();
+    this.displayAddPlayer = false;
+    this.displayEditPlayer = true;
+  }
+
+  togglePlayerForm() {
+    this.displayAddPlayer = !this.displayAddPlayer;
+    this.displayEditPlayer = false;
   }
 
   public openConfirmationDialog(id: any) {

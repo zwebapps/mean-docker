@@ -16,8 +16,10 @@ import { DomSanitizer } from "@angular/platform-browser";
 export class CoachSquadListComponent {
   @ViewChild("myTable") table: any;
   @Output() delPlayer = new EventEmitter<string>();
+  @Output() editPlayer = new EventEmitter<string>();
   options = {};
   @Input() players: any = [];
+  @Input() teams: any = [];
   leagues: any = [];
   columns: any = [{ prop: "firstname" }, { name: "lastname" }, { name: "username" }, { name: "email" }];
   loadingIndicator = true;
@@ -69,6 +71,11 @@ export class CoachSquadListComponent {
       return this.leagues.find((lg: any) => lg._id === leagueID);
     }
   }
+  getTeam = (teamID: any) => {
+    if (teamID) {
+      return this.teams.find((lg: any) => lg._id === teamID);
+    }
+  };
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return "by pressing ESC";
@@ -80,9 +87,7 @@ export class CoachSquadListComponent {
   }
 
   edit(value: any) {
-    // this.userService.deleteUser(value).subscribe((result:any)  => {
-    console.log(value);
-    // })
+    this.editPlayer.emit(value);
   }
 
   delete(value: any) {

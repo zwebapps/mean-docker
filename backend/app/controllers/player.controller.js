@@ -157,6 +157,7 @@ exports.createPlayer = async (req, resp, next) => {
               playerStatus: req.body[i]['status'],
               user: ObjectId(req.body[i].user['createdBy']),
               playingUp: req.body[i]['playingUp'],
+              playingUpTeam: req.body[i]['playingUpTeam'],
               createdAt:  new Date()
             });
             insertedPlayers.push(req.body[i]);
@@ -199,10 +200,10 @@ exports.createPlayer = async (req, resp, next) => {
             playerStatus: req.body['status'],
             user: ObjectId(req.body.user['createdBy']),
             playingUp: req.body['playingUp'],
+            playingUpTeam: req.body['playingUpTeam'],
             createdAt:  new Date()
           });
          
-  
           const savedPlayer = await playerData.save();
           resp.status(200).json({ player: savedPlayer, message: 'Player created successfully' });
         } else {
@@ -300,7 +301,12 @@ exports.playerByTeam = async (req, resp, next) => {
     const { id } = req.params;
     if(id) {
       // check if emries id or normal id
-      pl = await Player.find({ team: ObjectId(id) }).populate(["user", "league", "academy", "team"]).exec();
+      pl = await Player.find({ 
+                        $or: [
+                            { team : ObjectId(id) },
+                            { playingUpTeam : ObjectId(id) },
+                            ]
+                          }).populate(["user", "league", "academy", "team"]).exec();
     } 
     resp.status(200).json(pl ? pl : { message: 'Player not found'});
   } catch (error) {
@@ -333,6 +339,7 @@ exports.updatePlayer =  async (req, resp, next) => {
       ...fetchPlayer._doc,
       ...req.body,
       playingUp: req.body.playingUp.map((league) => ObjectId(league)),
+      playingUpTeam: req.body.playingUpTeam.map((team) => ObjectId(team)),
       dob: new Date(req.body.dob),
       user : ObjectId(req.body.user.createdBy)
     }
