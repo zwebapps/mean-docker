@@ -9,6 +9,7 @@ import * as FixureActions from "../../_store/actions/fixures.actions";
 import { FixtureService } from "src/app/_services/fixture.service";
 import { NotifierService } from "angular-notifier";
 import * as moment from "moment";
+import { StorageService } from "src/app/_services/storage.service";
 
 @Component({
   selector: "app-game-management",
@@ -26,15 +27,24 @@ export class GameManagementComponent implements OnInit {
   ColumnMode = ColumnMode;
   homeTeamSquad: any = [];
   awayTeamSquad: any = [];
-  constructor(private store: Store, notifier: NotifierService, private userService: UserService, private fixtureService: FixtureService) {
+  refereeDetails: any = {};
+  constructor(
+    private store: Store,
+    notifier: NotifierService,
+    private userService: UserService,
+    private fixtureService: FixtureService,
+    private storageService: StorageService
+  ) {
     this.notifier = notifier;
     this.fetchFixtures();
   }
   ngOnInit(): void {
+    // get ref details
+    this.refereeDetails = this.storageService.getUser();
     // now get the leagues and map
     this.store.select(FixtureSelectors.getFixtures).subscribe((fixtures) => {
       if (fixtures) {
-        this.fixtures = fixtures;
+        this.fixtures = fixtures.filter((fix: any) => fix.user_id && fix.user_id._id === this.refereeDetails.id);
       }
     });
   }
