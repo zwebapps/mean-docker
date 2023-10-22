@@ -35,7 +35,8 @@ exports.createUser = async (req, res) => {
   if( req.body && req.body['username'] && req.body['password'].length > 0) {
     // validate emirates id
     const isValidated = req.body['username'] && req.body['username'].length > 0;
-    if(isValidated) {
+    const isUsernameExists = await User.findOne({ username: req.body['username'] });
+    if(isValidated && !isUsernameExists) {
       // check if the same eid is already in the database
       let user = await User.findOne({ email: req.body['email'] });
       // get role by name
@@ -58,7 +59,7 @@ exports.createUser = async (req, res) => {
         res.status(200).json({ message: 'User already exists' });
       }
     } else {
-      res.status(200).json({ message: 'Name is not valid' });
+      res.status(200).json({ message: 'Name is not valid / username already exists' });
     }
   } else {
     res.status(200).json({ message: 'Username  is not valid' });

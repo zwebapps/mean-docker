@@ -74,6 +74,15 @@ export class UserManagementComponent implements OnInit {
     this.getRoles();
   }
 
+  filterUsers(event: any) {
+    const username = event.target.value;
+    if (username) {
+      this.data = this.data.filter((user: any) => user.username.includes(username.toLowerCase()));
+    } else {
+      this.getUsersFromStore();
+    }
+  }
+
   getUsersFromStore() {
     this.store.select(UserSelectors.getUsers).subscribe(
       (users) => {
@@ -179,7 +188,7 @@ export class UserManagementComponent implements OnInit {
       };
       this.userService.createUser(userObj).subscribe(
         (result: any) => {
-          if (result) {
+          if (!result.message) {
             if (this.userForm.value.academy) {
               let coachId = result._id;
               this.associateCoach(coachId);
@@ -188,6 +197,8 @@ export class UserManagementComponent implements OnInit {
             this.userForm.reset();
             this.store.dispatch(UserActions.loadUsers());
             this.submitted = false;
+          } else {
+            this.notifier.notify("error", result.message);
           }
         },
         (error) => {
