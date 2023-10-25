@@ -15,6 +15,7 @@ import { PlayerService } from "src/app/_services/player.service";
 import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { IDropdownSettings } from "ng-multiselect-dropdown";
 import { environment } from "src/environments/environment";
+import * as XLSX from "xlsx";
 
 import * as moment from "moment";
 
@@ -33,6 +34,8 @@ export class SquadListComponent implements OnInit {
   reorderable = true;
   ColumnMode = ColumnMode;
   public teams: any = [];
+  public filterTeams: any = [];
+  public teamsForFilter: any = [];
   private notifier: NotifierService;
   public academies: any = [];
   public academy: any = {};
@@ -80,7 +83,8 @@ export class SquadListComponent implements OnInit {
     this.notifier = notifier;
     this.filterLeague = new FormGroup({
       league: new FormControl("0"),
-      academy: new FormControl("0")
+      academy: new FormControl("0"),
+      team: new FormControl("0")
     });
     this.squadForm = new FormGroup({
       league: new FormControl("0"),
@@ -149,7 +153,8 @@ export class SquadListComponent implements OnInit {
     this.filterLeague.reset();
     this.filterLeague = new FormGroup({
       league: new FormControl("0"),
-      academy: new FormControl("0")
+      academy: new FormControl("0"),
+      team: new FormControl("0")
     });
     this.getPlayersFromStore();
   };
@@ -166,7 +171,8 @@ export class SquadListComponent implements OnInit {
           this.notifier.notify("success", res.message);
           this.filterLeague = new FormGroup({
             league: new FormControl("0"),
-            academy: new FormControl("0")
+            academy: new FormControl("0"),
+            team: new FormControl("0")
           });
           this.store.dispatch(PlayerActions.loadPlayers());
         }
@@ -176,6 +182,28 @@ export class SquadListComponent implements OnInit {
       }
     );
   };
+  exportPlayers = () => {
+    const fileName = "ExportedPlayers.xlsx";
+    const exPlayers = [];
+    this.players.forEach((player: any) =>
+      exPlayers.push({
+        Name: `${player.firstName} ${player.lastName}`,
+        League: player.league.leagueName,
+        Academy: player?.academy?.academyName,
+        Team: player?.team?.teamName,
+        PlayingUpLeague: this.leagues.find((league: any) => player.playingUp.includes(league._id)),
+        PlayingUpTeam: this.filterTeams.find((team: any) => player?.playingUpTeam.includes(team._id))
+      })
+    );
+
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exPlayers);
+
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "test");
+
+    XLSX.writeFile(wb, fileName);
+  };
+
   getAcademiesFromStore = () => {
     this.store.select(AcademySelectors.getAcademies).subscribe((academies) => {
       if (Array.isArray(academies)) {
@@ -189,6 +217,7 @@ export class SquadListComponent implements OnInit {
       if (Array.isArray(teams)) {
         // filter teams for current academy
         this.teams = teams.filter((team: any) => team.academy_id?._id === this.academy._id);
+        this.filterTeams = teams;
       }
     });
   };
@@ -356,8 +385,10 @@ export class SquadListComponent implements OnInit {
     }
     this.store.select(PlayerSelectors.getPlayers).subscribe((players) => {
       if (players.length > 0) {
-        players.forEach((player) => (player?.league && !this.alreadyExists(player?.league) ? this.leagues.push(player?.league) : null));
-        if (!this.displayAllPlayers) {
+        // players.forEach((player) => (player?.league && !this.alreadyExists(player?.league) ? this.leagues.push(player?.league) : null));
+        if (this.displayAllPlayers) {
+          this.players = players;
+        } else {
           if (leagueId) {
             this.players = players.filter(
               (player: any) =>
@@ -368,30 +399,38 @@ export class SquadListComponent implements OnInit {
               (player: any) => player?.team?._id == this.currentTeam._id && player?.team?.academy_id === this.academy._id
             );
           }
-        } else {
-          this.players = players;
         }
       }
     });
   }
   filterAllPlayers() {
+    this.getPlayersFromStore();
     let leagueId = null;
     let academy = null;
+    let team = null;
     if (this.filterLeague.value.league && this.filterLeague.value.league !== "0") {
       leagueId = this.filterLeague.value.league;
     }
     if (this.filterLeague.value.academy && this.filterLeague.value.academy !== "0") {
       academy = this.filterLeague.value.academy;
+      this.teamsForFilter = this.filterTeams.filter((team: any) => team?.academy_id?._id === this.filterLeague.value.academy);
+    }
+    if (this.filterLeague.value.team && this.filterLeague.value.team !== "0") {
+      team = this.filterLeague.value.team;
     }
     this.store.select(PlayerSelectors.getPlayers).subscribe((players) => {
       if (players.length > 0) {
-        if (leagueId && !academy) {
-          this.players = players.filter((player: any) => player?.league?._id === leagueId);
-        } else if (!leagueId && academy) {
-          this.players = players.filter((player: any) => player?.academy?._id === academy);
-        } else if (leagueId && academy) {
-          this.players = players.filter((player: any) => player?.academy?._id == academy && player?.league?._id == leagueId);
-        } else {
+        this.players = players;
+        if (leagueId) {
+          this.players = this.players.filter((player: any) => player?.league?._id === leagueId || player?.playingUp?.includes(leagueId));
+        }
+        if (academy) {
+          this.players = this.players.filter((player: any) => player?.academy?._id === academy);
+        }
+        if (team) {
+          this.players = this.players.filter((player: any) => player?.team?._id === team || player?.playingUpTeam?.includes(team));
+        }
+        if (!leagueId && !academy && !team) {
           this.players = players;
         }
       }
@@ -453,11 +492,16 @@ export class SquadListComponent implements OnInit {
     return this.leagues.find((l: any) => l._id == league._id) ? true : false;
   }
   filterPlayers() {
-    let leagueId = this.filterLeague.value.league;
-    let academyId = this.filterLeague.value.academy;
-    if (leagueId) {
-      this.getPlayersFromStore(leagueId, academyId);
+    let leagueId = null;
+    let academyId = null;
+    if (this.filterLeague.value.academy && this.filterLeague.value.academy !== "0") {
+      academyId = this.filterLeague.value.academy;
     }
+    if (this.filterLeague.value.league && this.filterLeague.value.league !== "0") {
+      leagueId = this.filterLeague.value.league;
+    }
+
+    this.getPlayersFromStore(leagueId, academyId);
   }
 
   edit(value: any) {

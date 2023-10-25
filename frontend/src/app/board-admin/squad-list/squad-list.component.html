@@ -328,7 +328,7 @@
 
       <div class="row">
         <form [formGroup]="filterLeague" class="d-flex" (submit)="activatePlayers()">
-          <div class="form-group col-12 col-lg-3 m-3">
+          <div class="form-group col-12 col-lg-2 m-3">
             <label for="name" class="control-label">League</label>
             <select class="form-select" name="league" formControlName="league" aria-label="Default select" (change)="filterAllPlayers()">
               <option value="0" selected>Select League</option>
@@ -339,7 +339,7 @@
               </ng-container>
             </select>
           </div>
-          <div class="form-group col-12 col-lg-3 m-3">
+          <div class="form-group col-12 col-lg-2 m-3">
             <label for="academy" class="control-label">Academy</label>
             <select class="form-select" name="academy" formControlName="academy" aria-label="Default select" (change)="filterAllPlayers()">
               <option value="0" selected>Select Academy</option>
@@ -350,8 +350,22 @@
               </ng-container>
             </select>
           </div>
-          <div class="form-group col-12 col-lg-3 m-3 pt-4">
+          <div class="form-group col-12 col-lg-2 m-3">
+            <label for="academy" class="control-label">Team</label>
+            <select class="form-select" name="team" formControlName="team" aria-label="Default select" (change)="filterAllPlayers()">
+              <option value="0" selected>Select Team</option>
+              <ng-container *ngIf="academies">
+                <ng-container *ngFor="let team of teamsForFilter">
+                  <option value="{{ team._id }}">{{ team.teamName }}</option>
+                </ng-container>
+              </ng-container>
+            </select>
+          </div>
+          <div class="form-group col-12 col-lg-2 m-3 pt-4">
             <button class="btn btn-primary mt-3" type="submit">Activate Players</button>
+          </div>
+          <div class="form-group col-12 col-lg-2 m-3 pt-4">
+            <button class="btn btn-primary mt-3" type="button" (click)="exportPlayers()">Export Players</button>
           </div>
         </form>
       </div>
