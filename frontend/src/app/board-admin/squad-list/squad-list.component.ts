@@ -183,26 +183,25 @@ export class SquadListComponent implements OnInit {
     );
   };
   exportPlayers = () => {
-    debugger;
     const fileName = "ExportedPlayers.xlsx";
     const exPlayers = [];
     this.players.forEach((player: any) => {
-      const playingUpLeague = this.leagues.find((league: any) => player.playingUp.includes(league._id));
-      const playingUpTeam = this.filterTeams.find((team: any) => player?.playingUpTeam.includes(team._id));
+      const playingUpLeague = this.leagues.filter((league: any) => player.playingUp.includes(league._id)) || [];
+      const playingUpTeam = this.filterTeams.filter((team: any) => player?.playingUpTeam.includes(team._id)) || [];
       exPlayers.push({
         Name: `${player.firstName} ${player.lastName}`,
-        League: player.league.leagueName,
+        League: player?.league?.leagueName,
         Academy: player?.academy?.academyName,
         Team: player?.team?.teamName,
-        PlayingUpLeague: playingUpLeague?.leagueName,
-        PlayingUpTeam: playingUpTeam?.teamName
+        PlayingUpLeague: playingUpLeague.length ? playingUpLeague.map((plUpLeague: any) => plUpLeague?.leagueName).join(",") : "",
+        PlayingUpTeam: playingUpTeam.length ? playingUpTeam.map((plTeam: any) => plTeam?.teamName).join(",") : ""
       });
     });
 
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(exPlayers);
 
     const wb: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "test");
+    XLSX.utils.book_append_sheet(wb, ws, "Players");
 
     XLSX.writeFile(wb, fileName);
   };
