@@ -60,6 +60,20 @@
           <div class="col-5 col-lg-2 mt-2">
             <h6>Filter by league:</h6>
           </div>
+          <div class="col-lg-4 me-1">
+            <input type="text" value="" id="name" placeholder="Player Name" class="form-control" (keyup)="filterPlayersByName($event)" />
+          </div>
+          <div class="col-lg-4 me-1" form-control>
+            <ng-multiselect-dropdown
+              [placeholder]="'EID'"
+              [settings]="eidDropdownSettings"
+              [data]="dropEID"
+              (onSelect)="onEidSelect($event)"
+              (onSelectAll)="onEIDSelectAll($event)"
+              (onDeSelect)="onEIDDeSelect($event)"
+            >
+            </ng-multiselect-dropdown>
+          </div>
           <div class="col-7 col-lg-4">
             <form [formGroup]="filterLeague">
               <select class="form-select" name="league" formControlName="league" aria-label="Default select" (change)="filterPlayers()">

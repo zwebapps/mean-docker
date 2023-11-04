@@ -42,6 +42,8 @@ export class SquadListComponent implements OnInit {
   public currentTeam: any = {};
   public coaches: any = [];
   public leagues: any = [];
+  public eidDropdownSettings: IDropdownSettings = {};
+  public dropEID: any = [];
   filterLeague: FormGroup;
   squadForm: FormGroup;
   displayAllPlayers: boolean = false;
@@ -70,6 +72,8 @@ export class SquadListComponent implements OnInit {
   // for selected league
   public selectedLeagues: any = [];
   public eidNo: any = "";
+  public selectedEIDs: any = [];
+  public searchByNameterm: any = "";
   constructor(
     private playerService: PlayerService,
     private userService: UserService,
@@ -94,9 +98,19 @@ export class SquadListComponent implements OnInit {
 
   ngOnInit() {
     this.dropdownSettings = {
-      singleSelection: true,
+      singleSelection: false,
       idField: "_id",
       textField: "leagueName",
+      selectAllText: "Select All",
+      unSelectAllText: "UnSelect All",
+      itemsShowLimit: 3,
+      allowSearchFilter: true
+    };
+
+    this.eidDropdownSettings = {
+      singleSelection: false,
+      idField: "_id",
+      textField: "emiratesIdNo",
       selectAllText: "Select All",
       unSelectAllText: "UnSelect All",
       itemsShowLimit: 3,
@@ -182,6 +196,16 @@ export class SquadListComponent implements OnInit {
       }
     );
   };
+  filterPlayersByName(event: any) {
+    const name = event.target.value;
+    if (name.length > 0) {
+      this.searchByNameterm = name;
+      this.getPlayersFromStore();
+    } else {
+      this.searchByNameterm = "";
+      this.getPlayersFromStore();
+    }
+  }
   exportPlayers = () => {
     const fileName = "ExportedPlayers.xlsx";
     const exPlayers = [];
@@ -378,6 +402,18 @@ export class SquadListComponent implements OnInit {
     let nameArray = leagueName.match(/(\d+)/);
     return nameArray.find((nm: any) => !isNaN(nm));
   }
+  onEidSelect(item: any) {
+    this.selectedEIDs.push(item.emiratesIdNo);
+    this.getPlayersFromStore();
+  }
+  onEIDSelectAll(items: any) {
+    this.selectedEIDs.push(items.map((eid: any) => eid.emiratesIdNo));
+    this.getPlayersFromStore();
+  }
+  onEIDDeSelect(item: any) {
+    this.selectedEIDs.splice(this.selectedEIDs.indexOf(item), 1);
+    this.getPlayersFromStore();
+  }
   getPlayersFromStore(leagueId?: any, academy?: any) {
     if (!leagueId) {
       leagueId = null;
@@ -385,9 +421,9 @@ export class SquadListComponent implements OnInit {
     if (!academy) {
       academy = null;
     }
+
     this.store.select(PlayerSelectors.getPlayers).subscribe((players) => {
       if (players.length > 0) {
-        // players.forEach((player) => (player?.league && !this.alreadyExists(player?.league) ? this.leagues.push(player?.league) : null));
         if (this.displayAllPlayers) {
           this.players = players;
         } else {
@@ -401,6 +437,20 @@ export class SquadListComponent implements OnInit {
               (player: any) => player?.team?._id == this.currentTeam._id && player?.team?.academy_id === this.academy._id
             );
           }
+          // condition for emiratesId
+          if (this.selectedEIDs.length > 0) {
+            this.players = this.players.filter((player: any) => this.selectedEIDs.includes(player.emiratesIdNo));
+          }
+          debugger;
+          // filter by name
+          if (this.searchByNameterm) {
+            this.players = this.players.filter(
+              (player: any) =>
+                player?.firstName?.toLowerCase().includes(this.searchByNameterm.toLowerCase()) ||
+                player?.lastName?.toLowerCase().includes(this.searchByNameterm.toLowerCase())
+            );
+          }
+          this.dropEID = players;
         }
       }
     });
