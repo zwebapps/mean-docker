@@ -15,6 +15,9 @@ const Academy = mongoose.model(
     color: {
       type: String,
     },
+    compitition: {
+      type: String,
+    },
     coach: [{
           type: mongoose.Schema.Types.ObjectId,
           ref: "User"

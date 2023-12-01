@@ -9,6 +9,9 @@ const User = mongoose.model(
     contact: String,
     email: String,
     password: String,
+    compitition: {
+      type: String,
+    },
     roles: [
       {
         type: mongoose.Schema.Types.ObjectId,

@@ -28,16 +28,11 @@ export const Approutes: Routes = [
         path: "login",
         component: LoginComponent
       },
-      // {
-      //   path: "home",
-      //   canActivate: [AuthGuard],
-      //   component: HomeComponent
-      // },
-      // {
-      //   path: "index",
-      //   canActivate: [AuthGuard],
-      //   component: HomeComponent
-      // },
+      {
+        path: "superadmin",
+        canActivate: [AuthGuard],
+        loadChildren: () => import("./super-admin/super-admin.module").then((m) => m.SuperAdminModule)
+      },
       {
         path: "admin",
         canActivate: [AuthGuard],
@@ -66,39 +61,11 @@ export const Approutes: Routes = [
           }
         ]
       },
-      // {
-      //   path: 'referee',
-      //   canActivate: [AuthGuard],
-      //   component: RefereeComponent,
-      //   children: [
-      //     {
-      //       path: 'dashboard',
-      //       component: RefereeDashboardComponent,
-      //     },
-      //     {
-      //       path: 'mangegames',
-      //       component: GameManagementComponent,
-      //     }
-      //   ]
-      // },
       {
         path: "referee",
         canActivate: [AuthGuard],
         loadChildren: () => import("./referee/referee.module").then((m) => m.RefereeModule)
       },
-      // {
-      //   path: "dashboard",
-      //   canActivate: [AuthGuard],
-      //   loadChildren: () => import("./dashboard/dashboard.module").then((m) => m.DashboardModule)
-      // },
-      // {
-      //   path: "about",
-      //   loadChildren: () => import("./about/about.module").then((m) => m.AboutModule)
-      // },
-      // {
-      //   path: "component",
-      //   loadChildren: () => import("./component/component.module").then((m) => m.ComponentsModule)
-      // },
       {
         path: "404",
         component: ErrorPageComponent

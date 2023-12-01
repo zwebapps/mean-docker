@@ -7,18 +7,14 @@ import { RouterModule, Routes } from "@angular/router";
 import { BoardAdminComponent } from "./board-admin.component";
 import { AuthGuard } from "../_helpers/auth.guard";
 import { TeamManagementComponent } from "./team-management/team-management.component";
-import { AcademyManagementComponent } from "./academy-management/academy-management.component";
 import { AdminDashboardComponent } from "./admin-dashboard/admin-dashboard.component";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
-import { AdminDataTableComponent } from "./admin-data-table/admin-data-table.component";
 import { AcademyDetailComponent } from "./academy-detail/academy-detail.component";
 import { AcademyLeagueSelectionComponent } from "./academy-league-selection/academy-league-selection.component";
 import { SquadAcademyListComponent } from "./squad-academy-list/squad-academy-list.component";
 import { SquadListComponent } from "./squad-list/squad-list.component";
-import { AdminSquadListComponent } from "./admin-squad-list/admin-squad-list.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NotifierModule, NotifierOptions } from "angular-notifier";
-import { ConfirmationModalComponent } from "./confirmation-modal/confirmation-modal.component";
 import { ConfirmationDialogService } from "../_services/confirmation-dialog.service";
 // Import the library
 import { NgxImageZoomModule } from "ngx-image-zoom";
@@ -26,6 +22,7 @@ import { AdminNotificationsComponent } from "./admin-notifications/admin-notific
 import { AngularEditorModule } from "@kolkov/angular-editor";
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { NgbModule, NgbNavModule } from "@ng-bootstrap/ng-bootstrap";
+import { AdminSharedModule } from "../admin-shared/admin-shared.module";
 
 /**
  * Custom angular notifier options
@@ -122,23 +119,9 @@ const adminRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    UserManagementComponent,
-    LeagueManagementComponent,
-    SquadManagementComponent,
-    TeamManagementComponent,
-    AcademyManagementComponent,
-    AdminDashboardComponent,
-    AdminDataTableComponent,
-    AcademyDetailComponent,
-    AcademyLeagueSelectionComponent,
-    SquadAcademyListComponent,
-    SquadListComponent,
-    AdminSquadListComponent,
-    ConfirmationModalComponent,
-    AdminNotificationsComponent
-  ],
+  declarations: [],
   imports: [
+    AdminSharedModule,
     CommonModule,
     NgxImageZoomModule,
     NgbNavModule,
@@ -146,9 +129,9 @@ const adminRoutes: Routes = [
     ReactiveFormsModule,
     FormsModule,
     AngularEditorModule,
+    NgMultiSelectDropDownModule.forRoot(),
     NotifierModule.withConfig(customNotifierOptions),
-    RouterModule.forChild(adminRoutes),
-    NgMultiSelectDropDownModule.forRoot()
+    RouterModule.forChild(adminRoutes)
   ],
   providers: [ConfirmationDialogService],
   exports: [RouterModule]

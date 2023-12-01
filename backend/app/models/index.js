@@ -16,6 +16,6 @@ db.increment = require("./increment.model");
 db.contact = require("./contact.model");
 
 
-db.ROLES = ["user", "admin", "coach", "referee"];
+db.ROLES = ["user", "admin", "coach", "referee", "superadmin"];
 
 module.exports = db;

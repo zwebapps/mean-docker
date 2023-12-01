@@ -45,6 +45,9 @@ import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { provideClientHydration } from "@angular/platform-browser";
 import { NgxUiLoaderModule, NgxUiLoaderHttpModule, NgxUiLoaderConfig, SPINNER, POSITION, PB_DIRECTION } from "ngx-ui-loader";
 import { ErrorPageComponent } from "./error-page/error-page.component";
+import { AdminSharedModule } from "./admin-shared/admin-shared.module";
+import { AnalyticsComponent } from "./analytics/analytics.component";
+import { SuperAdminModule } from "./super-admin/super-admin.module";
 
 const environment = {
   production: false
@@ -116,9 +119,11 @@ const customNotifierOptions: NotifierOptions = {
     CoachComponent,
     BoardUserComponent,
     AdminComponent,
-    CollectionsComponentComponent
+    CollectionsComponentComponent,
+    AnalyticsComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule.withServerTransition({ appId: "serverApp" }),
     NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
     NgxUiLoaderModule.forRoot(ngxUiLoaderConfig),
@@ -128,7 +133,6 @@ const customNotifierOptions: NotifierOptions = {
     NgxDatatableModule,
     CommonModule,
     BrowserModule,
-    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -141,6 +145,7 @@ const customNotifierOptions: NotifierOptions = {
     NavigationComponent,
     SidebarComponent,
     BoardAdminModule,
+    SuperAdminModule,
     CoachModule,
     FontAwesomeModule,
     StoreModule.forRoot(reducers, { metaReducers }),

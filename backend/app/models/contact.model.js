@@ -14,6 +14,9 @@ const Contact = mongoose.model(
     reply: {
       type: String,
     },
+    compitition: {
+      type: String,
+    },
     status: {
       type: String,
       default : 'Pending'

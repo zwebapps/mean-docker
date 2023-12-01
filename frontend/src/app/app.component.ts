@@ -5,7 +5,6 @@ import { AuthService } from "./_services/auth.service";
 import { EventBusService } from "./_shared/event-bus.service";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
-import { environment } from "./../environments/environment";
 import { NgxUiLoaderService } from "ngx-ui-loader";
 
 // importing actions
@@ -57,16 +56,17 @@ export class AppComponent {
       const user = this.storageService.getUser();
       this.roles = user.roles;
 
-      this.showAdminBoard = this.roles.includes("ROLE_ADMIN");
+      this.showAdminBoard = this.roles.includes("ROLE_ADMIN") || this.roles.includes("ROLE_SUPERADMIN");
       this.showModeratorBoard = this.roles.includes("ROLE_MODERATOR");
       this.username = user.username;
 
       this.ngxService.start();
       // gettinga all listings for store
       if (this.showAdminBoard) {
+        debugger;
         this.store.dispatch(UserActions.loadUsers());
       }
-
+      debugger;
       this.store.dispatch(TeamActions.loadTeams());
       this.store.dispatch(LeagueActions.loadLeagues());
       this.store.dispatch(FixureActions.loadFixtures());

@@ -61,6 +61,9 @@ const Player = mongoose.model(
         default: null,
         required: false
     },
+    compitition: {
+        type: String,
+      },
     playingUp: [{
         type: mongoose.Schema.Types.ObjectId,
         default: null,

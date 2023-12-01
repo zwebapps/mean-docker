@@ -2,6 +2,71 @@ import { RouteInfo, RouteUser } from "./sidebar.metadata";
 
 export const ROUTES: RouteUser[] = [
   {
+    role: "ROLE_SUPERADMIN",
+    routes: [
+      {
+        path: "/superadmin/dashboard",
+        title: "Dashboard",
+        icon: "bi bi-speedometer2",
+        image: "assets/images/bashboard.png",
+        active: "assets/images/bashbaord.png",
+        class: "",
+        extralink: false,
+        submenu: []
+      },
+      {
+        path: "/superadmin/compititions",
+        title: "Compitions",
+        icon: "bi bi-speedometer2",
+        image: "assets/images/bashboard.png",
+        active: "assets/images/bashbaord.png",
+        class: "",
+        extralink: false,
+        submenu: []
+      },
+      {
+        path: "/superadmin/users",
+        title: "Users Management",
+        icon: "bi bi-speedometer2",
+        image: "assets/images/squads.png",
+        active: "assets/images/squads.png",
+        class: "",
+        extralink: false,
+        submenu: []
+      },
+      {
+        path: "/superadmin/leagues",
+        title: "League Management",
+        icon: "bi bi-speedometer2",
+        image: "assets/images/leagues.png",
+        active: "assets/images/leagues.png",
+        class: "",
+        extralink: false,
+        submenu: []
+      },
+      {
+        path: "/superadmin/academies",
+        title: "Team Management",
+        icon: "bi bi-speedometer2",
+        image: "assets/images/teams.png",
+        active: "assets/images/teams.png",
+        class: "",
+        extralink: false,
+        submenu: []
+      },
+      {
+        path: "/superadmin/squads",
+        title: "Squad Management",
+        icon: "bi bi-speedometer2",
+        image: "assets/images/squads.png",
+        active: "assets/images/squads.png",
+        class: "",
+        extralink: false,
+        submenu: []
+      }
+    ]
+  },
+  {
     role: "ROLE_ADMIN",
     routes: [
       {
@@ -34,15 +99,6 @@ export const ROUTES: RouteUser[] = [
         extralink: false,
         submenu: []
       },
-      // {
-      //   path: '/admin/academies',
-      //   title: 'Academy Management',
-      //   icon: 'bi bi-speedometer2',
-      //   class: '',
-      //   extralink: false,
-      //   submenu: []
-      // },
-
       {
         path: "/admin/academies",
         title: "Team Management",

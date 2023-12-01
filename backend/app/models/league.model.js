@@ -12,6 +12,9 @@ const League = mongoose.model(
       type: String,
       required: true,
     },
+    compitition: {
+      type: String,
+    },
     user_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
