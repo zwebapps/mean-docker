@@ -17,8 +17,9 @@ const Team = mongoose.model(
         ref: "Academy"
     },
     compitition: {
-        type: String,
-      },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Compitition"
+    },
     leagues: [
         {
             type: mongoose.Schema.Types.ObjectId,

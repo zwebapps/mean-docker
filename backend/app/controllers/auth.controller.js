@@ -110,6 +110,7 @@ exports.signin = (req, res) => {
         username: user.username,
         email: user.email,
         roles: authorities,
+        compitition: user.compitition? user.compitition : 'yfl'
       });
     });
 };

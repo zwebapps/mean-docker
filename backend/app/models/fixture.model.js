@@ -19,7 +19,8 @@ const Fixture = mongoose.model(
         required: true
       },
       compitition: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Compitition"
       },
     user_id: {
           type: mongoose.Schema.Types.ObjectId,

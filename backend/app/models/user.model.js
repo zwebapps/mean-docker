@@ -10,7 +10,8 @@ const User = mongoose.model(
     email: String,
     password: String,
     compitition: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Compitition"
     },
     roles: [
       {

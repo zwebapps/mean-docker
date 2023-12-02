@@ -15,6 +15,10 @@ const Player = mongoose.model(
         type: Number,
         required: true
     },
+    gender: {
+        type: String,
+        required: true
+    },
     squadNo: {
         type: Number,
         required: true
@@ -62,7 +66,8 @@ const Player = mongoose.model(
         required: false
     },
     compitition: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Compitition"
       },
     playingUp: [{
         type: mongoose.Schema.Types.ObjectId,

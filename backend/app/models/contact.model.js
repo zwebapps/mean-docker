@@ -15,7 +15,8 @@ const Contact = mongoose.model(
       type: String,
     },
     compitition: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Compitition"
     },
     status: {
       type: String,
