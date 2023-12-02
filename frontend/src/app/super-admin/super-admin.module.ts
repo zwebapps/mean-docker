@@ -1,26 +1,20 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-
 import { RouterModule, Routes } from "@angular/router";
 import { AuthGuard } from "../_helpers/auth.guard";
-
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NotifierModule, NotifierOptions } from "angular-notifier";
-
 import { ConfirmationDialogService } from "../_services/confirmation-dialog.service";
 // Import the library
 import { NgxImageZoomModule } from "ngx-image-zoom";
-
 import { AngularEditorModule } from "@kolkov/angular-editor";
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { NgbModule, NgbNavModule } from "@ng-bootstrap/ng-bootstrap";
-
-import { SuperAdminRoutingModule } from "./super-admin-routing.module";
-import { SuperAdminComponent } from "./super-admin/super-admin.component";
+import { AdminSharedModule } from "../admin-shared/admin-shared.module";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
+import { AnalyticsComponent } from "../analytics/analytics.component";
 import { AcademyDetailComponent } from "../board-admin/academy-detail/academy-detail.component";
 import { AcademyLeagueSelectionComponent } from "../board-admin/academy-league-selection/academy-league-selection.component";
-import { AdminDashboardComponent } from "../board-admin/admin-dashboard/admin-dashboard.component";
 import { AdminNotificationsComponent } from "../board-admin/admin-notifications/admin-notifications.component";
 import { LeagueManagementComponent } from "../board-admin/league-management/league-management.component";
 import { SquadAcademyListComponent } from "../board-admin/squad-academy-list/squad-academy-list.component";
@@ -28,11 +22,8 @@ import { SquadListComponent } from "../board-admin/squad-list/squad-list.compone
 import { SquadManagementComponent } from "../board-admin/squad-management/squad-management.component";
 import { TeamManagementComponent } from "../board-admin/team-management/team-management.component";
 import { UserManagementComponent } from "../board-admin/user-management/user-management.component";
-import { AdminSharedModule } from "../admin-shared/admin-shared.module";
-import { AnalyticsComponent } from "../analytics/analytics.component";
-/**
- * Custom angular notifier options
- */
+import { SuperAdminComponent } from "./super-admin/super-admin.component";
+
 const customNotifierOptions: NotifierOptions = {
   position: {
     horizontal: {
@@ -128,9 +119,30 @@ const superAdminRoutes: Routes = [
   }
 ];
 
+// @NgModule({
+//   declarations: [],
+//   imports: [
+//     CommonModule,
+//     NgxImageZoomModule,
+//     NgbNavModule,
+//     NgxDatatableModule,
+//     ReactiveFormsModule,
+//     FormsModule,
+//     AngularEditorModule,
+//     AdminSharedModule,
+//     NgbModule,
+//     NotifierModule.withConfig(customNotifierOptions),
+//     RouterModule.forChild(superAdminRoutes),
+//     NgMultiSelectDropDownModule.forRoot(),
+//     SuperAdminRoutingModule
+//   ],
+//   providers: [ConfirmationDialogService],
+//   exports: [RouterModule]
+// })
 @NgModule({
   declarations: [],
   imports: [
+    AdminSharedModule,
     CommonModule,
     NgxImageZoomModule,
     NgbNavModule,
@@ -138,18 +150,11 @@ const superAdminRoutes: Routes = [
     ReactiveFormsModule,
     FormsModule,
     AngularEditorModule,
-    AdminSharedModule,
-    NgbModule,
-    NotifierModule.withConfig(customNotifierOptions),
-    RouterModule.forChild(superAdminRoutes),
     NgMultiSelectDropDownModule.forRoot(),
-    SuperAdminRoutingModule
+    NotifierModule.withConfig(customNotifierOptions),
+    RouterModule.forChild(superAdminRoutes)
   ],
   providers: [ConfirmationDialogService],
   exports: [RouterModule]
 })
-// @NgModule({
-//   declarations: [],
-//   imports: [CommonModule, SuperAdminRoutingModule]
-// })
 export class SuperAdminModule {}
