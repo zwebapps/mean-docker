@@ -119,28 +119,8 @@ const superAdminRoutes: Routes = [
   }
 ];
 
-// @NgModule({
-//   declarations: [],
-//   imports: [
-//     CommonModule,
-//     NgxImageZoomModule,
-//     NgbNavModule,
-//     NgxDatatableModule,
-//     ReactiveFormsModule,
-//     FormsModule,
-//     AngularEditorModule,
-//     AdminSharedModule,
-//     NgbModule,
-//     NotifierModule.withConfig(customNotifierOptions),
-//     RouterModule.forChild(superAdminRoutes),
-//     NgMultiSelectDropDownModule.forRoot(),
-//     SuperAdminRoutingModule
-//   ],
-//   providers: [ConfirmationDialogService],
-//   exports: [RouterModule]
-// })
 @NgModule({
-  declarations: [],
+  declarations: [SuperAdminComponent],
   imports: [
     AdminSharedModule,
     CommonModule,

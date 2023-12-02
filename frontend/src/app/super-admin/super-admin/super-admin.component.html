@@ -1,20 +1,13 @@
 <div class="team-boxed">
-  <ng-template #content let-modal size="950px">
+  <ng-template #content let-modal size="1000px">
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Add Compitition Details</h4>
       <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
-      <form
-        class="form-inline"
-        class="justify-content-around"
-        method="post"
-        enctype="multipart/form-data"
-        [formGroup]="compititionForm"
-        (ngSubmit)="onSubmit()"
-      >
-        <div class="row d-flex justify-content-start m-1">
-          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+      <form class="form-inline" method="post" enctype="multipart/form-data" [formGroup]="compititionForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
             <label for="name" class="control-label">Compitition Name</label>
             <input
               type="text"
@@ -25,13 +18,13 @@
               class="form-control"
               [ngClass]="{ 'is-invalid': submitted && f['compititionName'].errors }"
             />
-            <div *ngIf="submitted && f['username']?.errors" class="invalid-feedback">
-              <div *ngIf="f['username'].errors && f['username'].errors['required']">
+            <div *ngIf="submitted && f['compititionName']?.errors" class="invalid-feedback">
+              <div *ngIf="f['compititionName'].errors && f['compititionName'].errors['required']">
                 <small>Compitition Name is required</small>
               </div>
             </div>
           </div>
-          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
             <label for="name" class="control-label">Organiser Name</label>
             <input
               type="text"
@@ -48,42 +41,7 @@
               </div>
             </div>
           </div>
-          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
-            <label for="name" class="control-label">Organiser Name</label>
-            <input
-              type="text"
-              [value]=""
-              class="form-control"
-              placeholder="organiser Name"
-              formControlName="organiserName"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f['organiserName'].errors }"
-            />
-            <div *ngIf="submitted && f['organiserName']?.errors" class="invalid-feedback">
-              <div *ngIf="f['organiserName'].errors && f['organiserName'].errors['required']">
-                <small>Compitition Name is required</small>
-              </div>
-            </div>
-          </div>
-          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
-            <label for="name" class="control-label">Organiser Name</label>
-            <input
-              type="text"
-              [value]=""
-              class="form-control"
-              placeholder="Organiser Name"
-              formControlName="organiserName"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f['organiserName'].errors }"
-            />
-            <div *ngIf="submitted && f['organiserName'].errors" class="invalid-feedback">
-              <div *ngIf="f['organiserName'].errors['required']">
-                <small>Organiser Name is required</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
             <label for="name" class="control-label">Organiser Contact</label>
             <input
               type="text"
@@ -100,25 +58,8 @@
               </div>
             </div>
           </div>
-          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
-            <label for="name" class="control-label">Organiser Name</label>
-            <input
-              type="text"
-              [value]=""
-              class="form-control"
-              placeholder="Organiser Name"
-              formControlName="organiserName"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f['organiserName'].errors }"
-            />
-            <div *ngIf="submitted && f['organiserName'].errors" class="invalid-feedback">
-              <div *ngIf="f['organiserName'].errors['required']">
-                <small>Organiser Name is required</small>
-              </div>
-            </div>
-          </div>
 
-          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
             <label for="name" class="control-label">Organiser Email</label>
             <input
               type="email"
@@ -135,7 +76,7 @@
               </div>
             </div>
           </div>
-          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
             <label for="name" class="control-label">Compitition Description</label>
             <input
               type="text"
@@ -153,13 +94,13 @@
             </div>
           </div>
 
-          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
-            <label for="name" class="control-label">ShortCode</label>
+          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
+            <label for="name" class="control-label">Short Code</label>
             <input
               type="text"
               [value]=""
               class="form-control"
-              placeholder="ShortCode"
+              placeholder="Short Code"
               formControlName="shortCode"
               class="form-control"
               [ngClass]="{ 'is-invalid': submitted && f['shortCode'].errors }"
@@ -170,7 +111,7 @@
               </div>
             </div>
           </div>
-          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
             <label for="name" class="control-label">Compitition Logo</label>
             <input
               type="file"
@@ -188,24 +129,24 @@
             </div>
           </div>
 
-          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
-            <label for="name" class="control-label">compitition Background</label>
+          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
+            <label for="name" class="control-label">Compitition Background</label>
             <input
               type="color"
               [value]=""
               class="form-control"
               placeholder="Compitition Background"
-              formControlName="CompititionBackground"
+              formControlName="compititionBackground"
               class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f['Compitition Background'].errors }"
+              [ngClass]="{ 'is-invalid': submitted && f['compititionBackground'].errors }"
             />
-            <div *ngIf="submitted && f['CompititionBackground']?.errors" class="invalid-feedback">
-              <div *ngIf="f['CompititionBackground'].errors && f['CompititionBackground'].errors['required']">
+            <div *ngIf="submitted && f['compititionBackground']?.errors" class="invalid-feedback">
+              <div *ngIf="f['compititionBackground'].errors && f['compititionBackground'].errors['required']">
                 <small>Compitition Background color is required</small>
               </div>
             </div>
           </div>
-          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
             <label for="name" class="control-label">Compitition Font Color</label>
             <input
               type="text"
@@ -222,7 +163,7 @@
               </div>
             </div>
           </div>
-          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
             <label for="name" class="control-label">Compitition Border Size</label>
             <input
               type="number"
@@ -241,8 +182,8 @@
               </div>
             </div>
           </div>
-          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
-            <label for="name" class="control-label">compitition Season</label>
+          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
+            <label for="name" class="control-label">Compitition Season</label>
             <input
               type="text"
               [value]=""
@@ -258,7 +199,7 @@
               </div>
             </div>
           </div>
-          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
             <label for="name" class="control-label">Compitition Start</label>
             <input
               type="date"
@@ -275,7 +216,7 @@
               </div>
             </div>
           </div>
-          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
             <label for="name" class="control-label">Compitition Ends</label>
             <input
               type="date"
@@ -292,12 +233,11 @@
               </div>
             </div>
           </div>
-
           <div class="row">
             <div class="d-flex justify-content-center">
-              <div class="form-group col-xs-6 col-md-3 col-lg-3 mt-2 align-items-end">
+              <div class="form-group col-xs-12 col-md-6 col-lg-6 p-2 mt-2 align-items-end">
                 <div class="ms-3 w-100">
-                  <button type="submit" class="btn btn-primary col-12 text-white">Add User</button>
+                  <button type="submit" class="btn btn-primary col-12 text-white">Add Compitition</button>
                 </div>
               </div>
             </div>
