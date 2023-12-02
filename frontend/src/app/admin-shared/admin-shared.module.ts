@@ -21,6 +21,7 @@ import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { NgxImageZoomModule } from "ngx-image-zoom";
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { NotifierModule, NotifierOptions } from "angular-notifier";
+import { RouterModule } from "@angular/router";
 
 /**
  * Custom angular notifier options
@@ -92,7 +93,8 @@ const customNotifierOptions: NotifierOptions = {
     FormsModule,
     AngularEditorModule,
     NgMultiSelectDropDownModule.forRoot(),
-    NotifierModule.withConfig(customNotifierOptions)
+    NotifierModule.withConfig(customNotifierOptions),
+    RouterModule
   ],
   exports: [
     UserManagementComponent,
