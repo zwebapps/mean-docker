@@ -46,7 +46,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.ngxService.stop();
           this.storageService.setSession(data.token);
           // delete token from data
-          this.storageService.saveUser({ email: data.email, id: data.id, roles: data.roles, username: data.username });
+          this.storageService.saveUser({
+            email: data.email,
+            id: data.id,
+            roles: data.roles,
+            username: data.username,
+            compitition: data.compitition
+          });
 
           this.isLoginFailed = false;
           this.isLoggedIn = true;
