@@ -1,1 +1,366 @@
-<p>super-admin works!</p>
+<div class="team-boxed">
+  <ng-template #content let-modal size="950px">
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Add Compitition Details</h4>
+      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <form
+        class="form-inline"
+        class="justify-content-around"
+        method="post"
+        enctype="multipart/form-data"
+        [formGroup]="compititionForm"
+        (ngSubmit)="onSubmit()"
+      >
+        <div class="row d-flex justify-content-start m-1">
+          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+            <label for="name" class="control-label">Compitition Name</label>
+            <input
+              type="text"
+              [value]=""
+              class="form-control"
+              placeholder="Compitition Name"
+              formControlName="compititionName"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f['compititionName'].errors }"
+            />
+            <div *ngIf="submitted && f['username']?.errors" class="invalid-feedback">
+              <div *ngIf="f['username'].errors && f['username'].errors['required']">
+                <small>Compitition Name is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+            <label for="name" class="control-label">Organiser Name</label>
+            <input
+              type="text"
+              [value]=""
+              class="form-control"
+              placeholder="Organiser Name"
+              formControlName="organiserName"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f['organiserName'].errors }"
+            />
+            <div *ngIf="submitted && f['organiserName'].errors" class="invalid-feedback">
+              <div *ngIf="f['organiserName'].errors['required']">
+                <small>Organiser Name is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+            <label for="name" class="control-label">Organiser Name</label>
+            <input
+              type="text"
+              [value]=""
+              class="form-control"
+              placeholder="organiser Name"
+              formControlName="organiserName"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f['organiserName'].errors }"
+            />
+            <div *ngIf="submitted && f['organiserName']?.errors" class="invalid-feedback">
+              <div *ngIf="f['organiserName'].errors && f['organiserName'].errors['required']">
+                <small>Compitition Name is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+            <label for="name" class="control-label">Organiser Name</label>
+            <input
+              type="text"
+              [value]=""
+              class="form-control"
+              placeholder="Organiser Name"
+              formControlName="organiserName"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f['organiserName'].errors }"
+            />
+            <div *ngIf="submitted && f['organiserName'].errors" class="invalid-feedback">
+              <div *ngIf="f['organiserName'].errors['required']">
+                <small>Organiser Name is required</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+            <label for="name" class="control-label">Organiser Contact</label>
+            <input
+              type="text"
+              [value]=""
+              class="form-control"
+              placeholder="Organiser Contact"
+              formControlName="organiserContact"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f['compititionName'].errors }"
+            />
+            <div *ngIf="submitted && f['username']?.errors" class="invalid-feedback">
+              <div *ngIf="f['username'].errors && f['username'].errors['required']">
+                <small>Compitition Name is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+            <label for="name" class="control-label">Organiser Name</label>
+            <input
+              type="text"
+              [value]=""
+              class="form-control"
+              placeholder="Organiser Name"
+              formControlName="organiserName"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f['organiserName'].errors }"
+            />
+            <div *ngIf="submitted && f['organiserName'].errors" class="invalid-feedback">
+              <div *ngIf="f['organiserName'].errors['required']">
+                <small>Organiser Name is required</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+            <label for="name" class="control-label">Organiser Email</label>
+            <input
+              type="email"
+              [value]=""
+              class="form-control"
+              placeholder="Organiser Email"
+              formControlName="organiserEmail"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f['organiserEmail'].errors }"
+            />
+            <div *ngIf="submitted && f['organiserEmail']?.errors" class="invalid-feedback">
+              <div *ngIf="f['organiserEmail'].errors && f['organiserEmail'].errors['required']">
+                <small>Organiser Email is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+            <label for="name" class="control-label">Compitition Description</label>
+            <input
+              type="text"
+              [value]=""
+              class="form-control"
+              placeholder="Compitition Description"
+              formControlName="compititionDescription"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f['compititionDescription'].errors }"
+            />
+            <div *ngIf="submitted && f['compititionDescription'].errors" class="invalid-feedback">
+              <div *ngIf="f['compititionDescription'].errors['required']">
+                <small>Compitition Description is required</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+            <label for="name" class="control-label">ShortCode</label>
+            <input
+              type="text"
+              [value]=""
+              class="form-control"
+              placeholder="ShortCode"
+              formControlName="shortCode"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f['shortCode'].errors }"
+            />
+            <div *ngIf="submitted && f['shortCode']?.errors" class="invalid-feedback">
+              <div *ngIf="f['shortCode'].errors && f['shortCode'].errors['required']">
+                <small>ShortCode is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+            <label for="name" class="control-label">Compitition Logo</label>
+            <input
+              type="file"
+              [value]=""
+              class="form-control"
+              placeholder="Compitition Logo"
+              formControlName="compititionLogo"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f['compititionLogo'].errors }"
+            />
+            <div *ngIf="submitted && f['compititionLogo'].errors" class="invalid-feedback">
+              <div *ngIf="f['compititionLogo'].errors['required']">
+                <small>Compitition Logo is required</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+            <label for="name" class="control-label">compitition Background</label>
+            <input
+              type="color"
+              [value]=""
+              class="form-control"
+              placeholder="Compitition Background"
+              formControlName="CompititionBackground"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f['Compitition Background'].errors }"
+            />
+            <div *ngIf="submitted && f['CompititionBackground']?.errors" class="invalid-feedback">
+              <div *ngIf="f['CompititionBackground'].errors && f['CompititionBackground'].errors['required']">
+                <small>Compitition Background color is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+            <label for="name" class="control-label">Compitition Font Color</label>
+            <input
+              type="text"
+              [value]=""
+              class="form-control"
+              placeholder="Compitition Color"
+              formControlName="compititionColor"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f['compititionColor'].errors }"
+            />
+            <div *ngIf="submitted && f['compititionColor'].errors" class="invalid-feedback">
+              <div *ngIf="f['compititionColor'].errors['required']">
+                <small>compitition Color is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+            <label for="name" class="control-label">Compitition Border Size</label>
+            <input
+              type="number"
+              [value]=""
+              min="0"
+              max="5"
+              class="form-control"
+              placeholder="Border Size"
+              formControlName="compititionBorder"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f['compititionBorder'].errors }"
+            />
+            <div *ngIf="submitted && f['compititionBorder'].errors" class="invalid-feedback">
+              <div *ngIf="f['compititionBorder'].errors['required']">
+                <small>Border Size is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+            <label for="name" class="control-label">compitition Season</label>
+            <input
+              type="text"
+              [value]=""
+              class="form-control"
+              placeholder="Compitition season"
+              formControlName="compititionSeason"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f['compititionSeason'].errors }"
+            />
+            <div *ngIf="submitted && f['compititionSeason'].errors" class="invalid-feedback">
+              <div *ngIf="f['compititionSeason'].errors['required']">
+                <small>Compitition Season is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+            <label for="name" class="control-label">Compitition Start</label>
+            <input
+              type="date"
+              [value]=""
+              class="form-control"
+              placeholder="Start Date"
+              formControlName="compititionStart"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f['compititionStart'].errors }"
+            />
+            <div *ngIf="submitted && f['compititionStart'].errors" class="invalid-feedback">
+              <div *ngIf="f['compititionStart'].errors['required']">
+                <small>Compitition Start is required</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+            <label for="name" class="control-label">Compitition Ends</label>
+            <input
+              type="date"
+              [value]=""
+              class="form-control"
+              placeholder="End Date"
+              formControlName="compititionEnd"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f['compititionEnd'].errors }"
+            />
+            <div *ngIf="submitted && f['compititionEnd'].errors" class="invalid-feedback">
+              <div *ngIf="f['compititionEnd'].errors['required']">
+                <small>Compitition End is required</small>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="d-flex justify-content-center">
+              <div class="form-group col-xs-6 col-md-3 col-lg-3 mt-2 align-items-end">
+                <div class="ms-3 w-100">
+                  <button type="submit" class="btn btn-primary col-12 text-white">Add User</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+
+  <div class="container">
+    <div class="intro">
+      <h2 class="text-center">Team</h2>
+      <div class="text-center"><button class="btn btn-primary" (click)="open(content)">Add Compitition</button></div>
+      <p class="text-center">
+        Nunc luctus in metus eget fringilla. Aliquam sed justo ligula. Vestibulum nibh erat, pellentesque ut laoreet vitae.
+      </p>
+    </div>
+    <div class="row people">
+      <div class="col-md-6 col-lg-4 item">
+        <div class="box">
+          <img class="rounded-circle" src="http://localhost:3000/static/1695319562479_fl2.png" />
+          <h3 class="name">Ben Johnson</h3>
+          <p class="title">Musician</p>
+          <p class="description">
+            Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus
+            est, et interdum justo suscipit id. Etiam dictum feugiat tellus, a semper massa.
+          </p>
+          <div class="social">
+            <a href="#"><i class="fa fa-facebook-official"></i></a><a href="#"><i class="fa fa-twitter"></i></a
+            ><a href="#"><i class="fa fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 item">
+        <div class="box">
+          <img class="rounded-circle" src="http://localhost:3000/static/1695319562479_fl2.png" />
+          <h3 class="name">Emily Clark</h3>
+          <p class="title">Artist</p>
+          <p class="description">
+            Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus
+            est, et interdum justo suscipit id. Etiam dictum feugiat tellus, a semper massa.
+          </p>
+          <div class="social">
+            <a href="#"><i class="fa fa-facebook-official"></i></a><a href="#"><i class="fa fa-twitter"></i></a
+            ><a href="#"><i class="fa fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 item">
+        <div class="box">
+          <img class="rounded-circle" src="http://localhost:3000/static/1695319562479_fl2.png" />
+          <h3 class="name">Carl Kent</h3>
+          <p class="title">Stylist</p>
+          <p class="description">
+            Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus
+            est, et interdum justo suscipit id. Etiam dictum feugiat tellus, a semper massa.
+          </p>
+          <div class="social">
+            <a href="#"><i class="fa fa-facebook-official"></i></a><a href="#"><i class="fa fa-twitter"></i></a
+            ><a href="#"><i class="fa fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
