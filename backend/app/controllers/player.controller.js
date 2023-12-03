@@ -158,6 +158,7 @@ exports.createPlayer = async (req, resp, next) => {
               user: ObjectId(req.body[i].user['createdBy']),
               playingUp: req.body[i]['playingUp'],
               playingUpTeam: req.body[i]['playingUpTeam'],
+              compitition : ObjectId(req.body[i].compitition),
               createdAt:  new Date()
             });
             insertedPlayers.push(req.body[i]);
@@ -201,6 +202,7 @@ exports.createPlayer = async (req, resp, next) => {
             user: ObjectId(req.body.user['createdBy']),
             playingUp: req.body['playingUp'],
             playingUpTeam: req.body['playingUpTeam'],
+            compitition : ObjectId(req.body.compitition),
             createdAt:  new Date()
           });
          

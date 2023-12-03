@@ -62,6 +62,7 @@ exports.createUser = async (req, res) => {
           contact: req.body['contact'],
           password: bcrypt.hashSync(req.body['password'], 8),
           email: req.body['email'],
+          compitition : ObjectId(req.body.compitition),
           roles: [ObjectId(role._id)]
         });
 
@@ -144,6 +145,7 @@ exports.createContact = async (req, res) => {
         heading: heading,
         content: req.body['content'],       
         user: ObjectId(req.body.user['id']),
+        compitition : ObjectId(req.body.compitition),
         status: 'Pending',
         createdAt: new Date(),
       });

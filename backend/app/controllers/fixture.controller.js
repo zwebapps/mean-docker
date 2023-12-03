@@ -15,6 +15,7 @@ exports.createFixture = async (req, resp, next) => {
                 awayTeam: req.body[i]['awayTeam'],
                 league: ObjectId(req.body[i]['league']),
                 user_id: ObjectId(req.body[i].user['createdBy']),
+                compitition : ObjectId(req.body[i].compitition),
                 createdAt:  new Date()
             });
             insertedFixtures.push(req.body[i]);
@@ -28,6 +29,7 @@ exports.createFixture = async (req, resp, next) => {
           awayTeam: req.body['awayTeam'],
           league: ObjectId(req.body['league']),
           user_id: ObjectId(req.body.user['createdBy']),
+          compitition : ObjectId(req.body.compitition),
           createdAt:  new Date()
         });
 
