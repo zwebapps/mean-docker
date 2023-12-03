@@ -139,7 +139,6 @@ const customNotifierOptions: NotifierOptions = {
     NgbModule,
     SweetAlert2Module.forRoot(),
     NotifierModule.withConfig(customNotifierOptions),
-    NotifierModule,
     RouterModule.forRoot(Approutes, { useHash: false }),
     FullComponent,
     NavigationComponent,

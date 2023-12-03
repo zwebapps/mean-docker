@@ -20,52 +20,52 @@ import { NgbNavModule } from "@ng-bootstrap/ng-bootstrap";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { NgxImageZoomModule } from "ngx-image-zoom";
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
-import { NotifierModule, NotifierOptions } from "angular-notifier";
+// import { NotifierModule, NotifierOptions } from "angular-notifier";
 import { RouterModule } from "@angular/router";
 
 /**
  * Custom angular notifier options
  */
-const customNotifierOptions: NotifierOptions = {
-  position: {
-    horizontal: {
-      position: "right",
-      distance: 12
-    },
-    vertical: {
-      position: "bottom",
-      distance: 12,
-      gap: 10
-    }
-  },
-  theme: "material",
-  behaviour: {
-    autoHide: 5000,
-    onClick: "hide",
-    onMouseover: "pauseAutoHide",
-    showDismissButton: true,
-    stacking: 4
-  },
-  animations: {
-    enabled: true,
-    show: {
-      preset: "slide",
-      speed: 300,
-      easing: "ease"
-    },
-    hide: {
-      preset: "fade",
-      speed: 300,
-      easing: "ease",
-      offset: 50
-    },
-    shift: {
-      speed: 300,
-      easing: "ease"
-    },
-    overlap: 150
-  }
-};
+// const customNotifierOptions: NotifierOptions = {
+//   position: {
+//     horizontal: {
+//       position: "right",
+//       distance: 12
+//     },
+//     vertical: {
+//       position: "bottom",
+//       distance: 12,
+//       gap: 10
+//     }
+//   },
+//   theme: "material",
+//   behaviour: {
+//     autoHide: 5000,
+//     onClick: "hide",
+//     onMouseover: "pauseAutoHide",
+//     showDismissButton: true,
+//     stacking: 4
+//   },
+//   animations: {
+//     enabled: true,
+//     show: {
+//       preset: "slide",
+//       speed: 300,
+//       easing: "ease"
+//     },
+//     hide: {
+//       preset: "fade",
+//       speed: 300,
+//       easing: "ease",
+//       offset: 50
+//     },
+//     shift: {
+//       speed: 300,
+//       easing: "ease"
+//     },
+//     overlap: 150
+//   }
+// };
 
 @NgModule({
   declarations: [
@@ -93,7 +93,7 @@ const customNotifierOptions: NotifierOptions = {
     FormsModule,
     AngularEditorModule,
     NgMultiSelectDropDownModule.forRoot(),
-    NotifierModule.withConfig(customNotifierOptions),
+    // NotifierModule.withConfig(customNotifierOptions),
     RouterModule
   ],
   exports: [

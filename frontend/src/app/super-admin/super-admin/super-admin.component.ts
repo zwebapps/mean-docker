@@ -1,30 +1,46 @@
-import { Component } from "@angular/core";
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { DomSanitizer } from "@angular/platform-browser";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
 import { Store } from "@ngrx/store";
 import { NotifierService } from "angular-notifier";
+import { CompititionService } from "src/app/_services/compitition.service";
+import { PlayerService } from "src/app/_services/player.service";
 import { StorageService } from "src/app/_services/storage.service";
 import { UserService } from "src/app/_services/user.service";
+import { environment } from "src/environments/environment";
+import * as CompititionActions from "../../_store/actions/compititions.actions";
+import * as CompititionSelectors from "../../_store/selectors/compititions.selectors";
 
 @Component({
   selector: "app-super-admin",
   templateUrl: "./super-admin.component.html",
   styleUrls: ["./super-admin.component.scss"]
 })
-export class SuperAdminComponent {
+export class SuperAdminComponent implements OnInit {
+  @ViewChild("content") content: any;
+  apiURL = environment.apiURL;
+  public shortCodeExists: boolean = false;
+  public displayEditCompitition: boolean = false;
+  public compititions: any = [];
   private notifier: NotifierService;
   compititionForm: FormGroup;
   public closeResult: string = "";
   public submitted: boolean = false;
+  public compititionLogo: any;
+  public compititionToBeEdit: any;
+
   constructor(
+    private palyerService: PlayerService,
     private sanitizer: DomSanitizer,
     private modalService: NgbModal,
     private store: Store,
     private userService: UserService,
     notifier: NotifierService,
     private formBuilder: FormBuilder,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private compititionService: CompititionService,
+    private cdr: ChangeDetectorRef
   ) {
     this.notifier = notifier;
 
@@ -32,10 +48,10 @@ export class SuperAdminComponent {
       compititionName: ["", Validators.required],
       organiserName: ["", Validators.required],
       organiserContact: ["", Validators.required],
-      organiserEmail: ["", Validators.required],
+      organiserEmail: ["", [Validators.required, Validators.email]],
       compititionDescription: ["", Validators.required],
       shortCode: ["", Validators.required],
-      compititionLogo: ["", Validators.required],
+      compititionLogo: [""],
       compititionBackground: ["", Validators.required],
       compititionColor: ["", Validators.required],
       compititionBorder: ["", Validators.required],
@@ -45,8 +61,12 @@ export class SuperAdminComponent {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getAllCompititions();
+  }
+
   open(content: any) {
+    debugger;
     this.modalService.open(content, { ariaLabelledBy: "modal-basic-title", size: "lg" }).result.then(
       (result) => {
         this.closeResult = `Closed with: ${result}`;
@@ -55,6 +75,13 @@ export class SuperAdminComponent {
         this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
       }
     );
+  }
+  getAllCompititions() {
+    debugger;
+    this.store.dispatch(CompititionActions.loadCompititions());
+    this.store.select(CompititionSelectors.getCompititions).subscribe((compitition: any) => {
+      this.compititions = compitition;
+    });
   }
 
   private getDismissReason(reason: any): string {
@@ -70,10 +97,23 @@ export class SuperAdminComponent {
     return this.compititionForm.controls;
   }
 
+  uploadLogo(event: any) {
+    const file: File = event.target.files[0];
+    const inputName = event.target.name;
+    this.palyerService.upload(file).subscribe((res: any) => {
+      if (res) {
+        this.compititionLogo = res.filename;
+        console.log("logo update successsfully");
+      }
+    });
+  }
   onSubmit() {
     this.submitted = true;
-    debugger;
-    if (!this.compititionForm.invalid) {
+    if (!this.compititionLogo) {
+      this.notifier.notify("error", "Logo is not uploaded!");
+    }
+
+    if (this.compititionForm.invalid) {
       this.notifier.notify("error", "All fields are required!");
       return;
     } else {
@@ -87,7 +127,7 @@ export class SuperAdminComponent {
           compititionDescription: this.compititionForm.value.compititionDescription
         }),
         shortCode: this.compititionForm.value.shortCode,
-        compititionLogo: this.compititionForm.value.compititionLogo,
+        compititionLogo: this.compititionLogo,
         compititionSettings: JSON.stringify({
           compititionBackground: this.compititionForm.value.compititionBackground,
           compititionColor: this.compititionForm.value.compititionColor,
@@ -98,8 +138,79 @@ export class SuperAdminComponent {
         compititionEnd: this.compititionForm.value.compititionEnd,
         createdBy: user.id
       };
-      debugger;
-      console.log(compititionObj);
+      if (this.displayEditCompitition) {
+        this.compititionService.updateCompitition(this.compititionToBeEdit._id, compititionObj).subscribe((res: any) => {
+          if (res) {
+            this.displayEditCompitition = false;
+            this.compititionForm.reset();
+            this.store.dispatch(CompititionActions.loadCompititions());
+            console.log(res);
+            this.notifier.notify("success", "Compitition updated successfully!");
+          }
+        });
+      } else {
+        this.compititionService.createCompitition(compititionObj).subscribe((res: any) => {
+          if (res) {
+            this.displayEditCompitition = false;
+            this.store.dispatch(CompititionActions.loadCompititions());
+            this.compititionForm.reset();
+            this.notifier.notify("success", "Compitition created successfully!");
+          }
+        });
+      }
     }
+  }
+  getDescription(data: any) {
+    return JSON.parse(data)?.compititionDescription || "No Description provided";
+  }
+  getOrganiser(data: any) {
+    return JSON.parse(data)?.organiserName || "No Organiser provided";
+  }
+  getSantizedpopUpUrl = (image: any) => {
+    const logoUrl = `${this.apiURL}/static/${image}`;
+    return this.sanitizer.bypassSecurityTrustResourceUrl(logoUrl);
+  };
+  verifyShortCode(event: any) {
+    const shortCode = event.target.value;
+    if (shortCode && shortCode.length > 2) {
+      this.compititionService.getCompititionByShortCode(shortCode).subscribe((res: any) => {
+        if (!res.message) {
+          this.shortCodeExists = true;
+        } else {
+          this.shortCodeExists = false;
+        }
+      });
+    }
+  }
+  editCompitition(compititon: any) {
+    if (compititon) {
+      this.compititionToBeEdit = compititon;
+      this.displayEditCompitition = true;
+      const organiserDetail = JSON.parse(compititon.organiserDetail);
+      const compititionSettings = JSON.parse(compititon.compititionSettings);
+      this.compititionLogo = compititon.compititionLogo;
+      this.compititionForm.patchValue({
+        compititionName: compititon.compititionName,
+        organiserName: organiserDetail.organiserName,
+        organiserContact: organiserDetail.organiserContact,
+        organiserEmail: organiserDetail.organiserEmail,
+        compititionDescription: organiserDetail.compititionDescription,
+        shortCode: compititon.shortCode,
+        compititionBackground: compititionSettings.compititionBackground,
+        compititionColor: compititionSettings.compititionColor,
+        compititionBorder: compititionSettings.compititionBorder,
+        compititionSeason: compititon.compititionSeason,
+        compititionStart: new Date(compititon.compititionStart).toISOString().slice(0, 10),
+        compititionEnd: new Date(compititon.compititionEnd).toISOString().slice(0, 10)
+      });
+      this.open(this.content);
+    }
+  }
+  deleteCompitition(compititionId: any) {
+    this.compititionService.deleteCompitition(compititionId).subscribe((res: any) => {
+      if (res) {
+        this.notifier.notify("success", "Compitition deleted successfully!");
+      }
+    });
   }
 }

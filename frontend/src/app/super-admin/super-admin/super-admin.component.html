@@ -1,4 +1,5 @@
 <div class="team-boxed">
+  <notifier-container></notifier-container>
   <ng-template #content let-modal size="1000px">
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Add Compitition Details</h4>
@@ -52,8 +53,8 @@
               class="form-control"
               [ngClass]="{ 'is-invalid': submitted && f['compititionName'].errors }"
             />
-            <div *ngIf="submitted && f['username']?.errors" class="invalid-feedback">
-              <div *ngIf="f['username'].errors && f['username'].errors['required']">
+            <div *ngIf="submitted && f['compititionName']?.errors" class="invalid-feedback">
+              <div *ngIf="f['compititionName'].errors && f['compititionName'].errors['required']">
                 <small>Compitition Name is required</small>
               </div>
             </div>
@@ -75,25 +76,10 @@
                 <small>Organiser Email is required</small>
               </div>
             </div>
-          </div>
-          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
-            <label for="name" class="control-label">Compitition Description</label>
-            <input
-              type="text"
-              [value]=""
-              class="form-control"
-              placeholder="Compitition Description"
-              formControlName="compititionDescription"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f['compititionDescription'].errors }"
-            />
-            <div *ngIf="submitted && f['compititionDescription'].errors" class="invalid-feedback">
-              <div *ngIf="f['compititionDescription'].errors['required']">
-                <small>Compitition Description is required</small>
-              </div>
+            <div *ngIf="f['organiserEmail'].invalid && (f['organiserEmail'].dirty || f['organiserEmail'].touched)" class="invalid-feedback">
+              <small>Organiser Email is invalid</small>
             </div>
           </div>
-
           <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
             <label for="name" class="control-label">Short Code</label>
             <input
@@ -102,6 +88,7 @@
               class="form-control"
               placeholder="Short Code"
               formControlName="shortCode"
+              (blur)="verifyShortCode($event)"
               class="form-control"
               [ngClass]="{ 'is-invalid': submitted && f['shortCode'].errors }"
             />
@@ -110,15 +97,21 @@
                 <small>ShortCode is required</small>
               </div>
             </div>
+            <div *ngIf="shortCodeExists" class="invalid-feedback">
+              <small>ShortCode is already in use</small>
+            </div>
           </div>
           <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
-            <label for="name" class="control-label">Compitition Logo</label>
+            <label for="name" class="control-label"
+              >Compitition Logo <span *ngIf="compititionLogo">({{ compititionLogo }})</span></label
+            >
             <input
               type="file"
               [value]=""
               class="form-control"
               placeholder="Compitition Logo"
               formControlName="compititionLogo"
+              (change)="uploadLogo($event)"
               class="form-control"
               [ngClass]="{ 'is-invalid': submitted && f['compititionLogo'].errors }"
             />
@@ -149,7 +142,7 @@
           <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
             <label for="name" class="control-label">Compitition Font Color</label>
             <input
-              type="text"
+              type="color"
               [value]=""
               class="form-control"
               placeholder="Compitition Color"
@@ -233,11 +226,29 @@
               </div>
             </div>
           </div>
+          <div class="form-group col-xs-12 col-md-12 col-lg-12 p-2">
+            <label for="name" class="control-label">Compitition Description</label>
+            <textarea
+              type="text"
+              [value]=""
+              class="form-control"
+              placeholder="Compitition Description"
+              formControlName="compititionDescription"
+              class="form-control"
+              [ngClass]="{ 'is-invalid': submitted && f['compititionDescription'].errors }"
+            >
+            </textarea>
+            <div *ngIf="submitted && f['compititionDescription'].errors" class="invalid-feedback">
+              <div *ngIf="f['compititionDescription'].errors['required']">
+                <small>Compitition Description is required</small>
+              </div>
+            </div>
+          </div>
           <div class="row">
             <div class="d-flex justify-content-center">
               <div class="form-group col-xs-12 col-md-6 col-lg-6 p-2 mt-2 align-items-end">
                 <div class="ms-3 w-100">
-                  <button type="submit" class="btn btn-primary col-12 text-white">Add Compitition</button>
+                  <button type="submit" class="btn btn-primary col-12 text-white">Add/ Update Compitition</button>
                 </div>
               </div>
             </div>
@@ -249,58 +260,20 @@
 
   <div class="container">
     <div class="intro">
-      <h2 class="text-center">Team</h2>
+      <h2 class="text-center">
+        <!-- <img src="assets/images/teams.png" alt="homepage" class="dark-logo" /> -->
+        Compititions
+      </h2>
       <div class="text-center"><button class="btn btn-primary" (click)="open(content)">Add Compitition</button></div>
       <p class="text-center">
         Nunc luctus in metus eget fringilla. Aliquam sed justo ligula. Vestibulum nibh erat, pellentesque ut laoreet vitae.
       </p>
     </div>
-    <div class="row people">
-      <div class="col-md-6 col-lg-4 item">
-        <div class="box">
-          <img class="rounded-circle" src="http://localhost:3000/static/1695319562479_fl2.png" />
-          <h3 class="name">Ben Johnson</h3>
-          <p class="title">Musician</p>
-          <p class="description">
-            Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus
-            est, et interdum justo suscipit id. Etiam dictum feugiat tellus, a semper massa.
-          </p>
-          <div class="social">
-            <a href="#"><i class="fa fa-facebook-official"></i></a><a href="#"><i class="fa fa-twitter"></i></a
-            ><a href="#"><i class="fa fa-instagram"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4 item">
-        <div class="box">
-          <img class="rounded-circle" src="http://localhost:3000/static/1695319562479_fl2.png" />
-          <h3 class="name">Emily Clark</h3>
-          <p class="title">Artist</p>
-          <p class="description">
-            Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus
-            est, et interdum justo suscipit id. Etiam dictum feugiat tellus, a semper massa.
-          </p>
-          <div class="social">
-            <a href="#"><i class="fa fa-facebook-official"></i></a><a href="#"><i class="fa fa-twitter"></i></a
-            ><a href="#"><i class="fa fa-instagram"></i></a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4 item">
-        <div class="box">
-          <img class="rounded-circle" src="http://localhost:3000/static/1695319562479_fl2.png" />
-          <h3 class="name">Carl Kent</h3>
-          <p class="title">Stylist</p>
-          <p class="description">
-            Aenean tortor est, vulputate quis leo in, vehicula rhoncus lacus. Praesent aliquam in tellus eu gravida. Aliquam varius finibus
-            est, et interdum justo suscipit id. Etiam dictum feugiat tellus, a semper massa.
-          </p>
-          <div class="social">
-            <a href="#"><i class="fa fa-facebook-official"></i></a><a href="#"><i class="fa fa-twitter"></i></a
-            ><a href="#"><i class="fa fa-instagram"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
+    <hr />
+    <app-compitition
+      [compititions]="compititions"
+      (delCompitition)="deleteCompitition($event)"
+      (editComp)="editCompitition($event)"
+    ></app-compitition>
   </div>
 </div>

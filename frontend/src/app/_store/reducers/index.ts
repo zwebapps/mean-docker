@@ -1,25 +1,23 @@
-import {
-  ActionReducerMap,
-  MetaReducer
-} from '@ngrx/store';
-import { environment } from '../../../environments/environment';
-import * as fromUserReducer from './users.reducer';
-import * as fromTeamReducer from './teams.reducer';
-import * as fromPlayerReducer from './players.reducer';
-import * as fromLeagueReducer from './leagues.reducer';
-import * as fromFixtureReducer from './fixtures.reducer';
-import * as fromAcademyReducer from './academies.reducer';
-import * as fromNotificationReducer from './notifications.reducer';
-
+import { ActionReducerMap, MetaReducer } from "@ngrx/store";
+import { environment } from "../../../environments/environment";
+import * as fromUserReducer from "./users.reducer";
+import * as fromTeamReducer from "./teams.reducer";
+import * as fromPlayerReducer from "./players.reducer";
+import * as fromLeagueReducer from "./leagues.reducer";
+import * as fromFixtureReducer from "./fixtures.reducer";
+import * as fromAcademyReducer from "./academies.reducer";
+import * as fromNotificationReducer from "./notifications.reducer";
+import * as fromCompititionReducer from "./compititions.reducer";
 
 export interface State {
-  users : fromUserReducer.State,
-  teams : fromTeamReducer.State,
-  players : fromPlayerReducer.State,
-  leagues : fromLeagueReducer.State,
-  fixtures : fromFixtureReducer.State,
-  academies : fromAcademyReducer.State
-  notifications: fromNotificationReducer.State
+  users: fromUserReducer.State;
+  teams: fromTeamReducer.State;
+  players: fromPlayerReducer.State;
+  leagues: fromLeagueReducer.State;
+  fixtures: fromFixtureReducer.State;
+  academies: fromAcademyReducer.State;
+  notifications: fromNotificationReducer.State;
+  compititions: fromCompititionReducer.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -29,8 +27,8 @@ export const reducers: ActionReducerMap<State> = {
   leagues: fromLeagueReducer.reducer,
   fixtures: fromFixtureReducer.reducer,
   academies: fromAcademyReducer.reducer,
-  notifications: fromNotificationReducer.reducer
+  notifications: fromNotificationReducer.reducer,
+  compititions: fromCompititionReducer.reducer
 };
-
 
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];

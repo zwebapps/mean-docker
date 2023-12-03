@@ -26,21 +26,21 @@ exports.createCompitition = async (req, resp, next) => {
             await compititionData.save();
           };
         }
-      resp.status(200).json(insertedCompititions);
+      return resp.status(200).json(insertedCompititions);
     } else if(req.body['compititionName']) {
         const compititionData = new Compitition({
             compititionName: req.body['compititionName'],
             organiserDetail: req.body['organiserDetail'],
             shortCode: req.body['shortCode'],
             compititionLogo: req.body['compititionLogo'],
-            compitionSettings: req.body['compitionSettings'],
-            compitionSeason: req.body['compitionSeason'],
+             compititionSettings: req.body['compititionSettings'],
+             compititionSeason: req.body['compititionSeason'],
             compititionStart: req.body['compititionStart'],
             compititionEnd: req.body['compititionEnd'],
             createdAt:  new Date()
         });
-        insertedCompititions.push(req.body);
         await compititionData.save();
+        return resp.status(200).json({ message: 'Compitition has been created successfully!'});
       };    
   } catch (error) {
     next(error);
@@ -49,9 +49,9 @@ exports.createCompitition = async (req, resp, next) => {
 
 
 /* GET all Compititions listing. */
-exports.getAllCopititions =  async (req, resp, next) => {
+exports.getAllCompititions =  async (req, resp, next) => {
   try {
-    const compitition = await Compitition.find({});
+    const compitition = await Compitition.find({}).populate(["user_id"]).exec();
     resp.status(200).json( compitition.length > 0 ? compitition : { message: 'No compitition found' });
   } catch (error) {
     next(error);
@@ -69,6 +69,22 @@ exports.getCompititionById = async (req, resp, next) => {
   }
 };
 
+exports.getCompititionByName = async (req, resp, next) => {
+  try {
+    const compitition = await Compitition.find({ compititionName: req.params.name });
+    return resp.status(200).json( compitition? compitition: { message: 'No compitition found' });
+  } catch (error) {
+    next(error);
+  }
+};
+exports.getCompititionByShortCode = async (req, resp, next) => {
+  try {
+    const compitition = await Compitition.find({ shortCode: req.params.shortcode });
+    return resp.status(200).json( compitition? compitition: { message: 'No compitition found' });
+  } catch (error) {
+    next(error);
+  }
+};
 /* Edit existing fixture based on id*/
 exports.updateCompitition=  async (req, resp, next) => {
 
@@ -107,7 +123,7 @@ exports.deleteCompitition = async (req, resp, next) => {
 };
 
 /* Delete all Compitition*/
-exports.deleteAllCompitition =  async (req, resp, next) => {
+exports.deleteAllCompititions =  async (req, resp, next) => {
 
   try {
     const compitition = await Compitition.deleteMany({});;

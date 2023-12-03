@@ -12,6 +12,7 @@ db.fixture = require("./fixture.model");
 db.league = require("./league.model");
 db.player = require("./player.model");
 db.team = require("./team.model");
+db.compitition = require("./compitition.model");
 db.increment = require("./increment.model");
 db.contact = require("./contact.model");
 

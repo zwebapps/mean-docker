@@ -21,9 +21,9 @@ exports.moderatorBoard = (req, res) => {
 };
 
 exports.getAllUsers = (req, res) => {
-  const { compition } = req.body;
+  const { compitition } = req.body;
   // get users
-   User.find({ compition: compition}).populate("roles").sort({ createdAt: -1 }).exec((err, users) => {
+   User.find({ compitition: compitition}).populate("roles").sort({ createdAt: -1 }).exec((err, users) => {
     if(err){
       return res.status(500).send({ message: err });
     }

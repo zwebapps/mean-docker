@@ -1,0 +1,21 @@
+<div class="row people">
+  <ng-container *ngFor="let compitition of compititions">
+    <div class="col-md-6 col-lg-4 item" *ngIf="compitition">
+      <span (click)="deleteCompitition(compitition)"><i class="bi bi-trash"></i></span>
+      <span (click)="editCompitition(compitition)"><i class="bi bi-pencil-square"></i></span>
+      <div class="box">
+        <img class="rounded-circle" [src]="getSantizedpopUpUrl(compitition.compititionLogo)" />
+        <h3 class="name">{{ compitition.compititionName }}</h3>
+        <p class="title">{{ compitition.compititionSeason }}</p>
+        <p class="description">
+          {{ getDescription(compitition.organiserDetail) }}
+        </p>
+        <div class="social">
+          <p>{{ getOrganiser(compitition.organiserDetail) }}</p>
+          <a href="#">{{ compitition.compititionStart | date : "dd/MM/yyyy" }}</a
+          >- <a href="#">{{ compitition.compititionEnd | date : "dd/MM/yyyy" }}</a>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

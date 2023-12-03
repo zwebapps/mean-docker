@@ -14,6 +14,7 @@ import * as PlayerActions from "./_store/actions/players.actions";
 import * as LeagueActions from "./_store/actions/leagues.actions";
 import * as FixureActions from "./_store/actions/fixures.actions";
 import * as AcademyActions from "./_store/actions/academies.actions";
+import * as CompititionActions from "./_store/actions/compititions.actions";
 import * as NotificationActions from "./_store/actions/notification.actions";
 
 // importing selectors
@@ -63,7 +64,6 @@ export class AppComponent {
       this.ngxService.start();
       // gettinga all listings for store
       if (this.showAdminBoard) {
-        debugger;
         this.store.dispatch(UserActions.loadUsers());
       }
       debugger;
@@ -73,6 +73,7 @@ export class AppComponent {
       this.store.dispatch(AcademyActions.loadAcademies());
       this.store.dispatch(PlayerActions.loadPlayers());
       this.store.dispatch(NotificationActions.loadNotifications());
+      this.store.dispatch(CompititionActions.loadCompititions());
       this.ngxService.stop();
     }
 

@@ -1,54 +1,61 @@
-.control-label {
-  margin-bottom: 1px;
-}
-.team-boxed p {
+p {
   color: #7d8285;
 }
 
-.team-boxed h2 {
+h2 {
   font-weight: bold;
   padding-top: 40px;
-  color: #2f2929;
-  img {
-    width: 25px;
-  }
+  color: inherit;
 }
 
 @media (max-width: 767px) {
-  .team-boxed h2 {
+  h2 {
     margin-bottom: 25px;
     padding-top: 25px;
     font-size: 24px;
-    img {
-      width: 25px;
-    }
   }
 }
 
-.team-boxed .intro {
+.intro {
   font-size: 16px;
   max-width: 500px;
   margin: 0 auto;
-  h2 {
-    img {
-      width: 25px;
+}
+
+.intro p {
+  margin-bottom: 0;
+}
+
+.people {
+  padding: 50px 0;
+}
+
+.item {
+  text-align: center;
+  span {
+    position: relative;
+    margin-right: 6px;
+    margin-top: 6px;
+    width: 20px;
+    float: right;
+    display: block;
+    background: #a89f9f;
+    border-radius: 5px;
+    display: none;
+  }
+  &:hover {
+    .box {
+      border: 1px solid #a89f9f;
+      border-radius: 5px;
+    }
+    span {
+      display: block;
+      z-index: 10;
     }
   }
 }
 
-.team-boxed .intro p {
-  margin-bottom: 0;
-}
-
-.team-boxed .people {
-  padding: 50px 0;
-}
-
-.team-boxed .item {
-  text-align: center;
-}
-
-.team-boxed .item .box {
+.item .box {
   text-align: center;
   padding: 30px;
   background-color: #fff;
@@ -56,14 +63,14 @@
   background-color: #eef4f7;
 }
 
-.team-boxed .item .name {
+.item .name {
   font-weight: bold;
   margin-top: 28px;
   margin-bottom: 8px;
   color: inherit;
 }
 
-.team-boxed .item .title {
+.item .title {
   text-transform: uppercase;
   font-weight: bold;
   color: #2f2929;
@@ -71,28 +78,28 @@
   font-size: 13px;
 }
 
-.team-boxed .item .description {
+.item .description {
   font-size: 15px;
   margin-top: 15px;
   margin-bottom: 20px;
 }
 
-.team-boxed .item img {
+.item img {
   max-width: 160px;
 }
 
-.team-boxed .social {
+.social {
   font-size: 18px;
   color: #a2a8ae;
 }
 
-.team-boxed .social a {
+.social a {
   color: inherit;
   margin: 0 10px;
   display: inline-block;
   opacity: 0.7;
 }
 
-.team-boxed .social a:hover {
+.social a:hover {
   opacity: 1;
 }

@@ -23,6 +23,7 @@ import { SquadManagementComponent } from "../board-admin/squad-management/squad-
 import { TeamManagementComponent } from "../board-admin/team-management/team-management.component";
 import { UserManagementComponent } from "../board-admin/user-management/user-management.component";
 import { SuperAdminComponent } from "./super-admin/super-admin.component";
+import { CompititionComponent } from './compitition/compitition.component';
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -120,7 +121,7 @@ const superAdminRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [SuperAdminComponent],
+  declarations: [SuperAdminComponent, CompititionComponent],
   imports: [
     AdminSharedModule,
     CommonModule,

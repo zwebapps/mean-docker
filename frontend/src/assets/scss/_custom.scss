@@ -1,7 +1,9 @@
 // In this scss you can overwrite all our scss, we suggested you to add your scss into this, so whenever the update comes it will not affect your code.
-.modal-content {
-  width: 1000px;
-  padding: 10px;
+@media (min-width: 667px) {
+  .modal-content {
+    width: 1000px;
+    padding: 10px;
+  }
 }
 .btn-back {
   background: #a155b9;
