@@ -441,7 +441,6 @@ export class SquadListComponent implements OnInit {
           if (this.selectedEIDs.length > 0) {
             this.players = this.players.filter((player: any) => this.selectedEIDs.includes(player.emiratesIdNo));
           }
-          debugger;
           // filter by name
           if (this.searchByNameterm) {
             this.players = this.players.filter(

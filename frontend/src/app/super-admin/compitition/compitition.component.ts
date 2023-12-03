@@ -28,7 +28,6 @@ export class CompititionComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustResourceUrl(logoUrl);
   };
   deleteCompitition(compitition: any) {
-    debugger;
     const { _id } = compitition;
     console.log(_id);
     this.delCompitition.emit(_id);

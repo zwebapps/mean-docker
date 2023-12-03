@@ -4,17 +4,21 @@ import * as NotificationActions from "../actions/notification.actions";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { map, catchError, mergeMap } from "rxjs/operators";
 import { of } from "rxjs";
+import { StorageService } from "src/app/_services/storage.service";
 
 @Injectable()
 export class NotificationsEffects {
-  constructor(private actions$: Actions, private UserService: UserService) {}
+  user: any;
+  constructor(private actions$: Actions, private UserService: UserService, private storageService: StorageService) {
+    this.user = this.storageService.getUser();
+  }
 
   loadNotifications$ = createEffect(() =>
     this.actions$.pipe(
       ofType(NotificationActions.loadNotifications),
       map((action: any) => action.payload),
       mergeMap(() => {
-        return this.UserService.getAllContents().pipe(
+        return this.UserService.getAllContentsByCompitition(this.user.compitition).pipe(
           map((data) =>
             Array.isArray(data)
               ? NotificationActions.loadNotificationsSuccess({ data })

@@ -21,15 +21,26 @@ exports.moderatorBoard = (req, res) => {
 };
 
 exports.getAllUsers = (req, res) => {
-  const { compitition } = req.body;
   // get users
-   User.find({ compitition: compitition}).populate("roles").sort({ createdAt: -1 }).exec((err, users) => {
+   User.find({}).populate("roles").sort({ createdAt: -1 }).exec((err, users) => {
     if(err){
       return res.status(500).send({ message: err });
     }
      return res.status(200).json(users.length > 0? users : { message: 'No user found' });
    });
 };
+
+exports.forCompitition = (req, res) => {
+  // get users
+   User.find({ compitition: ObjectId(req.params.compitition) }).populate("roles").sort({ createdAt: -1 }).exec((err, users) => {
+    if(err){
+      return res.status(500).send({ message: err });
+    }
+     return res.status(200).json(users.length > 0? users : { message: 'No user found' });
+   });
+};
+
+
 
 exports.createUser = async (req, res) => {
   // get users
@@ -192,6 +203,18 @@ exports.getAllContacts = (req, res) => {
     }
      return res.status(200).json(users.length > 0? users : { message: 'No content found' });
    });
+};
+
+
+exports.forContentsCompitition = async (req, res) => {
+  const { compitition } = req.params; 
+  // get users
+   const content = await Contact.find({ compitition: compitition }).populate("user").exec()
+   if(content) {
+      return res.status(200).send({conent: content,  status:'Success', message: "Conents fetched successrully!" });
+    }else {
+     return res.status(200).json({ message: 'No content found' });
+   };
 };
 
 exports.allContactsByIdCoach = async (req, res) => {

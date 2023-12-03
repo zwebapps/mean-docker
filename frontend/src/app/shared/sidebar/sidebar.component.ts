@@ -56,7 +56,13 @@ export class SidebarComponent implements OnInit, OnChanges {
     const user = this.storageService.getUser();
     if (user) {
       let userRoutes: any = ROUTES.find((item) => item["role"] === this.userRole);
-      this.sidebarnavItems = userRoutes["routes"];
+      this.sidebarnavItems = userRoutes["routes"].map((route: any) => {
+        return {
+          ...route,
+          path: `/${user.shortcode}${route.path}`
+        };
+      });
+      console.log(this.sidebarnavItems);
       userRoutes["routes"].forEach((item: any) => (this.router.url.includes(item.path) ? (item.class = "active") : (item.class = "")));
     }
   }

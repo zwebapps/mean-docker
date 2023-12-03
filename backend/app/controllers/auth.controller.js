@@ -68,7 +68,7 @@ exports.signin = (req, res) => {
   User.findOne({
     username: req.body.username,
   })
-    .populate("roles", "-__v")
+    .populate(["roles", "__v", "compitition"])
     .exec((err, user) => {
       if (err) {
         res.status(500).send({ message: err });
@@ -110,7 +110,8 @@ exports.signin = (req, res) => {
         username: user.username,
         email: user.email,
         roles: authorities,
-        compitition: user.compitition? user.compitition : 'yfl'
+        compitition: user.compitition._id,
+        shortcode: user.compitition.shortCode
       });
     });
 };

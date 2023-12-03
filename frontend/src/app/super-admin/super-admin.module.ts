@@ -23,7 +23,7 @@ import { SquadManagementComponent } from "../board-admin/squad-management/squad-
 import { TeamManagementComponent } from "../board-admin/team-management/team-management.component";
 import { UserManagementComponent } from "../board-admin/user-management/user-management.component";
 import { SuperAdminComponent } from "./super-admin/super-admin.component";
-import { CompititionComponent } from './compitition/compitition.component';
+import { CompititionComponent } from "./compitition/compitition.component";
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -81,39 +81,39 @@ const superAdminRoutes: Routes = [
         component: SuperAdminComponent
       },
       {
-        path: "users",
+        path: ":shortcode/users",
         component: UserManagementComponent
       },
       {
-        path: "leagues",
+        path: ":shortcode/leagues",
         component: LeagueManagementComponent
       },
       {
-        path: "academies/academy/:id",
+        path: ":shortcode/academies/academy/:id",
         component: AcademyDetailComponent
       },
       {
-        path: "academy/team/:id", // select leagues for team
+        path: ":shortcode/academy/team/:id", // select leagues for team
         component: AcademyLeagueSelectionComponent
       },
       {
-        path: "squads",
+        path: ":shortcode/squads",
         component: SquadManagementComponent
       },
       {
-        path: "squads/academy/:id",
+        path: ":shortcode/squads/academy/:id",
         component: SquadAcademyListComponent
       },
       {
-        path: "squads/squadlist/:id",
+        path: ":shortcode/squads/squadlist/:id",
         component: SquadListComponent
       },
       {
-        path: "academies",
+        path: ":shortcode/academies",
         component: TeamManagementComponent
       },
       {
-        path: "notifications",
+        path: ":shortcode/notifications",
         component: AdminNotificationsComponent
       }
     ]

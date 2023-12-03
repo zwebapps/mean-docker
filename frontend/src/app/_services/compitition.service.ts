@@ -13,8 +13,7 @@ export class CompititionService {
 
   constructor(private http: HttpClient) {}
 
-  loadCompititions(): Observable<any> {
-    debugger;
+  getCompititions(): Observable<any> {
     return this.http.get(`${API_URL}/compitition/all`, { headers: this.headers });
   }
   createCompitition(compitition: any): Observable<any> {
@@ -32,7 +31,6 @@ export class CompititionService {
   }
 
   updateCompitition(id: any, compitition: any): Observable<any> {
-    debugger;
     return this.http.post(`${API_URL}/compitition/update/${id}`, compitition, { headers: this.headers });
   }
   deleteCompitition(id: any): Observable<any> {

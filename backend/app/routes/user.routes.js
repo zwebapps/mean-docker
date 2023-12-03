@@ -53,7 +53,9 @@ app.post("/api/user/contentsupdate/:id", authJwt.isAuthenticated, controller.upd
 
 app.post("/api/user/contentdelete/:id", authJwt.isAuthenticated, controller.contentDelete);
 
+app.get("/api/user/forcompitition/:compitition", authJwt.isAuthenticated, controller.forCompitition);
 
+app.get("/api/user/contents/forcompitition/:compitition", authJwt.isAuthenticated, controller.forContentsCompitition);
 
 };
 

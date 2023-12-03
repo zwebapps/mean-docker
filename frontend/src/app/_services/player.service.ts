@@ -19,6 +19,9 @@ export class PlayerService {
   loadPlayers(): Observable<any> {
     return this.http.get(`${API_URL}/player/all`, { headers: this.headers });
   }
+  loadPlayersByCompitition(compitition: string): Observable<any> {
+    return this.http.get(`${API_URL}/player/forcompitition/${compitition}`, { headers: this.headers });
+  }
   approvePlayer(id: any, data: any): Observable<any> {
     return this.http.post(`${API_URL}/player/approve/${id}`, data, { headers: this.headers });
   }

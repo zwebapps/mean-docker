@@ -51,7 +51,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
             id: data.id,
             roles: data.roles,
             username: data.username,
-            compitition: data.compitition
+            compitition: data.compitition,
+            shortcode: data.shortcode
           });
 
           this.isLoginFailed = false;
@@ -88,15 +89,16 @@ export class LoginComponent implements OnInit, AfterViewInit {
   redirectPage(): void {
     if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
+      const { shortcode } = this.storageService.getUser();
       this.roles = this.storageService.getUser().roles;
       if (this.roles.includes("ROLE_SUPERADMIN")) {
         this.router.navigateByUrl("/superadmin/dashboard");
       } else if (this.roles.includes("ROLE_ADMIN")) {
-        this.router.navigateByUrl("/admin/dashboard");
+        this.router.navigateByUrl(`${shortcode}/admin/dashboard`);
       } else if (this.roles.includes("ROLE_COACH")) {
-        this.router.navigateByUrl("/coach/dashboard");
+        this.router.navigateByUrl(`${shortcode}/coach/dashboard`);
       } else if (this.roles.includes("ROLE_REFEREE")) {
-        this.router.navigateByUrl("/referee/dashboard");
+        this.router.navigateByUrl(`${shortcode}/referee/dashboard`);
       } else {
         this.router.navigateByUrl("/404");
       }

@@ -77,6 +77,15 @@ exports.getLeagueById = async (req, resp, next) => {
   }
 };
 
+exports.forCompitition = async (req, resp, next) => {
+  try {
+    const league = await League.find({ compitition: ObjectId(req.params.compitition)});
+    resp.status(200).json(league? league: { message: 'No league found' });
+  } catch (error) {
+    next(error);
+  }
+};
+
 /* Edit existing League based on id*/
 exports.updateLeague =  async (req, resp, next) => {
   try {

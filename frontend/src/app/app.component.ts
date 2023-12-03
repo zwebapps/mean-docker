@@ -66,7 +66,6 @@ export class AppComponent {
       if (this.showAdminBoard) {
         this.store.dispatch(UserActions.loadUsers());
       }
-      debugger;
       this.store.dispatch(TeamActions.loadTeams());
       this.store.dispatch(LeagueActions.loadLeagues());
       this.store.dispatch(FixureActions.loadFixtures());

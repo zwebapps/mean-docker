@@ -4,17 +4,21 @@ import * as PlayersActions from "../actions/players.actions";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { map, exhaustMap, catchError, mergeMap } from "rxjs/operators";
 import { of } from "rxjs";
+import { StorageService } from "src/app/_services/storage.service";
 
 @Injectable()
 export class PlayersEffects {
-  constructor(private actions$: Actions, private playerService: PlayerService) {}
+  user: any;
+  constructor(private actions$: Actions, private playerService: PlayerService, private storageService: StorageService) {
+    this.user = this.storageService.getUser();
+  }
 
   loadPlayers$ = createEffect(() =>
     this.actions$.pipe(
       ofType(PlayersActions.loadPlayers),
       map((action: any) => action.payload),
       mergeMap(() => {
-        return this.playerService.loadPlayers().pipe(
+        return this.playerService.loadPlayersByCompitition(this.user.compitition).pipe(
           map((data) =>
             Array.isArray(data) ? PlayersActions.loadPlayersSuccess({ data }) : PlayersActions.loadPlayersSuccess({ data: [] })
           ),

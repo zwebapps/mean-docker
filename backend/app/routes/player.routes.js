@@ -40,4 +40,6 @@ app.post("/player/multiupload", authJwt.isAuthenticated, player.multiUpload);
 
 app.post("/player/approvemulitple", authJwt.isAuthenticated, player.approveMulitplePlayers);
 
+app.get("/player/forcompitition/:compitition", authJwt.isAuthenticated, player.forCompitition);
+
 };

@@ -61,7 +61,15 @@ exports.getFixtureById = async (req, resp, next) => {
     next(error);
   }
 };
-
+ 
+exports.forCompitition = async (req, resp, next) => {
+  try {
+    const fixture = await Fixture.find({ compitition: ObjectId(req.params.compitition)}).populate(["league", "homeTeam", "awayTeam"]);
+    resp.status(200).json(fixture);
+  } catch (error) {
+    next(error);
+  }
+};
 /* Edit existing fixture based on id*/
 exports.updateFixture=  async (req, resp, next) => {
 

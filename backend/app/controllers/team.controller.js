@@ -86,6 +86,19 @@ exports.getTeamById = async (req, resp, next) => {
     next(error);
   }
 };
+exports.forCompitition = async (req, resp, next) => {
+  try {
+    const { compitition } = req.params;
+    if(compitition) {
+      const team = await Team.find({ compitition: ObjectId(req.params.compitition) }).populate(["academy_id", "leagues", "user_id"]).exec();
+      resp.status(200).json(team ? team: { message: 'No team found' });
+    }else{
+      resp.status(200).json({ message: 'Malformed Id provided' });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
 exports.getTeamByAcademyId = async (req, resp, next) => {
   try {
     const { id } = req.params;

@@ -34,12 +34,12 @@ export const Approutes: Routes = [
         loadChildren: () => import("./super-admin/super-admin.module").then((m) => m.SuperAdminModule)
       },
       {
-        path: "admin",
+        path: ":shortcode/admin",
         canActivate: [AuthGuard],
         loadChildren: () => import("./board-admin/board-admin.module").then((m) => m.BoardAdminModule)
       },
       {
-        path: "coach",
+        path: ":shortcode/coach",
         canActivate: [AuthGuard],
         component: CoachComponent,
         children: [
@@ -62,7 +62,7 @@ export const Approutes: Routes = [
         ]
       },
       {
-        path: "referee",
+        path: ":shortcode/referee",
         canActivate: [AuthGuard],
         loadChildren: () => import("./referee/referee.module").then((m) => m.RefereeModule)
       },

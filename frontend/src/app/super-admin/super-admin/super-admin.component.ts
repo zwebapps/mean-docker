@@ -66,7 +66,6 @@ export class SuperAdminComponent implements OnInit {
   }
 
   open(content: any) {
-    debugger;
     this.modalService.open(content, { ariaLabelledBy: "modal-basic-title", size: "lg" }).result.then(
       (result) => {
         this.closeResult = `Closed with: ${result}`;
@@ -77,10 +76,15 @@ export class SuperAdminComponent implements OnInit {
     );
   }
   getAllCompititions() {
-    debugger;
     this.store.dispatch(CompititionActions.loadCompititions());
     this.store.select(CompititionSelectors.getCompititions).subscribe((compitition: any) => {
       this.compititions = compitition;
+    });
+    this.compititionService.getCompititions().subscribe((res: any) => {
+      if (!res.message) {
+        this.notifier.notify("success", "Compitition fetched successfully!");
+        this.compititions = res;
+      }
     });
   }
 

@@ -314,6 +314,21 @@ exports.playerByTeam = async (req, resp, next) => {
   }
 };
 
+
+exports.forCompitition = async (req, resp, next) => {
+  let pl = {};
+  try {
+    const { compitition  } = req.params;
+    if(compitition) {
+      // check if compitition 
+      pl = await Player.find({ compitition: ObjectId(req.params.compitition) }).populate(["user", "league", "academy", "team"]).exec();
+    } 
+    resp.status(200).json(pl ? pl : { message: 'Player not found'});
+  } catch (error) {
+    next(error);
+  }
+};
+
 exports.playerByAcademy = async (req, resp, next) => {
   let pl = {};
   try {

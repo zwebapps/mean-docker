@@ -11,7 +11,6 @@ export class AuthInterceptor implements HttpInterceptor {
     const authToken = this.storageService.getToken();
     const user = this.storageService.getUser();
     if (authToken) {
-      // debugger;
       req = req.clone({
         setHeaders: {
           Authorization: "Bearer " + authToken

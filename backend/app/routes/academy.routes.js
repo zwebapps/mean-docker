@@ -29,5 +29,7 @@ app.post("/academy/academybyname", authJwt.isAuthenticated, academy.getAcademyBy
 
 app.get("/academy/academybycoach/:id", authJwt.isAuthenticated, academy.getAcademyByCoach);
 
+app.get("/academy/forcompitition/:compitition", authJwt.isAuthenticated, academy.forCompitition);
+
 };
 

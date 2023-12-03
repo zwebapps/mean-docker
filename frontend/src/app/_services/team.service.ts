@@ -22,6 +22,9 @@ export class TeamService {
     return this.http.get(`${API_URL}/team/foracademy/${id}`, { headers: this.headers });
   }
 
+  loadTeamsByCompitition(compitition: string): Observable<any> {
+    return this.http.get(`${API_URL}/team/forcompitition/${compitition}`, { headers: this.headers });
+  }
   createTeam(teamData: any): Observable<any> {
     return this.http.post(`${API_URL}/team/create`, teamData, { headers: this.headers });
   }

@@ -72,6 +72,20 @@ exports.getAcademyByName = async (req, resp, next) => {
   }
 };
 
+exports.forCompitition = async (req, resp, next) => {
+  try {
+    if( req.params && req.params.id ) {
+      const academy = await Academy.find({ compitition : ObjectId(req.params.compitition) }).populate("coach").exec();
+      resp.status(200).json(academy);
+    } else {
+      resp.status(200).json({message: 'Academy id is required to found'});
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+
 
 /* GET all academies. */
 exports.getAllAcademys =  async (req, resp, next) => {

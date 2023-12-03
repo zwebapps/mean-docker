@@ -4,17 +4,21 @@ import * as UserActions from "../actions/users.actions";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { map, exhaustMap, catchError, mergeMap } from "rxjs/operators";
 import { of } from "rxjs";
+import { StorageService } from "src/app/_services/storage.service";
 
 @Injectable()
 export class UsersEffects {
-  constructor(private actions$: Actions, private usersService: UserService) {}
+  user: any;
+  constructor(private actions$: Actions, private usersService: UserService, private storageService: StorageService) {
+    this.user = this.storageService.getUser();
+  }
 
   loadUsers$ = createEffect(() =>
     this.actions$.pipe(
       ofType(UserActions.loadUsers),
       map((action: any) => action.payload),
       mergeMap(() => {
-        return this.usersService.loadUsers().pipe(
+        return this.usersService.loadUsersByCompitition(this.user.compitition).pipe(
           map((data) => (Array.isArray(data) ? UserActions.loadUsersSuccess({ data }) : UserActions.loadUsersSuccess({ data: [] }))),
           catchError((error) => of(UserActions.loadUsersFailure({ error })))
         );
