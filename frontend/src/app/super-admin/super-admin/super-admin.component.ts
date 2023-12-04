@@ -82,7 +82,7 @@ export class SuperAdminComponent implements OnInit {
     });
     this.compititionService.getCompititions().subscribe((res: any) => {
       if (!res.message) {
-        this.notifier.notify("success", "Compitition fetched successfully!");
+        // this.notifier.notify("success", "Compitition fetched successfully!");
         this.compititions = res;
       }
     });

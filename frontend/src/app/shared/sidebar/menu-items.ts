@@ -23,47 +23,47 @@ export const ROUTES: RouteUser[] = [
         class: "",
         extralink: false,
         submenu: []
-      },
-      {
-        path: "/superadmin/users",
-        title: "Users Management",
-        icon: "bi bi-speedometer2",
-        image: "assets/images/squads.png",
-        active: "assets/images/squads.png",
-        class: "",
-        extralink: false,
-        submenu: []
-      },
-      {
-        path: "/superadmin/leagues",
-        title: "League Management",
-        icon: "bi bi-speedometer2",
-        image: "assets/images/leagues.png",
-        active: "assets/images/leagues.png",
-        class: "",
-        extralink: false,
-        submenu: []
-      },
-      {
-        path: "/superadmin/academies",
-        title: "Team Management",
-        icon: "bi bi-speedometer2",
-        image: "assets/images/teams.png",
-        active: "assets/images/teams.png",
-        class: "",
-        extralink: false,
-        submenu: []
-      },
-      {
-        path: "/superadmin/squads",
-        title: "Squad Management",
-        icon: "bi bi-speedometer2",
-        image: "assets/images/squads.png",
-        active: "assets/images/squads.png",
-        class: "",
-        extralink: false,
-        submenu: []
       }
+      // {
+      //   path: "/superadmin/users",
+      //   title: "Users Management",
+      //   icon: "bi bi-speedometer2",
+      //   image: "assets/images/squads.png",
+      //   active: "assets/images/squads.png",
+      //   class: "",
+      //   extralink: false,
+      //   submenu: []
+      // },
+      // {
+      //   path: "/superadmin/leagues",
+      //   title: "League Management",
+      //   icon: "bi bi-speedometer2",
+      //   image: "assets/images/leagues.png",
+      //   active: "assets/images/leagues.png",
+      //   class: "",
+      //   extralink: false,
+      //   submenu: []
+      // },
+      // {
+      //   path: "/superadmin/academies",
+      //   title: "Team Management",
+      //   icon: "bi bi-speedometer2",
+      //   image: "assets/images/teams.png",
+      //   active: "assets/images/teams.png",
+      //   class: "",
+      //   extralink: false,
+      //   submenu: []
+      // },
+      // {
+      //   path: "/superadmin/squads",
+      //   title: "Squad Management",
+      //   icon: "bi bi-speedometer2",
+      //   image: "assets/images/squads.png",
+      //   active: "assets/images/squads.png",
+      //   class: "",
+      //   extralink: false,
+      //   submenu: []
+      // }
     ]
   },
   {

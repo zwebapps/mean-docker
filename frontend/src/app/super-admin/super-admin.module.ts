@@ -73,49 +73,49 @@ const superAdminRoutes: Routes = [
     component: SuperAdminComponent,
     children: [
       {
-        path: "analytics",
-        component: AnalyticsComponent
-      },
-      {
-        path: "dashboard",
+        path: "compititions",
         component: SuperAdminComponent
       },
       {
-        path: ":shortcode/users",
-        component: UserManagementComponent
-      },
-      {
-        path: ":shortcode/leagues",
-        component: LeagueManagementComponent
-      },
-      {
-        path: ":shortcode/academies/academy/:id",
-        component: AcademyDetailComponent
-      },
-      {
-        path: ":shortcode/academy/team/:id", // select leagues for team
-        component: AcademyLeagueSelectionComponent
-      },
-      {
-        path: ":shortcode/squads",
-        component: SquadManagementComponent
-      },
-      {
-        path: ":shortcode/squads/academy/:id",
-        component: SquadAcademyListComponent
-      },
-      {
-        path: ":shortcode/squads/squadlist/:id",
-        component: SquadListComponent
-      },
-      {
-        path: ":shortcode/academies",
-        component: TeamManagementComponent
-      },
-      {
-        path: ":shortcode/notifications",
-        component: AdminNotificationsComponent
+        path: "dashboard",
+        component: AnalyticsComponent
       }
+      // {
+      //   path: ":shortcode/users",
+      //   component: UserManagementComponent
+      // },
+      // {
+      //   path: ":shortcode/leagues",
+      //   component: LeagueManagementComponent
+      // },
+      // {
+      //   path: ":shortcode/academies/academy/:id",
+      //   component: AcademyDetailComponent
+      // },
+      // {
+      //   path: ":shortcode/academy/team/:id", // select leagues for team
+      //   component: AcademyLeagueSelectionComponent
+      // },
+      // {
+      //   path: ":shortcode/squads",
+      //   component: SquadManagementComponent
+      // },
+      // {
+      //   path: ":shortcode/squads/academy/:id",
+      //   component: SquadAcademyListComponent
+      // },
+      // {
+      //   path: ":shortcode/squads/squadlist/:id",
+      //   component: SquadListComponent
+      // },
+      // {
+      //   path: ":shortcode/academies",
+      //   component: TeamManagementComponent
+      // },
+      // {
+      //   path: ":shortcode/notifications",
+      //   component: AdminNotificationsComponent
+      // }
     ]
   }
 ];

@@ -18,10 +18,17 @@ export class UsersEffects {
       ofType(UserActions.loadUsers),
       map((action: any) => action.payload),
       mergeMap(() => {
-        return this.usersService.loadUsersByCompitition(this.user.compitition).pipe(
-          map((data) => (Array.isArray(data) ? UserActions.loadUsersSuccess({ data }) : UserActions.loadUsersSuccess({ data: [] }))),
-          catchError((error) => of(UserActions.loadUsersFailure({ error })))
-        );
+        if (!this.user?.roles.includes("ROLE_SUPERADMIN")) {
+          return this.usersService.loadUsersByCompitition(this.user.compitition).pipe(
+            map((data) => (Array.isArray(data) ? UserActions.loadUsersSuccess({ data }) : UserActions.loadUsersSuccess({ data: [] }))),
+            catchError((error) => of(UserActions.loadUsersFailure({ error })))
+          );
+        } else {
+          return this.usersService.loadUsers().pipe(
+            map((data) => (Array.isArray(data) ? UserActions.loadUsersSuccess({ data }) : UserActions.loadUsersSuccess({ data: [] }))),
+            catchError((error) => of(UserActions.loadUsersFailure({ error })))
+          );
+        }
       })
     )
   );
