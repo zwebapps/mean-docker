@@ -18,14 +18,25 @@ export class NotificationsEffects {
       ofType(NotificationActions.loadNotifications),
       map((action: any) => action.payload),
       mergeMap(() => {
-        return this.UserService.getAllContentsByCompitition(this.user.compitition).pipe(
-          map((data) =>
-            Array.isArray(data)
-              ? NotificationActions.loadNotificationsSuccess({ data })
-              : NotificationActions.loadNotificationsSuccess({ data: [] })
-          ),
-          catchError((error) => of(NotificationActions.loadNotificationsFailure({ error })))
-        );
+        if (!this.user?.roles.includes("ROLE_SUPERADMIN")) {
+          return this.UserService.getAllContentsByCompitition(this.user.compitition).pipe(
+            map((data) =>
+              Array.isArray(data)
+                ? NotificationActions.loadNotificationsSuccess({ data })
+                : NotificationActions.loadNotificationsSuccess({ data: [] })
+            ),
+            catchError((error) => of(NotificationActions.loadNotificationsFailure({ error })))
+          );
+        } else {
+          return this.UserService.getAllContents().pipe(
+            map((data) =>
+              Array.isArray(data)
+                ? NotificationActions.loadNotificationsSuccess({ data })
+                : NotificationActions.loadNotificationsSuccess({ data: [] })
+            ),
+            catchError((error) => of(NotificationActions.loadNotificationsFailure({ error })))
+          );
+        }
       })
     )
   );
