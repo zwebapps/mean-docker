@@ -165,6 +165,6 @@ export class NavigationComponent implements OnInit, AfterViewInit {
     });
   };
   redirectToNotifications() {
-    this.router.navigate(["/admin/notifications"]);
+    this.router.navigate([`${this.loggedInUser.shortcode}/admin/notifications`]);
   }
 }

@@ -633,7 +633,7 @@ export class CoachAcademyDetailsComponent {
     reader.readAsBinaryString(file);
   }
   onContactUs = () => {
-    this.router.navigate(["/coach/contacts"]);
+    this.router.navigate([`${this.coach.shortcode}/coach/contacts`]);
   };
 
   appendHiphen(event: any) {
@@ -694,6 +694,6 @@ export class CoachAcademyDetailsComponent {
     }
   };
   redirectTo() {
-    this.router.navigate(["/coach/teams"]);
+    this.router.navigate([`${this.coach.shortcode}/coach/teams`]);
   }
 }

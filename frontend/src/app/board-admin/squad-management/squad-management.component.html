@@ -8,7 +8,7 @@
   <ng-container *ngFor="let academy of academies">
     <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
       <div class="league-lable btn">
-        <span class="league-text" [routerLink]="['/admin/squads/academy/', academy._id]">
+        <span class="league-text" (click)="redirectTo(academy._id)">
           {{ academy.academyName }}
         </span>
       </div>

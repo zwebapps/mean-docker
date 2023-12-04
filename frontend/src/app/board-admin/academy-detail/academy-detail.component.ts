@@ -19,6 +19,7 @@ import { environment } from "src/environments/environment";
   styleUrls: ["./academy-detail.component.scss"]
 })
 export class AcademyDetailComponent implements OnInit {
+  user: any = {};
   private notifier: NotifierService;
   academy: any = {};
   teams: any;
@@ -37,6 +38,7 @@ export class AcademyDetailComponent implements OnInit {
     public activatedRoute: ActivatedRoute,
     private confirmationDialogService: ConfirmationDialogService
   ) {
+    this.user = this.storageService.getUser();
     this.notifier = notifier;
   }
 
@@ -67,6 +69,7 @@ export class AcademyDetailComponent implements OnInit {
           "Team Name": this.teamForm.value.teamName,
           "Academy Id": this.academy._id,
           leagues: [],
+          compitition: user.compitition,
           user: {
             createdBy: user.id
           }
@@ -106,7 +109,7 @@ export class AcademyDetailComponent implements OnInit {
     );
   };
   onTeamClick = (team: any) => {
-    this.router.navigate([`/admin/academy/team/${team._id}`]);
+    this.router.navigate([`${this.user.shortcode}/admin/academy/team/${team._id}`]);
   };
   onDelete(teamId: any) {
     this.teamToDel = teamId;
@@ -131,6 +134,6 @@ export class AcademyDetailComponent implements OnInit {
     }
   }
   redirectTo() {
-    this.router.navigate(["/admin/academies"]);
+    this.router.navigate([`${this.user.shortcode}/admin/academies`]);
   }
 }

@@ -7,6 +7,7 @@ import { Router } from "@angular/router";
 import { environment } from "src/environments/environment";
 import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { DomSanitizer } from "@angular/platform-browser";
+import { StorageService } from "src/app/_services/storage.service";
 
 @Component({
   selector: "app-coach-squad-list",
@@ -28,13 +29,17 @@ export class CoachSquadListComponent {
   apiURL = environment.apiURL;
   closeResult = "";
   public imgSrc: any = null;
+  user: any = {};
   constructor(
+    private storageService: StorageService,
     private sanitizer: DomSanitizer,
     private modalService: NgbModal,
     private store: Store,
     private userService: UserService,
     private router: Router
-  ) {}
+  ) {
+    this.user = this.storageService.getUser();
+  }
 
   ngOnInit() {
     this.getLeaguesFromStore();
@@ -94,6 +99,6 @@ export class CoachSquadListComponent {
     this.delPlayer.emit(value);
   }
   redirectTo() {
-    this.router.navigate(["/admin/academies"]);
+    this.router.navigate([`${this.user.shortcode}/admin/academies`]);
   }
 }

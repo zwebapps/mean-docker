@@ -18,6 +18,7 @@ import { environment } from "src/environments/environment";
 import * as XLSX from "xlsx";
 
 import * as moment from "moment";
+import { StorageService } from "src/app/_services/storage.service";
 
 @Component({
   selector: "app-squad-list",
@@ -74,7 +75,9 @@ export class SquadListComponent implements OnInit {
   public eidNo: any = "";
   public selectedEIDs: any = [];
   public searchByNameterm: any = "";
+  user: any;
   constructor(
+    private storageService: StorageService,
     private playerService: PlayerService,
     private userService: UserService,
     notifier: NotifierService,
@@ -84,6 +87,7 @@ export class SquadListComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router
   ) {
+    this.user = this.storageService.getUser();
     this.notifier = notifier;
     this.filterLeague = new FormGroup({
       league: new FormControl("0"),
@@ -602,6 +606,6 @@ export class SquadListComponent implements OnInit {
     );
   }
   redirectTo() {
-    this.router.navigate(["/admin/squads"]);
+    this.router.navigate([`${this.user.shortcode}/admin/squads`]);
   }
 }

@@ -84,6 +84,7 @@ export class LeagueManagementComponent implements OnInit {
         const leagueData = {
           "League Name": this.leagueForm.value.leagueName,
           "Age Limit": this.leagueForm.value.leagueAge,
+          compitition: user.compitition,
           user: {
             createdBy: user._id
           }

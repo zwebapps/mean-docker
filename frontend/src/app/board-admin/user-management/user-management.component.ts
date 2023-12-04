@@ -120,6 +120,7 @@ export class UserManagementComponent implements OnInit {
                 contact: this.userToEdit?.contact,
                 email: this.userToEdit.email,
                 role: this.userToEdit?.roles[0]?.name,
+                compitition: this.loggedInUser?.compitition,
                 academy: res?._id
               });
             }
@@ -184,7 +185,8 @@ export class UserManagementComponent implements OnInit {
         contact: this.userForm.value.contact,
         password: this.userForm.value.password,
         email: this.userForm.value.email,
-        role: this.userForm.value.role
+        role: this.userForm.value.role,
+        compitition: this.loggedInUser?.compitition
       };
       this.userService.createUser(userObj).subscribe(
         (result: any) => {

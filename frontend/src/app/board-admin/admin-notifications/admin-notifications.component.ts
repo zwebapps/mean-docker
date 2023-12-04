@@ -130,6 +130,6 @@ export class AdminNotificationsComponent implements OnInit {
     });
   };
   redirectTo() {
-    this.router.navigate(["/admin/dashboard"]);
+    this.router.navigate([`${this.user.shortcode}/admin/dashboard`]);
   }
 }

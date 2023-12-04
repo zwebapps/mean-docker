@@ -21,6 +21,7 @@ import { PlayerService } from "src/app/_services/player.service";
   styleUrls: ["./team-management.component.scss"]
 })
 export class TeamManagementComponent implements OnInit {
+  user: any;
   private notifier: NotifierService;
   public academies: any = [];
   public academyToDel: any = [];
@@ -43,6 +44,7 @@ export class TeamManagementComponent implements OnInit {
     private userService: UserService,
     private palyerService: PlayerService
   ) {
+    this.user = this.storageService.getUser();
     this.notifier = notifier;
   }
 
@@ -89,6 +91,7 @@ export class TeamManagementComponent implements OnInit {
             Password: `Password@${this.makeAcademyUserName(this.academyForm.value.academyName)}`,
             Logo: this.academyLogo,
             Color: this.academyForm.value.academyColor,
+            compitition: user.compitition,
             user: {
               createdBy: user.id
             }
@@ -99,6 +102,7 @@ export class TeamManagementComponent implements OnInit {
             username: this.makeAcademyUserName(this.academyForm.value.academyName),
             email: `${this.makeAcademyUserName(this.academyForm.value.academyName)}@dummy.com`,
             password: `Password@${this.makeAcademyUserName(this.academyForm.value.academyName)}`,
+            compitition: user.compitition,
             role: "coach"
           };
           // check if academy exists
@@ -136,7 +140,8 @@ export class TeamManagementComponent implements OnInit {
       const academyData = {
         academyName: this.academyForm.value.academyName,
         logo: this.academyLogo,
-        color: this.academyForm.value.academyColor
+        color: this.academyForm.value.academyColor,
+        compitition: this.storageService.getUser()?.compitition
       };
       this.academyService.updateAcademy(this.academyToEdit, academyData).subscribe(
         (res: any) => {
@@ -169,10 +174,10 @@ export class TeamManagementComponent implements OnInit {
   }
 
   academyDetails(id: string) {
-    this.router.navigate([`/academies/academy/${id}`]);
+    this.router.navigate([`${this.user.shortcode}/academies/academy/${id}`]);
   }
   redirectTo() {
-    this.router.navigate(["/admin/academies/academy"]);
+    this.router.navigate([`${this.user.shortcode}/admin/academies/academy`]);
   }
 
   onDelete(academy: any) {

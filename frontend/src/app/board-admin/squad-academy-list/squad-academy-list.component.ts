@@ -16,18 +16,21 @@ import { environment } from "src/environments/environment";
   styleUrls: ["./squad-academy-list.component.scss"]
 })
 export class SquadAcademyListComponent implements OnInit {
+  public user: any = {};
   public teams: any = [];
   private notifier: NotifierService;
   public academies: any = [];
   public academy: any = {};
   apiURL = environment.apiURL;
   constructor(
+    private storageService: StorageService,
     notifier: NotifierService,
     private academyService: AcademyService,
     private teamService: TeamService,
     private router: Router,
     public activatedRoute: ActivatedRoute
   ) {
+    this.user = this.storageService.getUser();
     this.notifier = notifier;
   }
 
@@ -48,7 +51,7 @@ export class SquadAcademyListComponent implements OnInit {
     this.getTeamsByAcademy(id);
   }
   onTeamClick(team: any) {
-    this.router.navigate([`/admin/academy/team/${team._id}`]);
+    this.router.navigate([`${this.user.shortcode}/admin/academy/team/${team._id}`]);
   }
   getTeamsByAcademy(academyId: string) {
     this.teamService.getTeamsByAcademy(academyId).subscribe(
@@ -68,6 +71,11 @@ export class SquadAcademyListComponent implements OnInit {
     return `${this.apiURL}/static/${image}`;
   };
   redirectTo() {
-    this.router.navigate(["/admin/academies"]);
+    debugger;
+    this.router.navigate([`${this.user.shortcode}/admin/academies`]);
+  }
+  redirectToSquad(teamId: any) {
+    debugger;
+    this.router.navigate([`${this.user.shortcode}/admin/squads/squadlist/${teamId}`]);
   }
 }

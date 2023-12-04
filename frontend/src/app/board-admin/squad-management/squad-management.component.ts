@@ -19,6 +19,7 @@ export class SquadManagementComponent {
   academy: any = {};
   teams: any = [];
   public academies: any = [];
+  user: any;
   constructor(
     private storageService: StorageService,
     notifier: NotifierService,
@@ -28,11 +29,15 @@ export class SquadManagementComponent {
     private router: Router,
     public activatedRoute: ActivatedRoute
   ) {
+    this.user = this.storageService.getUser();
     this.notifier = notifier;
   }
 
   ngOnInit(): void {
     this.getAcademiesFromStore();
+  }
+  redirectTo(acadmeyId: any) {
+    this.router.navigate([this.user.shortcode + "/admin/squads/academy/" + acadmeyId]);
   }
   getAcademiesFromStore() {
     this.store.select(AcademySelectors.getAcademies).subscribe((academy) => {

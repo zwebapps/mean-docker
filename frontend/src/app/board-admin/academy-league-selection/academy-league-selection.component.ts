@@ -7,6 +7,7 @@ import * as LeagueSelectors from "../../_store/selectors/leagues.selectors";
 import { Store } from "@ngrx/store";
 import { NotifierService } from "angular-notifier";
 import { environment } from "src/environments/environment";
+import { StorageService } from "src/app/_services/storage.service";
 
 @Component({
   selector: "app-academy-league-selection",
@@ -14,6 +15,7 @@ import { environment } from "src/environments/environment";
   styleUrls: ["./academy-league-selection.component.scss"]
 })
 export class AcademyLeagueSelectionComponent implements OnInit {
+  user: any = {};
   private notifier: NotifierService;
   public team: any;
   public academy: any;
@@ -21,6 +23,7 @@ export class AcademyLeagueSelectionComponent implements OnInit {
   public leagueForm: FormGroup;
   apiURL = environment.apiURL;
   constructor(
+    private storageService: StorageService,
     private activatedRoute: ActivatedRoute,
     private teamService: TeamService,
     private fb: FormBuilder,
@@ -28,6 +31,7 @@ export class AcademyLeagueSelectionComponent implements OnInit {
     notifier: NotifierService,
     private router: Router
   ) {
+    this.user = this.storageService.getUser();
     this.notifier = notifier;
     this.leagueForm = this.fb.group({
       leagues: new FormArray([])
@@ -98,6 +102,6 @@ export class AcademyLeagueSelectionComponent implements OnInit {
   }
 
   redirectTo() {
-    this.router.navigate(["/admin/academies/academy/" + this.academy._id]);
+    this.router.navigate([`${this.user.shortcode}/admin/academies/academy/` + this.academy._id]);
   }
 }

@@ -135,6 +135,6 @@ export class ContactAdminComponent implements OnInit {
     });
   };
   redirectTo() {
-    this.router.navigate(["/coach/dashboard"]);
+    this.router.navigate([`${this.user.shortcode}/admin/coach/dashboard`]);
   }
 }

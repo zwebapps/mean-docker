@@ -47,7 +47,7 @@ export class CoachSquadManagementComponent implements OnInit {
   }
 
   onTeamClick(team: any) {
-    this.router.navigate([`/coach/squads/${team._id}`]);
+    this.router.navigate([`${this.loggedInCoach.shortcode}/coach/squads/${team._id}`]);
   }
   getImg = (image: string) => {
     return `${this.apiURL}/static/${image}`;
