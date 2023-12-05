@@ -110,8 +110,8 @@ exports.signin = (req, res) => {
         username: user.username,
         email: user.email,
         roles: authorities,
-        compitition: user.compitition._id,
-        shortcode: user.compitition.shortCode
+        compitition: user.compitition,
+        shortcode: user.shortcode
       });
     });
 };

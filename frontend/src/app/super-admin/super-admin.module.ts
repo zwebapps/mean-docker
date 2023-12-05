@@ -13,17 +13,19 @@ import { NgbModule, NgbNavModule } from "@ng-bootstrap/ng-bootstrap";
 import { AdminSharedModule } from "../admin-shared/admin-shared.module";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { AnalyticsComponent } from "../analytics/analytics.component";
-import { AcademyDetailComponent } from "../board-admin/academy-detail/academy-detail.component";
-import { AcademyLeagueSelectionComponent } from "../board-admin/academy-league-selection/academy-league-selection.component";
-import { AdminNotificationsComponent } from "../board-admin/admin-notifications/admin-notifications.component";
-import { LeagueManagementComponent } from "../board-admin/league-management/league-management.component";
-import { SquadAcademyListComponent } from "../board-admin/squad-academy-list/squad-academy-list.component";
-import { SquadListComponent } from "../board-admin/squad-list/squad-list.component";
-import { SquadManagementComponent } from "../board-admin/squad-management/squad-management.component";
-import { TeamManagementComponent } from "../board-admin/team-management/team-management.component";
-import { UserManagementComponent } from "../board-admin/user-management/user-management.component";
+// import { AcademyDetailComponent } from "../board-admin/academy-detail/academy-detail.component";
+// import { AcademyLeagueSelectionComponent } from "../board-admin/academy-league-selection/academy-league-selection.component";
+// import { AdminNotificationsComponent } from "../board-admin/admin-notifications/admin-notifications.component";
+// import { LeagueManagementComponent } from "../board-admin/league-management/league-management.component";
+// import { SquadAcademyListComponent } from "../board-admin/squad-academy-list/squad-academy-list.component";
+// import { SquadListComponent } from "../board-admin/squad-list/squad-list.component";
+// import { SquadManagementComponent } from "../board-admin/squad-management/squad-management.component";
+// import { TeamManagementComponent } from "../board-admin/team-management/team-management.component";
+// import { UserManagementComponent } from "../board-admin/user-management/user-management.component";
 import { SuperAdminComponent } from "./super-admin/super-admin.component";
 import { CompititionComponent } from "./compitition/compitition.component";
+import { DashboardComponent } from "../dashboard/dashboard.component";
+import { DashboardModule } from "../dashboard/dashboard.module";
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -68,66 +70,73 @@ const customNotifierOptions: NotifierOptions = {
 
 const superAdminRoutes: Routes = [
   {
-    path: "",
+    path: "dashboard",
     canActivate: [AuthGuard],
-    component: SuperAdminComponent,
-    children: [
-      {
-        path: "compititions",
-        component: SuperAdminComponent
-      },
-      {
-        path: "dashboard",
-        component: AnalyticsComponent
-      }
-      // {
-      //   path: ":shortcode/users",
-      //   component: UserManagementComponent
-      // },
-      // {
-      //   path: ":shortcode/leagues",
-      //   component: LeagueManagementComponent
-      // },
-      // {
-      //   path: ":shortcode/academies/academy/:id",
-      //   component: AcademyDetailComponent
-      // },
-      // {
-      //   path: ":shortcode/academy/team/:id", // select leagues for team
-      //   component: AcademyLeagueSelectionComponent
-      // },
-      // {
-      //   path: ":shortcode/squads",
-      //   component: SquadManagementComponent
-      // },
-      // {
-      //   path: ":shortcode/squads/academy/:id",
-      //   component: SquadAcademyListComponent
-      // },
-      // {
-      //   path: ":shortcode/squads/squadlist/:id",
-      //   component: SquadListComponent
-      // },
-      // {
-      //   path: ":shortcode/academies",
-      //   component: TeamManagementComponent
-      // },
-      // {
-      //   path: ":shortcode/notifications",
-      //   component: AdminNotificationsComponent
-      // }
-    ]
+    component: DashboardComponent
+    // children: [
+    // {
+    //   path: "compititions",
+    //   component: SuperAdminComponent
+    // }
+    // {
+    //   path: "dashboard",
+    //   component: AnalyticsComponent
+    // }
+    // {
+    //   path: ":shortcode/users",
+    //   component: UserManagementComponent
+    // },
+    // {
+    //   path: ":shortcode/leagues",
+    //   component: LeagueManagementComponent
+    // },
+    // {
+    //   path: ":shortcode/academies/academy/:id",
+    //   component: AcademyDetailComponent
+    // },
+    // {
+    //   path: ":shortcode/academy/team/:id", // select leagues for team
+    //   component: AcademyLeagueSelectionComponent
+    // },
+    // {
+    //   path: ":shortcode/squads",
+    //   component: SquadManagementComponent
+    // },
+    // {
+    //   path: ":shortcode/squads/academy/:id",
+    //   component: SquadAcademyListComponent
+    // },
+    // {
+    //   path: ":shortcode/squads/squadlist/:id",
+    //   component: SquadListComponent
+    // },
+    // {
+    //   path: ":shortcode/academies",
+    //   component: TeamManagementComponent
+    // },
+    // {
+    //   path: ":shortcode/notifications",
+    //   component: AdminNotificationsComponent
+    // }
+    // ]
+  },
+  {
+    path: "compititions",
+    canActivate: [AuthGuard],
+    component: SuperAdminComponent
   }
 ];
 
 @NgModule({
-  declarations: [SuperAdminComponent, CompititionComponent],
+  declarations: [SuperAdminComponent, CompititionComponent, AnalyticsComponent],
   imports: [
-    AdminSharedModule,
+    NgxDatatableModule,
     CommonModule,
+    NgbModule,
+    AdminSharedModule,
+    DashboardModule,
     NgxImageZoomModule,
     NgbNavModule,
-    NgxDatatableModule,
     ReactiveFormsModule,
     FormsModule,
     AngularEditorModule,

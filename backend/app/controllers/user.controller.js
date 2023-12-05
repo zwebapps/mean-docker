@@ -62,7 +62,8 @@ exports.createUser = async (req, res) => {
           contact: req.body['contact'],
           password: bcrypt.hashSync(req.body['password'], 8),
           email: req.body['email'],
-          compitition : ObjectId(req.body.compitition),
+          shortcode: req.body['shortcode'],
+          compitition : req.body.competition && req.body.competition.map((comp) => ObjectId(comp)),
           roles: [ObjectId(role._id)]
         });
 

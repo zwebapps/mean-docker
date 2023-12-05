@@ -1,6 +1,8 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewEncapsulation } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { environment } from "src/environments/environment";
+import { ColumnMode } from "@swimlane/ngx-datatable";
+import * as countriesData from "../../../assets/countries/countries.json";
 
 @Component({
   selector: "app-compitition",
@@ -9,6 +11,14 @@ import { environment } from "src/environments/environment";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CompititionComponent implements OnInit {
+  @ViewChild("myTable") table: any;
+
+  countries: any = [];
+  options = {};
+  columns: any = [{ prop: "firstname" }, { name: "lastname" }, { name: "username" }, { name: "email" }];
+  loadingIndicator = true;
+  reorderable = true;
+  ColumnMode = ColumnMode;
   @Output() delCompitition: EventEmitter<any> = new EventEmitter();
   @Output() editComp: EventEmitter<any> = new EventEmitter();
   @Input() compititions: any = [];
@@ -16,7 +26,10 @@ export class CompititionComponent implements OnInit {
 
   constructor(private sanitizer: DomSanitizer) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.getCountries();
+  }
+
   getDescription(data: any) {
     return JSON.parse(data)?.compititionDescription || "No Description provided";
   }
@@ -35,5 +48,13 @@ export class CompititionComponent implements OnInit {
   editCompitition(compitition: any) {
     console.log(compitition);
     this.editComp.emit(compitition);
+  }
+  getOrganiserDetail(details: any) {
+    if (details) {
+      return JSON.parse(details);
+    }
+  }
+  getCountries() {
+    this.countries = (countriesData as any).default;
   }
 }

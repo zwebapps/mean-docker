@@ -12,38 +12,43 @@ exports.createCompitition = async (req, resp, next) => {
         if(req.body[i]['compititionName']) {
             const compititionData = new Compitition({
                 compititionName: req.body[i]['compititionName'],
-                organiserDetail: req.body[i]['organiserDetail'],
+                organiser: req.body[i]['organiser'],
                 shortCode: req.body[i]['shortCode'],
                 compititionLogo: req.body[i]['compititionLogo'],
-                compitionSettings: req.body[i]['compitionSettings'],
-                compitionSeason: req.body[i]['compitionSeason'],
+                compititionSettings: req.body[i]['compititionSettings'],
+                compititionSeason: req.body[i]['compititionSeason'],
+                compititionCountry: req.body[i]['compititionCountry'],
+                compititionYear: req.body[i]['compititionYear'],
                 compititionStart: req.body[i]['compititionStart'],
                 compititionEnd: req.body[i]['compititionEnd'],
                 user_id: ObjectId(req.body[i].user['createdBy']),
                 createdAt:  new Date()
             });
-            insertedCompititions.push(req.body[i]);
-            await compititionData.save();
+            const savedCompitition = await compititionData.save();
+            insertedCompititions.push(savedCompitition);
           };
         }
       return resp.status(200).json(insertedCompititions);
     } else if(req.body['compititionName']) {
         const compititionData = new Compitition({
-            compititionName: req.body['compititionName'],
-            organiserDetail: req.body['organiserDetail'],
-            shortCode: req.body['shortCode'],
-            compititionLogo: req.body['compititionLogo'],
-             compititionSettings: req.body['compititionSettings'],
-             compititionSeason: req.body['compititionSeason'],
-            compititionStart: req.body['compititionStart'],
-            compititionEnd: req.body['compititionEnd'],
-            createdAt:  new Date()
+          compititionName: req.body['compititionName'],
+          organiser: req.body['organiser'],
+          shortCode: req.body['shortCode'],
+          compititionLogo: req.body['compititionLogo'],
+          compititionSettings: req.body['compititionSettings'],
+          compititionSeason: req.body['compititionSeason'],
+          compititionCountry: req.body['compititionCountry'],
+          compititionYear: req.body['compititionYear'],
+          compititionStart: req.body['compititionStart'],
+          compititionEnd: req.body['compititionEnd'],
+          user_id: ObjectId(req.body.user['createdBy']),
+          createdAt:  new Date()
         });
         await compititionData.save();
         return resp.status(200).json({ message: 'Compitition has been created successfully!'});
       };    
   } catch (error) {
-    next(error);
+    return resp.status(400).json({ message: 'Competition creation failed!'+ error });
   }
 };
 
@@ -51,7 +56,7 @@ exports.createCompitition = async (req, resp, next) => {
 /* GET all Compititions listing. */
 exports.getAllCompititions =  async (req, resp, next) => {
   try {
-    const compitition = await Compitition.find({}).populate(["user_id"]).exec();
+    const compitition = await Compitition.find({}).populate(["organiser", "user_id"]).exec();
     resp.status(200).json( compitition.length > 0 ? compitition : { message: 'No compitition found' });
   } catch (error) {
     next(error);

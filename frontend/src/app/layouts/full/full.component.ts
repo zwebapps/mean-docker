@@ -7,9 +7,6 @@ import { NgbCollapseModule } from "@ng-bootstrap/ng-bootstrap";
 import { StorageService } from "src/app/_services/storage.service";
 import { UserService } from "src/app/_services/user.service";
 import { PLATFORM_ID } from "@angular/core";
-import { isPlatformBrowser } from "@angular/common";
-
-//declare var $: any;
 
 @Component({
   selector: "app-full-layout",
@@ -18,7 +15,7 @@ import { isPlatformBrowser } from "@angular/common";
   templateUrl: "./full.component.html",
   styleUrls: ["./full.component.scss"]
 })
-export class FullComponent implements OnInit {
+export class FullComponent implements OnInit, AfterViewInit {
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
     public router: Router,
@@ -55,7 +52,11 @@ export class FullComponent implements OnInit {
       this.userRole = user.roles[0];
     }
   }
-
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.expandLogo = false;
+    });
+  }
   @HostListener("window:resize", ["$event"])
   onResize() {
     this.handleSidebar();

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const Team = mongoose.model(
+const Compitition = mongoose.model(
   "Compitition",
   new mongoose.Schema({
     compititionName: {
@@ -8,36 +8,41 @@ const Team = mongoose.model(
         unique : true,
         required: true
     },
-    organiserDetail: {
-        type: String,
-        required: true
-    },
+    organiser: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      },
     shortCode: {
         type: String,
-        unique : true,
         required: true
     },
     compititionLogo: {
         type: String,
-        required: true
+        required: false
     },
     compititionSettings: {
-        type: String,      
-        required: true
+        type: String,
+        required: false
     },
     compititionSeason: {
-        type: String,      
-        required: true
+        type: String,
+        default: "2020/2021",
+        required: false  
     },
-    compititionStart:{
+    compititionCountry: {
+        type: String,
+        default: "ae",
+        required: false
+    },
+    compititionYear:{
         type: Date,
-        default: Date.now,
-        required: true
+        default: "2023/2024",
+        required: false
     },
     compititionEnd:{
         type: Date,
         default: Date.now,
-        required: true
+        required: false
     },
     user_id: {
           type: mongoose.Schema.Types.ObjectId,
@@ -51,4 +56,4 @@ const Team = mongoose.model(
   })
 );
 
-module.exports = Team;
+module.exports = Compitition;

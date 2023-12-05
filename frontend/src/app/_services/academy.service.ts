@@ -19,6 +19,7 @@ export class AcademyService {
     return this.http.get(`${API_URL}/academy/all`, { headers: this.headers });
   }
   loadAcademiesByCompitition(compitition: string): Observable<any> {
+    debugger;
     return this.http.get(`${API_URL}/academy/forcompitition/${compitition}`, { headers: this.headers });
   }
   createAcademy(academy: any): Observable<any> {

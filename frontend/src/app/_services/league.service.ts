@@ -19,6 +19,7 @@ export class LeagueService {
     return this.http.get(`${API_URL}/league/all`, { headers: this.headers });
   }
   loadLeaguesByCompitition(compitition: string): Observable<any> {
+    debugger;
     return this.http.get(`${API_URL}/leagues/forcompitition/${compitition}`, { headers: this.headers });
   }
   createLeague(league: any): Observable<any> {

@@ -15,27 +15,15 @@ const routes: Routes = [
     path: "",
     data: {
       title: "Dashboard",
-      urls: [{ title: "Dashboard", url: "/dashboard" }, { title: "Dashboard" }],
+      urls: [{ title: "Dashboard", url: "/dashboard" }, { title: "Dashboard" }]
     },
-    component: DashboardComponent,
-  },
+    component: DashboardComponent
+  }
 ];
 
 @NgModule({
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    RouterModule.forChild(routes),
-    NgApexchartsModule,
-  ],
-  declarations: [
-    DashboardComponent,
-    SalesSummaryComponent,
-    FeedsComponent,
-    TopSellingComponent,
-    TopCardsComponent,
-    BlogCardsComponent
-  ],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterModule.forChild(routes), NgApexchartsModule],
+  declarations: [DashboardComponent, SalesSummaryComponent, FeedsComponent, TopSellingComponent, TopCardsComponent, BlogCardsComponent],
+  exports: [DashboardComponent, SalesSummaryComponent, FeedsComponent, TopSellingComponent, TopCardsComponent, BlogCardsComponent]
 })
 export class DashboardModule {}

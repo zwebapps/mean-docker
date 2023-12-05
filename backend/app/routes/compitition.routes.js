@@ -18,7 +18,7 @@ app.get("/compitition/:id", authJwt.isAuthenticated, compitition.getCompititionB
 
 app.get("/compitition/shortcode/:shortcode", authJwt.isAuthenticated, compitition.getCompititionByShortCode);
 
-app.get("/compitition/name/:name", authJwt.isAuthenticated, compitition.getCompititionByName);
+app.get("/compitition/compititionbyname/:name", authJwt.isAuthenticated, compitition.getCompititionByName);
 
 app.post("/compitition/update/:id", authJwt.isAuthenticated, compitition.updateCompitition);
 

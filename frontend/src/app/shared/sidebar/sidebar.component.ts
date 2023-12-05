@@ -55,7 +55,6 @@ export class SidebarComponent implements OnInit, OnChanges {
     // get the query the params
     const user = this.storageService.getUser();
     if (user) {
-      debugger;
       let userRoutes: any = ROUTES.find((item) => item["role"] === this.userRole);
       if (this.userRole !== "ROLE_SUPERADMIN") {
         this.sidebarnavItems = userRoutes["routes"].map((route: any) => {

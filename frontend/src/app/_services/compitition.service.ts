@@ -23,7 +23,7 @@ export class CompititionService {
     return this.http.get(`${API_URL}/compitition/${id}`, { headers: this.headers });
   }
   getCompititionByName(compitition: any): Observable<any> {
-    return this.http.post(`${API_URL}/compitition/compititionbyname`, compitition, { headers: this.headers });
+    return this.http.get(`${API_URL}/compitition/compititionbyname/${compitition}`, { headers: this.headers });
   }
 
   getCompititionByShortCode(compitition: any): Observable<any> {

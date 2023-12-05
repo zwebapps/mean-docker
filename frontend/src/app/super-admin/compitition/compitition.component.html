@@ -1,21 +1,69 @@
-<div class="row people">
-  <ng-container *ngFor="let compitition of compititions">
-    <div class="col-md-6 col-lg-4 item" *ngIf="compitition">
-      <span (click)="deleteCompitition(compitition)"><i class="bi bi-trash"></i></span>
-      <span (click)="editCompitition(compitition)"><i class="bi bi-pencil-square"></i></span>
-      <div class="box">
-        <img class="rounded-circle" [src]="getSantizedpopUpUrl(compitition.compititionLogo)" />
-        <h3 class="name">{{ compitition.compititionName }}</h3>
-        <p class="title">{{ compitition.compititionSeason }}</p>
-        <p class="description">
-          {{ getDescription(compitition.organiserDetail) }}
-        </p>
-        <div class="social">
-          <p>{{ getOrganiser(compitition.organiserDetail) }}</p>
-          <a href="#">{{ compitition.compititionStart | date : "dd/MM/yyyy" }}</a
-          >- <a href="#">{{ compitition.compititionEnd | date : "dd/MM/yyyy" }}</a>
-        </div>
-      </div>
-    </div>
-  </ng-container>
-</div>
+<ngx-datatable
+  #myTable
+  class="material"
+  [rows]="compititions"
+  [columns]="columns"
+  [columnMode]="ColumnMode.force"
+  [footerHeight]="100"
+  [headerHeight]="50"
+  [limit]="10"
+  rowHeight="auto"
+  [scrollbarH]="false"
+>
+  <ngx-datatable-column name="Name" prop="row">
+    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+      {{ row.organiser?.firstname }} {{ row.organiser?.lastname }}
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Email" prop="row">
+    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+      {{ row.organiser?.email }}
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Mobile Number" prop="row">
+    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+      {{ row.organiser?.contact }}
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Country" prop="row">
+    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+      <span class="fi fi-{{ row.compititionCountry.toLowerCase() }} flag-img"></span>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Compitition" prop="row">
+    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+      {{ row.compititionName }}
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-column name="Actions" prop="row">
+    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+      <button type="button" class="btn btn-outline-success me-1" (click)="deleteCompitition(row)"><i class="bi bi-trash"></i></button>
+      <button type="button" class="btn btn-outline-danger" (click)="editCompitition(row)">
+        <i class="bi bi-pencil-square"></i>
+      </button>
+    </ng-template>
+  </ngx-datatable-column>
+  <ngx-datatable-footer *ngIf="true">
+    <ng-template
+      ngx-datatable-footer-template
+      let-rowCount="rowCount"
+      let-pageSize="pageSize"
+      let-selectedCount="selectedCount"
+      let-curPage="curPage"
+      let-offset="offset"
+    >
+      <datatable-pager
+        [pagerLeftArrowIcon]="'datatable-icon-left'"
+        [pagerRightArrowIcon]="'datatable-icon-right'"
+        [pagerPreviousIcon]="'datatable-icon-prev'"
+        [pagerNextIcon]="'datatable-icon-skip'"
+        [page]="curPage"
+        [size]="pageSize"
+        [count]="rowCount"
+        [hidden]="!(rowCount / pageSize > 1)"
+        (change)="table.onFooterPage($event)"
+      >
+      </datatable-pager>
+    </ng-template>
+  </ngx-datatable-footer>
+</ngx-datatable>

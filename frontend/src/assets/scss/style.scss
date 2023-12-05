@@ -6,12 +6,13 @@
 // @import '~@swimlane/ngx-datatable/assets/icons.css';
 // @import '~@swimlane/ngx-datatable/assets/icons.css';
 // @import '~@swimlane/ngx-datatable/assets/icons.css';
-@import '../../../node_modules/angular-notifier/styles';
-@import '../../../node_modules/@swimlane/ngx-datatable/themes/material.scss';
-@import '../../../node_modules/@swimlane/ngx-datatable/themes/material.scss';
-@import '../../../node_modules/@swimlane/ngx-datatable/assets/icons.css';
-@import '../../../node_modules/@swimlane/ngx-datatable/assets/icons.css';
-@import '../../../node_modules/@swimlane/ngx-datatable/assets/icons.css';
+@import "../../../node_modules/angular-notifier/styles";
+@import "../../../node_modules/@swimlane/ngx-datatable/themes/material.scss";
+@import "../../../node_modules/@swimlane/ngx-datatable/themes/material.scss";
+@import "../../../node_modules/@swimlane/ngx-datatable/assets/icons.css";
+@import "../../../node_modules/@swimlane/ngx-datatable/assets/icons.css";
+@import "../../../node_modules/@swimlane/ngx-datatable/assets/icons.css";
+@import "../../..//node_modules/flag-icons/css/flag-icons.min.css";
 
 //(Required file)
 @import "../scss/variable";
@@ -33,11 +34,10 @@
 
 // Adding the fonts
 @font-face {
-  font-family: 'NotoSansRegular';
-  src: url('../fonts/noto-sans-regular.ttf');
+  font-family: "NotoSansRegular";
+  src: url("../fonts/noto-sans-regular.ttf");
 }
 @font-face {
-  font-family: 'NotoSansBold';
-  src: url('../fonts/noto-sans-bold.ttf');
+  font-family: "NotoSansBold";
+  src: url("../fonts/noto-sans-bold.ttf");
 }
-

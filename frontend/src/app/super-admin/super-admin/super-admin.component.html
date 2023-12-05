@@ -1,279 +1,285 @@
-<div class="team-boxed">
+<div class="container" *ngIf="displayCompetitions">
   <notifier-container></notifier-container>
-  <ng-template #content let-modal size="1000px">
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Add Compitition Details</h4>
-      <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
-    </div>
-    <div class="modal-body">
-      <form class="form-inline" method="post" enctype="multipart/form-data" [formGroup]="compititionForm" (ngSubmit)="onSubmit()">
-        <div class="row">
-          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
-            <label for="name" class="control-label">Compitition Name</label>
+  <hr />
+  <div class="row">
+    <form class="form-inline mt-5" method="post" enctype="multipart/form-data">
+      <div class="d-flex justify-content-between">
+        <!-- <div class="col-md-3 mb-3">
+          <input type="text" class="form-control" id="validationTooltip02" placeholder="Last name" [value]="Otto" required />
+        </div> -->
+        <div class="col-md-3 mb-3">
+          <button class="btn btn-primary" (click)="addCompFormToggle()">Add Compitition</button>
+        </div>
+        <div class="col-md-3 mb-3">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="validationTooltipUsernamePrepend"><i class="bi bi-search"></i></span>
+            </div>
             <input
               type="text"
-              [value]=""
               class="form-control"
-              placeholder="Compitition Name"
-              formControlName="compititionName"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f['compititionName'].errors }"
+              id="validationTooltipUsername"
+              placeholder="Search"
+              (keyup)="filterCompetitions($event.target.value)"
+              aria-describedby="validationTooltipUsernamePrepend"
+              required
             />
-            <div *ngIf="submitted && f['compititionName']?.errors" class="invalid-feedback">
-              <div *ngIf="f['compititionName'].errors && f['compititionName'].errors['required']">
-                <small>Compitition Name is required</small>
-              </div>
-            </div>
           </div>
-          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
-            <label for="name" class="control-label">Organiser Name</label>
-            <input
-              type="text"
-              [value]=""
-              class="form-control"
-              placeholder="Organiser Name"
-              formControlName="organiserName"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f['organiserName'].errors }"
-            />
-            <div *ngIf="submitted && f['organiserName'].errors" class="invalid-feedback">
-              <div *ngIf="f['organiserName'].errors['required']">
-                <small>Organiser Name is required</small>
-              </div>
-            </div>
-          </div>
-          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
-            <label for="name" class="control-label">Organiser Contact</label>
-            <input
-              type="text"
-              [value]=""
-              class="form-control"
-              placeholder="Organiser Contact"
-              formControlName="organiserContact"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f['compititionName'].errors }"
-            />
-            <div *ngIf="submitted && f['compititionName']?.errors" class="invalid-feedback">
-              <div *ngIf="f['compititionName'].errors && f['compititionName'].errors['required']">
-                <small>Compitition Name is required</small>
-              </div>
-            </div>
-          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <app-compitition
+    [compititions]="listOfCompetitions"
+    (delCompitition)="deleteCompitition($event)"
+    (editComp)="editCompitition($event)"
+  ></app-compitition>
+</div>
 
-          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
-            <label for="name" class="control-label">Organiser Email</label>
-            <input
-              type="email"
-              [value]=""
-              class="form-control"
-              placeholder="Organiser Email"
-              formControlName="organiserEmail"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f['organiserEmail'].errors }"
-            />
-            <div *ngIf="submitted && f['organiserEmail']?.errors" class="invalid-feedback">
-              <div *ngIf="f['organiserEmail'].errors && f['organiserEmail'].errors['required']">
-                <small>Organiser Email is required</small>
-              </div>
-            </div>
-            <div *ngIf="f['organiserEmail'].invalid && (f['organiserEmail'].dirty || f['organiserEmail'].touched)" class="invalid-feedback">
-              <small>Organiser Email is invalid</small>
-            </div>
-          </div>
-          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
-            <label for="name" class="control-label">Short Code</label>
-            <input
-              type="text"
-              [value]=""
-              class="form-control"
-              placeholder="Short Code"
-              formControlName="shortCode"
-              (blur)="verifyShortCode($event)"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f['shortCode'].errors }"
-            />
-            <div *ngIf="submitted && f['shortCode']?.errors" class="invalid-feedback">
-              <div *ngIf="f['shortCode'].errors && f['shortCode'].errors['required']">
-                <small>ShortCode is required</small>
-              </div>
-            </div>
-            <div *ngIf="shortCodeExists" class="invalid-feedback">
-              <small>ShortCode is already in use</small>
+<div class="container" *ngIf="displayAddCompitition">
+  <hr />
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add Competition Details</h4>
+  </div>
+  <div class="modal-body">
+    <form class="form-inline" method="post" enctype="multipart/form-data" [formGroup]="compititionForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
+          <label for="name" class="control-label">First name</label>
+          <input
+            type="text"
+            [value]=""
+            [(ngModel)]="patchedValues.organiserFirstName"
+            class="form-control"
+            placeholder="Organiser first name"
+            formControlName="organiserFirstName"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['organiserFirstName'].errors }"
+          />
+          <div *ngIf="submitted && f['organiserFirstName'].errors" class="invalid-feedback">
+            <div *ngIf="f['organiserFirstName'].errors['required']">
+              <small>First name is required</small>
             </div>
           </div>
-          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
-            <label for="name" class="control-label"
-              >Compitition Logo <span *ngIf="compititionLogo">({{ compititionLogo }})</span></label
-            >
-            <input
-              type="file"
-              [value]=""
-              class="form-control"
-              placeholder="Compitition Logo"
-              formControlName="compititionLogo"
-              (change)="uploadLogo($event)"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f['compititionLogo'].errors }"
-            />
-            <div *ngIf="submitted && f['compititionLogo'].errors" class="invalid-feedback">
-              <div *ngIf="f['compititionLogo'].errors['required']">
-                <small>Compitition Logo is required</small>
-              </div>
+        </div>
+        <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
+          <label for="name" class="control-label">Last name</label>
+          <input
+            type="text"
+            [value]=""
+            class="form-control"
+            placeholder="Last name"
+            [(ngModel)]="patchedValues.organiserLastName"
+            formControlName="organiserLastName"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['organiserLastName'].errors }"
+          />
+          <div *ngIf="submitted && f['organiserLastName'].errors" class="invalid-feedback">
+            <div *ngIf="f['organiserLastName'].errors['required']">
+              <small>Last name is required</small>
             </div>
           </div>
+        </div>
+        <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
+          <label for="name" class="control-label">Organiser Username</label>
+          <input
+            type="text"
+            [value]=""
+            class="form-control"
+            placeholder="User name"
+            [(ngModel)]="patchedValues.organiserUserName"
+            formControlName="organiserUserName"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['organiserUserName'].errors }"
+          />
+          <div *ngIf="submitted && f['organiserUserName'].errors" class="invalid-feedback">
+            <div *ngIf="f['organiserUserName'].errors['required']">
+              <small>User name is required</small>
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
+          <label for="name" class="control-label">Password</label>
+          <input
+            type="text"
+            [value]=""
+            class="form-control"
+            placeholder="User password"
+            [(ngModel)]="patchedValues.organiserPassword"
+            formControlName="organiserPassword"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['organiserPassword'].errors }"
+          />
+          <div *ngIf="submitted && f['organiserPassword'].errors" class="invalid-feedback">
+            <div *ngIf="f['organiserPassword'].errors['required']">
+              <small>Password is required</small>
+            </div>
+          </div>
+        </div>
+        <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
+          <label for="name" class="control-label">Organiser Contact</label>
+          <input
+            type="text"
+            [value]=""
+            class="form-control"
+            placeholder="Organiser Contact"
+            [(ngModel)]="patchedValues.organiserContact"
+            formControlName="organiserContact"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['organiserContact'].errors }"
+          />
+          <div *ngIf="submitted && f['organiserContact']?.errors" class="invalid-feedback">
+            <div *ngIf="f['organiserContact'].errors && f['organiserContact'].errors['required']">
+              <small>Organiser Contact is required</small>
+            </div>
+          </div>
+        </div>
 
-          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
-            <label for="name" class="control-label">Compitition Background</label>
-            <input
-              type="color"
-              [value]=""
-              class="form-control"
-              placeholder="Compitition Background"
-              formControlName="compititionBackground"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f['compititionBackground'].errors }"
-            />
-            <div *ngIf="submitted && f['compititionBackground']?.errors" class="invalid-feedback">
-              <div *ngIf="f['compititionBackground'].errors && f['compititionBackground'].errors['required']">
-                <small>Compitition Background color is required</small>
-              </div>
+        <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
+          <label for="name" class="control-label">Email</label>
+          <input
+            type="email"
+            [value]=""
+            class="form-control"
+            placeholder="Organiser Email"
+            [(ngModel)]="patchedValues.organiserEmail"
+            formControlName="organiserEmail"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['organiserEmail'].errors }"
+          />
+          <div *ngIf="submitted && f['organiserEmail']?.errors" class="invalid-feedback">
+            <div *ngIf="f['organiserEmail'].errors && f['organiserEmail'].errors['required']">
+              <small>Organiser Email is required</small>
             </div>
           </div>
-          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
-            <label for="name" class="control-label">Compitition Font Color</label>
-            <input
-              type="color"
-              [value]=""
-              class="form-control"
-              placeholder="Compitition Color"
-              formControlName="compititionColor"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f['compititionColor'].errors }"
-            />
-            <div *ngIf="submitted && f['compititionColor'].errors" class="invalid-feedback">
-              <div *ngIf="f['compititionColor'].errors['required']">
-                <small>compitition Color is required</small>
-              </div>
+          <div *ngIf="f['organiserEmail'].invalid && (f['organiserEmail'].dirty || f['organiserEmail'].touched)" class="invalid-feedback">
+            <small>Organiser Email is invalid</small>
+          </div>
+        </div>
+        <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
+          <label for="name" class="control-label">ShortCode/ Domain name</label>
+          <input
+            type="text"
+            [value]=""
+            class="form-control"
+            placeholder="ShortCode/ Domain name"
+            [(ngModel)]="patchedValues.shortCode"
+            formControlName="shortCode"
+            (blur)="verifyShortCode($event)"
+            class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && f['shortCode'].errors }"
+          />
+          <div *ngIf="submitted && f['shortCode']?.errors" class="invalid-feedback">
+            <div *ngIf="f['shortCode'].errors && f['shortCode'].errors['required']">
+              <small>ShortCode is required</small>
             </div>
           </div>
-          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
-            <label for="name" class="control-label">Compitition Border Size</label>
-            <input
-              type="number"
-              [value]=""
-              min="0"
-              max="5"
-              class="form-control"
-              placeholder="Border Size"
-              formControlName="compititionBorder"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f['compititionBorder'].errors }"
-            />
-            <div *ngIf="submitted && f['compititionBorder'].errors" class="invalid-feedback">
-              <div *ngIf="f['compititionBorder'].errors['required']">
-                <small>Border Size is required</small>
-              </div>
-            </div>
+          <div *ngIf="shortCodeExists" class="invalid-feedback">
+            <small>ShortCode is already in use</small>
           </div>
-          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
-            <label for="name" class="control-label">Compitition Season</label>
-            <input
-              type="text"
-              [value]=""
-              class="form-control"
-              placeholder="Compitition season"
-              formControlName="compititionSeason"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f['compititionSeason'].errors }"
-            />
-            <div *ngIf="submitted && f['compititionSeason'].errors" class="invalid-feedback">
-              <div *ngIf="f['compititionSeason'].errors['required']">
-                <small>Compitition Season is required</small>
-              </div>
-            </div>
-          </div>
-          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
-            <label for="name" class="control-label">Compitition Start</label>
-            <input
-              type="date"
-              [value]=""
-              class="form-control"
-              placeholder="Start Date"
-              formControlName="compititionStart"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f['compititionStart'].errors }"
-            />
-            <div *ngIf="submitted && f['compititionStart'].errors" class="invalid-feedback">
-              <div *ngIf="f['compititionStart'].errors['required']">
-                <small>Compitition Start is required</small>
-              </div>
-            </div>
-          </div>
-          <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
-            <label for="name" class="control-label">Compitition Ends</label>
-            <input
-              type="date"
-              [value]=""
-              class="form-control"
-              placeholder="End Date"
-              formControlName="compititionEnd"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f['compititionEnd'].errors }"
-            />
-            <div *ngIf="submitted && f['compititionEnd'].errors" class="invalid-feedback">
-              <div *ngIf="f['compititionEnd'].errors['required']">
-                <small>Compitition End is required</small>
-              </div>
-            </div>
-          </div>
-          <div class="form-group col-xs-12 col-md-12 col-lg-12 p-2">
-            <label for="name" class="control-label">Compitition Description</label>
-            <textarea
-              type="text"
-              [value]=""
-              class="form-control"
-              placeholder="Compitition Description"
-              formControlName="compititionDescription"
-              class="form-control"
-              [ngClass]="{ 'is-invalid': submitted && f['compititionDescription'].errors }"
-            >
-            </textarea>
-            <div *ngIf="submitted && f['compititionDescription'].errors" class="invalid-feedback">
-              <div *ngIf="f['compititionDescription'].errors['required']">
-                <small>Compitition Description is required</small>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="d-flex justify-content-center">
-              <div class="form-group col-xs-12 col-md-6 col-lg-6 p-2 mt-2 align-items-end">
-                <div class="ms-3 w-100">
-                  <button type="submit" class="btn btn-primary col-12 text-white">Add/ Update Compitition</button>
+        </div>
+        <ng-container *ngFor="let competition of competitions.controls; let compIndex = index">
+          <hr />
+          <span class="float-end" (click)="removeCompetition(compIndex)"> <i class="bi bi-trash"></i></span>
+          <ng-container [formGroup]="competition">
+            <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
+              <label for="name" class="control-label">Competition</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  (blur)="verifyCompetition($event)"
+                  [ngClass]="{ 'is-invalid': submitted && competition.controls['compititionName'].errors }"
+                  [(ngModel)]="
+                    patchedValues.competitions && patchedValues.competitions && patchedValues.competitions[compIndex].compititionName
+                  "
+                  formControlName="compititionName"
+                  placeholder="Competition Name"
+                  aria-label="Text input with checkbox"
+                  width="70%"
+                />
+                <div class="input-group-append" width="20%">
+                  <input
+                    type="number"
+                    placeholder="Year"
+                    [(ngModel)]="patchedValues.competitions && patchedValues.competitions[compIndex].compititionYear"
+                    formControlName="compititionYear"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && competition.controls['compititionYear'].errors }"
+                    class="form-control"
+                  />
                 </div>
+              </div>
+              <div *ngIf="submitted && competition.controls['compititionName']?.errors" class="invalid-feedback">
+                <div *ngIf="competition.controls['compititionName'].errors && competition.controls['compititionName'].errors['required']">
+                  <small>Competition is required</small>
+                </div>
+              </div>
+              <div *ngIf="submitted && competition.controls['compititionYear']?.errors" class="invalid-feedback">
+                <div *ngIf="competition.controls['compititionYear'].errors && competition.controls['compititionYear'].errors['required']">
+                  <small>Year is required</small>
+                </div>
+              </div>
+              <div *ngIf="competitionExists" class="invalid-feedback">
+                <small>Competition is already in use</small>
+              </div>
+            </div>
+            <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
+              <label for="name" class="control-label">Country</label>
+              <select
+                class="form-select"
+                [(ngModel)]="patchedValues.competitions && patchedValues.competitions[compIndex].compititionCountry"
+                name="compititionCountry"
+                formControlName="compititionCountry"
+                aria-label="Default select"
+              >
+                <option [value]="0" selected>Select Country</option>
+                <ng-container *ngIf="countries">
+                  <ng-container *ngFor="let country of countries">
+                    <option
+                      [value]="country.code"
+                      [selected]="patchedValues.competitions && patchedValues.competitions[compIndex]?.compititionCountry == country.code"
+                    >
+                      {{ country.name }}
+                      <span class="fi fi-gr"></span>
+                    </option>
+                  </ng-container>
+                </ng-container>
+              </select>
+              <div *ngIf="submitted && competition.controls['compititionCountry']?.errors" class="invalid-feedback">
+                <div
+                  *ngIf="competition.controls['compititionCountry'].errors && competition.controls['compititionCountry'].errors['required']"
+                >
+                  <small>Country is required</small>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-xs-12 col-md-12 col-lg-12 p-2">
+              <label for="name" class="control-label">Competition Description</label>
+              <textarea
+                type="text"
+                [value]=""
+                class="form-control"
+                placeholder="Competition Description"
+                [(ngModel)]="patchedValues.competitions && patchedValues.competitions[compIndex].compititionDescription"
+                formControlName="compititionDescription"
+                class="form-control"
+              >
+              </textarea>
+            </div>
+          </ng-container>
+        </ng-container>
+        <div class="row">
+          <div class="d-flex justify-content-center">
+            <div class="form-group col-xs-12 col-md-6 col-lg-6 p-2 mt-2 align-items-end">
+              <div class="d-flex justify-content-around">
+                <button type="button" class="btn btn-primary col-4 text-white" (click)="addcompetitions()">More Compitition</button>
+                <button type="submit" class="btn btn-primary col-4 text-white">Submit</button>
               </div>
             </div>
           </div>
         </div>
-      </form>
-    </div>
-  </ng-template>
-
-  <div class="container">
-    <div class="intro">
-      <h2 class="text-center">
-        <!-- <img src="assets/images/teams.png" alt="homepage" class="dark-logo" /> -->
-        Compititions
-      </h2>
-      <div class="text-center"><button class="btn btn-primary" (click)="open(content)">Add Compitition</button></div>
-      <p class="text-center">
-        Nunc luctus in metus eget fringilla. Aliquam sed justo ligula. Vestibulum nibh erat, pellentesque ut laoreet vitae.
-      </p>
-    </div>
-    <hr />
-    <app-compitition
-      [compititions]="compititions"
-      (delCompitition)="deleteCompitition($event)"
-      (editComp)="editCompitition($event)"
-    ></app-compitition>
+      </div>
+    </form>
   </div>
 </div>

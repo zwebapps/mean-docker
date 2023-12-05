@@ -46,8 +46,10 @@ import { provideClientHydration } from "@angular/platform-browser";
 import { NgxUiLoaderModule, NgxUiLoaderHttpModule, NgxUiLoaderConfig, SPINNER, POSITION, PB_DIRECTION } from "ngx-ui-loader";
 import { ErrorPageComponent } from "./error-page/error-page.component";
 import { AdminSharedModule } from "./admin-shared/admin-shared.module";
-import { AnalyticsComponent } from "./analytics/analytics.component";
 import { SuperAdminModule } from "./super-admin/super-admin.module";
+import { DashboardComponent } from "./dashboard/dashboard.component";
+import { DashboardModule } from "./dashboard/dashboard.module";
+import { CompititionsEffects } from "./_store/effects/compititions.effects";
 
 const environment = {
   production: false
@@ -118,9 +120,7 @@ const customNotifierOptions: NotifierOptions = {
     BoardAdminComponent,
     CoachComponent,
     BoardUserComponent,
-    AdminComponent,
-    CollectionsComponentComponent,
-    AnalyticsComponent
+    AdminComponent
   ],
   imports: [
     HttpClientModule,
@@ -144,6 +144,7 @@ const customNotifierOptions: NotifierOptions = {
     NavigationComponent,
     SidebarComponent,
     BoardAdminModule,
+    DashboardModule,
     SuperAdminModule,
     CoachModule,
     FontAwesomeModule,
@@ -156,7 +157,8 @@ const customNotifierOptions: NotifierOptions = {
       TeamsEffects,
       LeaguesEffects,
       FixuresEffects,
-      PlayersEffects
+      PlayersEffects,
+      CompititionsEffects
     ])
   ],
   providers: [
