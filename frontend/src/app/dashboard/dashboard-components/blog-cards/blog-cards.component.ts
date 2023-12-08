@@ -11,6 +11,7 @@ import { environment } from "src/environments/environment";
 })
 export class BlogCardsComponent implements OnInit, AfterViewInit {
   @Input() blogcards: any;
+  @Input() dashbordContents: any;
   apiURL = environment.apiURL;
 
   constructor(private dashboardService: DashboardService) {}
