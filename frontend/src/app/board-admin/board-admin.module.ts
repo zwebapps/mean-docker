@@ -23,6 +23,7 @@ import { AngularEditorModule } from "@kolkov/angular-editor";
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { NgbModule, NgbNavModule } from "@ng-bootstrap/ng-bootstrap";
 import { AdminSharedModule } from "../admin-shared/admin-shared.module";
+import { DashboardModule } from "../dashboard/dashboard.module";
 
 /**
  * Custom angular notifier options
@@ -121,6 +122,7 @@ const adminRoutes: Routes = [
 @NgModule({
   declarations: [],
   imports: [
+    NgbModule,
     AdminSharedModule,
     CommonModule,
     NgxImageZoomModule,
@@ -129,6 +131,7 @@ const adminRoutes: Routes = [
     ReactiveFormsModule,
     FormsModule,
     AngularEditorModule,
+    DashboardModule,
     NgMultiSelectDropDownModule.forRoot(),
     NotifierModule.withConfig(customNotifierOptions),
     RouterModule.forChild(adminRoutes)

@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, OnInit } from "@angular/core";
 import { DashboardService } from "../_services/dashbaord.service";
 import { NotifierService } from "angular-notifier";
-import { blogcard, blogcards } from "../../app/dashboard/dashboard-components/blog-cards/blog-cards-data";
+import { blogcard } from "../../app/dashboard/dashboard-components/blog-cards/blog-cards-data";
 //declare var require: any;
 
 @Component({
