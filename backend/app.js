@@ -158,6 +158,8 @@ function initial() {
         firstname: 'yfl',
         lastname: 'superadmin',
         username: 'yflsuperadmin',
+        shortcode: 'yfl',
+        compitition: [],
         contact: '+971553762217',
         password: bcrypt.hashSync('superAdmin@yfl', 8),
         email: 'admin@yfl.com',
@@ -178,6 +180,8 @@ function initial() {
         lastname: 'admin',
         username: 'yfladmin',
         contact: '+971553762217',
+        shortcode: 'yfl',
+        compitition: [],
         password: bcrypt.hashSync('Admin@yfl', 8),
         email: 'admin@yfl.com',
         roles: [ObjectId("5895b74ca84c675de0d3338d")]
