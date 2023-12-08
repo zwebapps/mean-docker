@@ -20,7 +20,7 @@ export class TeamsEffects {
       map((action: any) => action.payload),
       mergeMap(() => {
         if (!this.user?.roles.includes("ROLE_SUPERADMIN")) {
-          return this.teamService.loadTeamsByCompitition(this.user.compitition).pipe(
+          return this.teamService.loadTeamsByShortcode(this.user.shortcode).pipe(
             map((data) => (Array.isArray(data) ? TeamsActions.loadTeamsSuccess({ data }) : TeamsActions.loadTeamsSuccess({ data: [] }))),
             catchError((error) => of(TeamsActions.loadTeamsFailure({ error })))
           );

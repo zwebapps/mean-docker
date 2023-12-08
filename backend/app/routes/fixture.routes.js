@@ -26,4 +26,6 @@ app.post("/fixture/delete/all", authJwt.isAuthenticated, fixture.deleteAllFixtur
 
 app.get("/fixture/forcompitition/:compitition", authJwt.isAuthenticated, fixture.forCompitition);
 
+app.get("/fixture/forshortcode/:shortcode", authJwt.isAuthenticated, fixture.forShortCode);
+
 };

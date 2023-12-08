@@ -15,6 +15,9 @@ const Player = mongoose.model(
         type: Number,
         required: true
     },
+    shortcode: {
+        type: String,
+      },
     gender: {
         type: String,
         required: true

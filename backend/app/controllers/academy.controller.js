@@ -74,6 +74,19 @@ exports.getAcademyByName = async (req, resp, next) => {
   }
 };
 
+
+exports.forShortCode = async (req, resp, next) => {
+  try {
+    if( req.params && req.params.shortcode ) {
+      const academy = await Academy.find({ shortcode : req.params.shortcode }).populate("coach").exec();
+      resp.status(200).json(academy);
+    } else {
+      resp.status(200).json({message: 'shortcode is required!'});
+    }
+  } catch (error) {
+    next(error);
+  }
+};
 exports.forCompitition = async (req, resp, next) => {
   try {
     if( req.params && req.params.id ) {

@@ -26,4 +26,6 @@ app.post("/compitition/delete/:id", authJwt.isAuthenticated, compitition.deleteC
 
 app.post("/compitition/delete/all", authJwt.isAuthenticated, compitition.deleteAllCompititions);
 
+app.get("/compitition/forshortcode/:shortcode", authJwt.isAuthenticated, compitition.forShortCode);
+
 };

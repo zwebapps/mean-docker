@@ -42,4 +42,6 @@ app.post("/player/approvemulitple", authJwt.isAuthenticated, player.approveMulit
 
 app.get("/player/forcompitition/:compitition", authJwt.isAuthenticated, player.forCompitition);
 
+app.get("/player/forshortcode/:shortcode", authJwt.isAuthenticated, player.forShortCode);
+
 };

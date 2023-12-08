@@ -55,7 +55,10 @@ app.post("/api/user/contentdelete/:id", authJwt.isAuthenticated, controller.cont
 
 app.get("/api/user/forcompitition/:compitition", authJwt.isAuthenticated, controller.forCompitition);
 
+app.get("/api/user/forshortcode/:shortcode", authJwt.isAuthenticated, controller.forShortcode);
+
 app.get("/api/user/contents/forcompitition/:compitition", authJwt.isAuthenticated, controller.forContentsCompitition);
 
+app.get("/api/user/contents/forshortcode/:shortcode", authJwt.isAuthenticated, controller.contentForShortCode);
 };
 

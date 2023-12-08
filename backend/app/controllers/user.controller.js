@@ -30,6 +30,17 @@ exports.getAllUsers = (req, res) => {
    });
 };
 
+
+exports.forShortcode = (req, res) => {
+  // get users
+   User.find({ shortcode: req.params.shortcode }).populate(["compitition","roles"]).sort({ createdAt: -1 }).exec((err, users) => {
+    if(err){
+      return res.status(500).send({ message: err });
+    }
+     return res.status(200).json(users.length > 0? users : { message: 'No user found' });
+   });
+};
+
 exports.forCompitition = (req, res) => {
   // get users
    User.find({ compitition: ObjectId(req.params.compitition) }).populate("roles").sort({ createdAt: -1 }).exec((err, users) => {
@@ -209,10 +220,21 @@ exports.getAllContacts = (req, res) => {
 };
 
 
+exports.contentForShortCode = async (req, res) => {
+  const { shortcode } = req.params; 
+  // get users
+   const content = await Contact.find({ shortcode: shortcode }).populate("user").exec()
+   if(content) {
+      return res.status(200).send({conent: content,  status:'Success', message: "Conents fetched successrully!" });
+    }else {
+     return res.status(200).json({ message: 'No content found' });
+   };
+};
+
 exports.forContentsCompitition = async (req, res) => {
   const { compitition } = req.params; 
   // get users
-   const content = await Contact.find({ compitition: compitition }).populate("user").exec()
+   const content = await Contact.find({ compitition: ObjectId(compitition) }).populate("user").exec()
    if(content) {
       return res.status(200).send({conent: content,  status:'Success', message: "Conents fetched successrully!" });
     }else {

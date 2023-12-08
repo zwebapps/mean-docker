@@ -22,6 +22,11 @@ export class UserService {
     debugger;
     return this.http.get(`${API_URL}/user/forcompitition/${compitition}`, { headers: this.headers });
   }
+
+  loadUsersByShortcode(shortcode: string): Observable<any> {
+    debugger;
+    return this.http.get(`${API_URL}/user/forshortcode/${shortcode}`, { headers: this.headers });
+  }
   getUserBoard(): Observable<any> {
     return this.http.get(API_URL + "/user", { headers: this.headers });
   }
@@ -67,6 +72,10 @@ export class UserService {
 
   getAllContentsByCompitition(compitition: string): Observable<any> {
     return this.http.get(`${API_URL}/user/contents/forcompitition/${compitition}`, { headers: this.headers });
+  }
+
+  getAllContentsByShortcode(shortcode: string): Observable<any> {
+    return this.http.get(`${API_URL}/user/contents/forshortcode/${shortcode}`, { headers: this.headers });
   }
 
   getAllContents(): Observable<any> {

@@ -79,6 +79,14 @@ exports.getLeagueById = async (req, resp, next) => {
   }
 };
 
+exports.forShortCode = async (req, resp, next) => {
+  try {
+    const league = await League.find({ shortcode: req.params.shortcode});
+    resp.status(200).json(league? league: { message: 'No league found' });
+  } catch (error) {
+    next(error);
+  }
+};
 exports.forCompitition = async (req, resp, next) => {
   try {
     const league = await League.find({ compitition: ObjectId(req.params.compitition)});

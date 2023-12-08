@@ -16,6 +16,9 @@ const Team = mongoose.model(
         type: mongoose.Schema.Types.ObjectId,
         ref: "Academy"
     },
+    shortcode: {
+      type: String,
+    },
     compitition: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Compitition"

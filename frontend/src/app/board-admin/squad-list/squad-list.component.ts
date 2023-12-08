@@ -185,6 +185,7 @@ export class SquadListComponent implements OnInit {
     }
     this.playerService.updateMultiplePlayers(selectedPlayers.map((players: any) => players._id)).subscribe(
       (res: any) => {
+        debugger;
         if (res && res.message) {
           this.notifier.notify("success", res.message);
           this.filterLeague = new FormGroup({
@@ -419,6 +420,7 @@ export class SquadListComponent implements OnInit {
     this.getPlayersFromStore();
   }
   getPlayersFromStore(leagueId?: any, academy?: any) {
+    debugger;
     if (!leagueId) {
       leagueId = null;
     }

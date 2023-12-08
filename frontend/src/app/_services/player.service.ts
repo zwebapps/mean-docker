@@ -23,6 +23,10 @@ export class PlayerService {
     debugger;
     return this.http.get(`${API_URL}/player/forcompitition/${compitition}`, { headers: this.headers });
   }
+  loadPlayersByShortcode(shortcode: string): Observable<any> {
+    debugger;
+    return this.http.get(`${API_URL}/player/forshortcode/${shortcode}`, { headers: this.headers });
+  }
   approvePlayer(id: any, data: any): Observable<any> {
     return this.http.post(`${API_URL}/player/approve/${id}`, data, { headers: this.headers });
   }

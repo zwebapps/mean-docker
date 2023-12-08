@@ -12,6 +12,9 @@ const League = mongoose.model(
       type: String,
       required: true,
     },
+    shortcode: {
+      type: String,
+    },
     compitition: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Compitition"

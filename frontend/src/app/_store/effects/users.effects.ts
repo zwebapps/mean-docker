@@ -19,7 +19,7 @@ export class UsersEffects {
       map((action: any) => action.payload),
       mergeMap(() => {
         if (!this.user?.roles.includes("ROLE_SUPERADMIN")) {
-          return this.usersService.loadUsersByCompitition(this.user.compitition).pipe(
+          return this.usersService.loadUsersByShortcode(this.user.shortcode).pipe(
             map((data) => (Array.isArray(data) ? UserActions.loadUsersSuccess({ data }) : UserActions.loadUsersSuccess({ data: [] }))),
             catchError((error) => of(UserActions.loadUsersFailure({ error })))
           );

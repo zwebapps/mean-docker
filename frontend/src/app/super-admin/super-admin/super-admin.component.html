@@ -1,29 +1,40 @@
 <div class="container" *ngIf="displayCompetitions">
   <notifier-container></notifier-container>
   <hr />
+  <!-- <select class="form-select" id="container" name="roles" aria-label="Default select" formControlName="academy">
+    <option value="">Select Academy</option>
+    <ng-container *ngFor="let academy of academies">
+      <option value="{{ academy._id }}">{{ academy.academyName.toUpperCase() }}</option>
+    </ng-container>
+  </select> -->
+
   <div class="row">
     <form class="form-inline mt-5" method="post" enctype="multipart/form-data">
-      <div class="d-flex justify-content-between">
-        <!-- <div class="col-md-3 mb-3">
-          <input type="text" class="form-control" id="validationTooltip02" placeholder="Last name" [value]="Otto" required />
-        </div> -->
-        <div class="col-md-3 mb-3">
-          <button class="btn btn-primary" (click)="addCompFormToggle()">Add Compitition</button>
+      <div class="row">
+        <div class="col-12 col-lg-9 d-flex justify-content-start">
+          <div class="col-4 col-lg-2 mb-3">
+            <button class="btn btn-primary pe-2" (click)="addCompFormToggle()"><i class="bi bi-filter pe-3"></i>Filters</button>
+          </div>
+          <div class="col-8 col-lg-10 mb-3">
+            <button class="btn btn-primary" (click)="addCompFormToggle()">Add Compitition</button>
+          </div>
         </div>
-        <div class="col-md-3 mb-3">
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="validationTooltipUsernamePrepend"><i class="bi bi-search"></i></span>
+        <div class="col-12 col-lg-3">
+          <div class="col-12 mb-3">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend"><i class="bi bi-search"></i></span>
+              </div>
+              <input
+                type="text"
+                class="form-control"
+                id="validationTooltipUsername"
+                placeholder="Search"
+                (keyup)="filterCompetitions($event.target.value)"
+                aria-describedby="validationTooltipUsernamePrepend"
+                required
+              />
             </div>
-            <input
-              type="text"
-              class="form-control"
-              id="validationTooltipUsername"
-              placeholder="Search"
-              (keyup)="filterCompetitions($event.target.value)"
-              aria-describedby="validationTooltipUsernamePrepend"
-              required
-            />
           </div>
         </div>
       </div>

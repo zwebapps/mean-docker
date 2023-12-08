@@ -16,6 +16,7 @@ exports.createFixture = async (req, resp, next) => {
                 league: ObjectId(req.body[i]['league']),
                 user_id: ObjectId(req.body[i].user['createdBy']),
                 compitition : ObjectId(req.body[i].compitition),
+                shortcode : ObjectId(req.body[i].shortcode),
                 createdAt:  new Date()
             });
             insertedFixtures.push(req.body[i]);
@@ -63,7 +64,15 @@ exports.getFixtureById = async (req, resp, next) => {
     next(error);
   }
 };
- 
+
+exports.forShortCode = async (req, resp, next) => {
+  try {
+    const fixture = await Fixture.find({ shortcode: req.params.shortcode}).populate(["league", "homeTeam", "awayTeam"]);
+    resp.status(200).json(fixture);
+  } catch (error) {
+    next(error);
+  }
+};
 exports.forCompitition = async (req, resp, next) => {
   try {
     const fixture = await Fixture.find({ compitition: ObjectId(req.params.compitition)}).populate(["league", "homeTeam", "awayTeam"]);

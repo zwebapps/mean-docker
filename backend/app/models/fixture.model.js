@@ -26,6 +26,9 @@ const Fixture = mongoose.model(
           type: mongoose.Schema.Types.ObjectId,
           ref: "User"
         },
+    shortcode: {
+          type: String,
+        },
     createdAt: {
         type: Date,
         default: Date.now,

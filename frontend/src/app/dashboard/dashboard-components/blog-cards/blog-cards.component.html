@@ -1,37 +1,68 @@
 <div class="container">
+  <form class="mt-5" method="post" enctype="multipart/form-data">
+    <div class="row">
+      <div class="col-12 col-md-3 col-lg-3 mb-3">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            id="validationTooltipUsername"
+            placeholder="Select the Competition"
+            aria-describedby="validationTooltipUsernamePrepend"
+            required
+          />
+        </div>
+      </div>
+      <div class="col-12 col-md-3 col-lg-3 mb-3">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            id="validationTooltipUsername"
+            placeholder="Select the Year"
+            aria-describedby="validationTooltipUsernamePrepend"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="col-12 col-md-3 col-lg-3 mb-3">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            id="validationTooltipUsername"
+            placeholder="Select the Age Group"
+            aria-describedby="validationTooltipUsernamePrepend"
+            required
+          />
+        </div>
+      </div>
+      <div class="col-12 col-md-3 mb-3">
+        <div class="input-group">
+          <input
+            type="text"
+            class="form-control"
+            id="validationTooltipUsername"
+            placeholder="Select the Gender"
+            aria-describedby="validationTooltipUsernamePrepend"
+            required
+          />
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="container">
   <div class="row justify-content-center">
-    <form class="d-flex">
-      <div class="col-6 col-lg-3 col-md-3 me-2 mb-2 mt-2">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Select the Year" />
-        </div>
-      </div>
-      <div class="col-6 col-lg-3 col-md-3 m-2">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Select the Year" />
-        </div>
-      </div>
-      <div class="col-6 col-lg-3 col-md-3 m-2">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder=" Selecte the Age Group" />
-        </div>
-      </div>
-      <div class="col-6 col-lg-3 col-md-3 m-2">
-        <div class="form-group">
-          <input type="text" class="form-control" placeholder="Select the Gender" />
-        </div>
-      </div>
-    </form>
-  </div>
-  <div class="row mt-2 justify-content-around">
-    <div class="col-md-6 col-lg-5 mt-4" *ngFor="let blogcard of blogcards">
-      <div class="card">
-        <div class="card-horizontal">
-          <div class="img-square-wrapper">
-            <img class="" src="assets/images/dashboard/{{ blogcard.image }}" alt="Card image cap" />
+    <div class="col-12 col-md-6 col-lg-4 m-4 p-2" *ngFor="let blogcard of blogcards">
+      <div class="card p-4">
+        <div class="row text-center">
+          <div class="col-4 img-square-wrapper">
+            <img src="assets/images/dashboard/{{ blogcard.image }}" alt="Card image cap" />
           </div>
-          <div class="card-body">
-            <h4 class="card-title">{{ blogcard.title | titlecase }}</h4>
+          <div class="col-8" style="margin: auto">
+            <h2 class="card-title">{{ blogcard.title | titlecase }}</h2>
             <p>
               {{ blogcard.count }}
             </p>
@@ -41,25 +72,3 @@
     </div>
   </div>
 </div>
-
-<!-- <div class="row">
-  <div class="col-md-6 col-lg-5 m-2" *ngFor="let blogcard of blogcards">
-    <div class="card">
-      <div class="card-body">
-        <div class="d-flex align-items-center">
-          <div
-            class="btn btn-lg rounded-circle round round-lg fs-6 d-flex align-items-center justify-content-center bg-light-{{
-              blogcard.bgcolor
-            }} text-{{ blogcard.bgcolor }}"
-          >
-            <i class="{{ blogcard.icon }}"></i>
-          </div>
-          <div class="ms-3">
-            <h3 class="mb-0 font-weight-bold">{{ blogcard.title }}</h3>
-            <small class="text-muted fs-3">{{ blogcard.count }}</small>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->

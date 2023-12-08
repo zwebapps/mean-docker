@@ -7,6 +7,9 @@ const Contact = mongoose.model(
       type: String,      
       required: true
     },
+    shortcode: {
+      type: String,
+    },
     content: {
         type: String,       
         required: true
@@ -14,6 +17,7 @@ const Contact = mongoose.model(
     reply: {
       type: String,
     },
+
     compitition: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Compitition"

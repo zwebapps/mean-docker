@@ -19,7 +19,7 @@ export class LeaguesEffects {
       map((action: any) => action.payload),
       mergeMap(() => {
         if (!this.user?.roles.includes("ROLE_SUPERADMIN")) {
-          return this.leagueService.loadLeaguesByCompitition(this.user.compitition).pipe(
+          return this.leagueService.loadLeaguesByShortcode(this.user.shortcode).pipe(
             map((data) =>
               Array.isArray(data) ? LeagueActions.loadLeaguesSuccess({ data }) : LeagueActions.loadLeaguesSuccess({ data: [] })
             ),

@@ -19,6 +19,7 @@ export class CompititionsEffects {
       map((action: any) => action.payload),
       mergeMap(() => {
         if (!this.user?.roles.includes("ROLE_SUPERADMIN")) {
+          // get competition by logged in user
           return this.compititionService.getCompititions().pipe(
             map((data) => {
               return Array.isArray(data)

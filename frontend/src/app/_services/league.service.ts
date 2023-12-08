@@ -22,6 +22,10 @@ export class LeagueService {
     debugger;
     return this.http.get(`${API_URL}/leagues/forcompitition/${compitition}`, { headers: this.headers });
   }
+  loadLeaguesByShortcode(shortcode: string): Observable<any> {
+    debugger;
+    return this.http.get(`${API_URL}/league/forshortcode/${shortcode}`, { headers: this.headers });
+  }
   createLeague(league: any): Observable<any> {
     return this.http.post(`${API_URL}/league/create`, league, { headers: this.headers });
   }

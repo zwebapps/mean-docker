@@ -88,6 +88,20 @@ exports.getTeamById = async (req, resp, next) => {
     next(error);
   }
 };
+
+exports.forShortCode = async (req, resp, next) => {
+  try {
+    const { shortcode } = req.params;
+    if(shortcode) {
+      const team = await Team.find({ shortcode: req.params.shortcode }).populate(["academy_id", "leagues", "user_id"]).exec();
+      resp.status(200).json(team ? team: { message: 'No team found' });
+    }else{
+      resp.status(200).json({ message: 'Malformed Id provided' });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
 exports.forCompitition = async (req, resp, next) => {
   try {
     const { compitition } = req.params;

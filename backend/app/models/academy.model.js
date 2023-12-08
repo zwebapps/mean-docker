@@ -15,6 +15,9 @@ const Academy = mongoose.model(
     color: {
       type: String,
     },
+    shortcode: {
+      type: String,
+    },
     compitition: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Compitition"

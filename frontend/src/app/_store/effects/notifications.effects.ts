@@ -19,7 +19,7 @@ export class NotificationsEffects {
       map((action: any) => action.payload),
       mergeMap(() => {
         if (!this.user?.roles.includes("ROLE_SUPERADMIN")) {
-          return this.UserService.getAllContentsByCompitition(this.user.compitition).pipe(
+          return this.UserService.getAllContentsByShortcode(this.user.shortcode).pipe(
             map((data) =>
               Array.isArray(data)
                 ? NotificationActions.loadNotificationsSuccess({ data })

@@ -34,20 +34,12 @@ app.use(function (req, res, next) {
     next();
   });
 
-// app.use( '*', 
-//   cors({
-//     'Access-Control-Allow-Credentials': true,
-//     origin: client,
-//   })
-// );
 
 app.use(cors());
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 // parse requests of content-type - application/x-www-form-urlencoded
 // app.use(express.urlencoded({ extended: true }));
-
-
 
 app.use(
   cookieSession({
@@ -61,10 +53,13 @@ const db = require("./app/models");
 const Role = db.role;
 const User = db.user;
 const Increment  = db.increment;
+const uri = "mongodb://admin-user:admin-password@0.0.0.0:27017/mean-football?authSource=admin";
 
-console.log(environment.mongodb.uri,"<<<<<<<<<<<<")
+// const uri = "mongodb://admin-user:admin-password@yflpms.com:27017/mean-football?authSource=admin";
+
+console.log(uri,"<<<<<<<<<<<<")
 db.mongoose
-  .connect(environment.mongodb.uri, {
+  .connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
@@ -91,6 +86,8 @@ require("./app/routes/league.routes")(app);
 require("./app/routes/player.routes")(app);
 require("./app/routes/team.routes")(app);
 require("./app/routes/roles.routes")(app);
+require("./app/routes/compitition.routes")(app);
+require("./app/routes/dashboard.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3000;
@@ -108,6 +105,15 @@ function initial() {
     console.log(rest.deletedCount,'deleting all')
     Role.estimatedDocumentCount((err, count) => {
       if(!err && count === 0) {
+        new Role({
+          _id: ObjectId("6567914b7d2b0a879a8840cc"),
+          name: "superadmin"
+        }).save(err => {
+          if (err) {
+            console.log("error", err);
+          }
+          console.log("added 'superadmin' to roles collection");
+        });
         new Role({
           _id: ObjectId("5895b74ca84c675de0d3338d"),
           name: "admin"
@@ -145,7 +151,26 @@ function initial() {
   Role.find({}).then((roles) => {
     console.log(roles,'roles');
   })
-   // creating user
+  // creating yfl super admin
+   User.findOne({ username: 'yflsuperadmin'}).exec().then((users) => {
+    if(!users){
+      new User({
+        firstname: 'yfl',
+        lastname: 'superadmin',
+        username: 'yflsuperadmin',
+        contact: '+971553762217',
+        password: bcrypt.hashSync('superAdmin@yfl', 8),
+        email: 'admin@yfl.com',
+        roles: [ObjectId("6567914b7d2b0a879a8840cc")]
+      }).save(err => {
+        if (err) {
+          console.log("error", err);
+        }
+        console.log("added 'admin user' to users collection");
+      });
+    }
+  })
+   // creating yfl admin
    User.findOne({ username: 'yfladmin'}).exec().then((users) => {
     if(!users){
       new User({

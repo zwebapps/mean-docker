@@ -24,4 +24,6 @@ app.post("/league/delete/all", authJwt.isAuthenticated, league.deleteAllLeagues)
 
 app.get("/league/forcompitition/:compitition", authJwt.isAuthenticated, league.forCompitition);
 
+app.get("/league/forshortcode/:shortcode", authJwt.isAuthenticated, league.forShortCode);
+
 };

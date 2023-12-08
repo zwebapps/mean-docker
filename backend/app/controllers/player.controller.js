@@ -316,6 +316,19 @@ exports.playerByTeam = async (req, resp, next) => {
   }
 };
 
+exports.forShortCode = async (req, resp, next) => {
+  let pl = {};
+  try {
+    const { shortcode  } = req.params;
+    if(shortcode) {
+      // check if compitition 
+      pl = await Player.find({ shortcode: shortcode }).populate(["user", "league", "academy", "team"]).exec();
+    } 
+    resp.status(200).json(pl ? pl : { message: 'Player not found'});
+  } catch (error) {
+    next(error);
+  }
+};
 
 exports.forCompitition = async (req, resp, next) => {
   let pl = {};

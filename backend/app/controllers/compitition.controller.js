@@ -64,6 +64,15 @@ exports.getAllCompititions =  async (req, resp, next) => {
 
 };
 
+
+exports.forShortCode = async (req, resp, next) => {
+  try {
+    const compitition = await Compitition.find({ _id: req.params.id }).exec();
+    resp.status(200).json(compitition);
+  } catch (error) {
+    next(error);
+  }
+};
 /* Get compitition based on id*/
 exports.getCompititionById = async (req, resp, next) => {
   try {

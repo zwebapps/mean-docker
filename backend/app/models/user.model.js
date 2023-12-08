@@ -9,7 +9,9 @@ const User = mongoose.model(
     contact: String,
     email: String,
     password: String,
-    shortcode: String,
+    shortcode: {
+      type: String,
+    },
     compitition: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "Compitition"

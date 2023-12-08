@@ -25,4 +25,6 @@ app.post("/team/delete/all", authJwt.isAuthenticated, team.deleteAllTeams);
 
 app.get("/team/forcompitition/:compitition", authJwt.isAuthenticated, team.forCompitition);
 
+app.get("/team/forshortcode/:shortcode", authJwt.isAuthenticated, team.forShortCode);
+
 };

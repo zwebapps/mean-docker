@@ -31,5 +31,7 @@ app.get("/academy/academybycoach/:id", authJwt.isAuthenticated, academy.getAcade
 
 app.get("/academy/forcompitition/:compitition", authJwt.isAuthenticated, academy.forCompitition);
 
+app.get("/academy/forshortcode/:shortcode", authJwt.isAuthenticated, academy.forShortCode);
+
 };
 
