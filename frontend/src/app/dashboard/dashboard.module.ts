@@ -8,7 +8,6 @@ import { SalesSummaryComponent } from "./dashboard-components/sales-summary/sale
 import { FeedsComponent } from "./dashboard-components/feeds/feeds.component";
 import { TopSellingComponent } from "./dashboard-components/top-selling/top-selling.component";
 import { TopCardsComponent } from "./dashboard-components/top-cards/top-cards.component";
-import { BlogCardsComponent } from "./dashboard-components/blog-cards/blog-cards.component";
 import { TopFiltersComponent } from "./dashboard-components/top-filters/top-filters.component";
 import { AdminSharedModule } from "../admin-shared/admin-shared.module";
 

@@ -100,7 +100,7 @@ exports.getCompititionByShortCode = async (req, resp, next) => {
   }
 };
 /* Edit existing fixture based on id*/
-exports.updateCompitition=  async (req, resp, next) => {
+exports.updateCompitition =  async (req, resp, next) => {
 
   try {
     if(req.params && req.params.id) {

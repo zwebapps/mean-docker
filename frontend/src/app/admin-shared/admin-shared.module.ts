@@ -25,6 +25,7 @@ import { RouterModule } from "@angular/router";
 import { AdminTopFiltersComponent } from "../board-admin/admin-top-filters/admin-top-filters.component";
 import { BlogCardsComponent } from "../dashboard/dashboard-components/blog-cards/blog-cards.component";
 import { DashboardModule } from "../dashboard/dashboard.module";
+import { AdminCompetitionComponent } from './admin-competition/admin-competition.component';
 
 /**
  * Custom angular notifier options
@@ -87,7 +88,8 @@ import { DashboardModule } from "../dashboard/dashboard.module";
     ConfirmationModalComponent,
     AdminNotificationsComponent,
     AdminTopFiltersComponent,
-    BlogCardsComponent
+    BlogCardsComponent,
+    AdminCompetitionComponent
   ],
   imports: [
     CommonModule,

@@ -25,6 +25,8 @@ import { NgbModule, NgbNavModule } from "@ng-bootstrap/ng-bootstrap";
 import { AdminSharedModule } from "../admin-shared/admin-shared.module";
 import { DashboardModule } from "../dashboard/dashboard.module";
 import { AdminTopFiltersComponent } from "./admin-top-filters/admin-top-filters.component";
+import { AdminCompetitionComponent } from "../admin-shared/admin-competition/admin-competition.component";
+import { ComponentsModule } from "../component/component.module";
 
 /**
  * Custom angular notifier options
@@ -81,6 +83,14 @@ const adminRoutes: Routes = [
         component: AdminDashboardComponent
       },
       {
+        path: "competitions",
+        component: AdminCompetitionComponent
+      },
+      // {
+      //   path: "competitions",
+      //   loadChildren: () => import("../component/component.module").then((m) => m.ComponentsModule)
+      // },
+      {
         path: "users",
         component: UserManagementComponent
       },
@@ -133,6 +143,7 @@ const adminRoutes: Routes = [
     FormsModule,
     AngularEditorModule,
     DashboardModule,
+    ComponentsModule,
     NgMultiSelectDropDownModule.forRoot(),
     NotifierModule.withConfig(customNotifierOptions),
     RouterModule.forChild(adminRoutes)

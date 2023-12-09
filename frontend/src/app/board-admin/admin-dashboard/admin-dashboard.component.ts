@@ -39,7 +39,6 @@ export class AdminDashboardComponent implements OnInit {
   getDashboardContents() {
     this.dashboardService.getDashboardContents().subscribe((res: any) => {
       if (res) {
-        debugger;
         // this.notifier.notify("success", res.message);
         this.dashbordContents = res.data;
         this.mapDashboardContents();

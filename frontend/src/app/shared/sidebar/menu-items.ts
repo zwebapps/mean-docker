@@ -80,6 +80,16 @@ export const ROUTES: RouteUser[] = [
         submenu: []
       },
       {
+        path: "/admin/competitions",
+        title: "Competitions",
+        icon: "bi bi-speedometer2",
+        image: "assets/images/bashboard.png",
+        active: "assets/images/bashbaord.png",
+        class: "",
+        extralink: false,
+        submenu: []
+      },
+      {
         path: "/admin/users",
         title: "Users Management",
         icon: "bi bi-speedometer2",

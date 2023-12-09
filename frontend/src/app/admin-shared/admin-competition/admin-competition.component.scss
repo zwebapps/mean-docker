@@ -1,0 +1,11 @@
+.card {
+  padding: 20px;
+  border-radius: 10px;
+  .editBtn {
+    margin: 5px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 99;
+  }
+}
