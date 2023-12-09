@@ -49,7 +49,6 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.isLoggedIn = this.storageService.isLoggedIn();
-    debugger;
     if (!this.isLoggedIn) {
       this.router.navigate(["login"]);
     }

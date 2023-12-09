@@ -22,6 +22,9 @@ import { NgxImageZoomModule } from "ngx-image-zoom";
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 // import { NotifierModule, NotifierOptions } from "angular-notifier";
 import { RouterModule } from "@angular/router";
+import { AdminTopFiltersComponent } from "../board-admin/admin-top-filters/admin-top-filters.component";
+import { BlogCardsComponent } from "../dashboard/dashboard-components/blog-cards/blog-cards.component";
+import { DashboardModule } from "../dashboard/dashboard.module";
 
 /**
  * Custom angular notifier options
@@ -82,7 +85,9 @@ import { RouterModule } from "@angular/router";
     SquadListComponent,
     AdminSquadListComponent,
     ConfirmationModalComponent,
-    AdminNotificationsComponent
+    AdminNotificationsComponent,
+    AdminTopFiltersComponent,
+    BlogCardsComponent
   ],
   imports: [
     CommonModule,
@@ -97,6 +102,7 @@ import { RouterModule } from "@angular/router";
     RouterModule
   ],
   exports: [
+    AdminTopFiltersComponent,
     UserManagementComponent,
     LeagueManagementComponent,
     SquadManagementComponent,
@@ -110,7 +116,8 @@ import { RouterModule } from "@angular/router";
     SquadListComponent,
     AdminSquadListComponent,
     ConfirmationModalComponent,
-    AdminNotificationsComponent
+    AdminNotificationsComponent,
+    BlogCardsComponent
   ]
 })
 export class AdminSharedModule {}

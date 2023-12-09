@@ -89,7 +89,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
   redirectPage(): void {
     if (this.storageService.isLoggedIn()) {
       this.isLoggedIn = true;
-      debugger;
       const { shortcode } = this.storageService.getUser();
       this.roles = this.storageService.getUser().roles;
       if (this.roles.includes("ROLE_SUPERADMIN")) {

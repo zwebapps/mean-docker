@@ -18,11 +18,9 @@ export class FixtureService {
     return this.http.get(`${API_URL}/fixture/all`, { headers: this.headers });
   }
   loadFixturesByCompitition(compitition: string): Observable<any> {
-    debugger;
     return this.http.get(`${API_URL}/fixture/forcompitition/${compitition}`, { headers: this.headers });
   }
   loadFixturesByShortcode(shortcode: string): Observable<any> {
-    debugger;
     return this.http.get(`${API_URL}/fixture/forshortcode/${shortcode}`, { headers: this.headers });
   }
   createFixture(fixture: any): Observable<any> {

@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
-import { UserService } from "src/app/_services/user.service";
 import { topcard, topcards } from "src/app/dashboard/dashboard-components/top-cards/top-cards-data";
 import * as UserSelectors from "../../_store/selectors/users.selectors";
 import * as TeamSelectors from "../../_store/selectors/teams.selectors";
@@ -21,7 +20,7 @@ export class AdminDashboardComponent implements OnInit {
   users: any = [];
   teams: any = [];
   constructor(private store: Store, private dashboardService: DashboardService, notifier: NotifierService) {
-    notifier = notifier;
+    this.notifier = notifier;
     this.topcards = topcards;
   }
 
@@ -34,11 +33,14 @@ export class AdminDashboardComponent implements OnInit {
     this.store.select(TeamSelectors.getTeams).subscribe((teams) => {
       this.teams = teams;
     });
+
+    this.getDashboardContents();
   }
   getDashboardContents() {
     this.dashboardService.getDashboardContents().subscribe((res: any) => {
       if (res) {
-        this.notifier.notify("success", res.message);
+        debugger;
+        // this.notifier.notify("success", res.message);
         this.dashbordContents = res.data;
         this.mapDashboardContents();
       }

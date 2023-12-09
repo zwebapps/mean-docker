@@ -23,11 +23,9 @@ export class TeamService {
   }
 
   loadTeamsByCompitition(compitition: string): Observable<any> {
-    debugger;
     return this.http.get(`${API_URL}/team/forcompitition/${compitition}`, { headers: this.headers });
   }
   loadTeamsByShortcode(shortcode: string): Observable<any> {
-    debugger;
     return this.http.get(`${API_URL}/team/forshortcode/${shortcode}`, { headers: this.headers });
   }
   createTeam(teamData: any): Observable<any> {

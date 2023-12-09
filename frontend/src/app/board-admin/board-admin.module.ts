@@ -24,6 +24,7 @@ import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { NgbModule, NgbNavModule } from "@ng-bootstrap/ng-bootstrap";
 import { AdminSharedModule } from "../admin-shared/admin-shared.module";
 import { DashboardModule } from "../dashboard/dashboard.module";
+import { AdminTopFiltersComponent } from "./admin-top-filters/admin-top-filters.component";
 
 /**
  * Custom angular notifier options

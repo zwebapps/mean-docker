@@ -19,12 +19,10 @@ export class UserService {
     return this.http.get(API_URL + "/content", { headers: this.headers });
   }
   loadUsersByCompitition(compitition: string): Observable<any> {
-    debugger;
     return this.http.get(`${API_URL}/user/forcompitition/${compitition}`, { headers: this.headers });
   }
 
   loadUsersByShortcode(shortcode: string): Observable<any> {
-    debugger;
     return this.http.get(`${API_URL}/user/forshortcode/${shortcode}`, { headers: this.headers });
   }
   getUserBoard(): Observable<any> {

@@ -109,7 +109,6 @@ export class SuperAdminComponent implements OnInit {
   }
   getAllCompititions() {
     this.store.select(CompititionSelectors.getCompititions).subscribe((compitition: any) => {
-      debugger;
       this.listOfCompetitions = compitition;
     });
   }
@@ -138,14 +137,12 @@ export class SuperAdminComponent implements OnInit {
     });
   }
   onSubmit() {
-    debugger;
     this.submitted = true;
     if (this.compititionForm.invalid) {
       this.notifier.notify("error", "All fields are required!");
       return;
     } else {
       const user = this.storageService.getUser();
-      debugger;
       // organiserDetail: JSON.stringify({
       //   organiserFirstName: this.compititionForm.value.organiserFirstName,
       //   organiserLastName: this.compititionForm.value.organiserLastName,
@@ -208,10 +205,8 @@ export class SuperAdminComponent implements OnInit {
         ...compitition
       });
     });
-    debugger;
     this.compititionService.createCompitition(competitions).subscribe((res: any) => {
       if (res) {
-        debugger;
         if (this.createdAdmin.compitition) {
           this.createdAdmin.compitition.push(res.map((comp: any) => comp._id));
         }
@@ -251,10 +246,8 @@ export class SuperAdminComponent implements OnInit {
     });
   }
   updateAdmin(id: any, user: any) {
-    debugger;
     this.userService.updateUser(id, user).subscribe((res: any) => {
       if (res) {
-        debugger;
         console.log(res);
       }
     });
@@ -294,7 +287,6 @@ export class SuperAdminComponent implements OnInit {
     }
   }
   editCompitition(compititon: any) {
-    debugger;
     if (compititon) {
       this.compititionToBeEdit = compititon;
       const { organiser } = compititon;
@@ -327,7 +319,7 @@ export class SuperAdminComponent implements OnInit {
           }
         ]
       };
-      debugger;
+
       this.compititionForm.controls.organiserFirstName.disable();
       this.compititionForm.controls.organiserFirstName.disable();
       this.compititionForm.controls.organiserLastName.disable();

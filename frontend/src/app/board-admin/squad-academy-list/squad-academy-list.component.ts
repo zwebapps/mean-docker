@@ -71,11 +71,9 @@ export class SquadAcademyListComponent implements OnInit {
     return `${this.apiURL}/static/${image}`;
   };
   redirectTo() {
-    debugger;
     this.router.navigate([`${this.user.shortcode}/admin/academies`]);
   }
   redirectToSquad(teamId: any) {
-    debugger;
     this.router.navigate([`${this.user.shortcode}/admin/squads/squadlist/${teamId}`]);
   }
 }

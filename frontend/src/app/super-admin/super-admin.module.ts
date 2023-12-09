@@ -134,7 +134,6 @@ const superAdminRoutes: Routes = [
     CommonModule,
     NgbModule,
     AdminSharedModule,
-    DashboardModule,
     NgxImageZoomModule,
     NgbNavModule,
     ReactiveFormsModule,
