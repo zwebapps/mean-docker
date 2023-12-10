@@ -29,10 +29,6 @@
   font-family: "bootstrap-icons";
 }
 
-.sidebar-nav ul .sidebar-item .sidebar-link{
-  color:#fff;
-}
-
 .form-select {
   border-radius: 8px;
   border: 1px solid #D0D5DD;
@@ -48,6 +44,18 @@
 .ngx-datatable.material .datatable-header{
   border: 1.22px solid #EAECF0;
   background: #F9FAFB;
+}
+
+.ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell .datatable-header-cell-label {
+  color: #8A92A6;
+  font-family: 'Anton', sans-serif;
+  font-size: 14px;
+}
+
+.datatable-body-cell-label{
+  color: #101828;
+  font-family: 'Anton', sans-serif;
+  font-size: 14px;
 }
 
 .ngx-datatable.material .datatable-header .datatable-row-left, .ngx-datatable.material .datatable-body .datatable-row-left {

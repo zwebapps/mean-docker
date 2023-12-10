@@ -1,10 +1,8 @@
 <div class="container" *ngIf="displayCompetitions">
   <notifier-container></notifier-container>
-  <hr />
   <div class="row">
     <form class="form-inline mt-5" method="post" enctype="multipart/form-data">
       <div class="row">
-        <h1 class="fontTesting">Heading Testing</h1>
         <div class="col-12 col-lg-9 d-flex justify-content-start">
           <div class="col-4 col-lg-2 mb-3">
             <button class="btn btn-primary pe-2" (click)="addCompFormToggle()"><i class="bi bi-filter pe-3"></i>Filters</button>
@@ -41,8 +39,7 @@
   ></app-compitition>
 </div>
 
-<div class="container" *ngIf="displayAddCompitition">
-  <hr />
+<div class="container p-5" *ngIf="displayAddCompitition">
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Add Competition Details</h4>
   </div>
