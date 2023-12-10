@@ -24,7 +24,6 @@
     }
   }
   .left-sidebar {
-    top: 120px;
     position: absolute;
   }
 #navbarSupportedContent {
@@ -60,6 +59,9 @@
 }
 
 @media (min-width: 1024px) {
+  .topbar {
+    margin-left: 250px !important;
+  }
   .page-wrapper.ml-250 {
     margin-left: 250px !important;
   }

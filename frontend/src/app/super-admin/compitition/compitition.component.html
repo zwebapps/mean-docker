@@ -37,10 +37,8 @@
   </ngx-datatable-column>
   <ngx-datatable-column name="Actions" prop="row">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-      <button type="button" class="btn btn-outline-success me-1" (click)="deleteCompitition(row)"><i class="bi bi-trash"></i></button>
-      <button type="button" class="btn btn-outline-danger" (click)="editCompitition(row)">
-        <i class="bi bi-pencil-square"></i>
-      </button>
+      <button type="button" class="btn btn-primary me-1" (click)="editCompitition(row)"><i class="bi bi-pencil-square"></i></button>
+      <button type="button" class="btn btn-danger" (click)="deleteCompitition(row)"><i class="bi bi-trash"></i></button>
     </ng-template>
   </ngx-datatable-column>
   <ngx-datatable-footer *ngIf="true">

@@ -5,10 +5,11 @@ ul.navbar-nav.width-10 {
   flex-basis: 10%;
 }
 ul.navbar-nav {
+  color: #000;
   li.nav-item {
     span.headingtitle {
       font-family: NotoSansRegular;
-      color: #fff;
+      color: #000;
       text-align: center;
       padding-top: 10px;
       display: inline-block;
@@ -16,6 +17,9 @@ ul.navbar-nav {
       font-style: normal;
       font-weight: 600;
       line-height: normal;
+    }
+    .nav-link {
+      color: #000;
     }
   }
 }

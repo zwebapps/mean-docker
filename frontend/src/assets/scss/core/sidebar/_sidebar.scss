@@ -12,12 +12,20 @@ Main sidebar
 .left-sidebar {
   position: absolute;
   width: $sidebar-width-full;
-  height: calc(100vh - 124px);
+  height: 100vh;
   top: 0px;
   z-index: 99;
   background: $sidebar;
   transition: 0.2s ease-in;
   background: linear-gradient(270deg, #2185D0 0%, #42A3EA 99.64%);
+  .logo-icon {
+    margin: 40px 40px 120px 40px;
+    height: 90px;
+    display: block;
+    img{
+      height:100%;
+    }
+  }
 }
 
 /*******************

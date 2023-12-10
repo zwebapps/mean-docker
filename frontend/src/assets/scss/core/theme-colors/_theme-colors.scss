@@ -22,7 +22,7 @@
     .topbar .navbar-collapse,
     .topbar {
       &[data-navbarbg="skin5"] {
-        background: #0B1354;
+        background: #fff;
       }
     }
     /*This is for the sidebar bg*/
@@ -35,9 +35,9 @@
             .sidebar-item {
               &.active {
                 > .sidebar-link {
-                  color: #fff;
+                  color: #2185D0;
                   i {
-                    color: #0B1354;
+                    color: #2185D0;
                   }
                 }
               }

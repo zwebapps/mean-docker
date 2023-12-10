@@ -28,3 +28,28 @@
   content: "\e5e4"; /* Unicode for the arrow-left icon */
   font-family: "bootstrap-icons";
 }
+
+.sidebar-nav ul .sidebar-item .sidebar-link{
+  color:#fff;
+}
+
+.form-select {
+  border-radius: 8px;
+  border: 1px solid #D0D5DD;
+  background: #FFF;
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+}
+
+.ngx-datatable.material {
+  border-radius: 10px;
+  box-shadow: 0px 2.44px 4.881px -2.44px rgba(16, 24, 40, 0.05), 0px 4.881px 9.762px -2.44px rgba(16, 24, 40, 0.05);
+}
+
+.ngx-datatable.material .datatable-header{
+  border: 1.22px solid #EAECF0;
+  background: #F9FAFB;
+}
+
+.ngx-datatable.material .datatable-header .datatable-row-left, .ngx-datatable.material .datatable-body .datatable-row-left {
+  background: #000;
+}
