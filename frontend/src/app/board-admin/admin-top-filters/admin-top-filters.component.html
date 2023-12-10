@@ -11,8 +11,8 @@
           (change)="filterCompetitions($event)"
         >
           <option value="">Select the Competition</option>
-          <ng-container *ngIf="dashbordContents['competitions']">
-            <ng-container *ngFor="let competition of dashbordContents['competitions']">
+          <ng-container *ngIf="dashboardContents['competitions']">
+            <ng-container *ngFor="let competition of dashboardContents['competitions']">
               <option value="{{ competition._id }}">{{ competition.compititionName.toUpperCase() }}</option>
             </ng-container>
           </ng-container>

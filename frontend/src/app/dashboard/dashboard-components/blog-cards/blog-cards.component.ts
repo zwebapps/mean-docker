@@ -10,7 +10,7 @@ import { environment } from "src/environments/environment";
 })
 export class BlogCardsComponent implements OnInit {
   @Input() blogcards: any;
-  @Input() dashbordContents: any;
+  @Input() dashboardContents: any;
   apiURL = environment.apiURL;
 
   constructor() {}

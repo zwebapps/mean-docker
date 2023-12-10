@@ -22,7 +22,7 @@ import { PlayerService } from "src/app/_services/player.service";
 export class AdminCompetitionComponent {
   countries: any = [];
   public blogcards: any = [];
-  public dashbordContents: any = {};
+  public dashboardContents: any = {};
   apiURL = environment.apiURL;
   private notifier: NotifierService;
   compititionForm: FormGroup;
@@ -170,17 +170,17 @@ export class AdminCompetitionComponent {
   getDashboardContents() {
     this.dashboardService.getDashboardContents().subscribe((res: any) => {
       if (res) {
-        this.dashbordContents = res.data;
+        this.dashboardContents = res.data;
         this.mapDashboardContents();
       }
     });
   }
   mapDashboardContents() {
-    if (Object.keys(this.dashbordContents).length > 0) {
-      Object.keys(this.dashbordContents).forEach((key) => {
+    if (Object.keys(this.dashboardContents).length > 0) {
+      Object.keys(this.dashboardContents).forEach((key) => {
         this.blogcards.push({
           title: key,
-          count: this.dashbordContents[key].length.toString(),
+          count: this.dashboardContents[key].length.toString(),
           image: `${key}.svg`,
           bgcolor: "success",
           icon: "bi bi-wallet"

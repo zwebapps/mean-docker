@@ -4,26 +4,26 @@
       <div class="card-body">
         <div class="d-md-flex align-items-center">
           <div>
-            <h4 class="card-title">Sales Summary</h4>
-            <h5 class="card-subtitle text-muted">Yearly Sales Report</h5>
+            <h4 class="card-title">Academies Summary</h4>
+            <h5 class="card-subtitle text-muted">Academies wise Tegistered Teams</h5>
           </div>
         </div>
         <div class="row mt-4">
           <!-- column -->
           <div class="col-12 col-lg-12">
-            <div class="d-flex flex-column w-100">
+            <div class="d-flex flex-column w-100" *ngIf="pieChartOptions">
               <apx-chart
-                [series]="salesChartOptions.series"
-                [chart]="salesChartOptions.chart"
-                [xaxis]="salesChartOptions.xaxis"
-                [yaxis]="salesChartOptions.yaxis"
-                [grid]="salesChartOptions.grid"
-                [stroke]="salesChartOptions.stroke"
-                [tooltip]="salesChartOptions.tooltip"
-                [dataLabels]="salesChartOptions.dataLabels"
-                [legend]="salesChartOptions.legend"
-                [colors]="salesChartOptions.colors"
-                [markers]="salesChartOptions.markers"
+                [series]="pieChartOptions.series"
+                [chart]="pieChartOptions.chart"
+                [xaxis]="pieChartOptions.xaxis"
+                [yaxis]="pieChartOptions.yaxis"
+                [grid]="pieChartOptions.grid"
+                [stroke]="pieChartOptions.stroke"
+                [tooltip]="pieChartOptions.tooltip"
+                [dataLabels]="pieChartOptions.dataLabels"
+                [legend]="pieChartOptions.legend"
+                [colors]="pieChartOptions.colors"
+                [markers]="pieChartOptions.markers"
               >
               </apx-chart>
             </div>
@@ -38,14 +38,14 @@
       <div class="card-body">
         <div class="d-md-flex align-items-center">
           <div>
-            <h4 class="card-title">Sales Summary</h4>
-            <h5 class="card-subtitle text-muted">Yearly Sales Report</h5>
+            <h4 class="card-title">Teams Summary</h4>
+            <h5 class="card-subtitle text-muted">Leagues Association</h5>
           </div>
         </div>
         <div class="row mt-4">
           <!-- column -->
           <div class="col-12 col-lg-12">
-            <div class="d-flex flex-column w-100">
+            <div class="d-flex flex-column w-100" *ngIf="barCharOptions">
               <apx-chart
                 [series]="barCharOptions.series"
                 [chart]="barCharOptions.chart"
@@ -73,26 +73,26 @@
       <div class="card-body">
         <div class="d-md-flex align-items-center">
           <div>
-            <h4 class="card-title">Sales Summary</h4>
-            <h5 class="card-subtitle text-muted">Yearly Sales Report</h5>
+            <h4 class="card-title">Academies Summary</h4>
+            <h5 class="card-subtitle text-muted">Academies wise Tegistered Teams</h5>
           </div>
         </div>
         <div class="row mt-4">
           <!-- column -->
           <div class="col-12 col-lg-12">
-            <div class="d-flex flex-column w-100">
+            <div class="d-flex flex-column w-100" *ngIf="salesChartOptions">
               <apx-chart
-                [series]="pieChartOptions.series"
-                [chart]="pieChartOptions.chart"
-                [xaxis]="pieChartOptions.xaxis"
-                [yaxis]="pieChartOptions.yaxis"
-                [grid]="pieChartOptions.grid"
-                [stroke]="pieChartOptions.stroke"
-                [tooltip]="pieChartOptions.tooltip"
-                [dataLabels]="pieChartOptions.dataLabels"
-                [legend]="pieChartOptions.legend"
-                [colors]="pieChartOptions.colors"
-                [markers]="pieChartOptions.markers"
+                [series]="salesChartOptions.series"
+                [chart]="salesChartOptions.chart"
+                [xaxis]="salesChartOptions.xaxis"
+                [yaxis]="salesChartOptions.yaxis"
+                [grid]="salesChartOptions.grid"
+                [stroke]="salesChartOptions.stroke"
+                [tooltip]="salesChartOptions.tooltip"
+                [dataLabels]="salesChartOptions.dataLabels"
+                [legend]="salesChartOptions.legend"
+                [colors]="salesChartOptions.colors"
+                [markers]="salesChartOptions.markers"
               >
               </apx-chart>
             </div>
@@ -108,14 +108,14 @@
       <div class="card-body">
         <div class="d-md-flex align-items-center">
           <div>
-            <h4 class="card-title">Sales Summary</h4>
-            <h5 class="card-subtitle text-muted">Yearly Sales Report</h5>
+            <h4 class="card-title">Academies Summary</h4>
+            <h5 class="card-subtitle text-muted">Academies wise Tegistered Teams</h5>
           </div>
         </div>
         <div class="row mt-4">
           <!-- column -->
           <div class="col-12 col-lg-12">
-            <div class="d-flex flex-column w-100">
+            <div class="d-flex flex-column w-100" *ngIf="donutChartOptions">
               <apx-chart
                 [series]="donutChartOptions.series"
                 [chart]="donutChartOptions.chart"

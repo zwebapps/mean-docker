@@ -7,7 +7,7 @@ import { FormControl, FormGroup } from "@angular/forms";
   styleUrls: ["./admin-top-filters.component.scss"]
 })
 export class AdminTopFiltersComponent {
-  @Input() dashbordContents: any;
+  @Input() dashboardContents: any;
   @Output() competitionsOut = new EventEmitter();
   @Output() ageGroupOut = new EventEmitter();
   @Output() compYearOut = new EventEmitter();
