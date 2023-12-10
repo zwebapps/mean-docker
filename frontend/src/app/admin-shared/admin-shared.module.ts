@@ -25,7 +25,9 @@ import { RouterModule } from "@angular/router";
 import { AdminTopFiltersComponent } from "../board-admin/admin-top-filters/admin-top-filters.component";
 import { BlogCardsComponent } from "../dashboard/dashboard-components/blog-cards/blog-cards.component";
 import { DashboardModule } from "../dashboard/dashboard.module";
-import { AdminCompetitionComponent } from './admin-competition/admin-competition.component';
+import { AdminCompetitionComponent } from "./admin-competition/admin-competition.component";
+import { SalesSummaryComponent } from "../dashboard/dashboard-components/sales-summary/sales-summary.component";
+import { NgApexchartsModule } from "ng-apexcharts";
 
 /**
  * Custom angular notifier options
@@ -89,9 +91,11 @@ import { AdminCompetitionComponent } from './admin-competition/admin-competition
     AdminNotificationsComponent,
     AdminTopFiltersComponent,
     BlogCardsComponent,
-    AdminCompetitionComponent
+    AdminCompetitionComponent,
+    SalesSummaryComponent
   ],
   imports: [
+    NgApexchartsModule,
     CommonModule,
     NgxImageZoomModule,
     NgbNavModule,
@@ -104,6 +108,7 @@ import { AdminCompetitionComponent } from './admin-competition/admin-competition
     RouterModule
   ],
   exports: [
+    SalesSummaryComponent,
     AdminTopFiltersComponent,
     UserManagementComponent,
     LeagueManagementComponent,

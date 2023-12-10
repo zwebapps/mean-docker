@@ -15,8 +15,13 @@ exports.getDashboardContents = async (req, resp, next) => {
         const fixtures = await Fixture.find({}).populate(["league", "homeTeam", "awayTeam", "user_id"]);
         const leagues = await League.find({});
         const players = await Player.find({}).populate("league").populate("academy").populate("team").populate("user").sort({ createdAt: -1}).exec();
-        const teams = await Team.find({}).populate(["academy_id", "leagues", "user_id"]).exec();
-
+        let teams = await Team.find({}).populate(["academy_id", "leagues", "user_id"]).exec();
+        if(teams) {
+            teams = JSON.parse(JSON.stringify(teams));
+            teams = teams.map(team => {
+               return { ...team, count: team.leagues.length };
+                });
+        }
         return  resp.status(200).json({
             success: true,
             data: { 
