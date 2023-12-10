@@ -101,7 +101,7 @@ export const ROUTES: RouteUser[] = [
       },
       {
         path: "/admin/leagues",
-        title: "League Management",
+        title: "League/ Cup Management",
         icon: "bi bi-speedometer2",
         image: "assets/images/leagues.png",
         active: "assets/images/leagues.png",
