@@ -14,7 +14,7 @@ import { DashboardService } from "src/app/_services/dashbaord.service";
 })
 export class AdminDashboardComponent implements OnInit {
   private notifier: NotifierService;
-  public dashbordContents: any = {};
+  public dashboardContents: any = {};
   blogcards: blogcard[] = [];
   topcards: topcard[];
   users: any = [];
@@ -40,17 +40,17 @@ export class AdminDashboardComponent implements OnInit {
     this.dashboardService.getDashboardContents().subscribe((res: any) => {
       if (res) {
         // this.notifier.notify("success", res.message);
-        this.dashbordContents = res.data;
+        this.dashboardContents = res.data;
         this.mapDashboardContents();
       }
     });
   }
   mapDashboardContents() {
-    if (Object.keys(this.dashbordContents).length > 0) {
-      Object.keys(this.dashbordContents).forEach((key) => {
+    if (Object.keys(this.dashboardContents).length > 0) {
+      Object.keys(this.dashboardContents).forEach((key) => {
         this.blogcards.push({
           title: key,
-          count: this.dashbordContents[key].length.toString(),
+          count: this.dashboardContents[key].length.toString(),
           image: `${key}.svg`,
           bgcolor: "success",
           icon: "bi bi-wallet"

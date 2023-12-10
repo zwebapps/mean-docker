@@ -7,7 +7,7 @@ import { FormControl, FormGroup } from "@angular/forms";
   styleUrls: ["./top-filters.component.scss"]
 })
 export class TopFiltersComponent implements OnInit {
-  @Input() dashbordContents: any = {};
+  @Input() dashboardContents: any = {};
   @Output() competitionsOut = new EventEmitter();
   @Output() ageGroupOut = new EventEmitter();
   @Output() compYearOut = new EventEmitter();

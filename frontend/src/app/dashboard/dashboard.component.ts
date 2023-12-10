@@ -11,7 +11,7 @@ import { blogcard } from "../../app/dashboard/dashboard-components/blog-cards/bl
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
   private notifier: NotifierService;
-  public dashbordContents: any = {};
+  public dashboardContents: any = {};
   blogcards: blogcard[] = [];
   constructor(private dashboardService: DashboardService, notifier: NotifierService) {
     this.notifier = notifier;
@@ -26,17 +26,17 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.dashboardService.getDashboardContents().subscribe((res: any) => {
       if (res) {
         this.notifier.notify("success", res.message);
-        this.dashbordContents = res.data;
+        this.dashboardContents = res.data;
         this.mapDashboardContents();
       }
     });
   }
   mapDashboardContents() {
-    if (Object.keys(this.dashbordContents).length > 0) {
-      Object.keys(this.dashbordContents).forEach((key) => {
+    if (Object.keys(this.dashboardContents).length > 0) {
+      Object.keys(this.dashboardContents).forEach((key) => {
         this.blogcards.push({
           title: key,
-          count: this.dashbordContents[key].length.toString(),
+          count: this.dashboardContents[key].length.toString(),
           image: `${key}.svg`,
           bgcolor: "success",
           icon: "bi bi-wallet"
