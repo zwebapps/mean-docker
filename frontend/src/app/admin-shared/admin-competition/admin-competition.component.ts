@@ -170,7 +170,6 @@ export class AdminCompetitionComponent {
   getDashboardContents() {
     this.dashboardService.getDashboardContents().subscribe((res: any) => {
       if (res) {
-        // this.notifier.notify("success", res.message);
         this.dashbordContents = res.data;
         this.mapDashboardContents();
       }

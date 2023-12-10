@@ -15,7 +15,7 @@
   <!-- ============================================================== -->
   <!-- Topbar header - style you can find in topbar.scss -->
   <!-- ============================================================== -->
-  <header class="topbar" data-navbarbg="skin5">
+  <header class="topbar" data-navbarbg="skin5" *ngIf="isLoggedIn">
     <nav class="d-flex top-navbar navbar-expand-lg navbar-dark">
       <div class="navbar-header" [ngClass]="expandLogo ? 'expand-logo' : ''" data-logobg="skin5">
         <!-- This is for the sidebar toggle which is visible on mobile only -->

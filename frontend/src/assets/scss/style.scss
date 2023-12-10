@@ -35,9 +35,20 @@
 // Adding the fonts
 @font-face {
   font-family: "NotoSansRegular";
-  src: url("../fonts/noto-sans-regular.ttf");
+  src: url("../fonts/noto-sans-regular.woff");
 }
 @font-face {
   font-family: "NotoSansBold";
-  src: url("../fonts/noto-sans-bold.ttf");
+  src: url("../fonts/noto-sans-bold.woff");
+}
+
+@font-face {
+  font-family: "Anton";
+  src: url("../fonts/Anton-Regular.woff") format("woff"), url("../fonts/Anton-Regular.woff2") format("woff2"),
+    url("../fonts/Anton-Regular.svg#Anton-Regular") format("svg"), url("../fonts/Anton-Regular.eot"),
+    url("../fonts/Anton-Regular.eot?#iefix") format("embedded-opentype"), url("../fonts/Anton-Regular.ttf") format("truetype");
+
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
