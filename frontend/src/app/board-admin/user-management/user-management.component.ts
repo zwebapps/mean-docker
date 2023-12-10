@@ -19,6 +19,8 @@ import { AcademyService } from "src/app/_services/academy.service";
 export class UserManagementComponent implements OnInit {
   @ViewChild("myTable") table: any;
   private notifier: NotifierService;
+  public enteredUserName: string = "";
+  public selectedRole: string = "";
   options = {};
   data: any = [];
   columns: any = [{ prop: "firstname" }, { name: "lastname" }, { name: "username" }, { name: "email" }];
@@ -74,10 +76,18 @@ export class UserManagementComponent implements OnInit {
     this.getRoles();
   }
 
-  filterUsers(event: any) {
-    const username = event.target.value;
-    if (username) {
-      this.data = this.data.filter((user: any) => user.username.includes(username.toLowerCase()));
+  filterUsers() {
+    this.getUsersFromStore();
+    if (this.enteredUserName && !this.selectedRole) {
+      this.data = this.data.filter((user: any) => user.username.includes(this.enteredUserName.toLowerCase()));
+    } else if (!this.enteredUserName && this.selectedRole) {
+      this.data = this.data.filter((user: any) => user.roles.every((role: any) => role.name.includes(this.selectedRole.toLowerCase())));
+    } else if (this.enteredUserName && this.selectedRole) {
+      this.data = this.data.filter(
+        (user: any) =>
+          user.username.includes(this.enteredUserName.toLowerCase()) &&
+          user.roles.every((role: any) => role.name.includes(this.selectedRole.toLowerCase()))
+      );
     } else {
       this.getUsersFromStore();
     }
