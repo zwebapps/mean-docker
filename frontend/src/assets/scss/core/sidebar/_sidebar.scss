@@ -134,6 +134,20 @@ sidebar navigation
   display: block;
 }
 
+.left-sidebar{
+  .user-role{
+    position: absolute;
+    bottom: 80px;
+    text-align: center;
+    display: block;
+    width: 100%;
+    padding: 0 20px;
+    color: #fff;
+    font-family: 'Anton', sans-serif;
+    font-size: 35px;
+  }
+}
+
 @media (max-width: 991px) {
   .left-sidebar {
     .logo-icon {
