@@ -37,28 +37,31 @@ export class AcademyLeagueSelectionComponent implements OnInit {
       leagues: new FormArray([])
     });
   }
+  getLeagueNo(leagueName: any) {
+    let nameArray = leagueName.match(/(\d+)/);
+    return nameArray ? nameArray.find((nm: any) => !isNaN(nm)) : null;
+  }
   ngOnInit(): void {
     // now get the leagues and map
-    this.store.select(LeagueSelectors.getLeagues).subscribe((leagues) => {
-      if (leagues) {
-        this.leagues = leagues.slice().sort((a, b) => {
-          const aNumber = parseInt(a?.leagueName.split(" ")[1]);
-          const bNumber = parseInt(b?.leagueName.split(" ")[1]);
-
-          if (isNaN(aNumber) || isNaN(bNumber)) {
-            return a?.leagueName.localeCompare(b?.leagueName);
-          }
-
-          return aNumber - bNumber;
-        });
-      }
-    });
+    this.getLeaguesFromLeague();
     let id = this.activatedRoute.snapshot.params["id"];
-    this.teamService.getTeamById(id).subscribe((res: any) => {
+    this.getTeamsById(id);
+    // getting leagues
+    // this.store.select(LeagueSelectors.getLeagues).subscribe((leagues) => {
+    //   if (leagues) {
+    //     this.leagues = leagues;
+    //   }
+    // });
+    this.getLeaguesFromLeague();
+  }
+
+  getTeamsById = (teamID: any) => {
+    this.teamService.getTeamById(teamID).subscribe((res: any) => {
       if (res) {
         this.team = res;
         this.academy = res.academy_id;
         if (this.leagues.length > 0) {
+          // sort the leagues
           this.leagues = this.leagues.map((league: any) => {
             let selectedLeague = this.team.leagues.find((lg: any) => lg._id == league._id);
             return {
@@ -69,14 +72,23 @@ export class AcademyLeagueSelectionComponent implements OnInit {
         }
       }
     });
-
-    // getting leagues
+  };
+  getLeaguesFromLeague = () => {
     this.store.select(LeagueSelectors.getLeagues).subscribe((leagues) => {
       if (leagues) {
-        this.leagues = leagues;
+        this.leagues = leagues.slice().sort((a, b) => {
+          const aNumber = parseInt(this.getLeagueNo(a?.leagueName));
+          const bNumber = parseInt(this.getLeagueNo(b?.leagueName));
+
+          if (isNaN(aNumber) || isNaN(bNumber)) {
+            return a?.leagueName.localeCompare(b?.leagueName);
+          }
+
+          return aNumber - bNumber;
+        });
       }
     });
-  }
+  };
   getImg = (image: string) => {
     return `${this.apiURL}/static/${image}`;
   };

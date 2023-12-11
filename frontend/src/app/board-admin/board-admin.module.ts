@@ -27,6 +27,7 @@ import { DashboardModule } from "../dashboard/dashboard.module";
 import { AdminTopFiltersComponent } from "./admin-top-filters/admin-top-filters.component";
 import { AdminCompetitionComponent } from "../admin-shared/admin-competition/admin-competition.component";
 import { ComponentsModule } from "../component/component.module";
+import { AdminPlayersComponent } from "./admin-players/admin-players.component";
 
 /**
  * Custom angular notifier options
@@ -111,6 +112,10 @@ const adminRoutes: Routes = [
         component: SquadManagementComponent
       },
       {
+        path: "players",
+        component: AdminPlayersComponent
+      },
+      {
         path: "squads/academy/:id",
         component: SquadAcademyListComponent
       },
@@ -131,7 +136,7 @@ const adminRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [],
+  declarations: [AdminPlayersComponent],
   imports: [
     NgbModule,
     AdminSharedModule,

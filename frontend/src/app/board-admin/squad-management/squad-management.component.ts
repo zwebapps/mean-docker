@@ -41,7 +41,18 @@ export class SquadManagementComponent {
   }
   getAcademiesFromStore() {
     this.store.select(AcademySelectors.getAcademies).subscribe((academy) => {
-      this.academies = academy;
+      if (academy) {
+        this.academies = academy.slice().sort((a, b) => {
+          const aNumber = parseInt(a?.academyName.split(" ")[1]);
+          const bNumber = parseInt(b?.academyName.split(" ")[1]);
+
+          if (isNaN(aNumber) || isNaN(bNumber)) {
+            return a?.academyName.localeCompare(b?.academyName);
+          }
+
+          return aNumber - bNumber;
+        });
+      }
     });
   }
 }

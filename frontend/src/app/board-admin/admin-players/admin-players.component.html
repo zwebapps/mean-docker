@@ -1,0 +1,74 @@
+<div class="row academy-row" style="background-color: #2261c6">
+  <div class="col-12 col-lg-2">
+    <div class="acedmy-plus m-auto"><img src="assets/images/bg/bg1.jpg" class="img-fluid" /><br /></div>
+  </div>
+  <div class="col-12 col-lg-10 academy-name">
+    <p>Competition Name</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <h4 class="m-3">List of players</h4>
+  </div>
+  <hr />
+</div>
+
+<div class="row">
+  <form [formGroup]="filterLeague" class="d-flex" (submit)="activatePlayers()">
+    <div class="form-group col-12 col-lg-2 m-3">
+      <label for="name" class="control-label">League</label>
+      <select class="form-select" name="league" formControlName="league" aria-label="Default select" (change)="filterAllPlayers()">
+        <option value="0" selected>Select League</option>
+        <ng-container *ngIf="leagues">
+          <ng-container *ngFor="let league of leagues">
+            <option value="{{ league._id }}">{{ league.leagueName }}</option>
+          </ng-container>
+        </ng-container>
+      </select>
+    </div>
+    <div class="form-group col-12 col-lg-2 m-3">
+      <label for="academy" class="control-label">Academy</label>
+      <select class="form-select" name="academy" formControlName="academy" aria-label="Default select" (change)="filterAllPlayers()">
+        <option value="0" selected>Select Academy</option>
+        <ng-container *ngIf="academies">
+          <ng-container *ngFor="let academy of academies">
+            <option value="{{ academy._id }}">{{ academy.academyName }}</option>
+          </ng-container>
+        </ng-container>
+      </select>
+    </div>
+    <div class="form-group col-12 col-lg-2 m-3">
+      <label for="academy" class="control-label">Team</label>
+      <select class="form-select" name="team" formControlName="team" aria-label="Default select" (change)="filterAllPlayers()">
+        <option value="0" selected>Select Team</option>
+        <ng-container *ngIf="academies">
+          <ng-container *ngFor="let team of teamsForFilter">
+            <option value="{{ team._id }}">{{ team.teamName }}</option>
+          </ng-container>
+        </ng-container>
+      </select>
+    </div>
+    <div class="form-group col-12 col-lg-2 m-3">
+      <button class="btn btn-primary mt-4" type="submit">Activate Players</button>
+    </div>
+    <div class="form-group col-12 col-lg-2 m-3">
+      <button class="btn btn-primary mt-4" type="button" (click)="exportPlayers()">Export Players</button>
+    </div>
+  </form>
+</div>
+
+<div class="row">
+  <app-admin-squad-list
+    [players]="players"
+    (delPlayer)="deletePlayer($event)"
+    (approvePlayer)="approve($event)"
+    [leaguesFilter]="leagues"
+    [leagues]="leagues"
+    (editPlayer)="editPlayer($event)"
+  ></app-admin-squad-list>
+</div>
+
+<div style="position: absolute; bottom: 0; right: 0; background-color: transparent">
+  <button class="btn btn-back" (click)="redirectTo()">Back</button>
+</div>
