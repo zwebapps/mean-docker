@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   title: "Local Environment Heading",
   apiEndpoint: "/backend",
-  apiURL: "http://yflpms.com:3000"
+  apiURL: "http://localhost:3000"
 };
 
 //  "http://212-115-110-26.cloud-xip.com:3000"

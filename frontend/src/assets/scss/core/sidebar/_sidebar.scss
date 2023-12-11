@@ -48,6 +48,7 @@ sidebar navigation
       width: 100%;
       margin: 0 0 10px 0;
       .sidebar-link {
+        position: relative;
         font-family: 'Anton', sans-serif;
         color: $sidebar-text;
         padding: $sidebar-link-padding;
@@ -83,6 +84,20 @@ sidebar navigation
           }
           img{
             filter: brightness(0) invert(1);  
+          }
+          &::after {
+            content: "";
+            display: block;
+            position: absolute;
+            height: 112px;
+            width: 74px;
+            display: block;
+            right: -44px;
+            top: -30px;
+            background: #F5F5F9;
+            --mask: radial-gradient(30px at 40px 40px,#0000 98%,#000) -40px -40px;
+            -webkit-mask: var(--mask);
+            mask: var(--mask);
           }
         }
       }
