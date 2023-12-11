@@ -35,6 +35,9 @@ Main sidebar
     color: $theme-light;
     padding: 7px;
   }
+  #sidebarnav{
+    overflow: hidden;
+  }
 }
 
 /*******************
@@ -74,8 +77,7 @@ sidebar navigation
           letter-spacing: 0.2px;
           font-family: 'Anton', sans-serif;
         }
-        &.active,
-        &:hover {
+        &.active {
           color: $ascent-color;
           background: $main-body-bg;
           border-radius: 10px 0px 0px 10px;
@@ -85,6 +87,8 @@ sidebar navigation
           img{
             filter: brightness(0) invert(1);  
           }
+        }
+        &.active{
           &::after {
             content: "";
             display: block;
