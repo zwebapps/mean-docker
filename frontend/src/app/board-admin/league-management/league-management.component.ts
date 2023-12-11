@@ -7,11 +7,9 @@ import { AcademyService } from "src/app/_services/academy.service";
 import { StorageService } from "src/app/_services/storage.service";
 import * as LeagueActions from "../../_store/actions/leagues.actions";
 // importing selectors
-import * as AcademySelectors from "../../_store/selectors/academies.selectors";
 import { Router } from "@angular/router";
 import { UserService } from "src/app/_services/user.service";
 import { LeagueService } from "src/app/_services/league.service";
-import { loadAcademies } from "src/app/_store/actions/academies.actions";
 import { ConfirmationDialogService } from "src/app/_services/confirmation-dialog.service";
 
 @Component({
@@ -47,8 +45,8 @@ export class LeagueManagementComponent implements OnInit {
       if (Array.isArray(leagues)) {
         if (leagues.length > 0) {
           this.leagues = leagues.slice().sort((a, b) => {
-            const aNumber = parseInt(a?.leagueName.split(" ")[1]);
-            const bNumber = parseInt(b?.leagueName.split(" ")[1]);
+            const aNumber = parseInt(this.getLeagueNo(a?.leagueName));
+            const bNumber = parseInt(this.getLeagueNo(b?.leagueName));
 
             if (isNaN(aNumber) || isNaN(bNumber)) {
               return a?.leagueName.localeCompare(b?.leagueName);
@@ -62,7 +60,7 @@ export class LeagueManagementComponent implements OnInit {
   }
   getLeagueNo(leagueName: any) {
     let nameArray = leagueName.match(/(\d+)/);
-    return nameArray.find((nm: any) => !isNaN(nm));
+    return nameArray ? nameArray.find((nm: any) => !isNaN(nm)) : null;
   }
 
   getAgeFromName(leagueName: any) {
