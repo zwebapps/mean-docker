@@ -15,6 +15,8 @@ import { ContactAdminComponent } from "./contact-admin/contact-admin.component";
 import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { NgImageSliderModule } from "ng-image-slider";
 import { NgbDatepickerModule } from "@ng-bootstrap/ng-bootstrap";
+import { DashboardModule } from "../dashboard/dashboard.module";
+import { AdminSharedModule } from "../admin-shared/admin-shared.module";
 
 /**
  * Custom angular notifier options
@@ -69,6 +71,7 @@ const customNotifierOptions: NotifierOptions = {
     ContactAdminComponent
   ],
   imports: [
+    AdminSharedModule,
     NgxImageZoomModule,
     CommonModule,
     NgxDatatableModule,

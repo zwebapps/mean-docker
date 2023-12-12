@@ -6,7 +6,7 @@
     <p *ngIf="academy">{{ academy.academyName }}</p>
   </div>
 </div>
-<div class="row justify-content-center mt-5">
+<!-- <div class="row justify-content-center mt-5">
   <div class="col-sm-6 col-md-6 col-lg-3">
     <div class="card-header text-center">Registered Players</div>
     <div class="card">
@@ -32,4 +32,7 @@
       </div>
     </div>
   </div>
+</div> -->
+<div class="row">
+  <app-sales-summary [dashboardContents]="dashboardContents" [blogcards]="blogcards" [academy]="academy"></app-sales-summary>
 </div>

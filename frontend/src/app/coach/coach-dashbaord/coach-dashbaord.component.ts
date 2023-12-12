@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnChanges, OnInit, ViewChild } from "@angular/core";
 import { Store } from "@ngrx/store";
 import * as PlayerSelectors from "../../_store/selectors/players.selectors";
 import * as TeamSelectors from "../../_store/selectors/teams.selectors";
@@ -9,12 +9,43 @@ import { TeamService } from "src/app/_services/team.service";
 import { environment } from "src/environments/environment";
 import { NotifierService } from "angular-notifier";
 
+import {
+  ApexAxisChartSeries,
+  ApexChart,
+  ChartComponent,
+  ApexDataLabels,
+  ApexYAxis,
+  ApexLegend,
+  ApexXAxis,
+  ApexTooltip,
+  ApexTheme,
+  ApexGrid
+} from "ng-apexcharts";
+import { DashboardService } from "src/app/_services/dashbaord.service";
+
+export type salesChartOptions = {
+  series: ApexAxisChartSeries | any;
+  chart: ApexChart | any;
+  xaxis: ApexXAxis | any;
+  yaxis: ApexYAxis | any;
+  stroke: any;
+  theme: ApexTheme | any;
+  tooltip: ApexTooltip | any;
+  dataLabels: ApexDataLabels | any;
+  legend: ApexLegend | any;
+  colors: string[] | any;
+  markers: any;
+  grid: ApexGrid | any;
+};
+
 @Component({
   selector: "app-coach-dashbaord",
   templateUrl: "./coach-dashbaord.component.html",
   styleUrls: ["./coach-dashbaord.component.scss"]
 })
 export class CoachDashbaordComponent implements OnInit {
+  public dashboardContents: any = {};
+  public blogcards: any = [];
   private notifier: NotifierService;
   players: any = [];
   teams: any = [];
