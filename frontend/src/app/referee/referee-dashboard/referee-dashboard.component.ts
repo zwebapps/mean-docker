@@ -128,7 +128,6 @@ export class RefereeDashboardComponent implements OnInit {
     // now get the leagues and map
     this.store.select(FixtureSelectors.getFixtures).subscribe((fixtures) => {
       if (Array.isArray(fixtures)) {
-        debugger;
         // filter teams for referee
         this.fixtures = fixtures.filter((fix: any) => fix?.user_id === this.refereeDetails.id);
       }
