@@ -133,10 +133,13 @@ export class SquadListComponent implements OnInit {
 
     const eidPattern = new RegExp("^\\d\\d\\d\\-\\d\\d\\d\\d\\-\\d\\d\\d\\d\\d\\d\\d\\-\\d$", "gm");
     this.playerForm = this.formBuilder.group({
+      geneder: ["Male", Validators.required],
+      limitedAbility: [false],
       firstName: ["", Validators.required],
       surName: ["", [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
       squadNo: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(3)]],
       dob: ["", Validators.required],
+      academy: ["", Validators.required],
       league: ["", Validators.required],
       team: ["", Validators.required],
       playerEidNo: ["", [Validators.required, Validators.pattern(eidPattern), Validators.maxLength(18)]],
@@ -304,10 +307,13 @@ export class SquadListComponent implements OnInit {
         this.selectedPlayingUpTeam = this.teams.filter((team: any) => this.playerToEdit.playingUpTeam.includes(team._id));
       }
       this.playerForm.patchValue({
+        geneder: this.playerToEdit.geneder ? this.playerToEdit.geneder : "Male",
+        limitedAbility: false,
         firstName: this.playerToEdit.firstName,
         surName: this.playerToEdit.lastName,
         squadNo: this.playerToEdit.squadNo,
         dob: this.formatDate(this.playerToEdit.dob),
+        academy: this.playerToEdit.academy?._id,
         league: this.playerToEdit.league?._id,
         team: this.playerToEdit.team?._id,
         playerEidNo: this.playerToEdit.emiratesIdNo,
@@ -344,9 +350,12 @@ export class SquadListComponent implements OnInit {
     }
     if (this.playerForm.valid) {
       const playerObj = {
+        limitedAbility: this.playerForm.value.limitedAbility,
+        geneder: this.playerForm.value.geneder,
         firstName: this.playerForm.value.firstName,
         surName: this.playerForm.value.surName,
         dob: this.playerForm.value.dob,
+        academy: this.playerForm.value.academy,
         league: this.playerForm.value.league,
         team: this.playerForm.value.team,
         squadNo: this.playerForm.value.squadNo,
@@ -458,6 +467,18 @@ export class SquadListComponent implements OnInit {
       }
     });
   }
+  teamsForSelectedAcademy = (event: any) => {
+    this.academy = this.academies.find((academy: any) => academy._id === this.playerForm.value.academy);
+    this.getTeamsFromStore();
+  };
+  associatedLeaguesForSelectedTeam = (event: any) => {
+    this.leagues = this.teams.find((academy: any) => academy._id === this.playerForm.value.team)?.leagues;
+    let dateToCompare =
+      this.playerForm.value.geneder === "Female" || this.playerForm.value.limitedAbility
+        ? moment(moment(this.playerForm.value.dob).subtract(1, "year")).format("YYYY-MM-DD")
+        : moment(this.playerForm.value.dob).format("YYYY-MM-DD");
+    this.leagues = this.leagues.filter((league: any) => moment(league.leagueAgeLimit).isSameOrBefore(dateToCompare));
+  };
   filterAllPlayers() {
     this.getPlayersFromStore();
     let leagueId = null;
