@@ -81,8 +81,6 @@ export class FullComponent implements OnInit, AfterViewInit {
     }
   }
   getUserRole() {
-    debugger;
-    console.log(roleNames);
     return roleNames[this.userRole];
   }
   toggleSidebar() {
