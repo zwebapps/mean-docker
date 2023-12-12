@@ -1,15 +1,16 @@
 <div class="mt-3">
+  <app-top-filters [dashboardContents]="dashboardContents"></app-top-filters>
   <!-- <app-top-cards></app-top-cards> -->
   <!-- ============================================================== -->
   <!-- Sales chart -->
   <!-- ============================================================== -->
   <div class="row">
-    <div class="col-lg-7">
+    <div class="col-lg-12">
       <app-sales-summary></app-sales-summary>
     </div>
-    <div class="col-lg-5">
+    <!-- <div class="col-lg-5">
       <app-feeds></app-feeds>
-    </div>
+    </div> -->
   </div>
   <!-- ============================================================== -->
   <!-- Sales chart -->
@@ -28,9 +29,8 @@
     <!-- ============================================================== -->
     <!-- ============================================================== -->
     <!-- cards -->
-    <app-top-filters [dashboardContents]="dashboardContents"></app-top-filters>
     <!-- ============================================================== -->
-    <app-blog-cards [dashboardContents]="dashboardContents" [blogcards]="blogcards"></app-blog-cards>
+    <!-- <app-blog-cards [dashboardContents]="dashboardContents" [blogcards]="blogcards"></app-blog-cards> -->
     <!-- ============================================================== -->
     <!-- cards -->
     <!-- ============================================================== -->

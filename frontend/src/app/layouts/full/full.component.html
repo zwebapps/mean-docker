@@ -32,28 +32,28 @@
   <!-- ============================================================== -->
   <aside class="left-sidebar" data-sidebarbg="skin5" (mouseover)="Logo()" (mouseout)="Logo()" *ngIf="isLoggedIn">
     <a
-        *ngIf="isLoggedIn"
-        (click)="showMobileMenu = !showMobileMenu"
-        class="nav-toggler waves-effect waves-light d-block d-lg-none"
-        href="javascript:void(0)"
-      >
-        <i [ngClass]="showMobileMenu ? 'bi bi-x fs-7' : 'bi bi-list fs-7'"></i>
-        <!-- <img src="assets/images/logos/menu.png" alt="homepage" class="dark-logo" /> -->
+      *ngIf="isLoggedIn"
+      (click)="showMobileMenu = !showMobileMenu"
+      class="nav-toggler waves-effect waves-light d-block d-lg-none"
+      href="javascript:void(0)"
+    >
+      <i [ngClass]="showMobileMenu ? 'bi bi-x fs-7' : 'bi bi-list fs-7'"></i>
+      <!-- <img src="assets/images/logos/menu.png" alt="homepage" class="dark-logo" /> -->
     </a>
     <!-- Logo -->
-        <!-- ============================================================== -->
-        <a class="navbar-brand" href="javascript:void(0)">
-          <!-- Logo icon -->
-          <b class="logo-icon">
-            <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
-            <!-- Light Logo icon -->
-            <img src="assets/images/logos/yfl.png" alt="homepage" class="dark-logo" />
-          </b>
-        </a>
-        <!-- ============================================================== -->
-        <!-- End Logo -->
+    <!-- ============================================================== -->
+    <a class="navbar-brand" href="javascript:void(0)">
+      <!-- Logo icon -->
+      <b class="logo-icon">
+        <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
+        <!-- Light Logo icon -->
+        <img src="assets/images/logos/yfl.png" alt="homepage" class="dark-logo" />
+      </b>
+    </a>
+    <!-- ============================================================== -->
+    <!-- End Logo -->
     <app-sidebar [userRole]="userRole" (toggleSideMenue)="toggleSidebar()"></app-sidebar>
-    <h3 class="user-role">Super Admin</h3>
+    <h3 class="user-role">{{ getUserRole() }}</h3>
   </aside>
   <!-- ============================================================== -->
   <!-- End Left Sidebar - style you can find in sidebar.scss  -->

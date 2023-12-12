@@ -8,6 +8,14 @@ import { StorageService } from "src/app/_services/storage.service";
 import { UserService } from "src/app/_services/user.service";
 import { PLATFORM_ID } from "@angular/core";
 
+const roleNames = {
+  ROLE_USER: "User",
+  ROLE_MODERATOR: "Moderator",
+  ROLE_ADMIN: "Competition Admin",
+  ROLE_SUPERADMIN: "Super Admin",
+  ROLE_COACH: "Club Manager"
+};
+
 @Component({
   selector: "app-full-layout",
   standalone: true,
@@ -71,6 +79,11 @@ export class FullComponent implements OnInit, AfterViewInit {
         this.sidebartype = this.defaultSidebar;
       }
     }
+  }
+  getUserRole() {
+    debugger;
+    console.log(roleNames);
+    return roleNames[this.userRole];
   }
   toggleSidebar() {
     this.showMobileMenu = !this.showMobileMenu;
