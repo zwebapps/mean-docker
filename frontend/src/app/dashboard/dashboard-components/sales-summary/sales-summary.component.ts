@@ -36,6 +36,7 @@ export class SalesSummaryComponent implements OnInit, OnChanges {
   @Input() dashboardContents = {};
   @Input() blogcards = {};
   @ViewChild("chart") chart: ChartComponent = Object.create(null);
+  @Input({ required: false }) academy: any = null;
   public salesChartOptions: Partial<salesChartOptions>;
   public barCharOptions: any;
   public pieChartOptions: any;
@@ -64,75 +65,18 @@ export class SalesSummaryComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.getDashboardContents();
   }
-  ngAfterViewInit() {
-    // this.pieChartOptions = {
-    //   series: [44, 55, 13, 43, 22],
-    //   chart: {
-    //     width: 380,
-    //     type: "pie"
-    //   },
-    //   labels: ["Team A", "Team B", "Team C", "Team D", "Team E"],
-    //   responsive: [
-    //     {
-    //       breakpoint: 480,
-    //       options: {
-    //         chart: {
-    //           width: 200
-    //         },
-    //         legend: {
-    //           position: "bottom"
-    //         }
-    //       }
-    //     }
-    //   ]
-    // };
-    // this.donutChartOptions = {
-    //   series: [44, 55, 41, 17, 15],
-    //   chart: {
-    //     width: 400,
-    //     height: 350,
-    //     type: "donut"
-    //   },
-    //   plotOptions: {
-    //     pie: {
-    //       startAngle: -90,
-    //       endAngle: 270
-    //     }
-    //   },
-    //   dataLabels: {
-    //     enabled: false
-    //   },
-    //   fill: {
-    //     type: "gradient"
-    //   },
-    //   legend: {
-    //     formatter: function (val, opts) {
-    //       return val + " - " + opts.w.globals.series[opts.seriesIndex];
-    //     }
-    //   },
-    //   title: {
-    //     text: "Gradient Donut with custom Start-angle"
-    //   },
-    //   responsive: [
-    //     {
-    //       breakpoint: 480,
-    //       options: {
-    //         chart: {
-    //           width: 250
-    //         },
-    //         legend: {
-    //           position: "bottom"
-    //         }
-    //       }
-    //     }
-    //   ]
-    // };
-  }
+  ngAfterViewInit() {}
   ngOnChanges() {}
   getDashboardContents() {
     this.dashboardService.getDashboardContents().subscribe((res: any) => {
       if (res) {
-        this.dashboardContents = res.data;
+        if (this.academy) {
+          debugger;
+          this.dashboardContents = res.data;
+          this.dashboardContents["teams"] = res.data["teams"].filter((team: any) => team?.academy_id?._id === this.academy._id);
+        } else {
+          this.dashboardContents = res.data;
+        }
         this.mapDashboardCharts(this.dashboardContents);
       }
     });

@@ -267,7 +267,7 @@ exports.bulkUploadPlayers = async (req, resp, next) => {
 /* GET all players listing. */
 exports.getAllPlayers = (req, res) => {
   try {
-    Player.find({}).populate("league").populate("academy").populate("team").populate("user").sort({ createdAt: -1}).exec((err, players) => {
+    Player.find({}).populate(["user", "league", "academy", "team"]).sort({ createdAt: -1}).exec((err, players) => {
       if(err){
         return res.status(500).send({ message: err });
       }
@@ -371,6 +371,9 @@ exports.updatePlayer =  async (req, resp, next) => {
       playingUp: req.body.playingUp.map((league) => ObjectId(league)),
       playingUpTeam: req.body.playingUpTeam.map((team) => ObjectId(team)),
       dob: new Date(req.body.dob),
+      academy: ObjectId(req.body.academy),
+      team: ObjectId(req.body.team),
+      league: ObjectId(req.body.league),
       user : ObjectId(req.body.user.createdBy)
     }
 

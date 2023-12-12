@@ -115,8 +115,10 @@
     </ngx-datatable-column>
     <ngx-datatable-column name="Actions" prop="row">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" class="d-flex">
-        <button type="button" class="btn btn-primary d-inline me-2" (click)="edit(row)"><i class="bi bi-pencil-square"></i></button>
-        <button type="button" class="btn btn-danger d-inline" (click)="delete(row['_id'])"><i class="bi bi-trash"></i></button>
+        <button type="button" class="btn btn-outline-danger d-inline me-2" (click)="edit(row)">
+          <i class="bi bi-pencil-square"></i>
+        </button>
+        <!-- <button type="button" class="btn btn-outline-success d-inline" (click)="delete(row['_id'])"><i class="bi bi-trash"></i></button> -->
       </ng-template>
     </ngx-datatable-column>
     <ngx-datatable-column name="Playingup League" prop="row">

@@ -423,10 +423,22 @@
   <hr />
 </div>
 <div class="row page-title-bar">
-  <div class="col-lg-8">
+  <div class="col-lg-6">
     <h3 class="page-title">Filters</h3>
   </div>
-  <div class="col-lg-4">
+  <div class="col-lg-3">
+    <div class="form-group m-2">
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        placeholder="Player's Name"
+        class="form-control"
+        (keyup)="filterPlayersByName($event.target.value)"
+      />
+    </div>
+  </div>
+  <div class="col-lg-3">
     <div class="form-group m-2">
       <ng-multiselect-dropdown
         [placeholder]="'EID'"
