@@ -696,4 +696,16 @@ export class CoachAcademyDetailsComponent {
   redirectTo() {
     this.router.navigate([`${this.coach.shortcode}/coach/teams`]);
   }
+
+  filterPlayersByName(name: any) {
+    this.getPlayersFromStore();
+    if (name) {
+      this.data = this.data.filter(
+        (player: any) =>
+          player.firstName.toLowerCase().includes(name.toLowerCase()) || player.lastName.toLowerCase().includes(name.toLowerCase())
+      );
+    } else {
+      this.getPlayersFromStore();
+    }
+  }
 }
