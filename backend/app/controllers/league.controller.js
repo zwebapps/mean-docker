@@ -17,7 +17,7 @@ exports.createLeague = async (req, resp, next) => {
               leagueName:  req.body[i]['League Name'],
               leagueAgeLimit:  req.body[i]['Age Limit'],
               user_id: ObjectId(req.body[i].user['createdBy']),
-              compitition : ObjectId(req.body[i].compitition),
+              compitition: req.body.compitition.map((comp) => ObjectId(comp)),
               createdAt:  new Date()
             });
             insertedLeagues.push(req.body[i]);

@@ -15,7 +15,7 @@ exports.createFixture = async (req, resp, next) => {
                 awayTeam: req.body[i]['awayTeam'],
                 league: ObjectId(req.body[i]['league']),
                 user_id: ObjectId(req.body[i].user['createdBy']),
-                compitition : ObjectId(req.body[i].compitition),
+                compitition: req.body.compitition.map((comp) => ObjectId(comp)),
                 shortcode : ObjectId(req.body[i].shortcode),
                 createdAt:  new Date()
             });

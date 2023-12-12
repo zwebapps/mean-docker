@@ -38,6 +38,10 @@ const Player = mongoose.model(
         type: mongoose.Schema.Types.ObjectId,
         ref: "Team"
     },
+    compitition: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Compitition"
+      },
     playerNo: {
         type: Number,
         unique : true,

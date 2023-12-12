@@ -158,7 +158,7 @@ exports.createPlayer = async (req, resp, next) => {
               user: ObjectId(req.body[i].user['createdBy']),
               playingUp: req.body[i]['playingUp'],
               playingUpTeam: req.body[i]['playingUpTeam'],
-              compitition : ObjectId(req.body[i].compitition),
+              compitition: req.body[i]['compitition'].map((comp) => ObjectId(comp)),
               createdAt:  new Date()
             });
             insertedPlayers.push(req.body[i]);
@@ -202,7 +202,7 @@ exports.createPlayer = async (req, resp, next) => {
             user: ObjectId(req.body.user['createdBy']),
             playingUp: req.body['playingUp'],
             playingUpTeam: req.body['playingUpTeam'],
-            compitition : ObjectId(req.body.compitition),
+            compitition: req.body.compitition.map((comp) => ObjectId(comp)),
             createdAt:  new Date()
           });
          
@@ -374,6 +374,7 @@ exports.updatePlayer =  async (req, resp, next) => {
       academy: ObjectId(req.body.academy),
       team: ObjectId(req.body.team),
       league: ObjectId(req.body.league),
+      compitition: req.body.compitition.map((comp) => ObjectId(comp)),
       user : ObjectId(req.body.user.createdBy)
     }
 

@@ -71,7 +71,6 @@ export class SalesSummaryComponent implements OnInit, OnChanges {
     this.dashboardService.getDashboardContents().subscribe((res: any) => {
       if (res) {
         if (this.academy) {
-          debugger;
           this.dashboardContents = res.data;
           this.dashboardContents["teams"] = res.data["teams"].filter((team: any) => team?.academy_id?._id === this.academy._id);
         } else {

@@ -97,6 +97,8 @@ export class UserManagementComponent implements OnInit {
     this.store.select(UserSelectors.getUsers).subscribe(
       (users) => {
         this.data = users.filter((user: any) => user.username !== this.loggedInUser.username);
+        this.data = users.filter((user: any) => user.roles.some((role: any) => role.name !== "admin" && role.name !== "superadmin"));
+        this.loadingIndicator = false;
       },
       (error) => {
         this.notifier.notify("error", "Please try again!");
