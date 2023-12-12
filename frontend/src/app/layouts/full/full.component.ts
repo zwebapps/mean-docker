@@ -13,7 +13,8 @@ const roleNames = {
   ROLE_MODERATOR: "Moderator",
   ROLE_ADMIN: "Competition Admin",
   ROLE_SUPERADMIN: "Super Admin",
-  ROLE_COACH: "Club Manager"
+  ROLE_COACH: "Club Manager",
+  ROLE_REFEREE: "Referee Admin"
 };
 
 @Component({
