@@ -9,7 +9,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     const authToken = this.storageService.getToken();
-    const user = this.storageService.getUser();
     if (authToken) {
       req = req.clone({
         setHeaders: {
