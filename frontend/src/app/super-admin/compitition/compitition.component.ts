@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
 import { DomSanitizer } from "@angular/platform-browser";
 import { environment } from "src/environments/environment";
 import { ColumnMode } from "@swimlane/ngx-datatable";
-import * as countriesData from "../../../assets/countries/countries.json";
+import { Country, Countries } from "src/app/_shared/countries.data";
 
 @Component({
   selector: "app-compitition",
@@ -13,7 +13,7 @@ import * as countriesData from "../../../assets/countries/countries.json";
 export class CompititionComponent implements OnInit {
   @ViewChild("myTable") table: any;
 
-  countries: any = [];
+  countries: Country[] = [];
   options = {};
   columns: any = [{ prop: "firstname" }, { name: "lastname" }, { name: "username" }, { name: "email" }];
   loadingIndicator = true;
@@ -55,6 +55,6 @@ export class CompititionComponent implements OnInit {
     }
   }
   getCountries() {
-    this.countries = (countriesData as any).default;
+    this.countries = Countries;
   }
 }

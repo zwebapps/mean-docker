@@ -12,7 +12,7 @@ import { environment } from "src/environments/environment";
 import * as CompititionActions from "../../_store/actions/compititions.actions";
 import * as CompititionSelectors from "../../_store/selectors/compititions.selectors";
 import { IDropdownSettings } from "ng-multiselect-dropdown";
-import * as countriesData from "../../../assets/countries/countries.json";
+import { Country, Countries } from "src/app/_shared/countries.data";
 
 @Component({
   selector: "app-super-admin",
@@ -23,7 +23,7 @@ export class SuperAdminComponent implements OnInit {
   @ViewChild("content") content: any;
   roles: any = [];
   apiURL = environment.apiURL;
-  countries: any = [];
+  countries: Country[] = [];
   public eidDropdownSettings: IDropdownSettings = {};
   public shortCodeExists: boolean = false;
   public competitionExists: boolean = false;
@@ -352,7 +352,7 @@ export class SuperAdminComponent implements OnInit {
     });
   }
   getCountries() {
-    this.countries = (countriesData as any).default;
+    this.countries = Countries;
   }
 
   getRoles() {

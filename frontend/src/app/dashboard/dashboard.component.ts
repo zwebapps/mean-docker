@@ -9,6 +9,7 @@ import { blogcard } from "../../app/dashboard/dashboard-components/blog-cards/bl
   templateUrl: "./dashboard.component.html",
   styleUrls: ["./dashboard.component.scss"]
 })
+// dashboard for super admin
 export class DashboardComponent implements OnInit, AfterViewInit {
   private notifier: NotifierService;
   public dashboardContents: any = {};
@@ -25,6 +26,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   getDashboardContents() {
     this.dashboardService.getDashboardContents().subscribe((res: any) => {
       if (res) {
+        debugger;
         this.notifier.notify("success", res.message);
         this.dashboardContents = res.data;
         this.mapDashboardContents();

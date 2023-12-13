@@ -24,7 +24,6 @@ import { AuthGuardService } from "./guards/auth-guard.service";
 import { StoreModule } from "@ngrx/store";
 import { reducers, metaReducers } from "./_store/reducers";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
-import { CollectionsComponentComponent } from "./collections-component/collections-component.component";
 import { EffectsModule } from "@ngrx/effects";
 import { UsersEffects } from "./_store/effects/users.effects";
 import { AcademiesEffects } from "./_store/effects/academies.effects";
@@ -45,11 +44,10 @@ import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { provideClientHydration } from "@angular/platform-browser";
 import { NgxUiLoaderModule, NgxUiLoaderHttpModule, NgxUiLoaderConfig, SPINNER, POSITION, PB_DIRECTION } from "ngx-ui-loader";
 import { ErrorPageComponent } from "./error-page/error-page.component";
-import { AdminSharedModule } from "./admin-shared/admin-shared.module";
 import { SuperAdminModule } from "./super-admin/super-admin.module";
-import { DashboardComponent } from "./dashboard/dashboard.component";
 import { DashboardModule } from "./dashboard/dashboard.module";
 import { CompititionsEffects } from "./_store/effects/compititions.effects";
+import { NgApexchartsModule } from "ng-apexcharts";
 
 const environment = {
   production: false
@@ -148,6 +146,7 @@ const customNotifierOptions: NotifierOptions = {
     SuperAdminModule,
     CoachModule,
     FontAwesomeModule,
+    NgApexchartsModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([

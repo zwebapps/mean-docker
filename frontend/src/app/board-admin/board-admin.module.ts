@@ -24,10 +24,10 @@ import { NgMultiSelectDropDownModule } from "ng-multiselect-dropdown";
 import { NgbModule, NgbNavModule } from "@ng-bootstrap/ng-bootstrap";
 import { AdminSharedModule } from "../admin-shared/admin-shared.module";
 import { DashboardModule } from "../dashboard/dashboard.module";
-import { AdminTopFiltersComponent } from "./admin-top-filters/admin-top-filters.component";
 import { AdminCompetitionComponent } from "../admin-shared/admin-competition/admin-competition.component";
 import { ComponentsModule } from "../component/component.module";
 import { AdminPlayersComponent } from "./admin-players/admin-players.component";
+import { NgApexchartsModule } from "ng-apexcharts";
 
 /**
  * Custom angular notifier options
@@ -138,6 +138,7 @@ const adminRoutes: Routes = [
 @NgModule({
   declarations: [AdminPlayersComponent],
   imports: [
+    NgApexchartsModule,
     NgbModule,
     AdminSharedModule,
     CommonModule,

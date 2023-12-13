@@ -35,7 +35,7 @@
               "src/assets/scss/_variable.scss",
               "src/assets/scss/core/theme-colors/_theme-colors.scss"
             ],
-            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"],
+            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.bundle.min.js", "node_modules/apexcharts/dist/apexcharts.min.js"],
             "vendorChunk": true,
             "extractLicenses": false,
             "buildOptimizer": false,
@@ -122,7 +122,7 @@
             "karmaConfig": "karma.conf.js",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.scss"],
-            "scripts": []
+            "scripts": ["node_modules/apexcharts/dist/apexcharts.min.js"]
           }
         },
         "e2e": {
