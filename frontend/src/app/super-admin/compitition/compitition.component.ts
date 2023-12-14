@@ -7,8 +7,8 @@ import { Country, Countries } from "src/app/_shared/countries.data";
 @Component({
   selector: "app-compitition",
   templateUrl: "./compitition.component.html",
-  styleUrls: ["./compitition.component.scss"],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ["./compitition.component.scss"]
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CompititionComponent implements OnInit {
   @ViewChild("myTable") table: any;

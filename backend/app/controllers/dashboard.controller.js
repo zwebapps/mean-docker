@@ -10,7 +10,7 @@ const Player = db.player;
 exports.getDashboardContents = async (req, resp, next) => {
     try {
         console.log(req.user,":::::: req");
-        const academies = await Academy.find({}).populate("coach").exec();
+        const academies = await Academy.find({}).populate(["coach"]).exec();
         const competitions = await Competition.find({}).populate(["organiser", "user_id"]).exec();
         const fixtures = await Fixture.find({}).populate(["league", "homeTeam", "awayTeam", "user_id"]);
         const leagues = await League.find({});

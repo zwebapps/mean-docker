@@ -26,6 +26,7 @@ import { SuperAdminComponent } from "./super-admin/super-admin.component";
 import { CompititionComponent } from "./compitition/compitition.component";
 import { DashboardComponent } from "../dashboard/dashboard.component";
 import { DashboardModule } from "../dashboard/dashboard.module";
+import { NgxChartsModule } from "@swimlane/ngx-charts";
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -130,6 +131,7 @@ const superAdminRoutes: Routes = [
 @NgModule({
   declarations: [SuperAdminComponent, CompititionComponent, AnalyticsComponent],
   imports: [
+    NgxChartsModule,
     NgxDatatableModule,
     CommonModule,
     NgbModule,

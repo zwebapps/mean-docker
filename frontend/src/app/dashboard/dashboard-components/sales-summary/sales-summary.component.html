@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-12 col-lg-6">
+  <div class="col-12 col-lg-12">
     <div class="card">
       <div class="card-body">
         <div class="d-md-flex align-items-center">
@@ -11,29 +11,43 @@
         <div class="row mt-4">
           <!-- column -->
           <div class="col-12 col-lg-12">
-            <div class="d-flex flex-column w-100" *ngIf="pieChartOptions">
-              <apx-chart
-                [series]="pieChartOptions.series"
-                [chart]="pieChartOptions.chart"
-                [xaxis]="pieChartOptions.xaxis"
-                [yaxis]="pieChartOptions.yaxis"
-                [grid]="pieChartOptions.grid"
-                [stroke]="pieChartOptions.stroke"
-                [tooltip]="pieChartOptions.tooltip"
-                [dataLabels]="pieChartOptions.dataLabels"
-                [legend]="pieChartOptions.legend"
-                [colors]="pieChartOptions.colors"
-                [markers]="pieChartOptions.markers"
-              >
-              </apx-chart>
-            </div>
+            <!-- <ngx-charts-bar-vertical
+              [view]="view"
+              [scheme]="colorScheme"
+              [results]="chartData"
+              [gradient]="gradient"
+              [xAxis]="showXAxis"
+              [yAxis]="showYAxis"
+              [legend]="showLegend"
+              [showXAxisLabel]="showXAxisLabel"
+              [showYAxisLabel]="showYAxisLabel"
+              [xAxisLabel]="xAxisLabel"
+              [yAxisLabel]="yAxisLabel"
+              (select)="onSelect($event)"
+            >
+            </ngx-charts-bar-vertical> -->
+            <ngx-charts-bar-vertical
+              [view]="view"
+              [scheme]="colorScheme"
+              [results]="chartData"
+              [gradient]="gradient"
+              [xAxis]="showXAxis"
+              [yAxis]="showYAxis"
+              [legend]="showLegend"
+              [showXAxisLabel]="showXAxisLabel"
+              [showYAxisLabel]="showYAxisLabel"
+              [xAxisLabel]="xAxisLabel"
+              [yAxisLabel]="yAxisLabel"
+              (select)="onSelect($event)"
+            >
+            </ngx-charts-bar-vertical>
           </div>
           <!-- column -->
         </div>
       </div>
     </div>
   </div>
-  <div class="col-12 col-lg-6">
+  <div class="col-12 col-lg-12">
     <div class="card">
       <div class="card-body">
         <div class="d-md-flex align-items-center">
@@ -45,91 +59,21 @@
         <div class="row mt-4">
           <!-- column -->
           <div class="col-12 col-lg-12">
-            <div class="d-flex flex-column w-100" *ngIf="barCharOptions">
-              <apx-chart
-                [series]="barCharOptions.series"
-                [chart]="barCharOptions.chart"
-                [xaxis]="barCharOptions.xaxis"
-                [yaxis]="barCharOptions.yaxis"
-                [grid]="barCharOptions.grid"
-                [stroke]="barCharOptions.stroke"
-                [tooltip]="barCharOptions.tooltip"
-                [dataLabels]="barCharOptions.dataLabels"
-                [legend]="barCharOptions.legend"
-                [colors]="barCharOptions.colors"
-                [markers]="barCharOptions.markers"
+            <div class="d-flex flex-column w-100">
+              <ngx-charts-pie-chart
+                [view]="view"
+                [scheme]="colorScheme"
+                [results]="chartData"
+                [gradient]="gradient"
+                [legend]="showLegend"
+                [legendPosition]="legendPosition"
+                [labels]="showLabels"
+                [doughnut]="isDoughnut"
+                (select)="onSelect($event)"
+                (activate)="onActivate($event)"
+                (deactivate)="onDeactivate($event)"
               >
-              </apx-chart>
-            </div>
-          </div>
-          <!-- column -->
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-12 col-lg-6">
-    <div class="card">
-      <div class="card-body">
-        <div class="d-md-flex align-items-center">
-          <div>
-            <h4 class="card-title">Academies Summary</h4>
-            <h5 class="card-subtitle text-muted">Academies wise Tegistered Teams</h5>
-          </div>
-        </div>
-        <div class="row mt-4">
-          <!-- column -->
-          <div class="col-12 col-lg-12">
-            <div class="d-flex flex-column w-100" *ngIf="salesChartOptions">
-              <apx-chart
-                [series]="salesChartOptions.series"
-                [chart]="salesChartOptions.chart"
-                [xaxis]="salesChartOptions.xaxis"
-                [yaxis]="salesChartOptions.yaxis"
-                [grid]="salesChartOptions.grid"
-                [stroke]="salesChartOptions.stroke"
-                [tooltip]="salesChartOptions.tooltip"
-                [dataLabels]="salesChartOptions.dataLabels"
-                [legend]="salesChartOptions.legend"
-                [colors]="salesChartOptions.colors"
-                [markers]="salesChartOptions.markers"
-              >
-              </apx-chart>
-            </div>
-          </div>
-          <!-- column -->
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="col-12 col-lg-6">
-    <div class="card">
-      <div class="card-body">
-        <div class="d-md-flex align-items-center">
-          <div>
-            <h4 class="card-title">Academies Summary</h4>
-            <h5 class="card-subtitle text-muted">Academies wise Tegistered Teams</h5>
-          </div>
-        </div>
-        <div class="row mt-4">
-          <!-- column -->
-          <div class="col-12 col-lg-12">
-            <div class="d-flex flex-column w-100" *ngIf="donutChartOptions">
-              <apx-chart
-                [series]="donutChartOptions.series"
-                [chart]="donutChartOptions.chart"
-                [xaxis]="donutChartOptions.xaxis"
-                [yaxis]="donutChartOptions.yaxis"
-                [grid]="donutChartOptions.grid"
-                [stroke]="donutChartOptions.stroke"
-                [tooltip]="donutChartOptions.tooltip"
-                [dataLabels]="donutChartOptions.dataLabels"
-                [legend]="donutChartOptions.legend"
-                [colors]="donutChartOptions.colors"
-                [markers]="donutChartOptions.markers"
-              >
-              </apx-chart>
+              </ngx-charts-pie-chart>
             </div>
           </div>
           <!-- column -->

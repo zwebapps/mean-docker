@@ -1,7 +1,6 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CommonModule, LocationStrategy, PathLocationStrategy } from "@angular/common";
-import { NgModule, isDevMode } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { Routes, RouterModule } from "@angular/router";
@@ -48,6 +47,9 @@ import { SuperAdminModule } from "./super-admin/super-admin.module";
 import { DashboardModule } from "./dashboard/dashboard.module";
 import { CompititionsEffects } from "./_store/effects/compititions.effects";
 import { NgApexchartsModule } from "ng-apexcharts";
+import { NgModule, PLATFORM_ID, APP_ID, Inject } from "@angular/core";
+import { isPlatformBrowser } from "@angular/common";
+import { NgxChartsModule } from "@swimlane/ngx-charts";
 
 const environment = {
   production: false
@@ -121,6 +123,7 @@ const customNotifierOptions: NotifierOptions = {
     AdminComponent
   ],
   imports: [
+    NgxChartsModule,
     HttpClientModule,
     BrowserModule.withServerTransition({ appId: "serverApp" }),
     NgxUiLoaderHttpModule.forRoot({ showForeground: true }),
@@ -146,7 +149,7 @@ const customNotifierOptions: NotifierOptions = {
     SuperAdminModule,
     CoachModule,
     FontAwesomeModule,
-    NgApexchartsModule,
+    // NgApexchartsModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([

@@ -138,7 +138,7 @@ const adminRoutes: Routes = [
 @NgModule({
   declarations: [AdminPlayersComponent],
   imports: [
-    NgApexchartsModule,
+    // NgApexchartsModule,
     NgbModule,
     AdminSharedModule,
     CommonModule,

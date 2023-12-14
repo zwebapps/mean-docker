@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.redirectPage();
   }
+
   onSubmit(): void {
     const { username, password } = this.form;
     try {

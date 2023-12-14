@@ -10,26 +10,23 @@ const routes: Routes = [
     path: "profile",
     data: {
       title: "Profile",
-      urls: [{ title: "Profile", url: "/profile" }, { title: "Profile" }],
+      urls: [{ title: "Profile", url: "/profile" }, { title: "Profile" }]
     },
-    component: ProfileComponent,
-  },
+    component: ProfileComponent
+  }
 ];
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-
-
 @NgModule({
   imports: [
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    RouterModule.forChild(routes),
-    NgApexchartsModule,
-  ],
+    RouterModule.forChild(routes)
+    // NgApexchartsModule,
+  ]
 })
 export class ProfileModule {}

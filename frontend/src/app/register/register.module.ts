@@ -10,26 +10,17 @@ const routes: Routes = [
     path: "register",
     data: {
       title: "Register",
-      urls: [{ title: "Register", url: "/register" }, { title: "Register" }],
+      urls: [{ title: "Register", url: "/register" }, { title: "Register" }]
     },
-    component: RegisterComponent,
-  },
+    component: RegisterComponent
+  }
 ];
-
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-
-
 @NgModule({
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    RouterModule.forChild(routes),
-    NgApexchartsModule,
-  ],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterModule.forChild(routes)]
 })
 export class RegisterModule {}

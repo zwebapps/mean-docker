@@ -62,13 +62,6 @@ const customNotifierOptions: NotifierOptions = {
 };
 
 @NgModule({
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    RouterModule.forChild(routes),
-    NotifierModule.withConfig(customNotifierOptions),
-    NgApexchartsModule
-  ]
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, RouterModule.forChild(routes), NotifierModule.withConfig(customNotifierOptions)]
 })
 export class LoginModule {}
