@@ -25,12 +25,7 @@ const roleNames = {
   styleUrls: ["./full.component.scss"]
 })
 export class FullComponent implements OnInit, AfterViewInit {
-  constructor(
-    @Inject(PLATFORM_ID) private platformId: any,
-    public router: Router,
-    private storageService: StorageService,
-    private userService: UserService
-  ) {}
+  constructor(public router: Router, private storageService: StorageService, private userService: UserService) {}
   public isCollapsed = false;
   public innerWidth: number = 0;
   public defaultSidebar: string = "";

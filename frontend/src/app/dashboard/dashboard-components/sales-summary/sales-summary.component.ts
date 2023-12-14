@@ -244,7 +244,9 @@ export class SalesSummaryComponent implements OnInit, OnChanges {
       },
       legend: {
         formatter: function (val, opts) {
-          return val + " - " + opts.w.globals.series[opts.seriesIndex];
+          if (opts.w) {
+            return val + " - " + opts.w.globals.series[opts.seriesIndex];
+          }
         }
       },
       title: {
