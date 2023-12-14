@@ -53,9 +53,9 @@ const db = require("./app/models");
 const Role = db.role;
 const User = db.user;
 const Increment  = db.increment;
-const uri = "mongodb://admin-user:admin-password@0.0.0.0:27017/mean-football?authSource=admin";
+// const uri = "mongodb://admin-user:admin-password@0.0.0.0:27017/mean-football?authSource=admin";
 
-// const uri = "mongodb://admin-user:admin-password@yflpms.com:27017/mean-football?authSource=admin";
+const uri = "mongodb://admin-user:admin-password@yflpms.com:27017/mean-football?authSource=admin";
 
 console.log(uri,"<<<<<<<<<<<<")
 db.mongoose
@@ -104,7 +104,6 @@ function initial() {
   Role.deleteMany({}).then((rest) => {
     console.log(rest.deletedCount,'deleting all')
     Role.estimatedDocumentCount((err, count) => {
-      if(!err && count === 0) {
         new Role({
           _id: ObjectId("6567914b7d2b0a879a8840cc"),
           name: "superadmin"
@@ -144,7 +143,7 @@ function initial() {
           }
           console.log("added 'referee' to roles collection");
         });
-      }
+      
     });
   });
 
@@ -152,16 +151,16 @@ function initial() {
     console.log(roles,'roles');
   })
   // creating yfl super admin
-   User.findOne({ username: 'yflsuperadmin'}).exec().then((users) => {
+   User.findOne({ username: 'yfldubai'}).exec().then((users) => {
     if(!users){
       new User({
-        firstname: 'yfl',
-        lastname: 'superadmin',
-        username: 'yflsuperadmin',
+        firstname: 'super',
+        lastname: 'admin',
+        username: 'yfldubai',
         shortcode: 'yfl',
         compitition: [],
         contact: '+971553762217',
-        password: bcrypt.hashSync('superAdmin@yfl', 8),
+        password: bcrypt.hashSync('yfl2023', 8),
         email: 'admin@yfl.com',
         roles: [ObjectId("6567914b7d2b0a879a8840cc")]
       }).save(err => {
@@ -173,16 +172,16 @@ function initial() {
     }
   })
    // creating yfl admin
-   User.findOne({ username: 'yfladmin'}).exec().then((users) => {
+   User.findOne({ username: 'football@yfl'}).exec().then((users) => {
     if(!users){
       new User({
         firstname: 'yfl',
         lastname: 'admin',
-        username: 'yfladmin',
+        username: 'football@yfl',
         contact: '+971553762217',
         shortcode: 'yfl',
         compitition: [],
-        password: bcrypt.hashSync('Admin@yfl', 8),
+        password: bcrypt.hashSync('yfl2023', 8),
         email: 'admin@yfl.com',
         roles: [ObjectId("5895b74ca84c675de0d3338d")]
       }).save(err => {
