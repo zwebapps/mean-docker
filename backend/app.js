@@ -57,9 +57,8 @@ const Increment  = db.increment;
 
 const uri = "mongodb://admin-user:admin-password@yflpms.com:27017/mean-football?authSource=admin";
 
-console.log(uri,"<<<<<<<<<<<<")
 db.mongoose
-  .connect(uri, {
+  .connect(environment.mongodb.uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
