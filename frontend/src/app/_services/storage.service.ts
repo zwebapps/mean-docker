@@ -12,7 +12,7 @@ const TOKEN = "token";
   providedIn: "root"
 })
 export class StorageService {
-  constructor(@Inject(PLATFORM_ID) private platformId: any, private http: HttpClient, public router: Router) {}
+  constructor(private http: HttpClient, public router: Router) {}
 
   clean(): void {
     if (typeof window !== "undefined") {

@@ -1,18 +1,18 @@
 import { Component } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { NotifierService } from "angular-notifier";
-import { DashboardService } from "src/app/_services/dashbaord.service";
+import { DashboardService } from "../../_services/dashbaord.service";
 import * as UserSelectors from "../../_store/selectors/users.selectors";
 import * as TeamSelectors from "../../_store/selectors/teams.selectors";
-import { topcard, topcards } from "src/app/dashboard/dashboard-components/top-cards/top-cards-data";
-import { environment } from "src/environments/environment";
+import { topcard, topcards } from "../../dashboard/dashboard-components/top-cards/top-cards-data";
+import { environment } from "../../../environments/environment";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { StorageService } from "src/app/_services/storage.service";
-import { CompititionService } from "src/app/_services/compitition.service";
+import { StorageService } from "../../_services/storage.service";
+import { CompititionService } from "../../_services/compitition.service";
 import * as CompititionActions from "../../_store/actions/compititions.actions";
 import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import * as countriesData from "../../../assets/countries/countries.json";
-import { PlayerService } from "src/app/_services/player.service";
+import { PlayerService } from "../../_services/player.service";
 
 @Component({
   selector: "app-admin-competition",

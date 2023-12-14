@@ -11,7 +11,7 @@ import {
   ApexTheme,
   ApexGrid
 } from "ng-apexcharts";
-import { DashboardService } from "src/app/_services/dashbaord.service";
+import { DashboardService } from "../../../_services/dashbaord.service";
 
 export type salesChartOptions = {
   series: ApexAxisChartSeries | any;
@@ -84,7 +84,7 @@ export class SalesSummaryComponent implements OnInit, OnChanges {
   mapDashboardCharts(chartsContents: any) {
     if (chartsContents["teams"]) {
       chartsContents["teams"].forEach((team: any) => {
-        this.teamsdata.counting.push(team.count), this.teamsdata.labels.push(team.teamName);
+        return this.teamsdata.counting.push(team.count), this.teamsdata.labels.push(team.teamName);
       });
       // add data for graph
       this.barCharOptions = {
