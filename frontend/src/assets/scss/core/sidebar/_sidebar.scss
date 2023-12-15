@@ -19,7 +19,7 @@ Main sidebar
   transition: 0.2s ease-in;
   background: linear-gradient(270deg, #2185D0 0%, #42A3EA 99.64%);
   .logo-icon {
-    margin: 40px 40px 120px 40px;
+    margin: 40px 40px 80px 40px;
     height: 90px;
     display: block;
     img{
@@ -37,6 +37,7 @@ Main sidebar
   }
   #sidebarnav{
     overflow: hidden;
+    padding-top: 30px;
   }
 }
 
