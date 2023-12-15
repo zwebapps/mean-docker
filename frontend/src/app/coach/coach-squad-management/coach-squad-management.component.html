@@ -6,12 +6,6 @@
     <p *ngIf="academy">{{ academy.academyName }}</p>
   </div>
 </div>
-<div class="row page-title-bar">
-  <div class="col-lg-12 heading-row">
-    <h3 class="page-title">Teams</h3>
-  </div
-  ><hr>
-</div>
 <div class="row d-flex justify-content-center" *ngIf="teams">
   <ng-container *ngFor="let team of teams">
     <div class="col-lg-3 col-md-4 col-sm-11 m-3">
