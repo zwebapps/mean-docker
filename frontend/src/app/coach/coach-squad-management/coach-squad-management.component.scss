@@ -6,12 +6,14 @@
   .academy-name {
     p {
       color: #fff;
-      font-family: NotoSansRegular;
-      font-size: 35px;
-      font-style: normal;
-      font-weight: 700;
-      line-height: normal;
-      text-transform: uppercase;
+      font-family: 'Anton', sans-serif;
+      font-size: 40px;
+      margin:0 5px 0 0;
+    }
+    .academy-team{
+      color: #FFF;
+      font-family: 'Anton', sans-serif;
+      font-size: 14px;
     }
   }
   .acedmy-plus {

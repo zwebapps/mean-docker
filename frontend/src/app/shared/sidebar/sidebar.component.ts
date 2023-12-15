@@ -34,6 +34,7 @@ export class SidebarComponent implements OnInit, OnChanges {
     } else {
       this.showMenu = element;
     }
+    debugger
     this.sidebarnavItems = this.sidebarnavItems.map((sidebarnavItem) => {
       sidebarnavItem.title === element ? (sidebarnavItem.class = "active") : (sidebarnavItem.class = "");
       return {
