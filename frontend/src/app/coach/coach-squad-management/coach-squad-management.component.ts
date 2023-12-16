@@ -1,11 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output, ViewChild } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
+import { ColumnMode } from "@swimlane/ngx-datatable";
 import { NotifierService } from "angular-notifier";
 import { AcademyService } from "src/app/_services/academy.service";
-import { PlayerService } from "src/app/_services/player.service";
 import { StorageService } from "src/app/_services/storage.service";
 import { TeamService } from "src/app/_services/team.service";
-import { UserService } from "src/app/_services/user.service";
 import { environment } from "src/environments/environment";
 
 @Component({
@@ -14,18 +13,24 @@ import { environment } from "src/environments/environment";
   styleUrls: ["./coach-squad-management.component.scss"]
 })
 export class CoachSquadManagementComponent implements OnInit {
+  @ViewChild("myTable") table: any;
+  options = {};
+  columns: any = [{ prop: "firstname" }, { name: "lastname" }, { name: "username" }, { name: "email" }];
+  loadingIndicator = true;
+  reorderable = true;
+  ColumnMode = ColumnMode;
   private notifier: NotifierService;
   private loggedInCoach: any = {};
   public academy: any;
   public teams: any = [];
   apiURL = environment.apiURL;
   constructor(
-    notifier: NotifierService,
     private academyService: AcademyService,
     private teamService: TeamService,
     private router: Router,
     public activatedRoute: ActivatedRoute,
-    private storagService: StorageService
+    private storagService: StorageService,
+    notifier: NotifierService
   ) {
     this.notifier = notifier;
     // get the logged in coach
