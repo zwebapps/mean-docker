@@ -7,7 +7,21 @@
     <p class="academy-team">TEAM: {{ team.teamName }}</p>
   </div>
 </div>
-<div class="row">
+<ng-template #content let-modal size="950px">
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Contact Us</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <app-contact-admin></app-contact-admin>
+  </div>
+  <div class="modal-footer">
+    <div class="justify-content-center">
+      <button type="button" class="btn btn-outline-dark">Update Competition</button>
+    </div>
+  </div>
+</ng-template>
+<!-- <div class="row">
   <form>
     <div class="row justify-content-start" *ngIf="leagues">
       <ng-container *ngFor="let league of leagues; let i = index">
@@ -29,21 +43,14 @@
         </div>
       </ng-container>
     </div>
-    <!-- <div class="row d-flex justify-content-end">
-        <div class="col-4">
-          <div class="league-btn-lable">
-            <button type="submit" class="btn text-center">Sign in</button>
-          </div>
-        </div>
-      </div> -->
   </form>
-</div>
+</div> -->
 
-<div class="row">
+<!-- <div class="row">
   <br />
   <hr />
-</div>
-<div class="row text-center mb-4">
+</div> -->
+<!-- <div class="row text-center mb-4">
   <div class="d-flex justify-content-end">
     <div class="col-12 col-lg-6 pe-5">
       <h2 class="me-5">
@@ -54,14 +61,14 @@
       <h2 *ngIf="selectedLeague">{{ selectedLeague.leagueName ? selectedLeague.leagueName : "No League Selected" }}</h2>
     </div>
   </div>
-</div>
-<div class="row page-title-bar">
+</div> -->
+<!-- <div class="row page-title-bar">
   <div class="col-lg-12 heading-row">
     <h3 class="page-title">Coaches Details</h3>
   </div>
   <hr />
-</div>
-<div class="row">
+</div> -->
+<!-- <div class="row">
   <div class="col-lg-3 col-sm-12 col-xs-12 col-md-3">
     <div class="form-group">
       <label for="name" class="control-label">Name</label>
@@ -96,13 +103,7 @@
       />
     </div>
   </div>
-</div>
-<div class="row page-title-bar">
-  <div class="col-lg-12 heading-row">
-    <h3 class="page-title">Squad</h3>
-  </div>
-  <hr />
-</div>
+</div> -->
 <div class="row squads pt-3">
   <div class="col-12 col-md-6 col-lg-8">
     <div class="row pt-3">
@@ -127,21 +128,21 @@
           <input type="file" name="file" (change)="getImages($event)" accept="image/*" multiple />
         </div>
       </div> -->
-      <div class="col-12 col-md-6 col-lg-4 mb-3">
+      <!-- <div class="col-12 col-md-6 col-lg-4 mb-3">
         <div class="btn squads-lable col-12" (click)="togglePlayerForm()">
           <span class="squads-text">Add Player</span>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
-  <div class="col-12 col-md-6 col-lg-4 justify-content-around">
+  <!-- <div class="col-12 col-md-6 col-lg-4 justify-content-around">
     <div class="btn squads-lable col-12" (click)="onContactUs()">
       <span class="squads-text">Contact Us</span>
     </div>
     <div class="col-12">
       <p>To move a player or player doesn't have a EID</p>
     </div>
-  </div>
+  </div> -->
 </div>
 <div class="row" *ngIf="displayAddPlayer">
   <form [formGroup]="playerForm" class="justify-content-around" method="post" enctype="multipart/form-data" (ngSubmit)="onFormSubmit()">
@@ -418,7 +419,17 @@
 </div>
 <div class="row page-title-bar">
   <div class="col-lg-6">
-    <h3 class="page-title">Filters</h3>
+    <div class="col-12 col-lg-9 d-flex justify-content-start">
+      <div class="col-4 col-lg-4 mb-3">
+        <button class="btn btn-primary pe-2"><i class="bi bi-filter pe-3"></i>Filters</button>
+      </div>
+      <div class="col-8 col-lg-10 mb-3">
+        <button class="btn btn-primary" (click)="togglePlayerForm()">Add Player</button>
+      </div>
+      <div class="col-8 col-lg-10 mb-3">
+        <button class="btn btn-primary" (click)="open(content)">Contact Us</button>
+      </div>
+    </div>
   </div>
   <div class="col-lg-3">
     <div class="form-group m-2">

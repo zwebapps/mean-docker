@@ -20,6 +20,7 @@ import * as XLSX from "xlsx";
 import * as moment from "moment";
 import { IDropdownSettings } from "ng-multiselect-dropdown";
 import { environment } from "src/environments/environment";
+import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 const { read, write, utils } = XLSX;
 
 @Component({
@@ -62,6 +63,7 @@ export class CoachAcademyDetailsComponent {
   public eidDropdownSettings: IDropdownSettings = {};
   public playerPlayingUp: any = [];
   public playerPlayingUpTeam: any = [];
+  public closeResult: string = "";
   public eidImages: any = {
     eidFront: null,
     eidBack: null
@@ -91,7 +93,8 @@ export class CoachAcademyDetailsComponent {
     notifier: NotifierService,
     private storageService: StorageService,
     private palyerService: PlayerService,
-    private confirmationDialogService: ConfirmationDialogService
+    private confirmationDialogService: ConfirmationDialogService,
+    private modalService: NgbModal
   ) {
     this.notifier = notifier;
     this.submitted = false;
@@ -357,6 +360,25 @@ export class CoachAcademyDetailsComponent {
         this.notifier.notify("error", "Please try again!");
       }
     );
+  }
+  open(content: any) {
+    this.modalService.open(content, { ariaLabelledBy: "modal-basic-title", size: "lg" }).result.then(
+      (result) => {
+        this.closeResult = `Closed with: ${result}`;
+      },
+      (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      }
+    );
+  }
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return "by pressing ESC";
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return "by clicking on a backdrop";
+    } else {
+      return `with: ${reason}`;
+    }
   }
   edit(value: any) {
     this.userService.deleteUser(value).subscribe(
