@@ -6,13 +6,13 @@
   .academy-name {
     p {
       color: #fff;
-      font-family: 'Anton', sans-serif;
+      font-family: "Anton", sans-serif;
       font-size: 40px;
-      margin:0 5px 0 0;
+      margin: 0 5px 0 0;
     }
-    .academy-team{
-      color: #FFF;
-      font-family: 'Anton', sans-serif;
+    .academy-team {
+      color: #fff;
+      font-family: "Anton", sans-serif;
       font-size: 14px;
     }
   }
@@ -59,11 +59,11 @@
 }
 
 form {
-  .input-group {
-    border: 1px black solid;
-    padding: 20px;
-    border-radius: 75px;
-  }
+  // .input-group {
+  //   border: 1px black solid;
+  //   padding: 20px;
+  //   border-radius: 75px;
+  // }
   ::placeholder {
     color: rgba(0, 0, 0, 0.5);
     font-family: NotoSansRegular;
@@ -80,10 +80,6 @@ form {
     border-radius: 35px;
   }
 }
-input.form-control {
-  line-height: 93px;
-}
-
 button.btn-default {
   background: #000000;
   border-radius: 50px !important;
@@ -127,15 +123,15 @@ button.btn-default {
       font-size: 16px;
     }
   }
-  input.form-control {
-    line-height: 16px;
-    margin: 0 30px 0 0;
-    padding: 18px;
-    border-radius: 19px !important;
-    border: 1px solid #000;
-    background: #fff;
-    width: 57%;
-  }
+  // input.form-control {
+  //   line-height: 16px;
+  //   margin: 0 30px 0 0;
+  //   padding: 18px;
+  //   border-radius: 19px !important;
+  //   border: 1px solid #000;
+  //   background: #fff;
+  //   width: 57%;
+  // }
 
   button.btn-default {
     background: #000000;
