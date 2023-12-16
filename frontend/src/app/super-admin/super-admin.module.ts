@@ -27,6 +27,7 @@ import { CompititionComponent } from "./compitition/compitition.component";
 import { DashboardComponent } from "../dashboard/dashboard.component";
 import { DashboardModule } from "../dashboard/dashboard.module";
 import { NgxChartsModule } from "@swimlane/ngx-charts";
+import { SuperAdminDashboardComponent } from "./super-admin-dashboard/super-admin-dashboard.component";
 
 const customNotifierOptions: NotifierOptions = {
   position: {
@@ -73,7 +74,7 @@ const superAdminRoutes: Routes = [
   {
     path: "dashboard",
     canActivate: [AuthGuard],
-    component: DashboardComponent
+    component: SuperAdminDashboardComponent
     // children: [
     // {
     //   path: "compititions",
@@ -129,7 +130,7 @@ const superAdminRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [SuperAdminComponent, CompititionComponent, AnalyticsComponent],
+  declarations: [SuperAdminComponent, CompititionComponent, AnalyticsComponent, SuperAdminDashboardComponent],
   imports: [
     NgxChartsModule,
     NgxDatatableModule,

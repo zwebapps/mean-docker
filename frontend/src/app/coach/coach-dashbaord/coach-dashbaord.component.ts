@@ -53,6 +53,7 @@ export class CoachDashbaordComponent implements OnInit {
   academy: any;
   apiURL = environment.apiURL;
   constructor(
+    private dashboardService: DashboardService,
     notifier: NotifierService,
     private store: Store,
     private activatedRoute: ActivatedRoute,
@@ -83,6 +84,7 @@ export class CoachDashbaordComponent implements OnInit {
         }
       );
     }
+    this.getDashboardContents();
   }
   getTeamsByAcademy(id: any) {
     this.teamService.getTeamsByAcademy(id).subscribe(
@@ -99,4 +101,27 @@ export class CoachDashbaordComponent implements OnInit {
   getImg = (image: string) => {
     return `${this.apiURL}/static/${image}`;
   };
+
+  getDashboardContents() {
+    this.dashboardService.getDashboardContents().subscribe((res: any) => {
+      if (res) {
+        // this.notifier.notify("success", res.message);
+        this.dashboardContents = res.data;
+        this.mapDashboardContents();
+      }
+    });
+  }
+  mapDashboardContents() {
+    if (Object.keys(this.dashboardContents).length > 0) {
+      Object.keys(this.dashboardContents).forEach((key) => {
+        this.blogcards.push({
+          title: key,
+          count: this.dashboardContents[key].length.toString(),
+          image: `${key}.svg`,
+          bgcolor: "success",
+          icon: "bi bi-wallet"
+        });
+      });
+    }
+  }
 }
