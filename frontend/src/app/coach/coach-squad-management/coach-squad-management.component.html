@@ -15,99 +15,101 @@
     </div>
   </ng-container>
 </div> -->
-<div class="row">
-  <form class="form-inline mt-5" method="post" enctype="multipart/form-data">
-    <div class="row">
-      <div class="col-12 col-lg-9 d-flex justify-content-start">
-        <div class="col-4 col-lg-2 mb-3">
-          <button class="btn btn-primary pe-2"><i class="bi bi-filter pe-3"></i>Filters</button>
+<div class="container">
+  <div class="row">
+    <form class="form-inline mt-5" method="post" enctype="multipart/form-data">
+      <div class="row">
+        <div class="col-12 col-lg-9 d-flex justify-content-start">
+          <div class="col-4 col-lg-2 mb-3">
+            <button class="btn btn-primary pe-2"><i class="bi bi-filter pe-3"></i>Filters</button>
+          </div>
         </div>
-      </div>
-      <div class="col-12 col-lg-3">
-        <div class="col-12 mb-3">
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="validationTooltipUsernamePrepend"><i class="bi bi-search"></i></span>
+        <div class="col-12 col-lg-3">
+          <div class="col-12 mb-3">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="validationTooltipUsernamePrepend"><i class="bi bi-search"></i></span>
+              </div>
+              <input
+                type="text"
+                class="form-control"
+                id="validationTooltipUsername"
+                placeholder="Search"
+                aria-describedby="validationTooltipUsernamePrepend"
+                required
+              />
             </div>
-            <input
-              type="text"
-              class="form-control"
-              id="validationTooltipUsername"
-              placeholder="Search"
-              aria-describedby="validationTooltipUsernamePrepend"
-              required
-            />
           </div>
         </div>
       </div>
-    </div>
-  </form>
-</div>
-<div class="row d-flex justify-content-center" *ngIf="teams">
-  <ngx-datatable
-    #myTable
-    class="material"
-    [rows]="teams"
-    [columns]="columns"
-    [columnMode]="ColumnMode.force"
-    [footerHeight]="100"
-    [headerHeight]="50"
-    [limit]="10"
-    rowHeight="auto"
-    [scrollbarH]="false"
-  >
-    <ngx-datatable-column name="Team Name" prop="row">
-      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-        <span onTeamClick="onTeamClick(row)">
-          {{ row.teamName }}
-        </span>
-      </ng-template>
-    </ngx-datatable-column>
-    <ngx-datatable-column name="League/Group" prop="row">
-      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-        <!-- {{ row.leagues | json }} -->
-        <ng-container *ngIf="row.leagues?.length > 0">
-          <ng-container *ngFor="let league of row.leagues">
-            <p>{{ league?.leagueName }}</p>
+    </form>
+  </div>
+  <div class="row d-flex justify-content-center" *ngIf="teams">
+    <ngx-datatable
+      #myTable
+      class="material"
+      [rows]="teams"
+      [columns]="columns"
+      [columnMode]="ColumnMode.force"
+      [footerHeight]="100"
+      [headerHeight]="50"
+      [limit]="10"
+      rowHeight="auto"
+      [scrollbarH]="false"
+    >
+      <ngx-datatable-column name="Team Name" prop="row">
+        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+          <span onTeamClick="onTeamClick(row)">
+            {{ row.teamName }}
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="League/Group" prop="row">
+        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+          <!-- {{ row.leagues | json }} -->
+          <ng-container *ngIf="row.leagues?.length > 0">
+            <ng-container *ngFor="let league of row.leagues">
+              <p>{{ league?.leagueName }}</p>
+            </ng-container>
           </ng-container>
-        </ng-container>
-      </ng-template>
-    </ngx-datatable-column>
+        </ng-template>
+      </ngx-datatable-column>
 
-    <ngx-datatable-column name="" prop="row">
-      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-        <button type="button" class="btn btn-info me-1" (click)="onTeamClick(row)">Sqaud</button>
-      </ng-template>
-    </ngx-datatable-column>
+      <ngx-datatable-column name="" prop="row">
+        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+          <button type="button" class="btn btn-info me-1" (click)="onTeamClick(row)">Sqaud</button>
+        </ng-template>
+      </ngx-datatable-column>
 
-    <ngx-datatable-column name="Actions" prop="row">
-      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-        <button type="button" class="btn btn-primary me-1"><i class="bi bi-pencil-square"></i></button>
-        <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
-      </ng-template>
-    </ngx-datatable-column>
-    <ngx-datatable-footer *ngIf="true">
-      <ng-template
-        ngx-datatable-footer-template
-        let-rowCount="rowCount"
-        let-pageSize="pageSize"
-        let-selectedCount="selectedCount"
-        let-curPage="curPage"
-        let-offset="offset"
-      >
-        <datatable-pager
-          [pagerLeftArrowIcon]="'datatable-icon-left'"
-          [pagerRightArrowIcon]="'datatable-icon-right'"
-          [pagerPreviousIcon]="'datatable-icon-prev'"
-          [pagerNextIcon]="'datatable-icon-skip'"
-          [page]="curPage"
-          [size]="pageSize"
-          [count]="rowCount"
-          [hidden]="!(rowCount / pageSize > 1)"
-          (change)="table.onFooterPage($event)"
+      <ngx-datatable-column name="Actions" prop="row">
+        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+          <button type="button" class="btn btn-primary me-1"><i class="bi bi-pencil-square"></i></button>
+          <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-footer *ngIf="true">
+        <ng-template
+          ngx-datatable-footer-template
+          let-rowCount="rowCount"
+          let-pageSize="pageSize"
+          let-selectedCount="selectedCount"
+          let-curPage="curPage"
+          let-offset="offset"
         >
-        </datatable-pager>
-      </ng-template>
-    </ngx-datatable-footer>
-  </ngx-datatable>
+          <datatable-pager
+            [pagerLeftArrowIcon]="'datatable-icon-left'"
+            [pagerRightArrowIcon]="'datatable-icon-right'"
+            [pagerPreviousIcon]="'datatable-icon-prev'"
+            [pagerNextIcon]="'datatable-icon-skip'"
+            [page]="curPage"
+            [size]="pageSize"
+            [count]="rowCount"
+            [hidden]="!(rowCount / pageSize > 1)"
+            (change)="table.onFooterPage($event)"
+          >
+          </datatable-pager>
+        </ng-template>
+      </ngx-datatable-footer>
+    </ngx-datatable>
+  </div>
 </div>
