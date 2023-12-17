@@ -15,7 +15,7 @@ import { UserService } from "src/app/_services/user.service";
 export class ContactAdminComponent implements OnInit {
   notifier: NotifierService;
   public htmlContent: any = "Any content here";
-  form: FormGroup;
+  contactForm: FormGroup;
   user: any;
   contents: any;
 
@@ -56,11 +56,14 @@ export class ContactAdminComponent implements OnInit {
     private userService: UserService
   ) {
     this.notifier = notifier;
-    this.form = this.formBuilder.group({
+    this.contactForm = this.formBuilder.group({
+      senderEmail: ["", Validators.required],
       heading: ["", Validators.required],
       content: ["", Validators.required],
       status: ["Pending"],
-      user: ["", Validators.required]
+      shortcode: ["", Validators.required],
+      competition: [""],
+      user: [""]
     });
   }
   ngOnInit(): void {
@@ -89,22 +92,26 @@ export class ContactAdminComponent implements OnInit {
   onBlur(event: any) {
     // console.log('blur ' + event);
     // console.log(this.form.value.content)
-    this.form.patchValue({
+    this.contactForm.patchValue({
       user: this.user
     });
   }
 
   submitContents = () => {
-    console.log(this.form.value.content);
-    this.form.patchValue({
+    debugger;
+    console.log(this.contactForm.value.content);
+    this.contactForm.patchValue({
       user: this.user,
-      status: "Pending"
+      status: "Pending",
+      shortcode: this.user.shortcode,
+      compitition: this.user.compitition
     });
-    if (this.form.valid) {
-      this.userService.createContact(this.form.value).subscribe((res: any) => {
+    if (this.contactForm.valid) {
+      debugger;
+      this.userService.createContact(this.contactForm.value).subscribe((res: any) => {
         if (res) {
           this.notifier.notify("success", `Message sent successfully!`);
-          this.form.reset();
+          this.contactForm.reset();
           this.user = this.storageService.getUser();
           if (this.user) {
             this.getAllContents(this.user?.id);
