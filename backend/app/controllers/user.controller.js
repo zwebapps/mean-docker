@@ -177,9 +177,6 @@ exports.updateUser = async (req, resp, next) => {
 };
 
 exports.createContact = async (req, res) => {
-  // get users
-  const emailResponse = await emailUtils.sendEmail(req.body);
-
   if (req.body && req.body["heading"] && req.body["content"].length > 0) {
     const heading = `${new Date().toISOString()}_${req.body["heading"]}`;
     const contactData = new Contact({
@@ -194,13 +191,14 @@ exports.createContact = async (req, res) => {
     });
 
     const savedContact = await contactData.save();
-    res
-      .status(200)
-      .json({
+    // sending email
+    emailUtils.sendEmail(req.body).then((emailResponse) => {
+      return res.status(200).json({
         data: savedContact,
         message: "Contact created successfully!",
         emailResponse
       });
+    });
   } else {
     res.status(200).json({ message: "Data is not provided correctly" });
   }

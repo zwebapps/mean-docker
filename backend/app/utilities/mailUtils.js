@@ -1,5 +1,6 @@
 const Nodemailer = require("nodemailer");
 const path = require("path");
+const fs = require("fs");
 
 /**
  * For this example to work, you need to set up a sending domain,
@@ -10,28 +11,35 @@ const TOKEN = "<YOUR-TOKEN-HERE>";
 const SENDER_EMAIL = "<SENDER@YOURDOMAIN.COM>";
 const RECIPIENT_EMAIL = "<RECIPIENT@EMAIL.COM>";
 
-const transport = Nodemailer.createTransport({
-  host: "sandbox.smtp.mailtrap.io",
-  port: 2525,
-  auth: {
-    user: "93259dc5f68f72",
-    pass: "b17052dc889d7d"
-  }
-});
+// setting up trapmailer.io
+// const transport = Nodemailer.createTransport({
+//   host: "sandbox.smtp.mailtrap.io",
+//   port: 2525,
+//   auth: {
+//     user: "93259dc5f68f72",
+//     pass: "b17052dc889d7d"
+//   }
+// });
 
 exports.sendEmail = async (emailContent) => {
   const { content, senderEmail, heading } = emailContent;
-  const logPath = path.join(__basedir, "public/resources/assets/yfl.jpeg");
+  const logoPath = path.join(__basedir, "public/resources/assets/yfl.jpeg");
+  const logPath = fs.readFileSync(
+    path.join(__basedir, "public/resources/assets/yfl.jpeg")
+  );
   transport
     .sendMail({
       text: heading,
       to: {
         address: "zahoor_ahmed143@hotmail.com",
-        name: "zahoor Ahmed"
+        name: "Club Admin"
       },
       from: {
         address: senderEmail,
-        name: "YFL Club Admin"
+        name: "YFL Administration"
+      },
+      auth: {
+        user: "zdev1989@gmail.com"
       },
       subject: heading ? heading.toUpperCase() : "CLUB ADMIN REQUEST",
       html: `<html lang="en">
@@ -165,7 +173,7 @@ exports.sendEmail = async (emailContent) => {
                         </tr>
 												 <tr>
                               <td width="478" mc:edit="section_one_img">
-                                <img src="${logPath}" alt="" mc:edit="section_one_img">
+                                <img src="cid:yfl-logo" alt=""mc:edit="section_one_img">
                               </td>
                             </tr>
                         <tr>
@@ -178,7 +186,11 @@ exports.sendEmail = async (emailContent) => {
                                   align="center"
                                   mc:edit="section_one"
                                 >
-                                  <h1>${heading}</h1>
+                                  <h1>${
+                                    heading
+                                      ? heading.toUpperCase()
+                                      : "CLUB ADMIN REQUEST"
+                                  }</h1>
                                   <p>${content}</p>
                                 </td>
                                 <td width="20">&nbsp;</td>
@@ -232,7 +244,7 @@ exports.sendEmail = async (emailContent) => {
                         </tr>
                         <tr>
                           <td width="540" align="center" bgcolor="EEEEEE">
-                            Company &copy;
+                            YFL Football League;
                           </td>
                         </tr>
                         <tr height="10">
@@ -276,7 +288,13 @@ exports.sendEmail = async (emailContent) => {
         </center>
       </body>
     </html> `,
-      attachments: []
+      attachments: [
+        {
+          filename: "image.png",
+          path: logoPath,
+          cid: "yfl-logo"
+        }
+      ]
     })
     .then((res) => {
       const { response, rejected } = res;
