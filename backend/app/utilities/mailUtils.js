@@ -1,4 +1,4 @@
-const Nodemailer = require("nodemailer");
+const nodemailer = require("nodemailer");
 const path = require("path");
 const fs = require("fs");
 
@@ -12,14 +12,14 @@ const SENDER_EMAIL = "<SENDER@YOURDOMAIN.COM>";
 const RECIPIENT_EMAIL = "<RECIPIENT@EMAIL.COM>";
 
 // setting up trapmailer.io
-// const transport = Nodemailer.createTransport({
-//   host: "sandbox.smtp.mailtrap.io",
-//   port: 2525,
-//   auth: {
-//     user: "93259dc5f68f72",
-//     pass: "b17052dc889d7d"
-//   }
-// });
+const transport = nodemailer.createTransport({
+  host: "sandbox.smtp.mailtrap.io",
+  port: 2525,
+  auth: {
+    user: "fecdedfa52ee9f",
+    pass: "a4b6757e3e5c20"
+  }
+});
 
 exports.sendEmail = async (emailContent) => {
   const { content, senderEmail, heading } = emailContent;
