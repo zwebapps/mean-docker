@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { ColumnMode } from "@swimlane/ngx-datatable";
 import { UserService } from "src/app/_services/user.service";
@@ -13,7 +13,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { AcademyService } from "src/app/_services/academy.service";
 import { StorageService } from "src/app/_services/storage.service";
 import { TeamService } from "src/app/_services/team.service";
-import { FormControl, FormGroup } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { FixtureService } from "src/app/_services/fixture.service";
 
 @Component({
@@ -21,15 +21,17 @@ import { FixtureService } from "src/app/_services/fixture.service";
   templateUrl: "./referee-dashboard.component.html",
   styleUrls: ["./referee-dashboard.component.scss"]
 })
-export class RefereeDashboardComponent implements OnInit {
+export class RefereeDashboardComponent implements OnInit, AfterViewInit {
   @ViewChild("myTable") table: any;
   private notifier: NotifierService;
+  public submitted = false;
   options = {};
   data: any = [];
   columns: any = [{ prop: "firstname" }, { name: "lastname" }, { name: "dob" }, { name: "email" }];
   loadingIndicator = true;
   reorderable = true;
   ColumnMode = ColumnMode;
+  public userForm: FormGroup;
   public leagues: any = [];
   public homeTeams: any = [];
   public awayTeams: any = [];
@@ -47,32 +49,43 @@ export class RefereeDashboardComponent implements OnInit {
     private store: Store,
     private router: Router,
     public activatedRoute: ActivatedRoute,
-    private fixtureService: FixtureService
+    private fixtureService: FixtureService,
+    private formBuilder: FormBuilder
   ) {
     this.notifier = notifier;
     this.getFixturesFromStore();
-    this.fixtureForm = new FormGroup({});
+    // this.fixtureForm = new FormGroup({});
   }
   ngOnInit(): void {
     // get ref details
     this.refereeDetails = this.storageService.getUser();
-    this.fixtureForm = new FormGroup({
-      league: new FormControl(""),
-      homeTeam: new FormControl(""),
-      awayTeam: new FormControl("")
+    this.fixtureForm = this.formBuilder.group({
+      matchDate: ["", Validators.required],
+      league: ["", Validators.required],
+      homeTeam: ["", Validators.required],
+      awayTeam: ["", Validators.required]
     });
     // now get the leagues and map
     this.store.select(LeagueSelectors.getLeagues).subscribe((leagues) => {
       if (leagues) {
-        this.leagues = leagues;
+        this.leagues = leagues.slice().sort((a, b) => {
+          const aNumber = parseInt(this.getLeagueNo(a?.leagueName));
+          const bNumber = parseInt(this.getLeagueNo(b?.leagueName));
+
+          if (isNaN(aNumber) || isNaN(bNumber)) {
+            return a?.leagueName.localeCompare(b?.leagueName);
+          }
+
+          return aNumber - bNumber;
+        });
       }
     });
     // now get the leagues and map
     this.store.select(TeamSelectors.getTeams).subscribe((teams) => {
-      if (teams) {
-        this.allTeams = teams;
-        this.homeTeams = teams;
-        this.awayTeams = teams;
+      if (teams.length > 0) {
+        this.allTeams = teams.slice().sort((a, b) => a?.teamName?.localeCompare(b?.teamName));
+        this.homeTeams = teams.slice().sort((a, b) => a?.teamName?.localeCompare(b?.teamName));
+        this.awayTeams = teams.slice().sort((a, b) => a?.teamName?.localeCompare(b?.teamName));
       }
     });
 
@@ -85,7 +98,18 @@ export class RefereeDashboardComponent implements OnInit {
       }
     });
   }
+  ngAfterViewInit(): void {
+    this.setMinDate();
+  }
 
+  getLeagueNo(leagueName: any) {
+    let nameArray = leagueName.match(/(\d+)/);
+    return nameArray ? nameArray.find((nm: any) => !isNaN(nm)) : null;
+  }
+
+  get f() {
+    return this.fixtureForm.controls;
+  }
   filterTeams = (event: any, type: string) => {
     const tm = event.target.value;
     if (type === "home") {
@@ -97,9 +121,23 @@ export class RefereeDashboardComponent implements OnInit {
       this.homeTeams = this.homeTeams.filter((team: any) => team._id !== tm);
     }
   };
+  setMinDate = () => {
+    const [today] = new Date().toISOString().split("T");
+    const maxDate = new Date();
+    maxDate.setDate(maxDate.getDate() + 120);
+    const [maxDateFormatted] = maxDate.toISOString().split("T");
+
+    const dateInput = document.getElementById("currentDate");
+    dateInput.setAttribute("min", today);
+    dateInput.setAttribute("max", maxDateFormatted);
+  };
   onFormSubmit() {
+    const loggedInRef = this.storageService.getUser();
+    console.log(this.fixtureForm.value);
+    this.submitted = true;
     if (this.fixtureForm.invalid) {
       this.notifier.notify("error", "Please select all the fields");
+      return;
     } else {
       // check if both teams are same
       if (this.fixtureForm.value.homeTeam === this.fixtureForm.value.awayTeam) {
@@ -107,11 +145,14 @@ export class RefereeDashboardComponent implements OnInit {
         return;
       }
       const fixtureObj = {
+        matchDate: this.fixtureForm.value.matchDate,
         league: this.fixtureForm.value.league,
         homeTeam: this.fixtureForm.value.homeTeam,
         awayTeam: this.fixtureForm.value.awayTeam,
+        shortcode: loggedInRef?.shortcode,
+        compitition: loggedInRef?.compitition,
         user: {
-          createdBy: this.storageService.getUser().id
+          createdBy: loggedInRef?.id
         }
       };
       this.fixtureService.createFixture(fixtureObj).subscribe((res: any) => {

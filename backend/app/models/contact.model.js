@@ -3,6 +3,10 @@ const mongoose = require("mongoose");
 const Contact = mongoose.model(
   "Contact",
   new mongoose.Schema({
+    senderEmail: {
+      type: String,      
+      required: true
+    },
     heading: {
       type: String,      
       required: true

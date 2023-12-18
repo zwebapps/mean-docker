@@ -37,6 +37,10 @@ export class PlayerService {
     return this.http.post(`${API_URL}/player/update/${id}`, playerData, { headers: this.headers });
   }
 
+  updateMVP(id: any, playerData): Observable<any> {
+    return this.http.post(`${API_URL}/player/mvp/${id}`, playerData, { headers: this.headers });
+  }
+
   getPlayerById(id: any): Observable<any> {
     return this.http.get(`${API_URL}/player/academy/${id}`, { headers: this.headers });
   }
