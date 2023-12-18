@@ -98,7 +98,6 @@ export class ContactAdminComponent implements OnInit {
   }
 
   submitContents = () => {
-    debugger;
     console.log(this.contactForm.value.content);
     this.contactForm.patchValue({
       user: this.user,
@@ -107,7 +106,6 @@ export class ContactAdminComponent implements OnInit {
       compitition: this.user.compitition
     });
     if (this.contactForm.valid) {
-      debugger;
       this.userService.createContact(this.contactForm.value).subscribe((res: any) => {
         if (res) {
           this.notifier.notify("success", `Message sent successfully!`);

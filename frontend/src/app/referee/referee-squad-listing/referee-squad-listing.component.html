@@ -2,7 +2,7 @@
   <ngx-datatable
     #myTable
     class="material fullscreen"
-    [rows]="fixtures"
+    [rows]="fixtureProvided"
     [columns]="columns"
     [columnMode]="ColumnMode.force"
     [footerHeight]="100"
@@ -24,9 +24,14 @@
         </div>
       </ng-template>
     </ngx-datatable-row-detail>
-    <ngx-datatable-column name="Fixture" prop="row" width="50">
+    <!-- <ngx-datatable-column name="Fixture" prop="row" width="50">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
         {{ rowIndex + 1 }}
+      </ng-template>
+    </ngx-datatable-column> -->
+    <ngx-datatable-column name="Fixture Date" prop="row" size="300">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+        {{ row?.matchDate | date : "dd/MM/yyyy" }}
       </ng-template>
     </ngx-datatable-column>
     <ngx-datatable-column name="League" prop="row">
@@ -39,15 +44,35 @@
         {{ row.homeTeam?.teamName }}
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column>
-      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" id="competed"> VS </ng-template>
+    <ngx-datatable-column prop="row">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" id="competed">
+        <mat-form-field class="justify-content-between d-flex">
+          <input
+            type="text"
+            style="width: 40px"
+            [value]="row.homeTeamGoals"
+            (keyup)="addGoals($event, rowIndex, 'homeTeamGoals')"
+            class="form-control"
+            [disabled]="!isEditable[rowIndex]"
+          />
+          <sapn> VS</sapn>
+          <input
+            type="text"
+            style="width: 40px"
+            [value]="row.awayTeamGoals"
+            (keyup)="addGoals($event, rowIndex, 'awayTeamGoals')"
+            class="form-control"
+            [disabled]="!isEditable[rowIndex]"
+          />
+        </mat-form-field>
+      </ng-template>
     </ngx-datatable-column>
     <ngx-datatable-column name="Team 2" prop="row">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
         {{ row.awayTeam?.teamName }}
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="Actions" prop="row">
+    <ngx-datatable-column name="Actions" prop="row" style="width: 275px !important">
       <ng-template
         ngx-datatable-cell-template
         let-rowIndex="rowIndex"
@@ -60,6 +85,14 @@
           <button type="button" class="btn btn-primary gtn-lg d-inline list-btn me-1" (click)="toggleExpandRow(row)">See Squad List</button>
           <button type="button" class="btn btn-danger d-inline btn-lg delet-btn" (click)="deleteFixture(row['_id'])">
             <i class="bi bi-trash"></i>
+          </button>
+          <button
+            type="button"
+            class="btn btn-danger d-inline btn-lg delet-btn"
+            (click)="this.isEditable[rowIndex] = !this.isEditable[rowIndex]"
+          >
+            <i class="fa fa-pencil" title="Modify" *ngIf="!this.isEditable[rowIndex]"></i>
+            <i class="fa fa-floppy-o" *ngIf="this.isEditable[rowIndex]" title="Save" (click)="save(row, rowIndex)"></i>
           </button>
         </div>
       </ng-template>

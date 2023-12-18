@@ -144,7 +144,6 @@ export class RefereeDashboardComponent implements OnInit, AfterViewInit {
         this.notifier.notify("error", "Both teams should be different");
         return;
       }
-      debugger;
       const fixtureObj = {
         matchDate: this.fixtureForm.value.matchDate,
         league: this.fixtureForm.value.league,

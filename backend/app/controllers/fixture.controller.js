@@ -100,7 +100,9 @@ exports.forCompitition = async (req, resp, next) => {
 exports.updateFixture = async (req, resp, next) => {
   try {
     if (req.params && req.params.id) {
-      let fetchFixture = await Fixture.find({ _id: ObjectId(req.params.id) });
+      let fetchFixture = await Fixture.findOne({
+        _id: ObjectId(req.params.id)
+      });
 
       if (!fetchFixture)
         return resp.status(404).json({ msg: "Fixture record not found" });

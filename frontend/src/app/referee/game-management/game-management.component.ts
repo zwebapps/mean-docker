@@ -81,4 +81,13 @@ export class GameManagementComponent implements OnInit {
       }
     );
   }
+  updateFixture(fixture: any) {
+    console.log("updateFixture", fixture);
+    this.fixtureService.updateFixture(fixture._id, fixture).subscribe((result: any) => {
+      if (result) {
+        this.notifier.notify("success", "Fixture updated successfully");
+        this.fetchFixtures();
+      }
+    });
+  }
 }

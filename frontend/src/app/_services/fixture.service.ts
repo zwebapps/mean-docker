@@ -29,4 +29,7 @@ export class FixtureService {
   deleteFixture(id: any): Observable<any> {
     return this.http.post(`${API_URL}/fixture/delete/${id}`, { headers: this.headers });
   }
+  updateFixture(id: any, fixtureDate: any): Observable<any> {
+    return this.http.post(`${API_URL}/fixture/update/${id}`, fixtureDate, { headers: this.headers });
+  }
 }

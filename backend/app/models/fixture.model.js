@@ -18,9 +18,19 @@ const Fixture = mongoose.model(
       ref: "Team",
       required: true
     },
+    homeTeamGoals: {
+      type: Number,
+      default: 0,
+      required: true
+    },
     awayTeam: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Team",
+      required: true
+    },
+    awayTeamGoals: {
+      type: Number,
+      default: 0,
       required: true
     },
     compitition: {
