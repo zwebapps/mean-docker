@@ -4,96 +4,104 @@ const Player = mongoose.model(
   "Player",
   new mongoose.Schema({
     firstName: {
-        type: String,
-        required: true
+      type: String,
+      required: true
     },
     lastName: {
-        type: String,
-        required: true
+      type: String,
+      required: true
     },
     dob: {
-        type: Number,
-        required: true
+      type: Number,
+      required: true
     },
     shortcode: {
-        type: String,
-      },
+      type: String
+    },
     gender: {
-        type: String,
-        required: true
+      type: String,
+      required: true
     },
     squadNo: {
-        type: Number,
-        required: true
+      type: Number,
+      required: true
     },
     league: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "League"
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "League"
     },
     academy: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Academy"
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Academy"
     },
     team: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Team"
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Team"
     },
     compitition: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Compitition"
-      },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Compitition"
+    },
     playerNo: {
-        type: Number,
-        unique : true,
-        required: true
+      type: Number,
+      unique: true,
+      required: true
     },
     emiratesIdNo: {
-        type: String,
-        unique : true,
-        required: true
+      type: String,
+      unique: true,
+      required: true
     },
     eidFront: {
-        type: String,
-        default: null,
-        required: false
+      type: String,
+      default: null,
+      required: false
     },
     eidBack: {
-        type: String,
-        default: null,
-        required: false
+      type: String,
+      default: null,
+      required: false
     },
     playerImage: {
-        type: String,
-        default: null,
-        required: false
+      type: String,
+      default: null,
+      required: false
     },
     playerStatus: {
-        type: String,
-        default: null,
-        required: false
+      type: String,
+      default: null,
+      required: false
     },
     compitition: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Compitition"
-      },
-    playingUp: [{
-        type: mongoose.Schema.Types.ObjectId,
-        default: null,
-        required: false
-    }],
-    playingUpTeam: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Compitition"
+    },
+    playingUp: [
+      {
         type: mongoose.Schema.Types.ObjectId,
         default: null,
         required: false
-    }],
-    user:  {
+      }
+    ],
+    playingUpTeam: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        default: null,
+        required: false
+      }
+    ],
+    mvp: {
+      type: Boolean,
+      default: false
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
     },
     createdAt: {
-        type: Date,
-        default: Date.now,
-        required: false
+      type: Date,
+      default: Date.now,
+      required: false
     }
   })
 );

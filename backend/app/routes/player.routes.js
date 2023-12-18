@@ -1,47 +1,73 @@
 const { authJwt } = require("../middlewares/");
 const player = require("../controllers/player.controller");
 
-module.exports = function(app) {
-    app.use(function(req, res, next) {
-      res.header(
-        "Access-Control-Allow-Headers",
-        "Origin, Content-Type, Accept"
-      );
-      next();
-    });
+module.exports = function (app) {
+  app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
+    next();
+  });
 
-app.post("/player/create", authJwt.isAuthenticated, player.createPlayer);
+  app.post("/player/create", authJwt.isAuthenticated, player.createPlayer);
 
-app.get("/player/all", authJwt.isAuthenticated, player.getAllPlayers);
+  app.get("/player/all", authJwt.isAuthenticated, player.getAllPlayers);
 
-app.post("/player/approve/:id", authJwt.isAuthenticated, player.approvePlayer);
+  app.post(
+    "/player/approve/:id",
+    authJwt.isAuthenticated,
+    player.approvePlayer
+  );
 
-app.post("/player/update/:id", authJwt.isAuthenticated, player.updatePlayer);
+  app.post("/player/update/:id", authJwt.isAuthenticated, player.updatePlayer);
 
-app.post("/player/delete/:id", authJwt.isAuthenticated, player.deletePlayer);
+  app.post("/player/mvp/:id", authJwt.isAuthenticated, player.upMvp);
 
-app.post("/player/delete/all", authJwt.isAuthenticated, player.deleteAllPlayers);
+  app.post("/player/delete/:id", authJwt.isAuthenticated, player.deletePlayer);
 
-app.get("/player/academy/:id", authJwt.isAuthenticated, player.playerByAcademy);
+  app.post(
+    "/player/delete/all",
+    authJwt.isAuthenticated,
+    player.deleteAllPlayers
+  );
 
-app.post("/player/bulkuploads", authJwt.isAuthenticated, player.bulkUploadPlayers);
+  app.get(
+    "/player/academy/:id",
+    authJwt.isAuthenticated,
+    player.playerByAcademy
+  );
 
-app.post("/player/upload", authJwt.isAuthenticated, player.upload);
+  app.post(
+    "/player/bulkuploads",
+    authJwt.isAuthenticated,
+    player.bulkUploadPlayers
+  );
 
-app.get("/player/getuploads", authJwt.isAuthenticated, player.getListFiles);
+  app.post("/player/upload", authJwt.isAuthenticated, player.upload);
 
-app.get("/player/:id", authJwt.isAuthenticated, player.playerByIdOrEID);
+  app.get("/player/getuploads", authJwt.isAuthenticated, player.getListFiles);
 
-app.get("/player/team/:id", authJwt.isAuthenticated, player.playerByTeam);
+  app.get("/player/:id", authJwt.isAuthenticated, player.playerByIdOrEID);
 
-app.get("/player/getuploads/:id", authJwt.isAuthenticated, player.download);
+  app.get("/player/team/:id", authJwt.isAuthenticated, player.playerByTeam);
 
-app.post("/player/multiupload", authJwt.isAuthenticated, player.multiUpload);
+  app.get("/player/getuploads/:id", authJwt.isAuthenticated, player.download);
 
-app.post("/player/approvemulitple", authJwt.isAuthenticated, player.approveMulitplePlayers);
+  app.post("/player/multiupload", authJwt.isAuthenticated, player.multiUpload);
 
-app.get("/player/forcompitition/:compitition", authJwt.isAuthenticated, player.forCompitition);
+  app.post(
+    "/player/approvemulitple",
+    authJwt.isAuthenticated,
+    player.approveMulitplePlayers
+  );
 
-app.get("/player/forshortcode/:shortcode", authJwt.isAuthenticated, player.forShortCode);
+  app.get(
+    "/player/forcompitition/:compitition",
+    authJwt.isAuthenticated,
+    player.forCompitition
+  );
 
+  app.get(
+    "/player/forshortcode/:shortcode",
+    authJwt.isAuthenticated,
+    player.forShortCode
+  );
 };
