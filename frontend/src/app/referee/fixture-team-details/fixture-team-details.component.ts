@@ -69,4 +69,15 @@ export class FixtureTeamDetailsComponent implements OnInit {
       }
     );
   }
+  addMvp = (player: any) => {
+    this.playerService
+      .updateMVP(player._id, {
+        mvp: player.mvp
+      })
+      .subscribe((res: any) => {
+        if (res) {
+          this.notifier.notify("success", res.message);
+        }
+      });
+  };
 }

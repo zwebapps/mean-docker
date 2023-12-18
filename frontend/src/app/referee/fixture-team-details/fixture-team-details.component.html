@@ -17,10 +17,10 @@
   <table class="table table-scroll table-striped">
     <thead>
       <tr>
-        <th>Player Name</th>
-        <th>Squad No</th>
-        <th>Date of Birth</th>
-        <th>Emirates ID</th>
+        <th>Name</th>
+        <th>Squad</th>
+        <th>DOB</th>
+        <th>EID</th>
         <th>MVP</th>
       </tr>
     </thead>
@@ -36,7 +36,7 @@
           </div>
         </td>
         <td>
-          <!-- <input type="checkbox" [(ngModel)]="player?.mvp" /> -->
+          <input type="checkbox" [(ngModel)]="player.mvp" [checked]="player.mvp" (change)="addMvp(player)" />
         </td>
       </tr>
     </tbody>
