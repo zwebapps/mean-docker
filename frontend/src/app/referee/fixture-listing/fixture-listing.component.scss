@@ -1,7 +1,6 @@
 .ngx-datatable.material {
   background: none !important;
   box-shadow: none !important;
-
 }
 :host ::ng-deep .datatable-header-cell {
   font-size: 16px;
@@ -13,7 +12,7 @@
   padding: 10px !important;
   border: 1px dotted #000 !important;
   margin: 20px;
-  border-radius: 20px;;
+  border-radius: 20px;
 }
 :host ::ng-deep .datatable-body-cell:nth-child(4) {
   width: 60px !important;
@@ -23,16 +22,16 @@
 :host ::ng-deep .datatable-body-cell:first-child {
   border: 1px dotted #000 !important;
   border-radius: 10px;
-  width: 60px !important;
+  width: 110px !important;
 }
 :host ::ng-deep .datatable-body-cell:last-child {
   padding: 10px !important;
   border: none !important;
-  margin: 20px;
-  border-radius: 20px;;
+  margin: 25px;
+  border-radius: 20px;
 }
 :host ::ng-deep .datatable-coloumn {
- background-color: #000;
+  background-color: #000;
 }
 
 :host ::ng-deep .datatable-body-cell-label {
