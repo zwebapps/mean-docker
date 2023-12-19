@@ -82,15 +82,13 @@
         let-expanded="expanded"
       >
         <div class="d-flex">
-          <button type="button" class="btn btn-primary gtn-lg d-inline list-btn me-1" (click)="toggleExpandRow(row)">See Squad List</button>
-          <button type="button" class="btn btn-danger d-inline btn-lg delet-btn" (click)="deleteFixture(row['_id'])">
+          <button type="button" class="btn btn-info gtn-lg d-inline list-btn me-1" (click)="toggleExpandRow(row)" title="View Squad">
+            <i class="bi bi-eye-fill"></i>
+          </button>
+          <button type="button" class="btn btn-danger d-inline me-1" (click)="deleteFixture(row['_id'])">
             <i class="bi bi-trash"></i>
           </button>
-          <button
-            type="button"
-            class="btn btn-danger d-inline btn-lg delet-btn"
-            (click)="this.isEditable[rowIndex] = !this.isEditable[rowIndex]"
-          >
+          <button type="button" class="btn btn-primary d-inline" (click)="this.isEditable[rowIndex] = !this.isEditable[rowIndex]">
             <i class="fa fa-pencil" title="Modify" *ngIf="!this.isEditable[rowIndex]"></i>
             <i class="fa fa-floppy-o" *ngIf="this.isEditable[rowIndex]" title="Save" (click)="save(row, rowIndex)"></i>
           </button>

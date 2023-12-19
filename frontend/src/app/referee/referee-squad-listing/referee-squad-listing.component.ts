@@ -55,7 +55,7 @@ export class RefereeSquadListingComponent implements OnInit, OnChanges {
       ...this.fixtureUpdatedGoals[rowIndex]
     };
     this.editFixture.emit(fixtureObj);
-    this.isEditable[rowIndex] = !this.isEditable[rowIndex];
+    // this.isEditable[rowIndex] = !this.isEditable[rowIndex];
   }
 
   addGoals($event: any, rowIndex: any, teamType: any) {
