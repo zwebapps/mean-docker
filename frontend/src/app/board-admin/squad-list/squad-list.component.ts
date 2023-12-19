@@ -133,7 +133,7 @@ export class SquadListComponent implements OnInit {
 
     const eidPattern = new RegExp("^\\d\\d\\d\\-\\d\\d\\d\\d\\-\\d\\d\\d\\d\\d\\d\\d\\-\\d$", "gm");
     this.playerForm = this.formBuilder.group({
-      geneder: ["Male", Validators.required],
+      gender: ["Male", Validators.required],
       limitedAbility: [false],
       firstName: ["", Validators.required],
       surName: ["", [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
@@ -307,7 +307,7 @@ export class SquadListComponent implements OnInit {
         this.selectedPlayingUpTeam = this.teams.filter((team: any) => this.playerToEdit.playingUpTeam.includes(team._id));
       }
       this.playerForm.patchValue({
-        geneder: this.playerToEdit.geneder ? this.playerToEdit.geneder : "Male",
+        gender: this.playerToEdit.gender ? this.playerToEdit.gender : "Male",
         limitedAbility: false,
         firstName: this.playerToEdit.firstName,
         surName: this.playerToEdit.lastName,
@@ -351,7 +351,7 @@ export class SquadListComponent implements OnInit {
     if (this.playerForm.valid) {
       const playerObj = {
         limitedAbility: this.playerForm.value.limitedAbility,
-        geneder: this.playerForm.value.geneder,
+        gender: this.playerForm.value.gender,
         firstName: this.playerForm.value.firstName,
         surName: this.playerForm.value.surName,
         dob: this.playerForm.value.dob,
@@ -474,7 +474,7 @@ export class SquadListComponent implements OnInit {
   associatedLeaguesForSelectedTeam = (event: any) => {
     this.leagues = this.teams.find((academy: any) => academy._id === this.playerForm.value.team)?.leagues;
     let dateToCompare =
-      this.playerForm.value.geneder === "Female" || this.playerForm.value.limitedAbility
+      this.playerForm.value.gender === "Female" || this.playerForm.value.limitedAbility
         ? moment(moment(this.playerForm.value.dob).subtract(1, "year")).format("YYYY-MM-DD")
         : moment(this.playerForm.value.dob).format("YYYY-MM-DD");
     this.leagues = this.leagues.filter((league: any) => moment(league.leagueAgeLimit).isSameOrBefore(dateToCompare));

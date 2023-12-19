@@ -148,6 +148,7 @@ exports.createPlayer = async (req, resp, next) => {
           if (!player) {
             const playerNo = await getNextSequence("item_id");
             const playerData = new Player({
+              gender: req.body[i]["gender"] ? req.body[i]["gender"] : "Male",
               firstName: req.body[i]["firstName"],
               lastName: req.body[i]["surName"],
               dob: new Date(req.body[i]["dob"]),
@@ -164,6 +165,7 @@ exports.createPlayer = async (req, resp, next) => {
               user: ObjectId(req.body[i].user["createdBy"]),
               playingUp: req.body[i]["playingUp"],
               playingUpTeam: req.body[i]["playingUpTeam"],
+              shortcode: req.body[i].shortcode,
               compitition: req.body[i]["compitition"].map((comp) =>
                 ObjectId(comp)
               ),
@@ -197,6 +199,7 @@ exports.createPlayer = async (req, resp, next) => {
           }
 
           const playerData = new Player({
+            gender: req.body["gender"] ? req.body["gender"] : "Male",
             firstName: req.body["firstName"],
             lastName: req.body["surName"],
             dob: new Date(req.body["dob"]),
@@ -213,18 +216,17 @@ exports.createPlayer = async (req, resp, next) => {
             user: ObjectId(req.body.user["createdBy"]),
             playingUp: req.body["playingUp"],
             playingUpTeam: req.body["playingUpTeam"],
-            mvp: req.body["mvp"],
+            mvp: req.body["mvp"] ? req.body["mvp"] : false,
+            shortcode: req.body.shortcode,
             compitition: req.body.compitition.map((comp) => ObjectId(comp)),
             createdAt: new Date()
           });
 
           const savedPlayer = await playerData.save();
-          resp
-            .status(200)
-            .json({
-              player: savedPlayer,
-              message: "Player created successfully"
-            });
+          resp.status(200).json({
+            player: savedPlayer,
+            message: "Player created successfully"
+          });
         } else {
           resp.status(200).json({ message: "Player already exists" });
         }
@@ -274,12 +276,10 @@ exports.bulkUploadPlayers = async (req, resp, next) => {
         insertedPlayers.push(fltPlayers[i]);
         await playerData.save();
       }
-      resp
-        .status(200)
-        .json({
-          message: "Players created successfully",
-          players: insertedPlayers
-        });
+      resp.status(200).json({
+        message: "Players created successfully",
+        players: insertedPlayers
+      });
     } else {
       resp.status(200).json({ message: "Malformed data provided" });
     }
@@ -448,12 +448,10 @@ exports.upMvp = async (req, resp, next) => {
       { new: true }
     );
 
-    resp
-      .status(200)
-      .json({
-        player: updatedPlayer,
-        message: "Player MVP updated successfully"
-      });
+    resp.status(200).json({
+      player: updatedPlayer,
+      message: "Player MVP updated successfully"
+    });
   } catch (error) {
     next(error);
   }
@@ -515,12 +513,10 @@ exports.deletePlayer = async (req, resp, next) => {
         .status(200)
         .json({ type: "error", message: `Player record not found!` });
     }
-    resp
-      .status(200)
-      .json({
-        type: "success",
-        message: `Player ${player.firstName} record deleted!`
-      });
+    resp.status(200).json({
+      type: "success",
+      message: `Player ${player.firstName} record deleted!`
+    });
   } catch (error) {
     next(error);
   }

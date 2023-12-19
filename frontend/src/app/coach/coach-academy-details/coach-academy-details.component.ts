@@ -60,6 +60,7 @@ export class CoachAcademyDetailsComponent {
   public dropteams: any = [];
   public dropdownSettings: IDropdownSettings = {};
   public dropdownTeamSettings: IDropdownSettings = {};
+  public dropdownLeagueSettings: IDropdownSettings = {};
   public eidDropdownSettings: IDropdownSettings = {};
   public playerPlayingUp: any = [];
   public playerPlayingUpTeam: any = [];
@@ -99,6 +100,8 @@ export class CoachAcademyDetailsComponent {
     this.notifier = notifier;
     this.submitted = false;
     this.playerForm = new FormGroup({
+      gender: new FormControl("Male"),
+      limitedAbility: new FormControl(false),
       firstName: new FormControl(""),
       surName: new FormControl(""),
       squadNo: new FormControl(""),
@@ -112,8 +115,11 @@ export class CoachAcademyDetailsComponent {
     });
     // edit form
     this.editPlayerForm = new FormGroup({
+      gender: new FormControl("Male"),
+      limitedAbility: new FormControl(false),
       firstName: new FormControl(""),
       surName: new FormControl(""),
+      league: new FormControl(""),
       playingUp: new FormControl(""),
       playingUpTeam: new FormControl(""),
       dob: new FormControl("")
@@ -138,6 +144,15 @@ export class CoachAcademyDetailsComponent {
       itemsShowLimit: 3,
       allowSearchFilter: true
     };
+    this.dropdownLeagueSettings = {
+      singleSelection: true,
+      idField: "_id",
+      textField: "leagueName",
+      selectAllText: "Select All",
+      unSelectAllText: "UnSelect All",
+      itemsShowLimit: 5,
+      allowSearchFilter: true
+    };
     this.eidDropdownSettings = {
       singleSelection: false,
       idField: "_id",
@@ -150,6 +165,8 @@ export class CoachAcademyDetailsComponent {
 
     const eidPattern = new RegExp("^\\d\\d\\d\\-\\d\\d\\d\\d\\-\\d\\d\\d\\d\\d\\d\\d\\-\\d$", "gm");
     this.playerForm = this.formBuilder.group({
+      gender: ["Male"],
+      limitedAbility: [false],
       firstName: ["", Validators.required],
       surName: ["", [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
       squadNo: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(3)]],
@@ -161,7 +178,7 @@ export class CoachAcademyDetailsComponent {
       playingUp: [""],
       playingUpTeam: [""]
     });
-    this.playerForm.controls.league.disable();
+    // this.playerForm.controls.league.disable();
     // get the team id
     let teamId = this.activatedRoute.snapshot.params["id"];
     // Now get team by id
@@ -234,11 +251,18 @@ export class CoachAcademyDetailsComponent {
       this.notifier.notify("error", "League is not selected!");
       return;
     } else {
-      let isIlligible = moment(this.selectedLeague.leagueAgeLimit).isSameOrBefore(this.playerForm.value.dob);
+      let dateToCompare =
+        this.playerForm.value.gender === "Female" || this.playerForm.value.limitedAbility
+          ? moment(moment(this.playerForm.value.dob).subtract(1, "year")).format("YYYY-MM-DD")
+          : moment(this.playerForm.value.dob).format("YYYY-MM-DD");
+
+      // let isIlligible = moment(this.selectedLeague.leagueAgeLimit).isSameOrBefore(this.playerForm.value.dob);
+      let isIlligible = moment(this.selectedLeague.leagueAgeLimit).isSameOrBefore(dateToCompare);
       if (!isIlligible) {
         this.notifier.notify("error", "You are not eligible for this league!");
         return;
       }
+
       const playerObj = {
         firstName: this.playerForm.value.firstName,
         surName: this.playerForm.value.surName,
@@ -254,8 +278,10 @@ export class CoachAcademyDetailsComponent {
         status: "Pending",
         playingUp: this.playerPlayingUp,
         playingUpTeam: this.playerPlayingUpTeam,
+        shortcode: this.coach.shortcode,
+        compitition: this.coach.compitition,
         user: {
-          createdBy: this.coach.id
+          createdBy: this.coach._id
         }
       };
 
@@ -406,14 +432,15 @@ export class CoachAcademyDetailsComponent {
       }
     );
   }
-  onCheckBox(lg: any) {
+  onCheckBox(league: any) {
+    const lg = this.leagues.find((leag: any) => leag._id === league._id);
     this.playerForm.patchValue({
       playingUp: ""
     });
 
     this.selectedLeague = lg;
     this.playerForm.patchValue({
-      league: this.selectedLeague.name
+      league: this.selectedLeague._id
     });
 
     this.leagues = this.leagues.map((league: any) => {
@@ -435,10 +462,10 @@ export class CoachAcademyDetailsComponent {
       // filter only selected league
       this.dropleagues = this.leagues.filter((league: any) => moment(this.selectedLeague.leagueAgeLimit).isAfter(league.leagueAgeLimit));
     }
-    if (this.selectedLeague) {
-      this.getPlayersFromStore();
-      this.data = this.data.filter((player: any) => player.league?._id === this.selectedLeague?._id);
-    }
+    // if (this.selectedLeague) {
+    //   this.getPlayersFromStore();
+    //   this.data = this.data.filter((player: any) => player.league?._id === this.selectedLeague?._id);
+    // }
   }
   onItemSelect(item: any) {
     this.playerPlayingUp = [];
@@ -459,6 +486,9 @@ export class CoachAcademyDetailsComponent {
     this.playerPlayingUpTeam = [];
     console.log(item);
     this.playerPlayingUpTeam.push(item._id);
+  }
+  onLeagueSelect(item: any) {
+    this.onCheckBox(item);
   }
   onEidSelect(item: any) {
     this.data = this.data.filter((player: any) => player.emiratesIdNo === item.emiratesIdNo);

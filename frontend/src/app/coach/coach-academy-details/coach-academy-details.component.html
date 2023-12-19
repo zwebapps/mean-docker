@@ -150,13 +150,31 @@
     <div class="col-12">
       <p>To move a player or player doesn't have a EID</p>
     </div>
-  </div> 
+  </div>
 </div> -->
 <div class="container">
   <div class="row" *ngIf="displayAddPlayer">
     <div class="form-wrapper">
       <form [formGroup]="playerForm" class="justify-content-around" method="post" enctype="multipart/form-data" (ngSubmit)="onFormSubmit()">
         <div class="row justify-content-between">
+          <div class="form-group col-12 col-12 col-md-3 col-lg-3 m-2">
+            <label for="name" class="control-label">
+              <i class="bi bi-person-exclamation"></i> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;Gender
+            </label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <button class="btn btn-outline-dark" type="button">
+                  <input class="btn btn-success" type="checkbox" value="" formControlName="limitedAbility" [checked]="false" />
+                </button>
+              </div>
+
+              <select class="form-select form-control" name="gender" aria-label="Default select" formControlName="gender">
+                <option value="">Select Gender</option>
+                <option value="Male" selected>Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+          </div>
           <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
             <label for="name" class="control-label">First Name</label>
             <input
@@ -229,7 +247,7 @@
               </div>
             </div>
           </div>
-          <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+          <!-- <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
             <label for="name" class="control-label">League</label>
             <input
               type="text"
@@ -245,7 +263,36 @@
                 <small>League is required</small>
               </div>
             </div>
+          </div> -->
+          <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+            <label for="league" class="control-label">League</label>
+            <ng-multiselect-dropdown
+              [class]="'form-control'"
+              [placeholder]="'League'"
+              [settings]="dropdownLeagueSettings"
+              [data]="leagues"
+              (onSelect)="onLeagueSelect($event)"
+              (onSelectAll)="onSelectAll($event)"
+            >
+            </ng-multiselect-dropdown>
           </div>
+          <!-- <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+            <label for="league" class="control-label">League</label>
+            <select
+              class="form-select"
+              name="league"
+              aria-label="Default select"
+              (change)="onCheckBox($event.target.value)"
+              formControlName="league"
+            >
+              <option value="0">Select League</option>
+              <ng-container *ngIf="leagues">
+                <ng-container *ngFor="let league of leagues; let i = index">
+                  <option [value]="league._id" [checked]="league.selected">{{ league.leagueName }} {{ league.selected }}</option>
+                </ng-container>
+              </ng-container>
+            </select>
+          </div> -->
           <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
             <label for="playerEidNo" class="control-label">EID No</label>
             <input
@@ -357,6 +404,24 @@
         (ngSubmit)="onUpdatePlayer()"
       >
         <div class="row justify-content-center">
+          <div class="form-group col-12 col-12 col-md-3 col-lg-3 m-2">
+            <label for="name" class="control-label">
+              <i class="bi bi-person-exclamation"></i> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;Gender
+            </label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <button class="btn btn-outline-dark" type="button">
+                  <input class="btn btn-success" type="checkbox" value="" formControlName="limitedAbility" [checked]="false" />
+                </button>
+              </div>
+
+              <select class="form-select form-control" name="gender" aria-label="Default select" formControlName="gender">
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+          </div>
           <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-3">
             <label for="name" class="control-label">First Name</label>
             <input
@@ -371,7 +436,15 @@
           </div>
           <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-3">
             <label for="name" class="control-label">Last Name</label>
-            <input type="text" class="form-control" id="name" placeholder="Last Name" formControlName="surName" class="form-control" disabled />
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              placeholder="Last Name"
+              formControlName="surName"
+              class="form-control"
+              disabled
+            />
           </div>
           <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-3">
             <label for="name" class="control-label">Date of birth</label>
