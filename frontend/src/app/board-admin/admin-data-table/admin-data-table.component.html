@@ -24,7 +24,7 @@
     <ngx-datatable-column name="Role" prop="row">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
         <span *ngFor="let role of row.roles">
-          <strong>{{ role.name.toUpperCase() }}</strong>
+          {{ role.name.toUpperCase() }}
         </span>
       </ng-template>
     </ngx-datatable-column>
