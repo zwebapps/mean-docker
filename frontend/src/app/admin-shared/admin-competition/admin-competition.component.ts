@@ -77,6 +77,7 @@ export class AdminCompetitionComponent {
 
     this.getDashboardContents();
     this.getCountries();
+    this.getCompetition();
   }
 
   setCompetition(event: any) {
@@ -84,6 +85,10 @@ export class AdminCompetitionComponent {
       this.selectedCompetition = event;
       this.storageService.setCompetition(this.selectedCompetition);
     }
+  }
+
+  getCompetition() {
+    this.selectedCompetition = this.storageService.getCompetition();
   }
 
   onSubmit() {

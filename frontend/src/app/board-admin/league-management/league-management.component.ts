@@ -11,6 +11,7 @@ import { Router } from "@angular/router";
 import { UserService } from "src/app/_services/user.service";
 import { LeagueService } from "src/app/_services/league.service";
 import { ConfirmationDialogService } from "src/app/_services/confirmation-dialog.service";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-league-management",
@@ -23,6 +24,9 @@ export class LeagueManagementComponent implements OnInit {
   leagueToDel: string = null;
   public editLeague: boolean = false;
   public leagueTobeEdit: any = {};
+  public selectedCompetition: any = {};
+  public compSettings: any = {};
+  apiURL = environment.apiURL;
   maxDate: Date = new Date();
   leagueForm = new FormGroup({
     leagueName: new FormControl("", Validators.required),
@@ -42,6 +46,7 @@ export class LeagueManagementComponent implements OnInit {
     private confirmationDialogService: ConfirmationDialogService
   ) {
     this.notifier = notifier;
+    this.getCompetitions();
   }
 
   ngOnInit(): void {
@@ -61,6 +66,15 @@ export class LeagueManagementComponent implements OnInit {
         }
       }
     });
+    this.leagueForm.patchValue({
+      shortCode: this.selectedCompetition?.shortCode,
+      leagueYear: isNaN(Number(this.selectedCompetition?.compititionYear))
+        ? new Date().getFullYear()
+        : this.selectedCompetition?.compititionYear
+    });
+    // disable year and short code
+    this.leagueForm.controls.shortCode.disable();
+    this.leagueForm.controls.leagueYear.disable();
   }
   getLeagueNo(leagueName: any) {
     let nameArray = leagueName.match(/(\d+)/);
@@ -89,12 +103,12 @@ export class LeagueManagementComponent implements OnInit {
             "Age Limit": this.leagueForm.value.leagueAge,
             "Short Code": this.leagueForm.value.shortCode,
             Year: this.leagueForm.value.leagueYear,
-            compitition: user.compitition,
+            compitition: user.compitition ? user.compitition : Array(this.selectedCompetition),
             user: {
               createdBy: user._id ? user._id : user.id
             }
           };
-          // check if academy exists
+          // update league
           this.leagueService.createLeague(leagueData).subscribe((res: any) => {
             if (res.message) {
               this.notifier.notify(res.type, res.message);
@@ -111,8 +125,11 @@ export class LeagueManagementComponent implements OnInit {
       const leagueData = {
         "League Name": this.leagueForm.value.leagueName,
         "Age Limit": this.leagueForm.value.leagueAge,
-        "Short Code": this.leagueForm.value.shortCode,
-        Year: this.leagueForm.value.leagueYear,
+        "Short Code": this.selectedCompetition?.shortCode,
+        year: isNaN(Number(this.selectedCompetition?.compititionYear))
+          ? new Date().getFullYear()
+          : this.selectedCompetition?.compititionYear,
+        compitition: user.compitition.length > 0 ? user.compitition : Array(this.selectedCompetition),
         user: {
           createdBy: user._id ? user._id : user.id
         }
@@ -139,12 +156,17 @@ export class LeagueManagementComponent implements OnInit {
   onEditLeague(league: any) {
     this.editLeague = true;
     this.leagueTobeEdit = league;
+    // disable year and short code
     this.leagueForm.patchValue({
+      shortCode: this.selectedCompetition?.shortCode,
+      leagueYear: isNaN(Number(this.selectedCompetition?.compititionYear))
+        ? new Date().getFullYear()
+        : this.selectedCompetition?.compititionYear,
       leagueName: league?.leagueName,
-      leagueAge: league?.leagueAgeLimit,
-      shortCode: league?.shortcode,
-      leagueYear: league?.year
+      leagueAge: league?.leagueAgeLimit
     });
+    this.leagueForm.controls.shortCode.disable();
+    this.leagueForm.controls.leagueYear.disable();
   }
   public openConfirmationDialog() {
     this.confirmationDialogService
@@ -161,6 +183,15 @@ export class LeagueManagementComponent implements OnInit {
           this.store.dispatch(LeagueActions.loadLeagues());
         }
       });
+    }
+  }
+  getImg = (image: string) => {
+    return `${this.apiURL}/static/${image}`;
+  };
+  getCompetitions() {
+    this.selectedCompetition = this.storageService.getCompetition();
+    if (this.selectedCompetition) {
+      this.compSettings = JSON.parse(this.selectedCompetition?.compititionSettings);
     }
   }
 }

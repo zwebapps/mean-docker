@@ -1,7 +1,12 @@
 <div class="row page-title-bar">
-  <!-- <div class="col-lg-12 heading-row">
-    <h3 class="page-title">Leagues & Divisions</h3>
-  </div> -->
+  <div class="row academy-row" [style.background-color]="compSettings?.compititionBackground">
+    <div class="col-12 col-lg-2">
+      <div class="acedmy-plus m-auto"><img [src]="getImg(selectedCompetition?.compititionLogo)" class="img-fluid" /><br /></div>
+    </div>
+    <div class="col-12 col-lg-10 academy-name">
+      <p>{{ selectedCompetition?.compititionName }}</p>
+    </div>
+  </div>
   <hr />
 </div>
 <div class="row">

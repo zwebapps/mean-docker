@@ -73,7 +73,12 @@ export class StorageService {
   };
   public getCompetition = () => {
     if (typeof window !== "undefined") {
-      return window.sessionStorage.getItem(COMPETITITION);
+      let competition = window.sessionStorage.getItem(COMPETITITION);
+      if (competition) {
+        return JSON.parse(competition);
+      } else {
+        return null;
+      }
     }
   };
 }

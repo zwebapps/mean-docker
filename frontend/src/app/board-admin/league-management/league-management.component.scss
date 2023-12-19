@@ -159,3 +159,67 @@
 //     }
 //   }
 // }
+
+.academy-row {
+  background: #165baa;
+  padding: 1rem 2rem;
+  justify-content: space-between;
+  align-items: center;
+  .academy-name {
+    p {
+      color: #fff;
+      font-family: "Anton", sans-serif;
+      font-size: 40px;
+      margin: 0 5px 0 0;
+    }
+    .academy-team {
+      color: #fff;
+      font-family: "Anton", sans-serif;
+      font-size: 14px;
+    }
+  }
+}
+
+.league-lable {
+  display: inline-block;
+  background: #000000;
+  border-radius: 30px;
+  height: 53px;
+  padding: 10px 10px 10px 20px;
+  .league-text {
+    color: #fff;
+    text-align: center;
+    font-size: 20px;
+    font-style: normal;
+    font-family: NotoSansRegular;
+    font-weight: 600;
+    line-height: normal;
+    display: block;
+  }
+  &:hover {
+    button {
+      visibility: visible;
+    }
+  }
+  button {
+    visibility: hidden;
+    position: relative;
+    float: right;
+    bottom: 30px;
+  }
+}
+
+@media (max-width: 767px) {
+  .academy-row {
+    align-items: center;
+    .academy-name {
+      padding-top: 0px;
+      font-size: 16px;
+      p {
+        font-size: 16px;
+        text-align: center;
+        margin-top: 10px;
+      }
+    }
+  }
+}
