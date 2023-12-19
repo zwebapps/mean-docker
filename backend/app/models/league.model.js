@@ -4,29 +4,35 @@ const League = mongoose.model(
   "League",
   new mongoose.Schema({
     leagueName: {
-        type: String,
-        unique : true,
-        required: true
+      type: String,
+      unique: true,
+      required: true
     },
     leagueAgeLimit: {
       type: String,
-      required: true,
+      required: true
     },
     shortcode: {
+      type: String
+    },
+    year: {
       type: String,
+      default: 2024
     },
-    compitition: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Compitition"
-    },
+    compitition: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Compitition"
+      }
+    ],
     user_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
     },
     createdAt: {
-        type: Date,
-        default: Date.now,
-        required: false
+      type: Date,
+      default: Date.now,
+      required: false
     }
   })
 );

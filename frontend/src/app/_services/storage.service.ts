@@ -7,6 +7,7 @@ import { isPlatformBrowser } from "@angular/common";
 
 const USER_KEY = "auth-user";
 const TOKEN = "token";
+const COMPETITITION = "Competition";
 
 @Injectable({
   providedIn: "root"
@@ -65,4 +66,14 @@ export class StorageService {
       }
     }
   }
+  public setCompetition = (competition: any) => {
+    if (typeof window !== "undefined") {
+      window.sessionStorage.setItem(COMPETITITION, JSON.stringify(competition));
+    }
+  };
+  public getCompetition = () => {
+    if (typeof window !== "undefined") {
+      return window.sessionStorage.getItem(COMPETITITION);
+    }
+  };
 }

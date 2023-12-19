@@ -28,6 +28,7 @@ import { AdminCompetitionComponent } from "../admin-shared/admin-competition/adm
 import { ComponentsModule } from "../component/component.module";
 import { AdminPlayersComponent } from "./admin-players/admin-players.component";
 import { NgApexchartsModule } from "ng-apexcharts";
+import { LeagueListingComponent } from "./league-listing/league-listing.component";
 
 /**
  * Custom angular notifier options
