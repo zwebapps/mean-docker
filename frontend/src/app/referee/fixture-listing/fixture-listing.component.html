@@ -26,7 +26,7 @@
         {{ row.league?.leagueName }}
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="Team 1" prop="row">
+    <ngx-datatable-column name="Home Team" prop="row">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
         {{ row.homeTeam?.teamName }}
       </ng-template>
@@ -34,7 +34,7 @@
     <ngx-datatable-column>
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" id="competed"> VS </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="Team 2" prop="row">
+    <ngx-datatable-column name="Away Team" prop="row">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
         {{ row.awayTeam?.teamName }}
       </ng-template>

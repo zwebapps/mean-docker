@@ -1,9 +1,5 @@
-<div class="row page-title-bar">
-  <div class="col-lg-12 heading-row">
-    <h3 class="page-title">Fixture Setup</h3>
-  </div>
-  <hr />
-</div>
+<div class="container">
+  <div class="form-wrapper">
 <form [formGroup]="fixtureForm" class="justify-content-around" method="post" enctype="multipart/form-data" (ngSubmit)="onFormSubmit()">
   <div class="row d-flex justify-content-center">
     <div class="col-12 col-lg-4 col-md-4 m-4">
@@ -95,10 +91,8 @@
     </div>
   </div>
 </form>
-
-<div class="row mt-5">
-  <hr />
 </div>
 <div class="row">
   <app-fixture-listing [fixtures]="fixtures" (delFixture)="deleteFixture($event)"></app-fixture-listing>
+</div>
 </div>
