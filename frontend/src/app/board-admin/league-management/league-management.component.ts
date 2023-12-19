@@ -50,22 +50,7 @@ export class LeagueManagementComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.select(LeagueSelectors.getLeagues).subscribe((leagues) => {
-      if (Array.isArray(leagues)) {
-        if (leagues.length > 0) {
-          this.leagues = leagues.slice().sort((a, b) => {
-            const aNumber = parseInt(this.getLeagueNo(a?.leagueName));
-            const bNumber = parseInt(this.getLeagueNo(b?.leagueName));
-
-            if (isNaN(aNumber) || isNaN(bNumber)) {
-              return a?.leagueName.localeCompare(b?.leagueName);
-            }
-
-            return aNumber - bNumber;
-          });
-        }
-      }
-    });
+    this.getLeaguesFromStore();
     this.leagueForm.patchValue({
       shortCode: this.selectedCompetition?.shortCode,
       leagueYear: isNaN(Number(this.selectedCompetition?.compititionYear))
@@ -148,6 +133,22 @@ export class LeagueManagementComponent implements OnInit {
     }
   }
 
+  filterByName(str: any) {
+    if (str) {
+      this.leagues = this.leagues.filter((league: any) => league.leagueName.toLowerCase().includes(str.toLowerCase()));
+    } else {
+      this.getLeaguesFromStore();
+    }
+  }
+  filterByYear(str: any) {
+    this.getLeaguesFromStore();
+    if (str.length > 3) {
+      this.leagues = this.leagues.filter((league: any) => league?.year.includes(str.toLowerCase()));
+    } else {
+      this.getLeaguesFromStore();
+    }
+  }
+
   onDeleteLeague(leagueId: any) {
     this.leagueToDel = leagueId;
     this.openConfirmationDialog();
@@ -193,5 +194,22 @@ export class LeagueManagementComponent implements OnInit {
     if (this.selectedCompetition) {
       this.compSettings = JSON.parse(this.selectedCompetition?.compititionSettings);
     }
+  }
+  getLeaguesFromStore() {
+    this.store.select(LeagueSelectors.getLeagues).subscribe((leagues) => {
+      if (Array.isArray(leagues)) {
+        if (leagues.length > 0) {
+          this.leagues = leagues.slice().sort((a, b) => {
+            const aNumber = parseInt(this.getLeagueNo(a?.leagueName));
+            const bNumber = parseInt(this.getLeagueNo(b?.leagueName));
+
+            if (isNaN(aNumber) || isNaN(bNumber)) {
+              return a?.leagueName.localeCompare(b?.leagueName);
+            }
+            return aNumber - bNumber;
+          });
+        }
+      }
+    });
   }
 }
