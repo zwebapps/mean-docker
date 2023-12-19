@@ -21,10 +21,14 @@ export class LeagueManagementComponent implements OnInit {
   private notifier: NotifierService;
   leagues: any = [];
   leagueToDel: string = null;
+  public editLeague: boolean = false;
+  public leagueTobeEdit: any = {};
   maxDate: Date = new Date();
   leagueForm = new FormGroup({
     leagueName: new FormControl("", Validators.required),
-    leagueAge: new FormControl("", Validators.required)
+    leagueAge: new FormControl("", Validators.required),
+    shortCode: new FormControl("", Validators.required),
+    leagueYear: new FormControl("", Validators.required)
   });
 
   constructor(
@@ -73,32 +77,57 @@ export class LeagueManagementComponent implements OnInit {
   }
 
   onSubmit() {
-    if (!this.leagueForm.value.leagueName) {
-      this.notifier.notify("error", "League name not provided!");
-      return;
-    } else {
-      const user = this.storageService.getUser();
-      if (this.leagueForm.value.leagueName) {
-        const leagueData = {
-          "League Name": this.leagueForm.value.leagueName,
-          "Age Limit": this.leagueForm.value.leagueAge,
-          compitition: user.compitition,
-          user: {
-            createdBy: user._id
-          }
-        };
-        // check if academy exists
-        this.leagueService.createLeague(leagueData).subscribe((res: any) => {
-          if (res.message) {
-            this.notifier.notify(res.type, res.message);
-            return;
-          } else {
-            this.notifier.notify("success", "League created successfully!");
-            this.leagueForm.reset();
-            this.store.dispatch(LeagueActions.loadLeagues());
-          }
-        });
+    const user = this.storageService.getUser();
+    if (!this.editLeague) {
+      if (!this.leagueForm.value.leagueName) {
+        this.notifier.notify("error", "League name not provided!");
+        return;
+      } else {
+        if (this.leagueForm.value.leagueName) {
+          const leagueData = {
+            "League Name": this.leagueForm.value.leagueName,
+            "Age Limit": this.leagueForm.value.leagueAge,
+            "Short Code": this.leagueForm.value.shortCode,
+            Year: this.leagueForm.value.leagueYear,
+            compitition: user.compitition,
+            user: {
+              createdBy: user._id ? user._id : user.id
+            }
+          };
+          // check if academy exists
+          this.leagueService.createLeague(leagueData).subscribe((res: any) => {
+            if (res.message) {
+              this.notifier.notify(res.type, res.message);
+              return;
+            } else {
+              this.notifier.notify("success", "League created successfully!");
+              this.leagueForm.reset();
+              this.store.dispatch(LeagueActions.loadLeagues());
+            }
+          });
+        }
       }
+    } else {
+      const leagueData = {
+        "League Name": this.leagueForm.value.leagueName,
+        "Age Limit": this.leagueForm.value.leagueAge,
+        "Short Code": this.leagueForm.value.shortCode,
+        Year: this.leagueForm.value.leagueYear,
+        user: {
+          createdBy: user._id ? user._id : user.id
+        }
+      };
+      // check if academy exists
+      this.leagueService.updateLeague(this.leagueTobeEdit._id, leagueData).subscribe((res: any) => {
+        if (res.message) {
+          this.notifier.notify(res.type, res.message);
+          return;
+        } else {
+          this.notifier.notify("success", "League created successfully!");
+          this.leagueForm.reset();
+          this.store.dispatch(LeagueActions.loadLeagues());
+        }
+      });
     }
   }
 
@@ -107,6 +136,16 @@ export class LeagueManagementComponent implements OnInit {
     this.openConfirmationDialog();
   }
 
+  onEditLeague(league: any) {
+    this.editLeague = true;
+    this.leagueTobeEdit = league;
+    this.leagueForm.patchValue({
+      leagueName: league?.leagueName,
+      leagueAge: league?.leagueAgeLimit,
+      shortCode: league?.shortcode,
+      leagueYear: league?.year
+    });
+  }
   public openConfirmationDialog() {
     this.confirmationDialogService
       .confirm("Please confirm..", "Do you really want to ... ?")

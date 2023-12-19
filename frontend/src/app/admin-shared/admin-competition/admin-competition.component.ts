@@ -33,6 +33,7 @@ export class AdminCompetitionComponent {
   public patchedValues: any = {};
   public closeResult: string = "";
   public compititionLogo: any;
+  public selectedCompetition: any = {};
   topcards: topcard[];
   users: any = [];
   teams: any = [];
@@ -76,6 +77,13 @@ export class AdminCompetitionComponent {
 
     this.getDashboardContents();
     this.getCountries();
+  }
+
+  setCompetition(event: any) {
+    if (event) {
+      this.selectedCompetition = event;
+      this.storageService.setCompetition(this.selectedCompetition);
+    }
   }
 
   onSubmit() {

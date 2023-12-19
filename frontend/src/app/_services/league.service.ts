@@ -30,4 +30,7 @@ export class LeagueService {
   deleteLeague(league: any): Observable<any> {
     return this.http.post(`${API_URL}/league/delete/${league}`, { headers: this.headers });
   }
+  updateLeague(id: any, league: any): Observable<any> {
+    return this.http.post(`${API_URL}/league/update/${id}`, league, { headers: this.headers });
+  }
 }
