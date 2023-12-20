@@ -1,7 +1,10 @@
 <div class="row page-title-bar">
   <div class="row academy-row" [style.background-color]="compSettings?.compititionBackground">
     <div class="col-12 col-lg-2">
-      <div class="acedmy-plus m-auto"><img [src]="getImg(selectedCompetition?.compititionLogo)" class="img-fluid" /><br /></div>
+      <div class="acedmy-plus m-auto">
+        <img [src]="getImg(selectedCompetition?.compititionLogo)" class="img-fluid" />
+        <br />
+      </div>
     </div>
     <div class="col-12 col-lg-10 academy-name">
       <p>{{ selectedCompetition?.compititionName }}</p>

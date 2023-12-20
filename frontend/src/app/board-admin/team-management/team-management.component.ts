@@ -14,6 +14,7 @@ import * as UserActions from "../../_store/actions/users.actions";
 import { UserService } from "src/app/_services/user.service";
 import { ConfirmationDialogService } from "src/app/_services/confirmation-dialog.service";
 import { PlayerService } from "src/app/_services/player.service";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-team-management",
@@ -28,10 +29,18 @@ export class TeamManagementComponent implements OnInit {
   public academyLogo: any;
   public editAcademy: boolean = false;
   public academyToEdit: string = null;
+  public selectedCompetition: any = {};
+  public compSettings: any = {};
+  public apiURL = environment.apiURL;
   academyForm = new FormGroup({
     academyName: new FormControl(""),
     academyLogo: new FormControl(""),
-    academyColor: new FormControl("")
+    academyColor: new FormControl(""),
+    coachName: new FormControl(""),
+    userName: new FormControl(""),
+    password: new FormControl(""),
+    emailAddress: new FormControl(""),
+    mobileNumber: new FormControl("")
   });
 
   constructor(
@@ -50,23 +59,21 @@ export class TeamManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAcademiesFromStore();
+    this.getCompetition();
   }
+  getImg = (image: string) => {
+    return `${this.apiURL}/static/${image}`;
+  };
 
   getAcademiesFromStore() {
     this.store.select(AcademySelectors.getAcademies).subscribe((academy) => {
       this.academies = academy.slice().sort((a, b) => {
-        // const aNumber = parseInt(a?.academyName.split(" ")[1]);
-        // const bNumber = parseInt(b?.academyName.split(" ")[1]);
-
-        // if (isNaN(aNumber) || isNaN(bNumber)) {
-        // }
         return a?.academyName?.localeCompare(b?.academyName);
       });
     });
   }
   uploadLogo(event: any) {
     const file: File = event.target.files[0];
-    const inputName = event.target.name;
     this.palyerService.upload(file).subscribe((res: any) => {
       if (res) {
         this.academyLogo = res.filename;
@@ -84,23 +91,26 @@ export class TeamManagementComponent implements OnInit {
         if (this.academyForm.value.academyName) {
           const academyData = {
             "Academy Name": this.academyForm.value.academyName,
-            "Academy User Name": this.makeAcademyUserName(this.academyForm.value.academyName),
-            Email: `${this.makeAcademyUserName(this.academyForm.value.academyName)}@dummy.com`,
-            Password: `Password@${this.makeAcademyUserName(this.academyForm.value.academyName)}`,
+            "Academy User Name": this.academyForm.value.userName,
+            Email: this.academyForm.value.emailAddress,
+            Password: this.academyForm.value.password,
+            contact: this.academyForm.value.mobileNumber,
             Logo: this.academyLogo,
             Color: this.academyForm.value.academyColor,
-            compitition: user.compitition,
+            compitition: user.compitition.length > 0 ? user.compitition : Array(this.selectedCompetition),
             user: {
-              createdBy: user.id
+              createdBy: user._id ? user._id : user.id
             }
           };
           const userData = {
-            firstname: this.makeAcademyUserName(this.academyForm.value.academyName),
-            lastname: this.makeAcademyUserName(this.academyForm.value.academyName),
-            username: this.makeAcademyUserName(this.academyForm.value.academyName),
-            email: `${this.makeAcademyUserName(this.academyForm.value.academyName)}@dummy.com`,
-            password: `Password@${this.makeAcademyUserName(this.academyForm.value.academyName)}`,
-            compitition: user.compitition,
+            firstname: this.makeAcademyUserName(this.academyForm.value.coachName),
+            lastname: this.makeAcademyUserName(this.academyForm.value.coachName),
+            username: this.academyForm.value.userName,
+            email: this.academyForm.value.emailAddress,
+            password: this.academyForm.value.password,
+            contact: this.academyForm.value.mobileNumber,
+            shortcode: this.selectedCompetition.shortCode,
+            compitition: user.compitition ? user.compitition : Array(this.selectedCompetition),
             role: "coach"
           };
           // check if academy exists
@@ -204,6 +214,12 @@ export class TeamManagementComponent implements OnInit {
           this.notifier.notify("error", "Please try again!");
         }
       );
+    }
+  }
+  getCompetition() {
+    this.selectedCompetition = this.storageService.getCompetition();
+    if (this.selectedCompetition) {
+      this.compSettings = JSON.parse(this.selectedCompetition?.compititionSettings);
     }
   }
 }

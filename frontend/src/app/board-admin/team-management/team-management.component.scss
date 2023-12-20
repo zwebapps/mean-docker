@@ -1,111 +1,111 @@
-.form-control:focus {
-  border: none !important;
-  border-color: none !important;
-  box-shadow: none !important;
-}
-form {
-  .input-group {
-    border: 1px black solid;
-    padding: 20px;
-    border-radius: 75px;
-    ::placeholder {
-      color: rgba(0, 0, 0, 0.5);
-      font-family: NotoSansRegular;
-      font-size: 20px;
-      font-style: normal;
-      font-weight: 700;
-      line-height: normal;
-      border: transparent !important;
-    }
-    input.league-input {
-      background-color: white;
-      border-radius: 50px;
-      position: relative;
-      border-radius: 35px;
-      border-color: transparent;
-    }
-  }
-  input.form-control {
-    line-height: 40px;
-  }
-  input.form-control:focus {
-    border: none !important;
-    border-color: none !important;
-  }
-  div {
-    button.btn-default {
-      background: #000000;
-      border-radius: 50px !important;
-      width: 100px;
-      color: white;
-      b > i {
-        font-size: 25px;
-        font-weight: bold;
-      }
-    }
-  }
-}
+// .form-control:focus {
+//   border: none !important;
+//   border-color: none !important;
+//   box-shadow: none !important;
+// }
+// form {
+//   .input-group {
+//     border: 1px black solid;
+//     padding: 20px;
+//     border-radius: 75px;
+//     ::placeholder {
+//       color: rgba(0, 0, 0, 0.5);
+//       font-family: NotoSansRegular;
+//       font-size: 20px;
+//       font-style: normal;
+//       font-weight: 700;
+//       line-height: normal;
+//       border: transparent !important;
+//     }
+//     input.league-input {
+//       background-color: white;
+//       border-radius: 50px;
+//       position: relative;
+//       border-radius: 35px;
+//       border-color: transparent;
+//     }
+//   }
+//   input.form-control {
+//     line-height: 40px;
+//   }
+//   input.form-control:focus {
+//     border: none !important;
+//     border-color: none !important;
+//   }
+//   div {
+//     button.btn-default {
+//       background: #000000;
+//       border-radius: 50px !important;
+//       width: 100px;
+//       color: white;
+//       b > i {
+//         font-size: 25px;
+//         font-weight: bold;
+//       }
+//     }
+//   }
+// }
 
-.league-lable {
-  display: inline-block;
-  width: 100%;
-  background: #000000;
-  border-radius: 30px;
-  height: 53px;
-  padding: 10px 10px 10px 20px;
-  .league-text {
-    color: #fff;
-    text-align: center;
-    font-size: 20px;
-    font-style: normal;
-    font-family: NotoSansRegular;
-    font-weight: 600;
-    line-height: normal;
-    display: block;
-  }
-  &:hover {
-    button {
-      visibility: visible;
-    }
-  }
-  button {
-    visibility: hidden;
-    position: relative;
-    float: right;
-    bottom: 30px;
-  }
-}
+// .league-lable {
+//   display: inline-block;
+//   width: 100%;
+//   background: #000000;
+//   border-radius: 30px;
+//   height: 53px;
+//   padding: 10px 10px 10px 20px;
+//   .league-text {
+//     color: #fff;
+//     text-align: center;
+//     font-size: 20px;
+//     font-style: normal;
+//     font-family: NotoSansRegular;
+//     font-weight: 600;
+//     line-height: normal;
+//     display: block;
+//   }
+//   &:hover {
+//     button {
+//       visibility: visible;
+//     }
+//   }
+//   button {
+//     visibility: hidden;
+//     position: relative;
+//     float: right;
+//     bottom: 30px;
+//   }
+// }
 
-input[type="color"],
-input[type="file"] {
-  border-radius: 0px !important;
-  padding: 4px !important;
-  height: 30px;
-  line-height: 30px;
-  margin-left: 10px !important;
-}
+// input[type="color"],
+// input[type="file"] {
+//   border-radius: 0px !important;
+//   padding: 4px !important;
+//   height: 30px;
+//   line-height: 30px;
+//   margin-left: 10px !important;
+// }
 
-input[type="file"] {
-  border-radius: 0px !important;
-}
+// input[type="file"] {
+//   border-radius: 0px !important;
+// }
 
-input.league-input:focus {
-  outline: none !important;
-  box-shadow: none !important;
-}
+// input.league-input:focus {
+//   outline: none !important;
+//   box-shadow: none !important;
+// }
 
-@media (max-width: 767px) {
-  form {
-    .input-group {
-      ::placeholder {
-        font-size: 18px;
-      }
-      input.form-control {
-        line-height: 55px;
-      }
-      button.btn-default {
-        width: 65px;
-      }
-    }
-  }
-}
+// @media (max-width: 767px) {
+//   form {
+//     .input-group {
+//       ::placeholder {
+//         font-size: 18px;
+//       }
+//       input.form-control {
+//         line-height: 55px;
+//       }
+//       button.btn-default {
+//         width: 65px;
+//       }
+//     }
+//   }
+// }

@@ -28,6 +28,7 @@ import { AdminCompetitionComponent } from "./admin-competition/admin-competition
 import { SalesSummaryComponent } from "../dashboard/dashboard-components/sales-summary/sales-summary.component";
 import { NgxChartsModule } from "@swimlane/ngx-charts";
 import { LeagueListingComponent } from "../board-admin/league-listing/league-listing.component";
+import { AcademyListingComponent } from './academy-listing/academy-listing.component';
 
 /**
  * Custom angular notifier options
@@ -93,7 +94,8 @@ import { LeagueListingComponent } from "../board-admin/league-listing/league-lis
     AdminTopFiltersComponent,
     BlogCardsComponent,
     AdminCompetitionComponent,
-    SalesSummaryComponent
+    SalesSummaryComponent,
+    AcademyListingComponent
   ],
   imports: [
     NgxChartsModule,
