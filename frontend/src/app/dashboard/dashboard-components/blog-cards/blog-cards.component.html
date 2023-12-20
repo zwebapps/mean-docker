@@ -1,14 +1,14 @@
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-12 col-md-6 col-lg-4 m-4 p-2" *ngFor="let blogcard of blogcards">
-      <div class="card p-4">
-        <div class="row text-center">
-          <div class="col-4 img-square-wrapper">
-            <img src="assets/images/dashboard/{{ blogcard.image }}" alt="Card image cap" />
+    <div class="col-12 col-md-6 col-lg-4 m-4 ps-0 pe-0" *ngFor="let blogcard of blogcards">
+      <div class="card p-4 text-center">
+        <div class="row">
+          <div class="col-12 col-lg-5 img-square-wrapper">
+            <img src="assets/images/dashboard/{{ blogcard.image }}" class="img-fluid" alt="Card image cap" />
           </div>
-          <div class="col-8" style="margin: auto">
-            <h2 class="card-title">{{ blogcard.title | titlecase }}</h2>
-            <p>
+          <div class="col-12 col-lg-7" style="margin: auto">
+            <h2 class="card-title mt-2">{{ blogcard.title | titlecase }}</h2>
+            <p class="card-counter">
               {{ blogcard.count }}
             </p>
           </div>

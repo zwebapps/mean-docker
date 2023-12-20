@@ -222,27 +222,6 @@ button.btn-default {
 }
 
 @media (max-width: 767px) {
-  input.form-control {
-    line-height: 16px;
-    margin: 0 30px 0 0;
-    padding: 18px;
-    border-radius: 19px !important;
-    border: 1px solid #000;
-    background: #fff;
-    // width: 57%;
-  }
-
-  button.btn-default {
-    background: #000000;
-    border-radius: 66px !important;
-    width: 9%;
-    color: white;
-    b > i {
-      font-size: 15px;
-      font-weight: bold;
-    }
-  }
- 
   .action-buttons {
     flex-direction: column;
     .btn{

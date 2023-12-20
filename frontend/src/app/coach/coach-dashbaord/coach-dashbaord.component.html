@@ -6,6 +6,7 @@
     <p *ngIf="academy">{{ academy.academyName }}</p>
   </div>
 </div>
+<div class="container ps-0 pe-0">
 <div class="row">
   <app-admin-top-filters [dashboardContents]="dashboardContents"></app-admin-top-filters>
 </div>
@@ -41,6 +42,5 @@
     <app-sales-summary [dashboardContents]="dashboardContents" [blogcards]="blogcards" [academy]="academy"></app-sales-summary>
   </div>
 </div> -->
-<div class="container">
   <app-blog-cards [dashboardContents]="dashboardContents" [blogcards]="blogcards"></app-blog-cards>
 </div>
