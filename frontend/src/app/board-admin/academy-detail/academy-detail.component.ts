@@ -2,9 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { NotifierService } from "angular-notifier";
 import { AcademyService } from "src/app/_services/academy.service";
 import { StorageService } from "src/app/_services/storage.service";
-import * as AcademyActions from "../../_store/actions/academies.actions";
-// importing selectors
-import * as AcademySelectors from "../../_store/selectors/academies.selectors";
 import { Store } from "@ngrx/store";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FormControl, FormGroup } from "@angular/forms";
@@ -19,6 +16,8 @@ import { environment } from "src/environments/environment";
   styleUrls: ["./academy-detail.component.scss"]
 })
 export class AcademyDetailComponent implements OnInit {
+  public selectedCompetition: any = {};
+  public compSettings: any = {};
   user: any = {};
   private notifier: NotifierService;
   academy: any = {};
@@ -135,5 +134,11 @@ export class AcademyDetailComponent implements OnInit {
   }
   redirectTo() {
     this.router.navigate([`${this.user.shortcode}/admin/academies`]);
+  }
+  getCompetition() {
+    this.selectedCompetition = this.storageService.getCompetition();
+    if (this.selectedCompetition) {
+      this.compSettings = JSON.parse(this.selectedCompetition?.compititionSettings);
+    }
   }
 }

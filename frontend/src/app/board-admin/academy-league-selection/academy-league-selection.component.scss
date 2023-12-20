@@ -1,18 +1,18 @@
 .academy-row {
-  background: #165BAA;
+  background: #165baa;
   padding: 1rem 2rem;
   justify-content: space-between;
   align-items: center;
   .academy-name {
     p {
       color: #fff;
-      font-family: 'Anton', sans-serif;
+      font-family: "Anton", sans-serif;
       font-size: 40px;
-      margin:0 5px 0 0;
+      margin: 0 5px 0 0;
     }
-    .academy-team{
-      color: #FFF;
-      font-family: 'Anton', sans-serif;
+    .academy-team {
+      color: #fff;
+      font-family: "Anton", sans-serif;
       font-size: 14px;
     }
   }
@@ -25,7 +25,6 @@
     border-radius: 100%;
     width: 120px;
     height: 120px;
-    background: white;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     img {
@@ -65,9 +64,6 @@ form {
     border-radius: 35px;
   }
 }
-input.form-control {
-  line-height: 93px;
-}
 
 button.btn-default {
   background: #000000;
@@ -87,30 +83,28 @@ button.btn-default {
   }
 }
 .league-lable {
-  min-height: 53px;
-  background: #000000;
-  border-radius: 30px;
-  margin-bottom: 15px;
-  padding: 15px;
+  min-height: 50px;
+  margin-bottom: 10px;
   .league-text {
-    color: #fff;
+    color: #020202;
     text-align: center;
     font-family: NotoSansRegular;
-    font-size: 20px;
+    font-size: 18px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
+    margin-left: 30px;
   }
   .list-group-item {
-    color: #fff;
+    color: #020202;
     font-family: NotoSansRegular;
     font-size: 18px;
     font-style: normal;
     font-weight: 600;
     input {
       position: absolute;
-      right: 0;
-      border-radius: 25px;
+      left: 0;
+      margin-right: 10px;
     }
   }
 }
@@ -120,9 +114,8 @@ button.btn-default {
   flex-direction: column;
   justify-content: center;
   flex-shrink: 0;
-  background: #165BAA;
-  border-radius: 30px;
-  margin: 15px;
+  background: #165baa;
+  border-radius: 10px;
   .btn {
     color: #fff;
     text-align: center;
@@ -140,7 +133,7 @@ button.btn-default {
     font-weight: 600;
     input {
       position: absolute;
-      right: 0;
+      left: 0;
       border-radius: 25px;
     }
   }

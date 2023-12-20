@@ -29,6 +29,7 @@ import { ComponentsModule } from "../component/component.module";
 import { AdminPlayersComponent } from "./admin-players/admin-players.component";
 import { NgApexchartsModule } from "ng-apexcharts";
 import { LeagueListingComponent } from "./league-listing/league-listing.component";
+import { AdminTeamListingComponent } from "./admin-team-listing/admin-team-listing.component";
 
 /**
  * Custom angular notifier options
@@ -88,10 +89,6 @@ const adminRoutes: Routes = [
         path: "competitions",
         component: AdminCompetitionComponent
       },
-      // {
-      //   path: "competitions",
-      //   loadChildren: () => import("../component/component.module").then((m) => m.ComponentsModule)
-      // },
       {
         path: "users",
         component: UserManagementComponent
@@ -139,7 +136,6 @@ const adminRoutes: Routes = [
 @NgModule({
   declarations: [AdminPlayersComponent],
   imports: [
-    // NgApexchartsModule,
     NgbModule,
     AdminSharedModule,
     CommonModule,
