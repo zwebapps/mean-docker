@@ -72,6 +72,9 @@ Topbar Responsive
       position: fixed;
       border-top: 1px solid $border-color;
       background-color: #165BAA;
+      padding-left: 10px;
+      left: 0px;
+      right: 0px;
     }
     .navbar-nav {
       flex-direction: row;

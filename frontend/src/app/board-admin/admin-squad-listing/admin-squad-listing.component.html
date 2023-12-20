@@ -24,8 +24,8 @@
       </ngx-datatable-column>
       <ngx-datatable-column name="Actions" prop="row">
         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-          <!-- <button type="button" class="btn btn-primary me-1" (click)="edit(row)"><i class="bi bi-pencil-square"></i></button> -->
-          <button type="button" class="btn btn-primary" (click)="sqManagement(row['_id'])">Squad Management</button>
+          <!-- <button type="button" class="btn btn-gradient me-1" (click)="edit(row)"><i class="bi bi-pencil-square"></i></button> -->
+          <button type="button" class="btn btn-gradient" (click)="sqManagement(row['_id'])">Squad Management</button>
         </ng-template>
       </ngx-datatable-column>
       <ngx-datatable-footer *ngIf="true">

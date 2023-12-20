@@ -126,7 +126,7 @@
     </ngx-datatable-column>
     <ngx-datatable-column name="Actions" prop="row" width="170">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" class="d-flex">
-        <button type="button" class="btn btn-sm btn-primary d-inline m-1" title="Edit" (click)="edit(row['_id'])">
+        <button type="button" class="btn btn-sm btn-gradient d-inline m-1" title="Edit" (click)="edit(row['_id'])">
           <i class="bi bi-pencil-square"></i>
         </button>
         <button type="button" class="btn btn-sm btn-info d-inline m-1" title="Approve" (click)="appPlayer(row['_id'])">

@@ -32,6 +32,15 @@
     }
   }
 }
+.topbartoggler{
+  background-color: #2185D0;
+  display: inline-block !important;
+  float: right;
+  top: 15px;
+  position: relative;
+  border-radius: 10px;
+  padding: 5px 10px;
+}
 @media (max-width: 991px) {
   .logo-menu {
     display: none;
