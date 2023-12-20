@@ -30,6 +30,7 @@ import { AdminPlayersComponent } from "./admin-players/admin-players.component";
 import { NgApexchartsModule } from "ng-apexcharts";
 import { LeagueListingComponent } from "./league-listing/league-listing.component";
 import { AdminTeamListingComponent } from "./admin-team-listing/admin-team-listing.component";
+import { AdminSquadListingComponent } from "./admin-squad-listing/admin-squad-listing.component";
 
 /**
  * Custom angular notifier options

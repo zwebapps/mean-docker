@@ -1,49 +1,60 @@
-<div class="row">
-  <ngx-datatable
-    #myTable
-    class="material"
-    [rows]="teamsData"
-    [columns]="columns"
-    [columnMode]="ColumnMode.force"
-    [footerHeight]="100"
-    [headerHeight]="50"
-    [limit]="10"
-    rowHeight="auto"
-    [scrollbarH]="true"
-  >
-    <ngx-datatable-column name="Team Name" prop="row">
-      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-        {{ row?.teamName }}
-      </ng-template>
-    </ngx-datatable-column>
-    <ngx-datatable-column name="Actions" prop="row">
-      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-        <button type="button" class="btn btn-primary me-1" (click)="edit(row)"><i class="bi bi-pencil-square"></i></button>
-        <button type="button" class="btn btn-danger" (click)="delete(row['_id'])"><i class="bi bi-trash"></i></button>
-      </ng-template>
-    </ngx-datatable-column>
-    <ngx-datatable-footer *ngIf="true">
-      <ng-template
-        ngx-datatable-footer-template
-        let-rowCount="rowCount"
-        let-pageSize="pageSize"
-        let-selectedCount="selectedCount"
-        let-curPage="curPage"
-        let-offset="offset"
-      >
-        <datatable-pager
-          [pagerLeftArrowIcon]="'datatable-icon-left'"
-          [pagerRightArrowIcon]="'datatable-icon-right'"
-          [pagerPreviousIcon]="'datatable-icon-prev'"
-          [pagerNextIcon]="'datatable-icon-skip'"
-          [page]="curPage"
-          [size]="pageSize"
-          [count]="rowCount"
-          [hidden]="!(rowCount / pageSize > 1)"
-          (change)="table.onFooterPage($event)"
+<div class="container">
+  <div class="row">
+    <ngx-datatable
+      #myTable
+      class="material"
+      [rows]="teamsData"
+      [columns]="columns"
+      [columnMode]="ColumnMode.force"
+      [footerHeight]="100"
+      [headerHeight]="50"
+      [limit]="10"
+      rowHeight="auto"
+      [scrollbarH]="true"
+    >
+      <ngx-datatable-column name="Team Name" prop="row">
+        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+          {{ row?.teamName }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="League Group" prop="row">
+        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+          <ng-container *ngIf="row?.leagues">
+            <ng-container *ngFor="let league of row?.leagues">
+              <p>{{ league?.leagueName }}</p>
+            </ng-container>
+          </ng-container>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Actions" prop="row">
+        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+          <button type="button" class="btn btn-primary me-1" (click)="edit(row)"><i class="bi bi-pencil-square"></i></button>
+          <button type="button" class="btn btn-danger" (click)="delete(row['_id'])"><i class="bi bi-trash"></i></button>
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-footer *ngIf="true">
+        <ng-template
+          ngx-datatable-footer-template
+          let-rowCount="rowCount"
+          let-pageSize="pageSize"
+          let-selectedCount="selectedCount"
+          let-curPage="curPage"
+          let-offset="offset"
         >
-        </datatable-pager>
-      </ng-template>
-    </ngx-datatable-footer>
-  </ngx-datatable>
+          <datatable-pager
+            [pagerLeftArrowIcon]="'datatable-icon-left'"
+            [pagerRightArrowIcon]="'datatable-icon-right'"
+            [pagerPreviousIcon]="'datatable-icon-prev'"
+            [pagerNextIcon]="'datatable-icon-skip'"
+            [page]="curPage"
+            [size]="pageSize"
+            [count]="rowCount"
+            [hidden]="!(rowCount / pageSize > 1)"
+            (change)="table.onFooterPage($event)"
+          >
+          </datatable-pager>
+        </ng-template>
+      </ngx-datatable-footer>
+    </ngx-datatable>
+  </div>
 </div>

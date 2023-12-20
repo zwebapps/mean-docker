@@ -5,7 +5,7 @@
   <hr />
 </div>
 <div class="row d-flex pt-5" *ngIf="academies">
-  <ng-container *ngFor="let academy of academies">
+  <!-- <ng-container *ngFor="let academy of academies">
     <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
       <div class="league-lable btn">
         <span class="league-text" (click)="redirectTo(academy._id)">
@@ -13,5 +13,6 @@
         </span>
       </div>
     </div>
-  </ng-container>
+  </ng-container> -->
+  <app-admin-squad-listing [academiesData]="academies" (squadManagement)="redirectTo($event)"></app-admin-squad-listing>
 </div>

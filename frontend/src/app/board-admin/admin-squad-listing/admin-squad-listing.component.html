@@ -3,7 +3,7 @@
     <ngx-datatable
       #myTable
       class="material"
-      [rows]="academies"
+      [rows]="academiesData"
       [columns]="columns"
       [columnMode]="ColumnMode.force"
       [footerHeight]="100"
@@ -17,22 +17,18 @@
           <img [src]="getImg(row?.logo)" class="img-fluid" style="width: 35px; border-radius: 20px" />
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Club Name" prop="row">
+      <ngx-datatable-column name="Team Name" prop="row">
         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
           {{ row?.academyName }}
         </ng-template>
       </ngx-datatable-column>
-
       <ngx-datatable-column name="Actions" prop="row">
-        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" class="d-flex">
-          <button type="button" class="btn btn-primary d-inline me-2" [routerLink]="['academy', row._id]">Team Management</button>
-          <button type="button" class="btn btn-danger d-inline" (click)="delete(row['_id'])"><i class="bi bi-trash"></i></button>
-          <button type="button" class="btn btn-primary d-inline" style="margin-left: 10px" (click)="edit(row)">
-            <i class="bi bi-pencil"></i>
-          </button>
+        <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+          <!-- <button type="button" class="btn btn-primary me-1" (click)="edit(row)"><i class="bi bi-pencil-square"></i></button> -->
+          <button type="button" class="btn btn-primary" (click)="sqManagement(row['_id'])">Squad Management</button>
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-footer>
+      <ngx-datatable-footer *ngIf="true">
         <ng-template
           ngx-datatable-footer-template
           let-rowCount="rowCount"

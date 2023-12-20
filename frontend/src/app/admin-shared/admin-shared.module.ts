@@ -30,6 +30,7 @@ import { NgxChartsModule } from "@swimlane/ngx-charts";
 import { LeagueListingComponent } from "../board-admin/league-listing/league-listing.component";
 import { AcademyListingComponent } from "./academy-listing/academy-listing.component";
 import { AdminTeamListingComponent } from "../board-admin/admin-team-listing/admin-team-listing.component";
+import { AdminSquadListingComponent } from "../board-admin/admin-squad-listing/admin-squad-listing.component";
 
 /**
  * Custom angular notifier options
@@ -77,6 +78,7 @@ import { AdminTeamListingComponent } from "../board-admin/admin-team-listing/adm
 
 @NgModule({
   declarations: [
+    AdminSquadListingComponent,
     AdminTeamListingComponent,
     LeagueListingComponent,
     UserManagementComponent,
@@ -113,6 +115,7 @@ import { AdminTeamListingComponent } from "../board-admin/admin-team-listing/adm
     RouterModule
   ],
   exports: [
+    AdminSquadListingComponent,
     AdminTeamListingComponent,
     LeagueListingComponent,
     SalesSummaryComponent,
