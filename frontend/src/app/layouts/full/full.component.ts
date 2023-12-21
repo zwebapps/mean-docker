@@ -36,6 +36,7 @@ export class FullComponent implements OnInit, AfterViewInit {
   public isLoggedIn = false;
   public loggedInUser: any = {};
   public unreadNotifications: any = [];
+  public adminCompetition: any = {};
 
   Logo() {
     this.expandLogo = !this.expandLogo;
@@ -43,6 +44,7 @@ export class FullComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.loggedInUser = this.storageService.getUser();
+    this.adminCompetition = this.storageService.getCompetition();
     if (this.router.url === "/") {
       this.router.navigate(["dashboard"]);
     }
@@ -57,10 +59,12 @@ export class FullComponent implements OnInit, AfterViewInit {
     }
   }
   ngAfterViewInit() {
+    this.adminCompetition = this.storageService.getCompetition();
     setTimeout(() => {
       this.expandLogo = false;
     });
   }
+
   @HostListener("window:resize", ["$event"])
   onResize() {
     this.handleSidebar();

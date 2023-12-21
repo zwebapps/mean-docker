@@ -85,6 +85,9 @@ export class AdminCompetitionComponent {
       this.selectedCompetition = event;
       this.storageService.setCompetition(this.selectedCompetition);
     }
+    if (typeof window !== "undefined") {
+      window.location.reload();
+    }
   }
 
   getCompetition() {

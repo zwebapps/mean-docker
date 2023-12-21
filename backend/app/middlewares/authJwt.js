@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const ObjectId = require("mongodb").ObjectId;
 const config = require("../config/auth.config.js");
 const db = require("../models");
 const User = db.user;
@@ -51,41 +52,41 @@ isAuthenticated = (req, res, next) => {
 };
 
 isAdmin = async (req, res, next) => {
-  console.log("no roles::::::::", req.userId);
-  User.findById(req.userId).exec((err, user) => {
-    if (err) {
-      res.status(500).send({ message: err });
-      return;
-    }
-
-    if (!user) {
-      console.log(JSON.parse(JSON.stringify(user)));
-      debugger;
-      console.log("no roles", user.roles);
-    }
-
-    Role.find(
-      {
-        _id: { $in: user.roles }
-      },
-      (err, roles) => {
-        if (err) {
-          res.status(500).send({ message: err });
-          return;
-        }
-
-        for (let i = 0; i < roles.length; i++) {
-          if (roles[i].name === "admin" || roles[i].name === "superadmin") {
-            next();
-            return;
-          }
-        }
-
-        res.status(403).send({ message: "Require Admin Role!" });
+  const { userId, role } = req;
+  if (role === "admin" || role === "superadmin") {
+    next();
+    return;
+  } else {
+    const reqUser = await User.findById(ObjectId(userId));
+    User.findById(ObjectId(req.userId)).exec((err, user) => {
+      if (err) {
+        res.status(500).send({ message: err });
         return;
       }
-    );
-  });
+
+      Role.find(
+        {
+          _id: { $in: user && user.roles ? user.roles : reqUser.roles }
+        },
+        (err, roles) => {
+          if (err) {
+            res.status(500).send({ message: err });
+            return;
+          }
+
+          for (let i = 0; i < roles.length; i++) {
+            if (roles[i].name === "admin" || roles[i].name === "superadmin") {
+              next();
+              return;
+            }
+          }
+
+          res.status(403).send({ message: "Require Admin Role!" });
+          return;
+        }
+      );
+    });
+  }
 };
 
 isUserAllowed = (req, res, next) => {

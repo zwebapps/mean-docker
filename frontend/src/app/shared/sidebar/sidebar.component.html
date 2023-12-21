@@ -1,18 +1,21 @@
-<nav class="sidebar-nav" [ngStyle]="{ display: sidebarnavItems.length > 0 ? 'block' : 'none'}">
-    <ul id="sidebarnav">
-        <!-- First level menu -->
-        <li class="sidebar-item" [class.active]="showMenu === sidebarnavItem.title"
-            *ngFor="let sidebarnavItem of sidebarnavItems">
-            <div class="nav-small-cap" *ngIf="sidebarnavItem.extralink === true">{{sidebarnavItem.title}}</div>
-            <a class="sidebar-link waves-effect waves-dark"
-                [routerLink]="sidebarnavItem.class === '' ? [sidebarnavItem.path] : null"
-                [ngClass]="[sidebarnavItem.class]" *ngIf="!sidebarnavItem.extralink;"
-                (click)="addExpandClass(sidebarnavItem.title)"
-                >
-                <!-- <i [ngClass]="[sidebarnavItem.icon]"></i> -->
-                <!-- <img src="{{sidebarnavItem.image}}" width="25" /> -->
-                <span class="hide-menu">{{sidebarnavItem.title}}</span>
-            </a>
-        </li>
-    </ul>
+<nav class="sidebar-nav" [ngStyle]="{ display: sidebarnavItems.length > 0 ? 'block' : 'none' }">
+  <ul id="sidebarnav">
+    <!-- First level menu -->
+    <ng-container *ngFor="let sidebarnavItem of sidebarnavItems">
+      <li class="sidebar-item" [class.active]="showMenu === sidebarnavItem.title" *ngIf="sidebarnavItem.display || displayCoachMenu">
+        <div class="nav-small-cap" *ngIf="sidebarnavItem.extralink === true">{{ sidebarnavItem.title }}</div>
+        <a
+          class="sidebar-link waves-effect waves-dark"
+          [routerLink]="sidebarnavItem.class === '' ? [sidebarnavItem.path] : null"
+          [ngClass]="[sidebarnavItem.class]"
+          *ngIf="!sidebarnavItem.extralink"
+          (click)="addExpandClass(sidebarnavItem.title)"
+        >
+          <!-- <i [ngClass]="[sidebarnavItem.icon]"></i> -->
+          <!-- <img src="{{sidebarnavItem.image}}" width="25" /> -->
+          <span class="hide-menu">{{ sidebarnavItem.title }}</span>
+        </a>
+      </li>
+    </ng-container>
+  </ul>
 </nav>

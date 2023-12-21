@@ -12,7 +12,8 @@ export const ROUTES: RouteUser[] = [
         active: "assets/images/bashbaord.png",
         class: "",
         extralink: false,
-        submenu: []
+        submenu: [],
+        display: true
       },
       {
         path: "/superadmin/competitions",
@@ -22,7 +23,8 @@ export const ROUTES: RouteUser[] = [
         active: "assets/images/bashbaord.png",
         class: "",
         extralink: false,
-        submenu: []
+        submenu: [],
+        display: true
       }
       // {
       //   path: "/superadmin/users",
@@ -32,7 +34,7 @@ export const ROUTES: RouteUser[] = [
       //   active: "assets/images/squads.png",
       //   class: "",
       //   extralink: false,
-      //   submenu: []
+      //   submenu: [],
       // },
       // {
       //   path: "/superadmin/leagues",
@@ -42,7 +44,7 @@ export const ROUTES: RouteUser[] = [
       //   active: "assets/images/leagues.png",
       //   class: "",
       //   extralink: false,
-      //   submenu: []
+      //   submenu: [],
       // },
       // {
       //   path: "/superadmin/academies",
@@ -52,7 +54,7 @@ export const ROUTES: RouteUser[] = [
       //   active: "assets/images/teams.png",
       //   class: "",
       //   extralink: false,
-      //   submenu: []
+      //   submenu: [],
       // },
       // {
       //   path: "/superadmin/squads",
@@ -62,7 +64,8 @@ export const ROUTES: RouteUser[] = [
       //   active: "assets/images/squads.png",
       //   class: "",
       //   extralink: false,
-      //   submenu: []
+      //   submenu: [],
+
       // }
     ]
   },
@@ -77,7 +80,8 @@ export const ROUTES: RouteUser[] = [
         active: "assets/images/bashbaord.png",
         class: "",
         extralink: false,
-        submenu: []
+        submenu: [],
+        display: true
       },
       {
         path: "/admin/competitions",
@@ -87,7 +91,8 @@ export const ROUTES: RouteUser[] = [
         active: "assets/images/bashbaord.png",
         class: "",
         extralink: false,
-        submenu: []
+        submenu: [],
+        display: true
       },
       {
         path: "/admin/users",
@@ -97,7 +102,8 @@ export const ROUTES: RouteUser[] = [
         active: "assets/images/squads.png",
         class: "",
         extralink: false,
-        submenu: []
+        submenu: [],
+        display: false
       },
       {
         path: "/admin/leagues",
@@ -107,7 +113,8 @@ export const ROUTES: RouteUser[] = [
         active: "assets/images/leagues.png",
         class: "",
         extralink: false,
-        submenu: []
+        submenu: [],
+        display: false
       },
       {
         path: "/admin/academies",
@@ -117,7 +124,8 @@ export const ROUTES: RouteUser[] = [
         active: "assets/images/teams.png",
         class: "",
         extralink: false,
-        submenu: []
+        submenu: [],
+        display: false
       },
       {
         path: "/admin/squads",
@@ -127,7 +135,8 @@ export const ROUTES: RouteUser[] = [
         active: "assets/images/squads.png",
         class: "",
         extralink: false,
-        submenu: []
+        submenu: [],
+        display: false
       },
       {
         path: "/admin/players",
@@ -137,7 +146,8 @@ export const ROUTES: RouteUser[] = [
         active: "assets/images/teams.png",
         class: "",
         extralink: false,
-        submenu: []
+        submenu: [],
+        display: false
       }
     ]
   },
@@ -152,7 +162,8 @@ export const ROUTES: RouteUser[] = [
         active: "assets/images/bashbaord.png",
         class: "",
         extralink: false,
-        submenu: []
+        submenu: [],
+        display: true
       },
       // {
       //   path: '/coach/leagues',
@@ -160,7 +171,7 @@ export const ROUTES: RouteUser[] = [
       //   icon: 'bi bi-bell',
       //   class: '',
       //   extralink: false,
-      //   submenu: []
+      //   submenu: [],
       // },
       // {
       //   path: '/coach/teams',
@@ -168,7 +179,7 @@ export const ROUTES: RouteUser[] = [
       //   icon: 'bi bi-patch-check',
       //   class: '',
       //   extralink: false,
-      //   submenu: []
+      //   submenu: [],
       // },
       {
         path: "/coach/teams",
@@ -178,7 +189,8 @@ export const ROUTES: RouteUser[] = [
         active: "assets/images/squads.png",
         class: "",
         extralink: false,
-        submenu: []
+        submenu: [],
+        display: true
       }
       // {
       //   path: '/component/card',
@@ -186,7 +198,7 @@ export const ROUTES: RouteUser[] = [
       //   icon: 'bi bi-card-text',
       //   class: '',
       //   extralink: false,
-      //   submenu: []
+      //   submenu: [],
       // },
       // {
       //   path: '/component/dropdown',
@@ -194,7 +206,7 @@ export const ROUTES: RouteUser[] = [
       //   icon: 'bi bi-menu-app',
       //   class: '',
       //   extralink: false,
-      //   submenu: []
+      //   submenu: [],
       // },
       // {
       //   path: '/component/pagination',
@@ -202,7 +214,7 @@ export const ROUTES: RouteUser[] = [
       //   icon: 'bi bi-dice-1',
       //   class: '',
       //   extralink: false,
-      //   submenu: []
+      //   submenu: [],
       // },
       // {
       //   path: '/component/nav',
@@ -210,7 +222,7 @@ export const ROUTES: RouteUser[] = [
       //   icon: 'bi bi-pause-btn',
       //   class: '',
       //   extralink: false,
-      //   submenu: []
+      //   submenu: [],
       // },
       // {
       //   path: '/component/table',
@@ -218,7 +230,7 @@ export const ROUTES: RouteUser[] = [
       //   icon: 'bi bi-layout-split',
       //   class: '',
       //   extralink: false,
-      //   submenu: []
+      //   submenu: [],
       // },
       // {
       //   path: '/about',
@@ -226,7 +238,7 @@ export const ROUTES: RouteUser[] = [
       //   icon: 'bi bi-people',
       //   class: '',
       //   extralink: false,
-      //   submenu: []
+      //   submenu: [],
       // }
     ]
   },
@@ -241,7 +253,8 @@ export const ROUTES: RouteUser[] = [
         active: "assets/images/bashbaord.png",
         class: "",
         extralink: false,
-        submenu: []
+        submenu: [],
+        display: true
       },
       {
         path: "/referee/mangegames",
@@ -251,7 +264,8 @@ export const ROUTES: RouteUser[] = [
         active: "assets/images/squads.png",
         class: "",
         extralink: false,
-        submenu: []
+        submenu: [],
+        display: true
       }
       // {
       //   path: '/component/badges',
@@ -259,7 +273,7 @@ export const ROUTES: RouteUser[] = [
       //   icon: 'bi bi-patch-check',
       //   class: '',
       //   extralink: false,
-      //   submenu: []
+      //   submenu: [],
       // },
       // {
       //   path: '/component/buttons',
@@ -267,7 +281,7 @@ export const ROUTES: RouteUser[] = [
       //   icon: 'bi bi-hdd-stack',
       //   class: '',
       //   extralink: false,
-      //   submenu: []
+      //   submenu: [],
       // },
       // {
       //   path: '/component/card',
@@ -275,7 +289,7 @@ export const ROUTES: RouteUser[] = [
       //   icon: 'bi bi-card-text',
       //   class: '',
       //   extralink: false,
-      //   submenu: []
+      //   submenu: [],
       // },
       // {
       //   path: '/component/dropdown',
@@ -283,7 +297,7 @@ export const ROUTES: RouteUser[] = [
       //   icon: 'bi bi-menu-app',
       //   class: '',
       //   extralink: false,
-      //   submenu: []
+      //   submenu: [],
       // },
       // {
       //   path: '/component/pagination',
@@ -291,7 +305,7 @@ export const ROUTES: RouteUser[] = [
       //   icon: 'bi bi-dice-1',
       //   class: '',
       //   extralink: false,
-      //   submenu: []
+      //   submenu: [],
       // },
       // {
       //   path: '/component/nav',
@@ -299,7 +313,7 @@ export const ROUTES: RouteUser[] = [
       //   icon: 'bi bi-pause-btn',
       //   class: '',
       //   extralink: false,
-      //   submenu: []
+      //   submenu: [],
       // },
       // {
       //   path: '/component/table',
@@ -307,7 +321,7 @@ export const ROUTES: RouteUser[] = [
       //   icon: 'bi bi-layout-split',
       //   class: '',
       //   extralink: false,
-      //   submenu: []
+      //   submenu: [],
       // },
       // {
       //   path: '/about',
@@ -315,7 +329,7 @@ export const ROUTES: RouteUser[] = [
       //   icon: 'bi bi-people',
       //   class: '',
       //   extralink: false,
-      //   submenu: []
+      //   submenu: [],
       // }
     ]
   }

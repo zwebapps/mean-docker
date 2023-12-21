@@ -1,26 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-import { UserService } from '../_services/user.service';
-import {topcard, topcards} from '../dashboard/dashboard-components/top-cards/top-cards-data';
-import { Store } from '@ngrx/store';
+import { Component, OnInit } from "@angular/core";
+import { UserService } from "../_services/user.service";
+import { topcard, topcards } from "../dashboard/dashboard-components/top-cards/top-cards-data";
+import { Store } from "@ngrx/store";
 // importing selectors
-import * as UserSelectors from "../_store/selectors/users.selectors";
-import * as TeamSelectors from "../_store/selectors/teams.selectors";
-import { StorageService } from '../_services/storage.service';
-import { Router } from '@angular/router';
+import { StorageService } from "../_services/storage.service";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-board-admin',
-  templateUrl: './board-admin.component.html',
-  styleUrls: ['./board-admin.component.scss']
+  selector: "app-board-admin",
+  templateUrl: "./board-admin.component.html",
+  styleUrls: ["./board-admin.component.scss"]
 })
 export class BoardAdminComponent implements OnInit {
   content?: string;
-  topcards:topcard[];
+  topcards: topcard[];
   users: any = [];
   teams: any = [];
 
-  constructor(private userService: UserService,  private router: Router, private storageService: StorageService) {
-    this.topcards=topcards;
+  constructor(private userService: UserService, private router: Router, private storageService: StorageService) {
+    this.topcards = topcards;
   }
 
   ngOnInit(): void {
@@ -28,10 +26,10 @@ export class BoardAdminComponent implements OnInit {
       this.router.navigateByUrl("/login");
     } else {
       this.userService.getAdminBoard().subscribe({
-        next: data => {
+        next: (data) => {
           this.content = data.content;
         },
-        error: err => {
+        error: (err) => {
           if (err.error) {
             try {
               const res = JSON.parse(err.error);

@@ -1,7 +1,7 @@
 // Sidebar route metadata
 export interface RouteUser {
-  role: string,
-  routes: RouteInfo[]
+  role: string;
+  routes: RouteInfo[];
 }
 export interface RouteInfo {
   path: string;
@@ -12,4 +12,5 @@ export interface RouteInfo {
   class: string;
   extralink: boolean;
   submenu: RouteInfo[];
+  display: boolean;
 }

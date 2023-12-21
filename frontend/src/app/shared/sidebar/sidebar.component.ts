@@ -18,15 +18,12 @@ export class SidebarComponent implements OnInit, OnChanges {
   showSubMenu = "";
   @Input() userRole: string = "ROLE_USER";
   @Output() toggleSideMenue = new EventEmitter<string>();
+  @Input({ required: false }) selectedCompetition: any = {};
   public sidebarnavItems: RouteInfo[] = [];
+  public displayCoachMenu: boolean = false;
   // this is for the open close
 
-  constructor(
-    private modalService: NgbModal,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private storageService: StorageService
-  ) {}
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private storageService: StorageService) {}
 
   addExpandClass(element: string) {
     if (element === this.showMenu) {
@@ -44,9 +41,13 @@ export class SidebarComponent implements OnInit, OnChanges {
     this.toggleSideMenue.emit();
   }
   ngOnChanges() {
+    console.log(this.selectedCompetition);
     if (this.storageService.getUser()) {
       // getting the roles
       this.userRole = this.storageService.getUser().roles[0];
+    }
+    if (this.storageService.getCompetition()) {
+      this.displayCoachMenu = true;
     }
   }
   // End open close
@@ -66,7 +67,6 @@ export class SidebarComponent implements OnInit, OnChanges {
       } else {
         this.sidebarnavItems = userRoutes["routes"];
       }
-      console.log(this.sidebarnavItems);
       userRoutes["routes"].forEach((item: any) => (this.router.url.includes(item.path) ? (item.class = "active") : (item.class = "")));
     }
   }
