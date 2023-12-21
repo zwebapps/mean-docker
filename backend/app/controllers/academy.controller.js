@@ -22,9 +22,7 @@ exports.createAcademy = async (req, resp, next) => {
               logo: req.body[i]["Logo"],
               color: req.body[i]["Color"],
               coach: [ObjectId(req.body[i].user["createdBy"])],
-              compitition: req.body[i]["compitition"].map((comp) =>
-                ObjectId(comp)
-              ),
+              competition: ObjectId(req.body[i]["competition"]),
               createdAt: new Date()
             });
             insertedAcademies.push(req.body[i]);
@@ -48,7 +46,7 @@ exports.createAcademy = async (req, resp, next) => {
             logo: req.body["Logo"],
             color: req.body["Color"],
             coach: [ObjectId(req.body.user["createdBy"])],
-            compitition: req.body.compitition.map((comp) => ObjectId(comp._id)),
+            competition: ObjectId(req.body[i]["competition"]),
             createdAt: new Date()
           });
 
@@ -99,11 +97,11 @@ exports.forShortCode = async (req, resp, next) => {
     next(error);
   }
 };
-exports.forCompitition = async (req, resp, next) => {
+exports.forCompetition = async (req, resp, next) => {
   try {
     if (req.params && req.params.id) {
       const academy = await Academy.find({
-        compitition: ObjectId(req.params.compitition)
+        competition: ObjectId(req.params.competition)
       })
         .populate("coach")
         .exec();
@@ -257,11 +255,9 @@ exports.deleteAcademy = async (req, resp, next) => {
       if (!academy) {
         resp.status(200).json({ message: `No academy record found!` });
       }
-      resp
-        .status(200)
-        .json({
-          message: `Academy ${academy.academyName} with ${teams.deletedCount} teams was deleted!`
-        });
+      resp.status(200).json({
+        message: `Academy ${academy.academyName} with ${teams.deletedCount} teams was deleted!`
+      });
     } else {
       resp.status(200).json({
         type: "error",

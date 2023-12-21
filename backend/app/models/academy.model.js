@@ -4,32 +4,33 @@ const Academy = mongoose.model(
   "Academy",
   new mongoose.Schema({
     academyName: {
-        type: String,
-        unique : true,
-        required: true
+      type: String,
+      required: true
     },
     logo: {
       type: String,
-      unique : true
+      unique: true
     },
     color: {
-      type: String,
+      type: String
     },
     shortcode: {
-      type: String,
+      type: String
     },
-    compitition: {
+    competition: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Compitition"
+      ref: "Competition"
     },
-    coach: [{
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User"
-        }],
+    coach: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+      }
+    ],
     createdAt: {
-        type: Date,
-        default: Date.now,
-        required: true
+      type: Date,
+      default: Date.now,
+      required: true
     }
   })
 );

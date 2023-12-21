@@ -33,9 +33,9 @@ const Fixture = mongoose.model(
       default: 0,
       required: true
     },
-    compitition: {
+    competition: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Compitition"
+      ref: "Competition"
     },
     user_id: {
       type: mongoose.Schema.Types.ObjectId,

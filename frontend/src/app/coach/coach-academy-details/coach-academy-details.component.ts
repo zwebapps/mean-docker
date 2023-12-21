@@ -279,7 +279,7 @@ export class CoachAcademyDetailsComponent {
         playingUp: this.playerPlayingUp,
         playingUpTeam: this.playerPlayingUpTeam,
         shortcode: this.coach.shortcode,
-        compitition: this.coach.compitition,
+        competition: this.coach.competition,
         user: {
           createdBy: this.coach._id
         }
@@ -727,7 +727,6 @@ export class CoachAcademyDetailsComponent {
       let ageDifMs = Date.now() - dob.getTime();
       let ageDate = new Date(ageDifMs);
       let age = Math.abs(ageDate.getUTCFullYear() - 1970);
-      // console.log(age, "::::::", value);
       return age;
     }
   };

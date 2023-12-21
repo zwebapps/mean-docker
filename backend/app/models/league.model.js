@@ -5,7 +5,6 @@ const League = mongoose.model(
   new mongoose.Schema({
     leagueName: {
       type: String,
-      unique: true,
       required: true
     },
     leagueAgeLimit: {
@@ -19,12 +18,10 @@ const League = mongoose.model(
       type: String,
       default: 2024
     },
-    compitition: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Compitition"
-      }
-    ],
+    competition: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Competition"
+    },
     user_id: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"

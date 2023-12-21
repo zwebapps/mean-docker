@@ -53,17 +53,19 @@ export class LeagueManagementComponent implements OnInit {
     this.getLeaguesFromStore();
     this.leagueForm.patchValue({
       shortCode: this.selectedCompetition?.shortCode,
-      leagueYear: isNaN(Number(this.selectedCompetition?.compititionYear))
+      leagueYear: isNaN(Number(this.selectedCompetition?.competitionYear))
         ? new Date().getFullYear()
-        : this.selectedCompetition?.compititionYear
+        : this.selectedCompetition?.competitionYear
     });
     // disable year and short code
     this.leagueForm.controls.shortCode.disable();
     this.leagueForm.controls.leagueYear.disable();
   }
   getLeagueNo(leagueName: any) {
-    let nameArray = leagueName.match(/(\d+)/);
-    return nameArray ? nameArray.find((nm: any) => !isNaN(nm)) : null;
+    if (leagueName) {
+      let nameArray = leagueName.match(/(\d+)/);
+      return nameArray ? nameArray.find((nm: any) => !isNaN(nm)) : null;
+    }
   }
 
   getAgeFromName(leagueName: any) {
@@ -88,7 +90,7 @@ export class LeagueManagementComponent implements OnInit {
             "Age Limit": this.leagueForm.value.leagueAge,
             "Short Code": this.leagueForm.value.shortCode,
             Year: this.leagueForm.value.leagueYear,
-            compitition: user.compitition ? user.compitition : Array(this.selectedCompetition),
+            competition: user.competition ? user.competition : Array(this.selectedCompetition),
             user: {
               createdBy: user._id ? user._id : user.id
             }
@@ -111,10 +113,10 @@ export class LeagueManagementComponent implements OnInit {
         "League Name": this.leagueForm.value.leagueName,
         "Age Limit": this.leagueForm.value.leagueAge,
         "Short Code": this.selectedCompetition?.shortCode,
-        year: isNaN(Number(this.selectedCompetition?.compititionYear))
+        year: isNaN(Number(this.selectedCompetition?.competitionYear))
           ? new Date().getFullYear()
-          : this.selectedCompetition?.compititionYear,
-        compitition: user.compitition.length > 0 ? user.compitition : Array(this.selectedCompetition),
+          : this.selectedCompetition?.competitionYear,
+        competition: user.competition.length > 0 ? user.competition : Array(this.selectedCompetition),
         user: {
           createdBy: user._id ? user._id : user.id
         }
@@ -160,9 +162,9 @@ export class LeagueManagementComponent implements OnInit {
     // disable year and short code
     this.leagueForm.patchValue({
       shortCode: this.selectedCompetition?.shortCode,
-      leagueYear: isNaN(Number(this.selectedCompetition?.compititionYear))
+      leagueYear: isNaN(Number(this.selectedCompetition?.competitionYear))
         ? new Date().getFullYear()
-        : this.selectedCompetition?.compititionYear,
+        : this.selectedCompetition?.competitionYear,
       leagueName: league?.leagueName,
       leagueAge: league?.leagueAgeLimit
     });
@@ -192,7 +194,7 @@ export class LeagueManagementComponent implements OnInit {
   getCompetitions() {
     this.selectedCompetition = this.storageService.getCompetition();
     if (this.selectedCompetition) {
-      this.compSettings = JSON.parse(this.selectedCompetition?.compititionSettings);
+      this.compSettings = JSON.parse(this.selectedCompetition?.competitionSettings);
     }
   }
   getLeaguesFromStore() {
@@ -204,7 +206,7 @@ export class LeagueManagementComponent implements OnInit {
             const bNumber = parseInt(this.getLeagueNo(b?.leagueName));
 
             if (isNaN(aNumber) || isNaN(bNumber)) {
-              return a?.leagueName.localeCompare(b?.leagueName);
+              return a?.leagueName?.localeCompare(b?.leagueName);
             }
             return aNumber - bNumber;
           });

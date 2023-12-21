@@ -29,12 +29,12 @@ export class AdminTeamListingComponent {
   }
   getCompetitionName = (competitions: any) => {
     if (competitions) {
-      return competitions.map((item: any) => item.compititionName).join(", ");
+      return competitions.map((item: any) => item.competitionName).join(", ");
     }
   };
   getCompetitionYear = (competitions: any) => {
     if (competitions) {
-      return competitions.map((item: any) => item.compititionYear).join(", ");
+      return competitions.map((item: any) => item.competitionYear).join(", ");
     }
   };
 }

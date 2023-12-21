@@ -4,35 +4,34 @@ const Team = mongoose.model(
   "Team",
   new mongoose.Schema({
     teamName: {
-        type: String,
-        unique : true,
-        required: true
+      type: String,
+      required: true
     },
     user_id: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User"
-        },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    },
     academy_id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Academy"
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Academy"
     },
     shortcode: {
-      type: String,
+      type: String
     },
-    compitition: {
+    competition: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Compitition"
+      ref: "Competition"
     },
     leagues: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "League"
-        }
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "League"
+      }
     ],
     createdAt: {
-        type: Date,
-        default: Date.now,
-        required: false
+      type: Date,
+      default: Date.now,
+      required: false
     }
   })
 );

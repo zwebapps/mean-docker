@@ -5,12 +5,12 @@ import { ColumnMode } from "@swimlane/ngx-datatable";
 import { Country, Countries } from "src/app/_shared/countries.data";
 
 @Component({
-  selector: "app-compitition",
-  templateUrl: "./compitition.component.html",
-  styleUrls: ["./compitition.component.scss"]
+  selector: "app-competition",
+  templateUrl: "./competition.component.html",
+  styleUrls: ["./competition.component.scss"]
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CompititionComponent implements OnInit {
+export class CompetitionComponent implements OnInit {
   @ViewChild("myTable") table: any;
 
   countries: Country[] = [];
@@ -19,9 +19,9 @@ export class CompititionComponent implements OnInit {
   loadingIndicator = true;
   reorderable = true;
   ColumnMode = ColumnMode;
-  @Output() delCompitition: EventEmitter<any> = new EventEmitter();
+  @Output() delCompetition: EventEmitter<any> = new EventEmitter();
   @Output() editComp: EventEmitter<any> = new EventEmitter();
-  @Input() compititions: any = [];
+  @Input() competitions: any = [];
   apiURL = environment.apiURL;
 
   constructor(private sanitizer: DomSanitizer) {}
@@ -31,7 +31,7 @@ export class CompititionComponent implements OnInit {
   }
 
   getDescription(data: any) {
-    return JSON.parse(data)?.compititionDescription || "No Description provided";
+    return JSON.parse(data)?.competitionDescription || "No Description provided";
   }
   getOrganiser(data: any) {
     return JSON.parse(data)?.organiserName || "No Organiser provided";
@@ -40,14 +40,14 @@ export class CompititionComponent implements OnInit {
     const logoUrl = `${this.apiURL}/static/${image}`;
     return this.sanitizer.bypassSecurityTrustResourceUrl(logoUrl);
   };
-  deleteCompitition(compitition: any) {
-    const { _id } = compitition;
+  deleteCompetition(competition: any) {
+    const { _id } = competition;
     console.log(_id);
-    this.delCompitition.emit(_id);
+    this.delCompetition.emit(_id);
   }
-  editCompitition(compitition: any) {
-    console.log(compitition);
-    this.editComp.emit(compitition);
+  editCompetition(competition: any) {
+    console.log(competition);
+    this.editComp.emit(competition);
   }
   getOrganiserDetail(details: any) {
     if (details) {

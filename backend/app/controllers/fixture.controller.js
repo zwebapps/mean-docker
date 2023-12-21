@@ -16,7 +16,7 @@ exports.createFixture = async (req, resp, next) => {
             awayTeam: req.body[i]["awayTeam"],
             league: ObjectId(req.body[i]["league"]),
             user_id: ObjectId(req.body[i].user["createdBy"]),
-            compitition: req.body.compitition.map((comp) => ObjectId(comp)),
+            competition: ObjectId(req.body[i]["competition"]),
             shortcode: ObjectId(req.body[i].shortcode),
             createdAt: new Date()
           });
@@ -33,9 +33,7 @@ exports.createFixture = async (req, resp, next) => {
         league: ObjectId(req.body["league"]),
         user_id: ObjectId(req.body.user["createdBy"]),
         shortcode: req.body.shortcode,
-        compitition: Array.isArray(req.body.compitition)
-          ? req.body.compitition.map((comp) => ObjectId(comp._id))
-          : ObjectId(req.body.compitition),
+        competition: ObjectId(req.body.competition),
         createdAt: new Date()
       });
 
@@ -54,7 +52,8 @@ exports.getAllFixture = async (req, resp, next) => {
       "league",
       "homeTeam",
       "awayTeam",
-      "user_id"
+      "user_id",
+      "competition"
     ]);
     resp
       .status(200)
@@ -80,16 +79,16 @@ exports.forShortCode = async (req, resp, next) => {
   try {
     const fixture = await Fixture.find({
       shortcode: req.params.shortcode
-    }).populate(["league", "homeTeam", "awayTeam"]);
+    }).populate(["league", "homeTeam", "awayTeam", "competition", "user_id"]);
     resp.status(200).json(fixture);
   } catch (error) {
     next(error);
   }
 };
-exports.forCompitition = async (req, resp, next) => {
+exports.forCompetition = async (req, resp, next) => {
   try {
     const fixture = await Fixture.find({
-      compitition: ObjectId(req.params.compitition)
+      competition: ObjectId(req.params.competition)
     }).populate(["league", "homeTeam", "awayTeam"]);
     resp.status(200).json(fixture);
   } catch (error) {
@@ -135,7 +134,9 @@ exports.deleteFixture = async (req, resp, next) => {
     const fixture = await Fixture.findByIdAndDelete({
       _id: ObjectId(req.params.id)
     });
-    resp.status(200).json({ message: `Fixture has been record deleted!` });
+    resp
+      .status(200)
+      .json({ message: `Fixture has been record deleted!`, fixture });
   } catch (error) {
     next(error);
   }

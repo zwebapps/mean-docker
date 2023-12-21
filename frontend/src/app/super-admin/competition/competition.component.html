@@ -1,7 +1,7 @@
 <ngx-datatable
   #myTable
   class="material"
-  [rows]="compititions"
+  [rows]="competitions"
   [columns]="columns"
   [columnMode]="ColumnMode.force"
   [footerHeight]="100"
@@ -27,18 +27,18 @@
   </ngx-datatable-column>
   <ngx-datatable-column name="Country" prop="row">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-      <span class="fi fi-{{ row.compititionCountry.toLowerCase() }} flag-img"></span>
+      <span class="fi fi-{{ row.competitionCountry.toLowerCase() }} flag-img"></span>
     </ng-template>
   </ngx-datatable-column>
-  <ngx-datatable-column name="Compitition" prop="row">
+  <ngx-datatable-column name="Competition" prop="row">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-      {{ row.compititionName }}
+      {{ row.competitionName }}
     </ng-template>
   </ngx-datatable-column>
   <ngx-datatable-column name="Actions" prop="row">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-      <button type="button" class="btn btn-primary me-1" (click)="editCompitition(row)"><i class="bi bi-pencil-square"></i></button>
-      <button type="button" class="btn btn-danger" (click)="deleteCompitition(row)"><i class="bi bi-trash"></i></button>
+      <button type="button" class="btn btn-primary me-1" (click)="editCompetition(row)"><i class="bi bi-pencil-square"></i></button>
+      <button type="button" class="btn btn-danger" (click)="deleteCompetition(row)"><i class="bi bi-trash"></i></button>
     </ng-template>
   </ngx-datatable-column>
   <ngx-datatable-footer *ngIf="true">

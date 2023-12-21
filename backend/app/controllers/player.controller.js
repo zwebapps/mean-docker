@@ -166,9 +166,7 @@ exports.createPlayer = async (req, resp, next) => {
               playingUp: req.body[i]["playingUp"],
               playingUpTeam: req.body[i]["playingUpTeam"],
               shortcode: req.body[i].shortcode,
-              compitition: req.body[i]["compitition"].map((comp) =>
-                ObjectId(comp)
-              ),
+              competition: ObjectId(req.body[i]["competition"]),
               mvp: req.body[i]["mvp"],
               createdAt: new Date()
             });
@@ -218,7 +216,7 @@ exports.createPlayer = async (req, resp, next) => {
             playingUpTeam: req.body["playingUpTeam"],
             mvp: req.body["mvp"] ? req.body["mvp"] : false,
             shortcode: req.body.shortcode,
-            compitition: req.body.compitition.map((comp) => ObjectId(comp)),
+            competition: ObjectId(req.body["competition"]),
             createdAt: new Date()
           });
 
@@ -353,7 +351,7 @@ exports.forShortCode = async (req, resp, next) => {
   try {
     const { shortcode } = req.params;
     if (shortcode) {
-      // check if compitition
+      // check if competition
       pl = await Player.find({ shortcode: shortcode })
         .populate(["user", "league", "academy", "team"])
         .exec();
@@ -364,13 +362,13 @@ exports.forShortCode = async (req, resp, next) => {
   }
 };
 
-exports.forCompitition = async (req, resp, next) => {
+exports.forCompetition = async (req, resp, next) => {
   let pl = {};
   try {
-    const { compitition } = req.params;
-    if (compitition) {
-      // check if compitition
-      pl = await Player.find({ compitition: ObjectId(req.params.compitition) })
+    const { competition } = req.params;
+    if (competition) {
+      // check if competition
+      pl = await Player.find({ competition: ObjectId(req.params.competition) })
         .populate(["user", "league", "academy", "team"])
         .exec();
     }
@@ -413,7 +411,7 @@ exports.updatePlayer = async (req, resp, next) => {
       academy: ObjectId(req.body.academy),
       team: ObjectId(req.body.team),
       league: ObjectId(req.body.league),
-      compitition: req.body.compitition.map((comp) => ObjectId(comp)),
+      competition: ObjectId(req.body["competition"]),
       user: ObjectId(req.body.user.createdBy)
     };
 

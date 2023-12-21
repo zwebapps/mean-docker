@@ -1,12 +1,9 @@
 const { authJwt } = require("../middlewares");
 const controller = require("../controllers/user.controller");
 
-module.exports = function(app) {
-  app.use(function(req, res, next) {
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, Content-Type, Accept"
-    );
+module.exports = function (app) {
+  app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
     next();
   });
 
@@ -37,28 +34,71 @@ module.exports = function(app) {
     controller.createUser
   );
 
-app.get("/api/users/:id", authJwt.isAuthenticated, controller.UserByIdOrEID);
+  app.get("/api/users/:id", authJwt.isAuthenticated, controller.UserByIdOrEID);
 
-app.post("/api/users/update/:id", authJwt.isAuthenticated, controller.updateUser);
+  app.post(
+    "/api/users/update/:id",
+    authJwt.isAuthenticated,
+    controller.updateUser
+  );
 
-app.post("/api/users/delete/:id", authJwt.isAuthenticated, controller.deleteUser);
+  app.post(
+    "/api/users/delete/:id",
+    authJwt.isAuthenticated,
+    controller.deleteUser
+  );
 
-app.post("/api/user/createcontact", authJwt.isAuthenticated, controller.createContact);
+  app.post(
+    "/api/user/createcontact",
+    authJwt.isAuthenticated,
+    controller.createContact
+  );
 
-app.get("/api/user/contents/:id", authJwt.isAuthenticated, controller.allContactsByIdCoach);
+  app.get(
+    "/api/user/contents/:id",
+    authJwt.isAuthenticated,
+    controller.allContactsByIdCoach
+  );
 
-app.get("/api/user/contents", authJwt.isAuthenticated, controller.getAllContacts);
+  app.get(
+    "/api/user/contents",
+    authJwt.isAuthenticated,
+    controller.getAllContacts
+  );
 
-app.post("/api/user/contentsupdate/:id", authJwt.isAuthenticated, controller.updateContact);
+  app.post(
+    "/api/user/contentsupdate/:id",
+    authJwt.isAuthenticated,
+    controller.updateContact
+  );
 
-app.post("/api/user/contentdelete/:id", authJwt.isAuthenticated, controller.contentDelete);
+  app.post(
+    "/api/user/contentdelete/:id",
+    authJwt.isAuthenticated,
+    controller.contentDelete
+  );
 
-app.get("/api/user/forcompitition/:compitition", authJwt.isAuthenticated, controller.forCompitition);
+  app.get(
+    "/api/user/forcompetition/:competition",
+    authJwt.isAuthenticated,
+    controller.forCompetition
+  );
 
-app.get("/api/user/forshortcode/:shortcode", authJwt.isAuthenticated, controller.forShortcode);
+  app.get(
+    "/api/user/forshortcode/:shortcode",
+    authJwt.isAuthenticated,
+    controller.forShortcode
+  );
 
-app.get("/api/user/contents/forcompitition/:compitition", authJwt.isAuthenticated, controller.forContentsCompitition);
+  app.get(
+    "/api/user/contents/forcompetition/:competition",
+    authJwt.isAuthenticated,
+    controller.forContentsCompetition
+  );
 
-app.get("/api/user/contents/forshortcode/:shortcode", authJwt.isAuthenticated, controller.contentForShortCode);
+  app.get(
+    "/api/user/contents/forshortcode/:shortcode",
+    authJwt.isAuthenticated,
+    controller.contentForShortCode
+  );
 };
-

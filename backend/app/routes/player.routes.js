@@ -60,9 +60,9 @@ module.exports = function (app) {
   );
 
   app.get(
-    "/player/forcompitition/:compitition",
+    "/player/forcompetition/:competition",
     authJwt.isAuthenticated,
-    player.forCompitition
+    player.forCompetition
   );
 
   app.get(
