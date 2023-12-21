@@ -22,6 +22,7 @@ export class CompetitionComponent implements OnInit {
   @Output() delCompetition: EventEmitter<any> = new EventEmitter();
   @Output() editComp: EventEmitter<any> = new EventEmitter();
   @Input() competitions: any = [];
+  @Input() users: any = [];
   apiURL = environment.apiURL;
 
   constructor(private sanitizer: DomSanitizer) {}

@@ -1,7 +1,7 @@
 <ngx-datatable
   #myTable
   class="material"
-  [rows]="competitions"
+  [rows]="users"
   [columns]="columns"
   [columnMode]="ColumnMode.force"
   [footerHeight]="100"
@@ -12,17 +12,17 @@
 >
   <ngx-datatable-column name="Name" prop="row">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-      {{ row.organiser?.firstname }} {{ row.organiser?.lastname }}
+      {{ row.firstname }} {{ row.lastname }}
     </ng-template>
   </ngx-datatable-column>
   <ngx-datatable-column name="Email" prop="row">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-      {{ row.organiser?.email }}
+      {{ row.email }}
     </ng-template>
   </ngx-datatable-column>
   <ngx-datatable-column name="Mobile Number" prop="row">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-      {{ row.organiser?.contact }}
+      {{ row.contact }}
     </ng-template>
   </ngx-datatable-column>
   <ngx-datatable-column name="Country" prop="row">
@@ -32,7 +32,9 @@
   </ngx-datatable-column>
   <ngx-datatable-column name="Competition" prop="row">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-      {{ row.competitionName }}
+      <ng-container *ngFor="let comp of row.competition">
+        <p>{{ comp.competitionName }}</p>
+      </ng-container>
     </ng-template>
   </ngx-datatable-column>
   <ngx-datatable-column name="Actions" prop="row">

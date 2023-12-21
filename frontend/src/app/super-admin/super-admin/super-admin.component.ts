@@ -13,6 +13,8 @@ import * as CompetitionActions from "../../_store/actions/competitions.actions";
 import * as CompetitionSelectors from "../../_store/selectors/competitions.selectors";
 import { IDropdownSettings } from "ng-multiselect-dropdown";
 import { Country, Countries } from "src/app/_shared/countries.data";
+// importing selectors
+import * as UserSelectors from "./../../_store/selectors/users.selectors";
 
 @Component({
   selector: "app-super-admin",
@@ -39,6 +41,8 @@ export class SuperAdminComponent implements OnInit {
   public competitionToBeEdit: any;
   public patchedValues: any = {};
   public createdAdmin: any = {};
+  public users: any;
+  public loggedInUser: any = {};
 
   constructor(
     private palyerService: PlayerService,
@@ -70,8 +74,11 @@ export class SuperAdminComponent implements OnInit {
     this.getAllCompetitions();
     this.addcompetitions();
     this.getCountries();
+    this.getLoggedInUser();
   }
-
+  getLoggedInUser() {
+    this.loggedInUser = this.storageService.getUser();
+  }
   get competitions() {
     return this.competitionForm.get("competitions") as FormArray;
   }
@@ -108,6 +115,12 @@ export class SuperAdminComponent implements OnInit {
     );
   }
   getAllCompetitions() {
+    this.store.select(UserSelectors.getUsers).subscribe((users) => {
+      if (users) {
+        this.users = users.filter((user: any) => user.createdBy && user.createdBy === this.loggedInUser.id);
+      }
+    });
+    console.log("Getting all competitions");
     this.store.select(CompetitionSelectors.getCompetitions).subscribe((competition: any) => {
       this.listOfCompetitions = competition;
     });

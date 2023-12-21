@@ -33,6 +33,7 @@
     </form>
   </div>
   <app-competition
+    [users]="users"
     [competitions]="listOfCompetitions"
     (delCompetition)="deleteCompetition($event)"
     (editComp)="editCompetition($event)"
