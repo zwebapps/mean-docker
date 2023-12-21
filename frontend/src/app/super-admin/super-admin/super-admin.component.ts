@@ -10,6 +10,7 @@ import { StorageService } from "src/app/_services/storage.service";
 import { UserService } from "src/app/_services/user.service";
 import { environment } from "src/environments/environment";
 import * as CompetitionActions from "../../_store/actions/competitions.actions";
+import * as UserActions from "../../_store/actions/users.actions";
 import * as CompetitionSelectors from "../../_store/selectors/competitions.selectors";
 import { IDropdownSettings } from "ng-multiselect-dropdown";
 import { Country, Countries } from "src/app/_shared/countries.data";
@@ -75,9 +76,18 @@ export class SuperAdminComponent implements OnInit {
     this.addcompetitions();
     this.getCountries();
     this.getLoggedInUser();
+    this.loadUsers();
+  }
+  loadUsers() {
+    this.store.dispatch(UserActions.loadUsers());
   }
   getLoggedInUser() {
     this.loggedInUser = this.storageService.getUser();
+    this.store.select(UserSelectors.getUsers).subscribe((users) => {
+      if (users) {
+        this.users = users.filter((user: any) => user.createdBy && user.createdBy === this.loggedInUser.id);
+      }
+    });
   }
   get competitions() {
     return this.competitionForm.get("competitions") as FormArray;
@@ -115,12 +125,6 @@ export class SuperAdminComponent implements OnInit {
     );
   }
   getAllCompetitions() {
-    this.store.select(UserSelectors.getUsers).subscribe((users) => {
-      if (users) {
-        this.users = users.filter((user: any) => user.createdBy && user.createdBy === this.loggedInUser.id);
-      }
-    });
-    console.log("Getting all competitions");
     this.store.select(CompetitionSelectors.getCompetitions).subscribe((competition: any) => {
       this.listOfCompetitions = competition;
     });
