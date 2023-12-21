@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from "@angular/core";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { DomSanitizer } from "@angular/platform-browser";
 import { NgbModal, ModalDismissReasons } from "@ng-bootstrap/ng-bootstrap";
@@ -61,7 +61,8 @@ export class SuperAdminComponent implements OnInit {
       organiserContact: ["", Validators.required],
       organiserEmail: ["", [Validators.required, Validators.email]],
       organiserPassword: ["", [Validators.required, Validators.minLength(6)]],
-      shortCode: ["", Validators.required]
+      shortCode: ["", Validators.required],
+      competitionCountry: ["", Validators.required]
     });
   }
 
@@ -78,7 +79,6 @@ export class SuperAdminComponent implements OnInit {
     return this.formBuilder.group({
       competitionName: ["", Validators.required],
       competitionYear: ["", Validators.required],
-      competitionCountry: ["", Validators.required],
       competitionDescription: [""],
       competitionLogo: [""],
       competitionBackground: [""],
@@ -161,6 +161,7 @@ export class SuperAdminComponent implements OnInit {
         password: this.competitionForm.value.organiserPassword,
         email: this.competitionForm.value.organiserEmail,
         shortCode: this.competitionForm.value.shortCode,
+        competitionCountry: this.competitionForm.value.competitionCountry,
         role: "admin"
       };
       const competitionObj = {
@@ -173,7 +174,6 @@ export class SuperAdminComponent implements OnInit {
         competitionBackground: this.competitionForm.value.competitionBackground,
         competitionColor: this.competitionForm.value.competitionColor,
         competitionBorder: this.competitionForm.value.competitionBorder,
-        competitionCountry: this.competitionForm.value.competitionCountry,
         competitionName: this.competitionForm.value.competitionName,
         competitionYear: this.competitionForm.value.competitionYear,
         user: {
@@ -303,12 +303,12 @@ export class SuperAdminComponent implements OnInit {
         shortCode: competiton?.shortCode,
         organiserUserName: organiser.username,
         organiserPassword: organiser.password,
+        competitionCountry: organiser?.competitionCountry ? organiser?.competitionCountry : "ae",
         competitions: [
           {
             competitionBackground: "#ffffff",
             competitionBorder: "#fefefe",
             competitionColor: "#eeeeee",
-            competitionCountry: competiton?.competitionCountry,
             competitionDescription: "Competition description",
             competitionLogo: competiton?.competitionLogo,
             competitionName: competiton?.competitionName,

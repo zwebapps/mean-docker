@@ -29,6 +29,10 @@ const User = mongoose.model(
       type: String,
       required: true
     },
+    competitionCountry: {
+      type: String,
+      default: "AE"
+    },
     competition: [
       {
         type: mongoose.Schema.Types.ObjectId,

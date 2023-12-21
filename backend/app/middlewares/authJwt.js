@@ -52,7 +52,7 @@ isAuthenticated = (req, res, next) => {
 
 isAdmin = async (req, res, next) => {
   console.log("no roles::::::::", req.userId);
-  await User.findById(req.userId).exec((err, user) => {
+  User.findById(req.userId).exec((err, user) => {
     if (err) {
       res.status(500).send({ message: err });
       return;

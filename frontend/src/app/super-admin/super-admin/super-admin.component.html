@@ -180,6 +180,31 @@
             <small>ShortCode is already in use</small>
           </div>
         </div>
+        <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
+          <label for="name" class="control-label">Country</label>
+          <select
+            class="form-select"
+            [(ngModel)]="patchedValues.competitionCountry"
+            name="competitionCountry"
+            formControlName="competitionCountry"
+            aria-label="Default select"
+          >
+            <option [value]="0" selected>Select Country</option>
+            <ng-container *ngIf="countries">
+              <ng-container *ngFor="let country of countries">
+                <option [value]="country.code" [selected]="patchedValues?.competitionCountry == country.code">
+                  {{ country.name }}
+                  <span class="fi fi-gr"></span>
+                </option>
+              </ng-container>
+            </ng-container>
+          </select>
+          <div *ngIf="submitted && f['competitionCountry']?.errors" class="invalid-feedback">
+            <div *ngIf="f['competitionCountry'].errors && f['competitionCountry'].errors['required']">
+              <small>Country is required</small>
+            </div>
+          </div>
+        </div>
         <ng-container *ngFor="let competition of competitions.controls; let compIndex = index">
           <hr />
           <span class="float-end" (click)="removeCompetition(compIndex)"> <i class="bi bi-trash"></i></span>
@@ -224,36 +249,6 @@
               </div>
               <div *ngIf="competitionExists" class="invalid-feedback">
                 <small>Competition is already in use</small>
-              </div>
-            </div>
-            <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
-              <label for="name" class="control-label">Country</label>
-              <select
-                class="form-select"
-                [(ngModel)]="patchedValues.competitions && patchedValues.competitions[compIndex].competitionCountry"
-                name="competitionCountry"
-                formControlName="competitionCountry"
-                aria-label="Default select"
-              >
-                <option [value]="0" selected>Select Country</option>
-                <ng-container *ngIf="countries">
-                  <ng-container *ngFor="let country of countries">
-                    <option
-                      [value]="country.code"
-                      [selected]="patchedValues.competitions && patchedValues.competitions[compIndex]?.competitionCountry == country.code"
-                    >
-                      {{ country.name }}
-                      <span class="fi fi-gr"></span>
-                    </option>
-                  </ng-container>
-                </ng-container>
-              </select>
-              <div *ngIf="submitted && competition.controls['competitionCountry']?.errors" class="invalid-feedback">
-                <div
-                  *ngIf="competition.controls['competitionCountry'].errors && competition.controls['competitionCountry'].errors['required']"
-                >
-                  <small>Country is required</small>
-                </div>
               </div>
             </div>
             <div class="form-group col-xs-12 col-md-12 col-lg-12 p-2">

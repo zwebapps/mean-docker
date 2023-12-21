@@ -89,6 +89,9 @@ exports.createUser = async (req, res) => {
           password: bcrypt.hashSync(req.body["password"], 8),
           email: req.body["email"],
           shortcode: req.body["shortcode"],
+          competitionCountry: req.body["competitionCountry"]
+            ? req.body["competitionCountry"]
+            : "AE",
           competition: req.body.competition.map((comp) => ObjectId(comp)),
           roles: [ObjectId(role._id)]
         });
