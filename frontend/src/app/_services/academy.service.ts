@@ -18,8 +18,8 @@ export class AcademyService {
   loadAcademies(): Observable<any> {
     return this.http.get(`${API_URL}/academy/all`, { headers: this.headers });
   }
-  loadAcademiesByCompitition(compitition: string): Observable<any> {
-    return this.http.get(`${API_URL}/academy/forcompitition/${compitition}`, { headers: this.headers });
+  loadAcademiesByCompetition(competition: string): Observable<any> {
+    return this.http.get(`${API_URL}/academy/forcompetition/${competition}`, { headers: this.headers });
   }
   loadAcademiesByShortCode(shortcode: string): Observable<any> {
     return this.http.get(`${API_URL}/academy/forshortcode/${shortcode}`, { headers: this.headers });

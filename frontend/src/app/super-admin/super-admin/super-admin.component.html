@@ -32,19 +32,19 @@
       </div>
     </form>
   </div>
-  <app-compitition
-    [compititions]="listOfCompetitions"
-    (delCompitition)="deleteCompitition($event)"
-    (editComp)="editCompitition($event)"
-  ></app-compitition>
+  <app-competition
+    [competitions]="listOfCompetitions"
+    (delCompetition)="deleteCompetition($event)"
+    (editComp)="editCompetition($event)"
+  ></app-competition>
 </div>
 
-<div class="container p-5" *ngIf="displayAddCompitition">
+<div class="container p-5" *ngIf="displayAddCompetition">
   <div class="modal-header">
     <h4 class="modal-title" id="modal-basic-title">Add Competition Details</h4>
   </div>
   <div class="modal-body">
-    <form class="form-inline" method="post" enctype="multipart/form-data" [formGroup]="compititionForm" (ngSubmit)="onSubmit()">
+    <form class="form-inline" method="post" enctype="multipart/form-data" [formGroup]="competitionForm" (ngSubmit)="onSubmit()">
       <div class="row">
         <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
           <label for="name" class="control-label">First name</label>
@@ -191,11 +191,11 @@
                   type="text"
                   class="form-control"
                   (blur)="verifyCompetition($event)"
-                  [ngClass]="{ 'is-invalid': submitted && competition.controls['compititionName'].errors }"
+                  [ngClass]="{ 'is-invalid': submitted && competition.controls['competitionName'].errors }"
                   [(ngModel)]="
-                    patchedValues.competitions && patchedValues.competitions && patchedValues.competitions[compIndex].compititionName
+                    patchedValues.competitions && patchedValues.competitions && patchedValues.competitions[compIndex].competitionName
                   "
-                  formControlName="compititionName"
+                  formControlName="competitionName"
                   placeholder="Competition Name"
                   aria-label="Text input with checkbox"
                   width="70%"
@@ -204,21 +204,21 @@
                   <input
                     type="number"
                     placeholder="Year"
-                    [(ngModel)]="patchedValues.competitions && patchedValues.competitions[compIndex].compititionYear"
-                    formControlName="compititionYear"
+                    [(ngModel)]="patchedValues.competitions && patchedValues.competitions[compIndex].competitionYear"
+                    formControlName="competitionYear"
                     class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && competition.controls['compititionYear'].errors }"
+                    [ngClass]="{ 'is-invalid': submitted && competition.controls['competitionYear'].errors }"
                     class="form-control"
                   />
                 </div>
               </div>
-              <div *ngIf="submitted && competition.controls['compititionName']?.errors" class="invalid-feedback">
-                <div *ngIf="competition.controls['compititionName'].errors && competition.controls['compititionName'].errors['required']">
+              <div *ngIf="submitted && competition.controls['competitionName']?.errors" class="invalid-feedback">
+                <div *ngIf="competition.controls['competitionName'].errors && competition.controls['competitionName'].errors['required']">
                   <small>Competition is required</small>
                 </div>
               </div>
-              <div *ngIf="submitted && competition.controls['compititionYear']?.errors" class="invalid-feedback">
-                <div *ngIf="competition.controls['compititionYear'].errors && competition.controls['compititionYear'].errors['required']">
+              <div *ngIf="submitted && competition.controls['competitionYear']?.errors" class="invalid-feedback">
+                <div *ngIf="competition.controls['competitionYear'].errors && competition.controls['competitionYear'].errors['required']">
                   <small>Year is required</small>
                 </div>
               </div>
@@ -230,9 +230,9 @@
               <label for="name" class="control-label">Country</label>
               <select
                 class="form-select"
-                [(ngModel)]="patchedValues.competitions && patchedValues.competitions[compIndex].compititionCountry"
-                name="compititionCountry"
-                formControlName="compititionCountry"
+                [(ngModel)]="patchedValues.competitions && patchedValues.competitions[compIndex].competitionCountry"
+                name="competitionCountry"
+                formControlName="competitionCountry"
                 aria-label="Default select"
               >
                 <option [value]="0" selected>Select Country</option>
@@ -240,7 +240,7 @@
                   <ng-container *ngFor="let country of countries">
                     <option
                       [value]="country.code"
-                      [selected]="patchedValues.competitions && patchedValues.competitions[compIndex]?.compititionCountry == country.code"
+                      [selected]="patchedValues.competitions && patchedValues.competitions[compIndex]?.competitionCountry == country.code"
                     >
                       {{ country.name }}
                       <span class="fi fi-gr"></span>
@@ -248,9 +248,9 @@
                   </ng-container>
                 </ng-container>
               </select>
-              <div *ngIf="submitted && competition.controls['compititionCountry']?.errors" class="invalid-feedback">
+              <div *ngIf="submitted && competition.controls['competitionCountry']?.errors" class="invalid-feedback">
                 <div
-                  *ngIf="competition.controls['compititionCountry'].errors && competition.controls['compititionCountry'].errors['required']"
+                  *ngIf="competition.controls['competitionCountry'].errors && competition.controls['competitionCountry'].errors['required']"
                 >
                   <small>Country is required</small>
                 </div>
@@ -263,8 +263,8 @@
                 [value]=""
                 class="form-control"
                 placeholder="Competition Description"
-                [(ngModel)]="patchedValues.competitions && patchedValues.competitions[compIndex].compititionDescription"
-                formControlName="compititionDescription"
+                [(ngModel)]="patchedValues.competitions && patchedValues.competitions[compIndex].competitionDescription"
+                formControlName="competitionDescription"
                 class="form-control"
               >
               </textarea>

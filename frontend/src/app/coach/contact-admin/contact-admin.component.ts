@@ -103,7 +103,7 @@ export class ContactAdminComponent implements OnInit {
       user: this.user,
       status: "Pending",
       shortcode: this.user.shortcode,
-      compitition: this.user.compitition
+      competition: this.user.competition
     });
     if (this.contactForm.valid) {
       this.userService.createContact(this.contactForm.value).subscribe((res: any) => {

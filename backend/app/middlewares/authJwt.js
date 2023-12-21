@@ -7,25 +7,26 @@ const Role = db.role;
 verifyToken = (req, res, next) => {
   try {
     const { authorization } = req.headers;
-    if(authorization){
+    if (authorization) {
       const token = authorization.split(" ")[1];
-      jwt.verify(token,
-              config.secret,
-              (err, decoded) => {
-                if (err) {
-                  return res.status(401).send({
-                    message: "Unauthorized!",
-                  });
-                }
-                req.userId = decoded.id;
-                next();
-              });
+      jwt.verify(token, config.secret, (err, decoded) => {
+        if (err) {
+          return res.status(401).send({
+            message: "Unauthorized!"
+          });
+        }
+        req.shortcode = decoded.shortcode;
+        req.role = decoded.role;
+        req.competition = decoded.role === "coach" ? decoded.competition : null;
+        req.userId = decoded.id;
+        next();
+      });
     } else {
       res.status(401).json({ message: "No token provided" });
     }
-} catch (error) {
+  } catch (error) {
     res.status(401).json({ message: "No token provided" });
-}
+  }
 };
 
 isAuthenticated = (req, res, next) => {
@@ -35,29 +36,37 @@ isAuthenticated = (req, res, next) => {
     return res.status(403).send({ message: "No token provided!" });
   }
 
-  jwt.verify(token,
-            config.secret,
-            (err, decoded) => {
-              if (err) {
-                return res.status(401).send({
-                  message: "Unauthorized!",
-                });
-              }
-              req.userId = decoded.id;
-              next();
-            });
+  jwt.verify(token, config.secret, (err, decoded) => {
+    if (err) {
+      return res.status(401).send({
+        message: "Unauthorized!"
+      });
+    }
+    req.shortcode = decoded.shortcode;
+    req.role = decoded.role;
+    req.competition = decoded.role === "coach" ? decoded.competition : null;
+    req.userId = decoded.id;
+    next();
+  });
 };
 
-isAdmin = async(req, res, next) => {
+isAdmin = async (req, res, next) => {
+  console.log("no roles::::::::", req.userId);
   await User.findById(req.userId).exec((err, user) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
     }
 
+    if (!user) {
+      console.log(JSON.parse(JSON.stringify(user)));
+      debugger;
+      console.log("no roles", user.roles);
+    }
+
     Role.find(
       {
-        _id: { $in: user.roles },
+        _id: { $in: user.roles }
       },
       (err, roles) => {
         if (err) {
@@ -83,19 +92,21 @@ isUserAllowed = (req, res, next) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
     jwt.verify(token, config.secret, (err, decoded) => {
-              if (err) {
-                return res.status(401).send({
-                  message: "Unauthorized!",
-                });
-              }
-              req.userId = decoded.id;
-              next();
-            });
-} catch (error) {
+      if (err) {
+        return res.status(401).send({
+          message: "Unauthorized!"
+        });
+      }
+      req.shortcode = decoded.shortcode;
+      req.role = decoded.role;
+      req.competition = decoded.role === "coach" ? decoded.competition : null;
+      req.userId = decoded.id;
+      next();
+    });
+  } catch (error) {
     res.status(401).json({ message: "No token provided" });
-}
-  
-}
+  }
+};
 isModerator = (req, res, next) => {
   User.findById(req.userId).exec((err, user) => {
     if (err) {
@@ -105,7 +116,7 @@ isModerator = (req, res, next) => {
 
     Role.find(
       {
-        _id: { $in: user.roles },
+        _id: { $in: user.roles }
       },
       (err, roles) => {
         if (err) {
@@ -131,6 +142,6 @@ const authJwt = {
   verifyToken,
   isAuthenticated,
   isAdmin,
-  isModerator,
+  isModerator
 };
 module.exports = authJwt;

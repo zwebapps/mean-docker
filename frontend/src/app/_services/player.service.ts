@@ -19,8 +19,8 @@ export class PlayerService {
   loadPlayers(): Observable<any> {
     return this.http.get(`${API_URL}/player/all`, { headers: this.headers });
   }
-  loadPlayersByCompitition(compitition: string): Observable<any> {
-    return this.http.get(`${API_URL}/player/forcompitition/${compitition}`, { headers: this.headers });
+  loadPlayersByCompetition(competition: string): Observable<any> {
+    return this.http.get(`${API_URL}/player/forcompetition/${competition}`, { headers: this.headers });
   }
   loadPlayersByShortcode(shortcode: string): Observable<any> {
     return this.http.get(`${API_URL}/player/forshortcode/${shortcode}`, { headers: this.headers });

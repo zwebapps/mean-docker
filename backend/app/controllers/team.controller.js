@@ -1,74 +1,76 @@
-const  ObjectId = require('mongodb').ObjectId;
+const ObjectId = require("mongodb").ObjectId;
 const db = require("../models");
 const Team = db.team;
 
 /* Add new team*/
 exports.createTeam = async (req, resp, next) => {
-
   try {
     // multiple creation
-    if(req.body && Array.isArray(req.body)) {
+    if (req.body && Array.isArray(req.body)) {
       let insertedTeams = [];
       for (let i = 0; i < req.body.length; i++) {
-        const isValidated = req.body[i]['Team Name'] && req.body[i]['Team Name'].length > 0;
-        if(isValidated) {
-          let team = await Team.findOne({ teamName: req.body['Team Name'] }); 
-          if (!team) { 
+        const isValidated =
+          req.body[i]["Team Name"] && req.body[i]["Team Name"].length > 0;
+        if (isValidated) {
+          let team = await Team.findOne({ teamName: req.body["Team Name"] });
+          if (!team) {
             const teamData = new Team({
-              teamName:  req.body[i]['Team Name'],
-              academy_id: req.body[i]['Academy Id'],
+              teamName: req.body[i]["Team Name"],
+              academy_id: req.body[i]["Academy Id"],
               leagues: [...req.body[i].leagues],
-              user_id: ObjectId(req.body[i].user['createdBy']),
-              compitition : ObjectId(req.body[i].compitition),
+              user_id: ObjectId(req.body[i].user["createdBy"]),
+              competition: ObjectId(req.body[i]["competition"]),
               createdAt: new Date()
             });
             insertedTeams.push(req.body[i]);
             await teamData.save();
           }
         }
-      };
+      }
       resp.status(200).json(insertedTeams);
-
-    } else if( req.body && req.body['Team Name']) {
+    } else if (req.body && req.body["Team Name"]) {
       // validate Team Name
-      const isValidated = req.body['Team Name'] && req.body['Team Name'].length > 0;
-      if(isValidated) {
+      const isValidated =
+        req.body["Team Name"] && req.body["Team Name"].length > 0;
+      if (isValidated) {
         // check if the same eid is already in the database
-        const team = await Team.findOne({ teamName: req.body['Team Name'] });
+        const team = await Team.findOne({ teamName: req.body["Team Name"] });
 
-        if (!team) {   
+        if (!team) {
           const teamData = new Team({
-            teamName:  req.body['Team Name'],
-            academy_id: req.body['Academy Id'],
-            leagues: [...req.body.leagues ],
-            user_id: ObjectId(req.body.user['createdBy']),
-            compitition : ObjectId(req.body.compitition),
+            teamName: req.body["Team Name"],
+            academy_id: req.body["Academy Id"],
+            leagues: [...req.body.leagues],
+            user_id: ObjectId(req.body.user["createdBy"]),
+            competition: ObjectId(req.body["competition"]),
             createdAt: new Date()
           });
-  
+
           const savedPlayer = await teamData.save();
           resp.status(200).json(savedPlayer);
         } else {
-          resp.status(200).json({ message: 'Team already exists' });
+          resp.status(200).json({ message: "Team already exists" });
         }
-      }else {
-        resp.status(200).json({ message: 'Team Name is not valid' });
+      } else {
+        resp.status(200).json({ message: "Team Name is not valid" });
       }
-   } else {
-      resp.status(200).json({ message: 'Malformed data provided' });
-   }
+    } else {
+      resp.status(200).json({ message: "Malformed data provided" });
+    }
   } catch (error) {
     next(error);
   }
 };
 
-
 /* GET all team. */
-exports.getAllTeams =  async (req, resp, next) => {
- 
+exports.getAllTeams = async (req, resp, next) => {
   try {
-    const teams = await Team.find().populate(["academy_id", "leagues", "user_id"]).exec();
-    resp.status(200).json(teams.length > 0? teams : { message: 'No team found' });
+    const teams = await Team.find()
+      .populate(["academy_id", "leagues", "user_id"])
+      .exec();
+    resp
+      .status(200)
+      .json(teams.length > 0 ? teams : { message: "No team found" });
   } catch (error) {
     next(error);
   }
@@ -78,11 +80,13 @@ exports.getAllTeams =  async (req, resp, next) => {
 exports.getTeamById = async (req, resp, next) => {
   try {
     const { id } = req.params;
-    if(id) {
-      const team = await Team.findOne({ _id: ObjectId(id) }).populate(["academy_id", "leagues", "user_id"]).exec();
-      resp.status(200).json(team ? team: { message: 'No team found' });
-    }else{
-      resp.status(200).json({ message: 'Malformed Id provided' });
+    if (id) {
+      const team = await Team.findOne({ _id: ObjectId(id) })
+        .populate(["academy_id", "leagues", "user_id"])
+        .exec();
+      resp.status(200).json(team ? team : { message: "No team found" });
+    } else {
+      resp.status(200).json({ message: "Malformed Id provided" });
     }
   } catch (error) {
     next(error);
@@ -92,24 +96,30 @@ exports.getTeamById = async (req, resp, next) => {
 exports.forShortCode = async (req, resp, next) => {
   try {
     const { shortcode } = req.params;
-    if(shortcode) {
-      const team = await Team.find({ shortcode: req.params.shortcode }).populate(["academy_id", "leagues", "user_id"]).exec();
-      resp.status(200).json(team ? team: { message: 'No team found' });
-    }else{
-      resp.status(200).json({ message: 'Malformed Id provided' });
+    if (shortcode) {
+      const team = await Team.find({ shortcode: req.params.shortcode })
+        .populate(["academy_id", "leagues", "user_id"])
+        .exec();
+      resp.status(200).json(team ? team : { message: "No team found" });
+    } else {
+      resp.status(200).json({ message: "Malformed Id provided" });
     }
   } catch (error) {
     next(error);
   }
 };
-exports.forCompitition = async (req, resp, next) => {
+exports.forCompetition = async (req, resp, next) => {
   try {
-    const { compitition } = req.params;
-    if(compitition) {
-      const team = await Team.find({ compitition: ObjectId(req.params.compitition) }).populate(["academy_id", "leagues", "user_id"]).exec();
-      resp.status(200).json(team ? team: { message: 'No team found' });
-    }else{
-      resp.status(200).json({ message: 'Malformed Id provided' });
+    const { competition } = req.params;
+    if (competition) {
+      const team = await Team.find({
+        competition: ObjectId(req.params.competition)
+      })
+        .populate(["academy_id", "leagues", "user_id"])
+        .exec();
+      resp.status(200).json(team ? team : { message: "No team found" });
+    } else {
+      resp.status(200).json({ message: "Malformed Id provided" });
     }
   } catch (error) {
     next(error);
@@ -118,11 +128,15 @@ exports.forCompitition = async (req, resp, next) => {
 exports.getTeamByAcademyId = async (req, resp, next) => {
   try {
     const { id } = req.params;
-    if(id) {
-      const team = await Team.find({ academy_id: ObjectId(req.params.id) }).populate(["academy_id", "leagues", "user_id"]).exec();
-      resp.status(200).json(team.length > 0 ? team: { message: 'No team found' });
-    }else{
-      resp.status(200).json({ message: 'Malformed Id provided' });
+    if (id) {
+      const team = await Team.find({ academy_id: ObjectId(req.params.id) })
+        .populate(["academy_id", "leagues", "user_id"])
+        .exec();
+      resp
+        .status(200)
+        .json(team.length > 0 ? team : { message: "No team found" });
+    } else {
+      resp.status(200).json({ message: "Malformed Id provided" });
     }
   } catch (error) {
     next(error);
@@ -130,58 +144,63 @@ exports.getTeamByAcademyId = async (req, resp, next) => {
 };
 
 /* Edit existing team based on id*/
-exports.updateTeam =  async (req, resp, next) => {
+exports.updateTeam = async (req, resp, next) => {
   try {
     const { id } = req.params;
-    if(id) {
-    let fetchTeam = await Team.find({_id: ObjectId(id)}).populate(["academy_id", "leagues", "user_id"]).exec();
+    if (id) {
+      let fetchTeam = await Team.find({ _id: ObjectId(id) })
+        .populate(["academy_id", "leagues", "user_id"])
+        .exec();
 
-    if (!fetchTeam) return resp.status(404).json({ message: 'Team record not found' });
-    fetchTeam = {
-      ...fetchTeam._doc,
-      ...req.body
+      if (!fetchTeam)
+        return resp.status(404).json({ message: "Team record not found" });
+      fetchTeam = {
+        ...fetchTeam._doc,
+        ...req.body
+      };
+
+      const updatedTeam = await Team.findByIdAndUpdate(
+        req.params.id,
+        fetchTeam,
+        { new: true }
+      );
+
+      resp.status(200).json(updatedTeam).status(200);
+    } else {
+      resp.status(200).json({ message: "Malformed Id provided" });
     }
-
-    const updatedTeam = await Team.findByIdAndUpdate(req.params.id, fetchTeam, { new: true });
-
-    resp.status(200).json(updatedTeam).status(200);
-  } else {
-    resp.status(200).json({ message: 'Malformed Id provided' });
-  }
-
   } catch (error) {
     next(error);
   }
 };
-
 
 /* Delete team based on id*/
 exports.deleteTeam = async (req, resp, next) => {
-
   try {
-    if(req.params && req.params.id) {
-    const team = await Team.findByIdAndDelete( { _id: ObjectId(req.params.id)} );
-    if(!team){
-      resp.status(200).send(`Team record not found!`)
+    if (req.params && req.params.id) {
+      const team = await Team.findByIdAndDelete({
+        _id: ObjectId(req.params.id)
+      });
+      if (!team) {
+        resp.status(200).send(`Team record not found!`);
+      }
+      resp
+        .status(200)
+        .send({ message: `Team ${team.teamName} record deleted!` });
+    } else {
+      resp.status(200).json({ message: "Malformed Id provided" });
     }
-    resp.status(200).send({ message : `Team ${team.teamName} record deleted!`})
-  } else {
-    resp.status(200).json({ message: 'Malformed Id provided' });
-  }
   } catch (error) {
     next(error);
   }
-
 };
 
 /* Delete all Players*/
-exports.deleteAllTeams =  async (req, resp, next) => {
-
+exports.deleteAllTeams = async (req, resp, next) => {
   try {
     const team = await Team.remove({});
-    resp.status(200).json({ message: `All teams has been deleted!`})
+    resp.status(200).json({ message: `All teams has been deleted!` });
   } catch (error) {
     next(error);
   }
-
 };

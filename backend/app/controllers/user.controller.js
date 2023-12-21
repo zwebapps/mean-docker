@@ -24,7 +24,7 @@ exports.moderatorBoard = (req, res) => {
 exports.getAllUsers = (req, res) => {
   // get users
   User.find({})
-    .populate("roles")
+    .populate(["roles", "competition"])
     .sort({ createdAt: -1 })
     .exec((err, users) => {
       if (err) {
@@ -39,7 +39,7 @@ exports.getAllUsers = (req, res) => {
 exports.forShortcode = (req, res) => {
   // get users
   User.find({ shortcode: req.params.shortcode })
-    .populate(["compitition", "roles"])
+    .populate(["competition", "roles"])
     .sort({ createdAt: -1 })
     .exec((err, users) => {
       if (err) {
@@ -51,9 +51,9 @@ exports.forShortcode = (req, res) => {
     });
 };
 
-exports.forCompitition = (req, res) => {
+exports.forCompetition = (req, res) => {
   // get users
-  User.find({ compitition: ObjectId(req.params.compitition) })
+  User.find({ competition: ObjectId(req.params.competition) })
     .populate("roles")
     .sort({ createdAt: -1 })
     .exec((err, users) => {
@@ -89,9 +89,7 @@ exports.createUser = async (req, res) => {
           password: bcrypt.hashSync(req.body["password"], 8),
           email: req.body["email"],
           shortcode: req.body["shortcode"],
-          compitition:
-            req.body.competition &&
-            req.body.competition.map((comp) => ObjectId(comp)),
+          competition: req.body.competition.map((comp) => ObjectId(comp)),
           roles: [ObjectId(role._id)]
         });
 
@@ -185,7 +183,7 @@ exports.createContact = async (req, res) => {
       content: req.body["content"],
       user: ObjectId(req.body.user["id"]),
       shortcode: req.body["shortcode"],
-      compitition: ObjectId(req.body.compitition),
+      competition: ObjectId(req.body.competition),
       status: "Pending",
       createdAt: new Date()
     });
@@ -282,10 +280,10 @@ exports.contentForShortCode = async (req, res) => {
   }
 };
 
-exports.forContentsCompitition = async (req, res) => {
-  const { compitition } = req.params;
+exports.forContentsCompetition = async (req, res) => {
+  const { competition } = req.params;
   // get users
-  const content = await Contact.find({ compitition: ObjectId(compitition) })
+  const content = await Contact.find({ competition: ObjectId(competition) })
     .populate("user")
     .exec();
   if (content) {

@@ -12,7 +12,7 @@
         <option value="">Select the Competition</option>
         <ng-container *ngIf="dashboardContents['competitions']">
           <ng-container *ngFor="let competition of dashboardContents['competitions']">
-            <option value="{{ competition._id }}">{{ competition.compititionName.toUpperCase() }}</option>
+            <option value="{{ competition._id }}">{{ competition.competitionName.toUpperCase() }}</option>
           </ng-container>
         </ng-container>
       </select>

@@ -8,8 +8,8 @@ import { topcard, topcards } from "../../dashboard/dashboard-components/top-card
 import { environment } from "../../../environments/environment";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { StorageService } from "../../_services/storage.service";
-import { CompititionService } from "../../_services/compitition.service";
-import * as CompititionActions from "../../_store/actions/compititions.actions";
+import { CompetitionService } from "../../_services/competition.service";
+import * as CompetitionActions from "../../_store/actions/competitions.actions";
 import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import * as countriesData from "../../../assets/countries/countries.json";
 import { PlayerService } from "../../_services/player.service";
@@ -25,14 +25,14 @@ export class AdminCompetitionComponent {
   public dashboardContents: any = {};
   apiURL = environment.apiURL;
   private notifier: NotifierService;
-  compititionForm: FormGroup;
+  competitionForm: FormGroup;
   submitted = false;
-  displayEditCompitition = false;
+  displayEditCompetition = false;
   createdAdmin: any;
-  compititionToBeEdit: any;
+  competitionToBeEdit: any;
   public patchedValues: any = {};
   public closeResult: string = "";
-  public compititionLogo: any;
+  public competitionLogo: any;
   public selectedCompetition: any = {};
   topcards: topcard[];
   users: any = [];
@@ -43,25 +43,25 @@ export class AdminCompetitionComponent {
     notifier: NotifierService,
     private formBuilder: FormBuilder,
     private storageService: StorageService,
-    private compititionService: CompititionService,
+    private competitionService: CompetitionService,
     private modalService: NgbModal,
     private playerService: PlayerService
   ) {
     this.notifier = notifier;
     this.topcards = topcards;
-    this.compititionForm = this.formBuilder.group({
+    this.competitionForm = this.formBuilder.group({
       shortCode: ["", Validators.required],
-      compititionName: ["", Validators.required],
-      compititionYear: ["", Validators.required],
-      compititionCountry: ["", Validators.required],
-      compititionDescription: [""],
-      compititionLogo: [""],
-      compititionBackground: [""],
-      compititionColor: [""],
-      compititionBorder: [""],
-      compititionSeason: [""],
-      compititionStart: [""],
-      compititionEnd: ["2024"]
+      competitionName: ["", Validators.required],
+      competitionYear: ["", Validators.required],
+      competitionCountry: ["", Validators.required],
+      competitionDescription: [""],
+      competitionLogo: [""],
+      competitionBackground: [""],
+      competitionColor: [""],
+      competitionBorder: [""],
+      competitionSeason: [""],
+      competitionStart: [""],
+      competitionEnd: ["2024"]
     });
   }
 
@@ -93,36 +93,36 @@ export class AdminCompetitionComponent {
 
   onSubmit() {
     this.submitted = true;
-    if (this.compititionForm.invalid) {
+    if (this.competitionForm.invalid) {
       this.notifier.notify("error", "All fields are required!");
       return;
     } else {
       const user = this.storageService.getUser();
 
-      const compititionObj = {
+      const competitionObj = {
         organiser: user._id,
-        shortCode: this.compititionForm.value.shortCode || this.patchedValues.shortCode,
-        compititionSeason: this.compititionForm.value.compititionSeason,
-        compititionStart: this.compititionForm.value.compititionStart,
-        compititionEnd: this.compititionForm.value.compititionEnd,
-        compititionDescription: this.compititionForm.value.compititionDescription,
-        compititionLogo: this.compititionLogo,
-        compititionCountry: this.compititionForm.value.compititionCountry,
-        compititionName: this.compititionForm.value.compititionName || this.patchedValues.compititionName,
-        compititionYear: this.compititionForm.value.compititionYear,
-        compititionSettings: JSON.stringify({
-          compititionBackground: this.compititionForm.value.compititionBackground,
-          compititionColor: this.compititionForm.value.compititionColor,
-          compititionBorder: this.compititionForm.value.compititionBorder
+        shortCode: this.competitionForm.value.shortCode || this.patchedValues.shortCode,
+        competitionSeason: this.competitionForm.value.competitionSeason,
+        competitionStart: this.competitionForm.value.competitionStart,
+        competitionEnd: this.competitionForm.value.competitionEnd,
+        competitionDescription: this.competitionForm.value.competitionDescription,
+        competitionLogo: this.competitionLogo,
+        competitionCountry: this.competitionForm.value.competitionCountry,
+        competitionName: this.competitionForm.value.competitionName || this.patchedValues.competitionName,
+        competitionYear: this.competitionForm.value.competitionYear,
+        competitionSettings: JSON.stringify({
+          competitionBackground: this.competitionForm.value.competitionBackground,
+          competitionColor: this.competitionForm.value.competitionColor,
+          competitionBorder: this.competitionForm.value.competitionBorder
         })
       };
-      // console.log(compititionObj);
-      this.updateCompitition(this.compititionToBeEdit._id, compititionObj);
+      // console.log(competitionObj);
+      this.updateCompetition(this.competitionToBeEdit._id, competitionObj);
       this.modalService.dismissAll();
     }
   }
   get f() {
-    return this.compititionForm.controls;
+    return this.competitionForm.controls;
   }
   open(content: any, competition: any) {
     this.editCompetition(competition);
@@ -135,30 +135,30 @@ export class AdminCompetitionComponent {
       }
     );
   }
-  editCompetition(compititon: any) {
-    if (compititon) {
-      this.compititionToBeEdit = compititon;
-      let settings = compititon?.compititionSettings;
+  editCompetition(competiton: any) {
+    if (competiton) {
+      this.competitionToBeEdit = competiton;
+      let settings = competiton?.competitionSettings;
       if (settings) {
         settings = JSON.parse(settings);
       }
-      (this.compititionLogo = compititon?.compititionLogo),
+      (this.competitionLogo = competiton?.competitionLogo),
         (this.patchedValues = {
-          shortCode: compititon?.shortCode,
-          compititionBackground: settings?.compititionBackground || "#ffffff",
-          compititionBorder: settings?.compititionBorder || "#fefefe",
-          compititionColor: compititon?.compititionColor || "#eeeeee",
-          compititionCountry: compititon?.compititionCountry,
-          compititionDescription: compititon?.compititionDescription || "Enter description",
-          compititionName: compititon?.compititionName,
-          compititionSeason: compititon?.compititionSeason,
-          compititionStart: compititon?.compititionStart ? new Date(compititon?.compititionStart).toISOString().slice(0, 10) : null,
-          compititionEnd: compititon?.compititionEnd ? new Date(compititon?.compititionEnd).toISOString().slice(0, 10) : null,
-          compititionYear: parseInt(new Date().getFullYear().toString())
+          shortCode: competiton?.shortCode,
+          competitionBackground: settings?.competitionBackground || "#ffffff",
+          competitionBorder: settings?.competitionBorder || "#fefefe",
+          competitionColor: competiton?.competitionColor || "#eeeeee",
+          competitionCountry: competiton?.competitionCountry,
+          competitionDescription: competiton?.competitionDescription || "Enter description",
+          competitionName: competiton?.competitionName,
+          competitionSeason: competiton?.competitionSeason,
+          competitionStart: competiton?.competitionStart ? new Date(competiton?.competitionStart).toISOString().slice(0, 10) : null,
+          competitionEnd: competiton?.competitionEnd ? new Date(competiton?.competitionEnd).toISOString().slice(0, 10) : null,
+          competitionYear: parseInt(new Date().getFullYear().toString())
         });
-      // compititionYear: compititon?.compititionYear ? compititon?.compititionYear : parseInt(new Date().getFullYear().toString())
-      this.compititionForm.controls.shortCode.disable();
-      this.compititionForm.controls.compititionName.disable();
+      // competitionYear: competiton?.competitionYear ? competiton?.competitionYear : parseInt(new Date().getFullYear().toString())
+      this.competitionForm.controls.shortCode.disable();
+      this.competitionForm.controls.competitionName.disable();
     }
   }
   uploadLogo(event: any) {
@@ -166,17 +166,17 @@ export class AdminCompetitionComponent {
     const inputName = event.target.name;
     this.playerService.upload(file).subscribe((res: any) => {
       if (res) {
-        this.compititionLogo = res.filename;
+        this.competitionLogo = res.filename;
         console.log("logo update successsfully");
       }
     });
   }
-  updateCompitition(id: any, competitionObj: any) {
-    this.compititionService.updateCompitition(id, competitionObj).subscribe((res: any) => {
+  updateCompetition(id: any, competitionObj: any) {
+    this.competitionService.updateCompetition(id, competitionObj).subscribe((res: any) => {
       if (res) {
         this.notifier.notify("success", "Competition updated successfully!");
-        this.compititionForm.reset();
-        this.store.dispatch(CompititionActions.loadCompititions());
+        this.competitionForm.reset();
+        this.store.dispatch(CompetitionActions.loadCompetitions());
       }
     });
   }

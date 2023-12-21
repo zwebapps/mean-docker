@@ -12,7 +12,7 @@ export class LeagueListingComponent implements OnInit {
   @Output() editLeague = new EventEmitter<string>();
   @Input() leaguesData: any;
   options = {};
-  columns: any = [{ prop: "leagueName" }, { name: "shortcode" }, { name: "user_id" }, { name: "compitition" }];
+  columns: any = [{ prop: "leagueName" }, { name: "shortcode" }, { name: "user_id" }, { name: "competition" }];
   loadingIndicator = true;
   reorderable = true;
   ColumnMode = ColumnMode;
@@ -29,12 +29,13 @@ export class LeagueListingComponent implements OnInit {
   }
   getCompetitionName = (competitions: any) => {
     if (competitions) {
-      return competitions.map((item: any) => item.compititionName).join(", ");
+      competitions = Array.isArray(competitions) ? competitions : [competitions];
+      return competitions.map((item: any) => item.competitionName).join(", ");
     }
   };
   getCompetitionYear = (competitions: any) => {
     if (competitions) {
-      return competitions.map((item: any) => item.compititionYear).join(", ");
+      return competitions.map((item: any) => item.competitionYear).join(", ");
     }
   };
 }

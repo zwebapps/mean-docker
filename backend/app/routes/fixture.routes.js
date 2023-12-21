@@ -1,31 +1,51 @@
 const { authJwt } = require("../middlewares/");
 const fixture = require("../controllers/fixture.controller");
 
-module.exports = function(app) {
-    app.use(function(req, res, next) {
-      res.header(
-        "Access-Control-Allow-Headers",
-        "Origin, Content-Type, Accept"
-      );
-      next();
-    });
+module.exports = function (app) {
+  app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Headers", "Origin, Content-Type, Accept");
+    next();
+  });
 
-app.post("/fixture/create", authJwt.isAuthenticated, fixture.createFixture);
+  app.post("/fixture/create", authJwt.isAuthenticated, fixture.createFixture);
 
-app.get("/fixture/all", authJwt.isAuthenticated, fixture.getAllFixture);
+  app.get("/fixture/all", authJwt.isAuthenticated, fixture.getAllFixture);
 
-app.get("/fixture/:id", authJwt.isAuthenticated, fixture.getFixtureById);
+  app.get("/fixture/:id", authJwt.isAuthenticated, fixture.getFixtureById);
 
-app.post("/fixture/approve/:id", authJwt.isAuthenticated, fixture.updateFixture);
+  app.post(
+    "/fixture/approve/:id",
+    authJwt.isAuthenticated,
+    fixture.updateFixture
+  );
 
-app.post("/fixture/update/:id", authJwt.isAuthenticated, fixture.updateFixture);
+  app.post(
+    "/fixture/update/:id",
+    authJwt.isAuthenticated,
+    fixture.updateFixture
+  );
 
-app.post("/fixture/delete/:id", authJwt.isAuthenticated, fixture.deleteFixture);
+  app.post(
+    "/fixture/delete/:id",
+    authJwt.isAuthenticated,
+    fixture.deleteFixture
+  );
 
-app.post("/fixture/delete/all", authJwt.isAuthenticated, fixture.deleteAllFixture);
+  app.post(
+    "/fixture/delete/all",
+    authJwt.isAuthenticated,
+    fixture.deleteAllFixture
+  );
 
-app.get("/fixture/forcompitition/:compitition", authJwt.isAuthenticated, fixture.forCompitition);
+  app.get(
+    "/fixture/forcompetition/:competition",
+    authJwt.isAuthenticated,
+    fixture.forCompetition
+  );
 
-app.get("/fixture/forshortcode/:shortcode", authJwt.isAuthenticated, fixture.forShortCode);
-
+  app.get(
+    "/fixture/forshortcode/:shortcode",
+    authJwt.isAuthenticated,
+    fixture.forShortCode
+  );
 };

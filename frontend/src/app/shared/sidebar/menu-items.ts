@@ -15,8 +15,8 @@ export const ROUTES: RouteUser[] = [
         submenu: []
       },
       {
-        path: "/superadmin/compititions",
-        title: "Compitions",
+        path: "/superadmin/competitions",
+        title: "Competions",
         icon: "bi bi-speedometer2",
         image: "assets/images/bashboard.png",
         active: "assets/images/bashbaord.png",

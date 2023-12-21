@@ -2,13 +2,13 @@
   <ng-template #content let-modal size="950px">
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">
-        <img src="{{ apiURL }}/static/{{ compititionLogo }}" width="100" height="100" *ngIf="compititionLogo" />
+        <img src="{{ apiURL }}/static/{{ competitionLogo }}" width="100" height="100" *ngIf="competitionLogo" />
         Update Competition Details
       </h4>
       <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
     </div>
     <div class="modal-body">
-      <form class="form-inline" method="post" enctype="multipart/form-data" [formGroup]="compititionForm">
+      <form class="form-inline" method="post" enctype="multipart/form-data" [formGroup]="competitionForm">
         <div class="row">
           <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
             <label for="name" class="control-label">ShortCode/ Domain name</label>
@@ -39,9 +39,9 @@
                 type="text"
                 class="form-control"
                 (blur)="verifyCompetition($event)"
-                [ngClass]="{ 'is-invalid': submitted && f['compititionName'].errors }"
-                [(ngModel)]="patchedValues && patchedValues.compititionName"
-                formControlName="compititionName"
+                [ngClass]="{ 'is-invalid': submitted && f['competitionName'].errors }"
+                [(ngModel)]="patchedValues && patchedValues.competitionName"
+                formControlName="competitionName"
                 placeholder="Competition Name"
                 aria-label="Competition Name"
                 width="70%"
@@ -50,21 +50,21 @@
                 <input
                   type="number"
                   placeholder="Year"
-                  [(ngModel)]="patchedValues.compititionYear"
-                  formControlName="compititionYear"
+                  [(ngModel)]="patchedValues.competitionYear"
+                  formControlName="competitionYear"
                   class="form-control"
-                  [ngClass]="{ 'is-invalid': submitted && f['compititionYear'].errors }"
+                  [ngClass]="{ 'is-invalid': submitted && f['competitionYear'].errors }"
                   class="form-control"
                 />
               </div>
             </div>
-            <div *ngIf="submitted && f['compititionName']?.errors" class="invalid-feedback">
-              <div *ngIf="f['compititionName'].errors && f['compititionName'].errors['required']">
+            <div *ngIf="submitted && f['competitionName']?.errors" class="invalid-feedback">
+              <div *ngIf="f['competitionName'].errors && f['competitionName'].errors['required']">
                 <small>Competition is required</small>
               </div>
             </div>
-            <div *ngIf="submitted && f['compititionYear']?.errors" class="invalid-feedback">
-              <div *ngIf="f['compititionYear'].errors && f['compititionYear'].errors['required']">
+            <div *ngIf="submitted && f['competitionYear']?.errors" class="invalid-feedback">
+              <div *ngIf="f['competitionYear'].errors && f['competitionYear'].errors['required']">
                 <small>Year is required</small>
               </div>
             </div>
@@ -76,23 +76,23 @@
             <label for="name" class="control-label">Country</label>
             <select
               class="form-select"
-              [(ngModel)]="patchedValues && patchedValues.compititionCountry"
-              name="compititionCountry"
-              formControlName="compititionCountry"
+              [(ngModel)]="patchedValues && patchedValues.competitionCountry"
+              name="competitionCountry"
+              formControlName="competitionCountry"
               aria-label="Default select"
             >
               <option [value]="0" selected>Select Country</option>
               <ng-container *ngIf="countries">
                 <ng-container *ngFor="let country of countries">
-                  <option [value]="country.code" [selected]="patchedValues && patchedValues?.compititionCountry == country.code">
+                  <option [value]="country.code" [selected]="patchedValues && patchedValues?.competitionCountry == country.code">
                     {{ country.name }}
                     <span class="fi fi-gr"></span>
                   </option>
                 </ng-container>
               </ng-container>
             </select>
-            <div *ngIf="submitted && f['compititionCountry']?.errors" class="invalid-feedback">
-              <div *ngIf="f['compititionCountry'].errors && f['compititionCountry'].errors['required']">
+            <div *ngIf="submitted && f['competitionCountry']?.errors" class="invalid-feedback">
+              <div *ngIf="f['competitionCountry'].errors && f['competitionCountry'].errors['required']">
                 <small>Country is required</small>
               </div>
             </div>
@@ -105,8 +105,8 @@
               class="form-control"
               (change)="uploadLogo($event)"
               placeholder="Competition Logo"
-              [(ngModel)]="patchedValues && patchedValues.compititionLogo"
-              formControlName="compititionLogo"
+              [(ngModel)]="patchedValues && patchedValues.competitionLogo"
+              formControlName="competitionLogo"
               class="form-control"
             />
           </div>
@@ -117,8 +117,8 @@
               [value]=""
               class="form-control"
               placeholder="Competition Background"
-              [(ngModel)]="patchedValues && patchedValues.compititionBackground"
-              formControlName="compititionBackground"
+              [(ngModel)]="patchedValues && patchedValues.competitionBackground"
+              formControlName="competitionBackground"
             />
           </div>
 
@@ -129,8 +129,8 @@
               [value]=""
               class="form-control"
               placeholder="Competition Color"
-              [(ngModel)]="patchedValues && patchedValues.compititionColor"
-              formControlName="compititionColor"
+              [(ngModel)]="patchedValues && patchedValues.competitionColor"
+              formControlName="competitionColor"
             />
           </div>
           <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
@@ -142,8 +142,8 @@
               max="5"
               class="form-control"
               placeholder="Border Size (0 - 5)"
-              [(ngModel)]="patchedValues && patchedValues.compititionBorder"
-              formControlName="compititionBorder"
+              [(ngModel)]="patchedValues && patchedValues.competitionBorder"
+              formControlName="competitionBorder"
               class="form-control"
             />
           </div>
@@ -154,8 +154,8 @@
               [value]=""
               class="form-control"
               placeholder="Competition Description"
-              [(ngModel)]="patchedValues && patchedValues.compititionDescription"
-              formControlName="compititionDescription"
+              [(ngModel)]="patchedValues && patchedValues.competitionDescription"
+              formControlName="competitionDescription"
               class="form-control"
             >
             </textarea>
@@ -199,11 +199,11 @@
         </div>
         <div class="row text-center">
           <div class="col-4 img-square-wrapper">
-            <img src="{{ apiURL }}/static/{{ blogcard.compititionLogo }}" width="100" height="100" *ngIf="blogcard.compititionLogo" />
-            <img src="assets/images/dashboard/teams.svg" alt="Card image cap" *ngIf="!blogcard.compititionLogo" />
+            <img src="{{ apiURL }}/static/{{ blogcard.competitionLogo }}" width="100" height="100" *ngIf="blogcard.competitionLogo" />
+            <img src="assets/images/dashboard/teams.svg" alt="Card image cap" *ngIf="!blogcard.competitionLogo" />
           </div>
           <div class="col-8" style="margin: auto">
-            <h2 class="card-title">{{ blogcard.compititionName | titlecase }}</h2>
+            <h2 class="card-title">{{ blogcard.competitionName | titlecase }}</h2>
             <p>
               {{ blogcard.count }}
             </p>

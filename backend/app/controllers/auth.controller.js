@@ -12,7 +12,7 @@ exports.signup = (req, res) => {
     lastname: req.body.lastname,
     username: req.body.username,
     email: req.body.email,
-    password: bcrypt.hashSync(req.body.password, 8),
+    password: bcrypt.hashSync(req.body.password, 8)
   });
 
   user.save((err, user) => {
@@ -24,7 +24,7 @@ exports.signup = (req, res) => {
     if (req.body.roles) {
       Role.find(
         {
-          name: { $in: req.body.roles },
+          name: { $in: req.body.roles }
         },
         (err, roles) => {
           if (err) {
@@ -66,9 +66,9 @@ exports.signup = (req, res) => {
 
 exports.signin = (req, res) => {
   User.findOne({
-    username: req.body.username,
+    username: req.body.username
   })
-    .populate(["roles", "__v", "compitition"])
+    .populate(["roles", "__v", "competition"])
     .exec((err, user) => {
       if (err) {
         res.status(500).send({ message: err });
@@ -87,14 +87,24 @@ exports.signin = (req, res) => {
       if (!passwordIsValid) {
         return res.status(401).send({ message: "Invalid Password!" });
       }
+      console.log("user:::::", JSON.parse(JSON.stringify(user)));
 
-      const token = jwt.sign({ id: user.id },
-                              config.secret,
-                              {
-                                algorithm: 'HS256',
-                                allowInsecureKeySizes: true,
-                                expiresIn: 86400, // 24 hours
-                              });
+      const token = jwt.sign(
+        {
+          id: user.id,
+          shortcode: user.shortcode,
+          role: user.roles[0].name,
+          competition: user.roles.every((x) => x.name === "coach")
+            ? user.competition
+            : null
+        },
+        config.secret,
+        {
+          algorithm: "HS256",
+          allowInsecureKeySizes: true,
+          expiresIn: 86400 // 24 hours
+        }
+      );
 
       var authorities = [];
 
@@ -110,7 +120,7 @@ exports.signin = (req, res) => {
         username: user.username,
         email: user.email,
         roles: authorities,
-        compitition: user.compitition,
+        competition: user.competition,
         shortcode: user.shortcode
       });
     });

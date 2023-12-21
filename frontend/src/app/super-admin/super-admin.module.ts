@@ -23,7 +23,7 @@ import { AnalyticsComponent } from "../analytics/analytics.component";
 // import { TeamManagementComponent } from "../board-admin/team-management/team-management.component";
 // import { UserManagementComponent } from "../board-admin/user-management/user-management.component";
 import { SuperAdminComponent } from "./super-admin/super-admin.component";
-import { CompititionComponent } from "./compitition/compitition.component";
+import { CompetitionComponent } from "./competition/competition.component";
 import { DashboardComponent } from "../dashboard/dashboard.component";
 import { DashboardModule } from "../dashboard/dashboard.module";
 import { NgxChartsModule } from "@swimlane/ngx-charts";
@@ -77,7 +77,7 @@ const superAdminRoutes: Routes = [
     component: SuperAdminDashboardComponent
     // children: [
     // {
-    //   path: "compititions",
+    //   path: "competitions",
     //   component: SuperAdminComponent
     // }
     // {
@@ -123,14 +123,14 @@ const superAdminRoutes: Routes = [
     // ]
   },
   {
-    path: "compititions",
+    path: "competitions",
     canActivate: [AuthGuard],
     component: SuperAdminComponent
   }
 ];
 
 @NgModule({
-  declarations: [SuperAdminComponent, CompititionComponent, AnalyticsComponent, SuperAdminDashboardComponent],
+  declarations: [SuperAdminComponent, CompetitionComponent, AnalyticsComponent, SuperAdminDashboardComponent],
   imports: [
     NgxChartsModule,
     NgxDatatableModule,

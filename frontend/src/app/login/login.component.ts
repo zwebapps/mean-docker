@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
             id: data.id,
             roles: data.roles,
             username: data.username,
-            compitition: data.compitition,
+            competition: data.competition,
             shortcode: data.shortcode
           });
 

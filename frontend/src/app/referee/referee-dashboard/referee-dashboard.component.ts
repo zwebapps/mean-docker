@@ -150,7 +150,7 @@ export class RefereeDashboardComponent implements OnInit, AfterViewInit {
         homeTeam: this.fixtureForm.value.homeTeam,
         awayTeam: this.fixtureForm.value.awayTeam,
         shortcode: loggedInRef?.shortcode,
-        compitition: loggedInRef?.compitition,
+        competition: loggedInRef?.competition,
         user: {
           createdBy: loggedInRef?.id
         }

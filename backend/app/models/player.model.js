@@ -38,9 +38,9 @@ const Player = mongoose.model(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Team"
     },
-    compitition: {
+    competition: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Compitition"
+      ref: "Competition"
     },
     playerNo: {
       type: Number,
@@ -49,7 +49,6 @@ const Player = mongoose.model(
     },
     emiratesIdNo: {
       type: String,
-      unique: true,
       required: true
     },
     eidFront: {
@@ -72,9 +71,9 @@ const Player = mongoose.model(
       default: null,
       required: false
     },
-    compitition: {
+    competition: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Compitition"
+      ref: "Competition"
     },
     playingUp: [
       {

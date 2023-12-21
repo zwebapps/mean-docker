@@ -38,8 +38,10 @@ export class AcademyLeagueSelectionComponent implements OnInit {
     });
   }
   getLeagueNo(leagueName: any) {
-    let nameArray = leagueName.match(/(\d+)/);
-    return nameArray ? nameArray.find((nm: any) => !isNaN(nm)) : null;
+    if (leagueName) {
+      let nameArray = leagueName.match(/(\d+)/);
+      return nameArray ? nameArray.find((nm: any) => !isNaN(nm)) : null;
+    }
   }
   ngOnInit(): void {
     // now get the leagues and map
