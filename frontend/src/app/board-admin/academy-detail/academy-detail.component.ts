@@ -68,7 +68,7 @@ export class AcademyDetailComponent implements OnInit {
           "Team Name": this.teamForm.value.teamName,
           "Academy Id": this.academy._id,
           leagues: [],
-          compitition: user.compitition,
+          competition: user.competition,
           user: {
             createdBy: user.id
           }
@@ -138,7 +138,7 @@ export class AcademyDetailComponent implements OnInit {
   getCompetition() {
     this.selectedCompetition = this.storageService.getCompetition();
     if (this.selectedCompetition) {
-      this.compSettings = JSON.parse(this.selectedCompetition?.compititionSettings);
+      this.compSettings = JSON.parse(this.selectedCompetition?.competitionSettings);
     }
   }
 }

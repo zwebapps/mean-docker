@@ -18,8 +18,8 @@ export class UserService {
   getPublicContent(): Observable<any> {
     return this.http.get(API_URL + "/content", { headers: this.headers });
   }
-  loadUsersByCompitition(compitition: string): Observable<any> {
-    return this.http.get(`${API_URL}/user/forcompitition/${compitition}`, { headers: this.headers });
+  loadUsersByCompetition(competition: string): Observable<any> {
+    return this.http.get(`${API_URL}/user/forcompetition/${competition}`, { headers: this.headers });
   }
 
   loadUsersByShortcode(shortcode: string): Observable<any> {
@@ -68,8 +68,8 @@ export class UserService {
     return this.http.get(`${API_URL}/user/contents/${id}`, { headers: this.headers });
   }
 
-  getAllContentsByCompitition(compitition: string): Observable<any> {
-    return this.http.get(`${API_URL}/user/contents/forcompitition/${compitition}`, { headers: this.headers });
+  getAllContentsByCompetition(competition: string): Observable<any> {
+    return this.http.get(`${API_URL}/user/contents/forcompetition/${competition}`, { headers: this.headers });
   }
 
   getAllContentsByShortcode(shortcode: string): Observable<any> {

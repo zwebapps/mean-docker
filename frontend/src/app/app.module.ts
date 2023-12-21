@@ -45,7 +45,7 @@ import { NgxUiLoaderModule, NgxUiLoaderHttpModule, NgxUiLoaderConfig, SPINNER, P
 import { ErrorPageComponent } from "./error-page/error-page.component";
 import { SuperAdminModule } from "./super-admin/super-admin.module";
 import { DashboardModule } from "./dashboard/dashboard.module";
-import { CompititionsEffects } from "./_store/effects/compititions.effects";
+import { CompetitionsEffects } from "./_store/effects/competitions.effects";
 import { NgApexchartsModule } from "ng-apexcharts";
 import { NgModule, PLATFORM_ID, APP_ID, Inject } from "@angular/core";
 import { isPlatformBrowser } from "@angular/common";
@@ -160,7 +160,7 @@ const customNotifierOptions: NotifierOptions = {
       LeaguesEffects,
       FixuresEffects,
       PlayersEffects,
-      CompititionsEffects
+      CompetitionsEffects
     ])
   ],
   providers: [

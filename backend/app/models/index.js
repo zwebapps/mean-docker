@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
 const db = {};
@@ -12,10 +12,9 @@ db.fixture = require("./fixture.model");
 db.league = require("./league.model");
 db.player = require("./player.model");
 db.team = require("./team.model");
-db.compitition = require("./compitition.model");
+db.competition = require("./competition.model");
 db.increment = require("./increment.model");
 db.contact = require("./contact.model");
-
 
 db.ROLES = ["user", "admin", "coach", "referee", "superadmin"];
 

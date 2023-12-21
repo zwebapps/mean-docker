@@ -97,7 +97,7 @@ export class TeamManagementComponent implements OnInit {
             contact: this.academyForm.value.mobileNumber,
             Logo: this.academyLogo,
             Color: this.academyForm.value.academyColor,
-            compitition: user.compitition.length > 0 ? user.compitition : Array(this.selectedCompetition),
+            competition: user.competition.length > 0 ? user.competition : Array(this.selectedCompetition),
             user: {
               createdBy: user._id ? user._id : user.id
             }
@@ -110,7 +110,7 @@ export class TeamManagementComponent implements OnInit {
             password: this.academyForm.value.password,
             contact: this.academyForm.value.mobileNumber,
             shortcode: this.selectedCompetition.shortCode,
-            compitition: user.compitition ? user.compitition : Array(this.selectedCompetition),
+            competition: user.competition ? user.competition : Array(this.selectedCompetition),
             role: "coach"
           };
           // check if academy exists
@@ -149,7 +149,7 @@ export class TeamManagementComponent implements OnInit {
         academyName: this.academyForm.value.academyName,
         logo: this.academyLogo,
         color: this.academyForm.value.academyColor,
-        compitition: this.storageService.getUser()?.compitition
+        competition: this.storageService.getUser()?.competition
       };
       this.academyService.updateAcademy(this.academyToEdit, academyData).subscribe(
         (res: any) => {
@@ -219,7 +219,7 @@ export class TeamManagementComponent implements OnInit {
   getCompetition() {
     this.selectedCompetition = this.storageService.getCompetition();
     if (this.selectedCompetition) {
-      this.compSettings = JSON.parse(this.selectedCompetition?.compititionSettings);
+      this.compSettings = JSON.parse(this.selectedCompetition?.competitionSettings);
     }
   }
 }

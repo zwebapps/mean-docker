@@ -4,40 +4,39 @@ const Contact = mongoose.model(
   "Contact",
   new mongoose.Schema({
     senderEmail: {
-      type: String,      
+      type: String,
       required: true
     },
     heading: {
-      type: String,      
+      type: String,
       required: true
     },
     shortcode: {
-      type: String,
+      type: String
     },
     content: {
-        type: String,       
-        required: true
+      type: String,
+      required: true
     },
     reply: {
-      type: String,
+      type: String
     },
-
-    compitition: {
+    competition: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Compitition"
+      ref: "Competition"
     },
     status: {
       type: String,
-      default : 'Pending'
+      default: "Pending"
     },
     user: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "User"
-        },
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+    },
     createdAt: {
-        type: Date,
-        default: Date.now,
-        required: true
+      type: Date,
+      default: Date.now,
+      required: true
     }
   })
 );

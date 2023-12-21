@@ -7,7 +7,7 @@ import * as fromLeagueReducer from "./leagues.reducer";
 import * as fromFixtureReducer from "./fixtures.reducer";
 import * as fromAcademyReducer from "./academies.reducer";
 import * as fromNotificationReducer from "./notifications.reducer";
-import * as fromCompititionReducer from "./compititions.reducer";
+import * as fromCompetitionReducer from "./competitions.reducer";
 
 export interface State {
   users: fromUserReducer.State;
@@ -17,7 +17,7 @@ export interface State {
   fixtures: fromFixtureReducer.State;
   academies: fromAcademyReducer.State;
   notifications: fromNotificationReducer.State;
-  compititions: fromCompititionReducer.State;
+  competitions: fromCompetitionReducer.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -28,7 +28,7 @@ export const reducers: ActionReducerMap<State> = {
   fixtures: fromFixtureReducer.reducer,
   academies: fromAcademyReducer.reducer,
   notifications: fromNotificationReducer.reducer,
-  compititions: fromCompititionReducer.reducer
+  competitions: fromCompetitionReducer.reducer
 };
 
 export const metaReducers: MetaReducer<State>[] = !environment.production ? [] : [];
