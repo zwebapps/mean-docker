@@ -43,7 +43,7 @@ export class CompetitionComponent implements OnInit {
   deleteCompetition(competition: any) {
     const { _id } = competition;
     console.log(_id);
-    this.delCompetition.emit(_id);
+    this.delCompetition.emit(competition);
   }
   editCompetition(competition: any) {
     console.log(competition);

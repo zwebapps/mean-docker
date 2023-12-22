@@ -31,6 +31,7 @@ import { LeagueListingComponent } from "../board-admin/league-listing/league-lis
 import { AcademyListingComponent } from "./academy-listing/academy-listing.component";
 import { AdminTeamListingComponent } from "../board-admin/admin-team-listing/admin-team-listing.component";
 import { AdminSquadListingComponent } from "../board-admin/admin-squad-listing/admin-squad-listing.component";
+import { NotifierModule, NotifierOptions } from "angular-notifier";
 
 /**
  * Custom angular notifier options

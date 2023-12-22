@@ -88,12 +88,15 @@ exports.createUser = async (req, res) => {
           contact: req.body["contact"],
           password: bcrypt.hashSync(req.body["password"], 8),
           email: req.body["email"],
-          shortcode: req.body["shortcode"],
+          shortcode: req.body["shortCode"],
           competitionCountry: req.body["competitionCountry"]
             ? req.body["competitionCountry"]
             : "AE",
-          competition: req.body.competition.map((comp) => ObjectId(comp)),
-          roles: [ObjectId(role._id)]
+          competition: req.body.competition
+            ? req.body.competition.map((comp) => ObjectId(comp))
+            : [],
+          roles: [ObjectId(role._id)],
+          createdBy: ObjectId(req.body.user["createdBy"])
         });
 
         const savedUser = await userData.save();

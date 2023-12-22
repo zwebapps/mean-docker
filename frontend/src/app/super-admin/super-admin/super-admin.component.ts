@@ -179,6 +179,9 @@ export class SuperAdminComponent implements OnInit {
         email: this.competitionForm.value.organiserEmail,
         shortCode: this.competitionForm.value.shortCode,
         competitionCountry: this.competitionForm.value.competitionCountry,
+        user: {
+          createdBy: user.id
+        },
         role: "admin"
       };
       const competitionObj = {
@@ -229,6 +232,7 @@ export class SuperAdminComponent implements OnInit {
         }
         this.updateAdmin(this.createdAdmin._id, this.createdAdmin);
         this.displayEditCompetition = false;
+        this.displayCompetitions = true;
         this.store.dispatch(CompetitionActions.loadCompetitions());
         this.competitionForm.reset();
         this.notifier.notify("success", "Competition created successfully!");
@@ -249,6 +253,7 @@ export class SuperAdminComponent implements OnInit {
     const loggedInUser = this.storageService.getUser();
     this.userService.createUser(user).subscribe((res: any) => {
       if (!res.message) {
+        debugger;
         this.createdAdmin = res;
         this.createCompetittion({
           ...this.competitionForm.value,
@@ -354,8 +359,25 @@ export class SuperAdminComponent implements OnInit {
     this.displayCompetitions = !this.displayCompetitions;
     // this.competitionForm.reset();
   }
-  deleteCompetition(competitionId: any) {
-    this.competitionService.deleteCompetition(competitionId).subscribe((res: any) => {
+  deleteCompetition(comp: any) {
+    const { _id, competition } = comp;
+    this.deleteUsers(_id);
+    if (Array.isArray(competition)) {
+      competition.forEach((comp: any) => {
+        this.removeCompetitions(comp._id);
+      });
+    }
+    this.loadUsers();
+  }
+  deleteUsers(id: any) {
+    this.userService.deleteUser(id).subscribe((res: any) => {
+      if (res) {
+        this.notifier.notify("success", res.message);
+      }
+    });
+  }
+  removeCompetitions(comp: any) {
+    this.competitionService.deleteCompetition(comp).subscribe((res: any) => {
       if (res) {
         this.notifier.notify("success", res.message);
         this.getAllCompetitions();

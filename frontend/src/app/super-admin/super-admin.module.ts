@@ -142,8 +142,8 @@ const superAdminRoutes: Routes = [
     ReactiveFormsModule,
     FormsModule,
     AngularEditorModule,
-    NgMultiSelectDropDownModule.forRoot(),
     NotifierModule.withConfig(customNotifierOptions),
+    NgMultiSelectDropDownModule.forRoot(),
     RouterModule.forChild(superAdminRoutes)
   ],
   providers: [ConfirmationDialogService],

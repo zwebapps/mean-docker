@@ -6,6 +6,7 @@ const Competition = db.competition;
 const Fixture = db.fixture;
 const League = db.league;
 const Player = db.player;
+const User = db.user;
 
 exports.getDashboardContents = async (req, resp, next) => {
   try {
@@ -19,26 +20,30 @@ exports.getDashboardContents = async (req, resp, next) => {
     let teams = [];
     // coach
     if (role === "coach") {
-      academies = await Academy.find({
-        competition: competition._id,
+      academies = await Academy.findOne({
+        coach: ObjectId(userId),
         shortcode: shortcode
       })
-        .populate(["coach"])
+        .populate("coach")
         .exec();
+      console.log(academies);
       competitions = await Competition.find({
-        competition: competition._id,
         shortcode: shortcode
       })
         .populate(["organiser", "user_id"])
         .exec();
 
       leagues = await League.find({
-        competition: competition._id,
+        competition: Array.isArray(competition)
+          ? competition[0]._id
+          : competition._id,
         shortcode: shortcode
       });
       players = await Player.find({
         user: userId,
-        competition: competition._id,
+        competition: Array.isArray(competition)
+          ? competition[0]._id
+          : competition._id,
         shortcode: shortcode
       })
         .populate("league")
@@ -49,7 +54,7 @@ exports.getDashboardContents = async (req, resp, next) => {
         .sort({ createdAt: -1 })
         .exec();
       teams = await Team.find({
-        competition: competition._id,
+        academy_id: academies._id,
         shortcode: shortcode
       })
         .populate(["academy_id", "leagues", "user_id"])
@@ -141,7 +146,7 @@ exports.getDashboardContents = async (req, resp, next) => {
       data: {
         teams,
         players,
-        academies,
+        academies: Array.isArray(academies) ? academies : [academies],
         competitions,
         fixtures,
         leagues
