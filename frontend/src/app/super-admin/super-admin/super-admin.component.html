@@ -1,6 +1,6 @@
 <notifier-container></notifier-container>
 <div class="container" *ngIf="displayCompetitions">
-  <div class="row">
+  <div class="form-wrapper">
     <form class="form-inline mt-5 ps-0 pe-0" method="post" enctype="multipart/form-data">
       <div class="row">
         <div class="col-12 col-lg-9 d-flex justify-content-start">
@@ -41,9 +41,6 @@
 </div>
 
 <div class="container p-5" *ngIf="displayAddCompetition">
-  <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title">Add Competition Details</h4>
-  </div>
   <div class="modal-body">
     <form class="form-inline" method="post" enctype="multipart/form-data" [formGroup]="competitionForm" (ngSubmit)="onSubmit()">
       <div class="row">
