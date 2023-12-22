@@ -39,7 +39,7 @@
   </ngx-datatable-column>
   <ngx-datatable-column name="Actions" prop="row">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-      <!-- <button type="button" class="btn btn-primary me-1" (click)="editCompetition(row)"><i class="bi bi-pencil-square"></i></button> -->
+      <button type="button" class="btn btn-primary me-1" (click)="editCompetition(row)"><i class="bi bi-pencil-square"></i></button>
       <button type="button" class="btn btn-danger" (click)="deleteCompetition(row)"><i class="bi bi-trash"></i></button>
     </ng-template>
   </ngx-datatable-column>
