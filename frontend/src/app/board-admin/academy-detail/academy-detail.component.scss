@@ -1,46 +1,46 @@
 .academy-row {
-  background: #165baa;
+  background: #165BAA;
   padding: 1rem 2rem;
   justify-content: space-between;
   align-items: center;
   .academy-name {
     p {
       color: #fff;
-      font-family: "Anton", sans-serif;
+      font-family: 'Anton', sans-serif;
       font-size: 40px;
-      margin: 0 5px 0 0;
+      margin:0 5px 0 0;
     }
-    .academy-team {
-      color: #fff;
-      font-family: "Anton", sans-serif;
+    .academy-team{
+      color: #FFF;
+      font-family: 'Anton', sans-serif;
       font-size: 14px;
     }
   }
-  // .acedmy-plus {
-  //   background: #4f5467;
-  //   border: 5px solid #fff;
-  //   display: flex;
-  //   justify-content: space-between;
-  //   align-items: center;
-  //   border-radius: 100%;
-  //   width: 120px;
-  //   height: 120px;
-  //   background: white;
-  //   overflow: hidden;
-  //   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  //   img {
-  //     width: 100%;
-  //     height: 100%;
-  //     object-fit: cover;
-  //   }
-  //   .btn-default {
-  //     b > i.academy-plus-inner-text {
-  //       color: #ff5a5a;
-  //       font-size: 30px;
-  //       font-weight: bold;
-  //     }
-  //   }
-  // }
+  .acedmy-plus {
+    background: #4f5467;
+    border: 5px solid #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 100%;
+    width: 120px;
+    height: 120px;
+    background: white;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .btn-default {
+      b > i.academy-plus-inner-text {
+        color: #ff5a5a;
+        font-size: 30px;
+        font-weight: bold;
+      }
+    }
+  }
 }
 
 // .form-control:focus {
