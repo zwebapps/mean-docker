@@ -44,6 +44,7 @@ export class SuperAdminComponent implements OnInit {
   public createdAdmin: any = {};
   public users: any;
   public loggedInUser: any = {};
+  public filterString: string = "";
 
   constructor(
     private palyerService: PlayerService,
@@ -85,7 +86,17 @@ export class SuperAdminComponent implements OnInit {
     this.loggedInUser = this.storageService.getUser();
     this.store.select(UserSelectors.getUsers).subscribe((users) => {
       if (users) {
-        this.users = users.filter((user: any) => user.createdBy && user.createdBy === this.loggedInUser.id);
+        if (this.filterString) {
+          this.users = users.filter(
+            (user: any) =>
+              user.createdBy &&
+              user.createdBy === this.loggedInUser.id &&
+              user.competition &&
+              user.competition.some((c: any) => c.competitionName.toLowerCase().includes(this.filterString.toLowerCase()))
+          );
+        } else {
+          this.users = users.filter((user: any) => user.createdBy && user.createdBy === this.loggedInUser.id);
+        }
       }
     });
   }
@@ -392,7 +403,12 @@ export class SuperAdminComponent implements OnInit {
     });
   }
   filterCompetitions(text: any) {
-    this.getAllCompetitions();
+    if (text.length > 0) {
+      this.filterString = text;
+    } else {
+      this.filterString = "";
+    }
+    this.getLoggedInUser();
     this.listOfCompetitions = this.listOfCompetitions.filter((competition: any) => {
       return competition.competitionName.toLowerCase().includes(text.toLowerCase());
     });
