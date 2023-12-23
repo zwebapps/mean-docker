@@ -58,10 +58,11 @@ const db = require("./app/models");
 const Role = db.role;
 const User = db.user;
 const Increment = db.increment;
-// const uri = "mongodb://admin-user:admin-password@0.0.0.0:27017/mean-football?authSource=admin";
-
 const uri =
-  "mongodb://admin-user:admin-password@yflpms.com:27017/mean-football?authSource=admin";
+  "mongodb://admin-user:admin-password@0.0.0.0:27017/mean-football?authSource=admin";
+
+// const uri =
+//   "mongodb://admin-user:admin-password@yflpms.com:27017/mean-football?authSource=admin";
 
 db.mongoose
   .connect(environment.mongodb.uri, {
@@ -156,6 +157,7 @@ function initial() {
   Role.find({}).then((roles) => {
     console.log(roles, "roles");
   });
+  // creating yfl super admin
   User.findOne({ username: "yfldubai" })
     .exec()
     .then((users) => {
