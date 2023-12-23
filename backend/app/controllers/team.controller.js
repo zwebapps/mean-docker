@@ -19,6 +19,7 @@ exports.createTeam = async (req, resp, next) => {
               academy_id: req.body[i]["Academy Id"],
               leagues: [...req.body[i].leagues],
               user_id: ObjectId(req.body[i].user["createdBy"]),
+              shortcode: req.body[i]["shortCode"],
               competition: ObjectId(req.body[i]["competition"]),
               createdAt: new Date()
             });
@@ -42,6 +43,7 @@ exports.createTeam = async (req, resp, next) => {
             academy_id: req.body["Academy Id"],
             leagues: [...req.body.leagues],
             user_id: ObjectId(req.body.user["createdBy"]),
+            shortcode: req.body["shortCode"],
             competition: ObjectId(req.body["competition"]),
             createdAt: new Date()
           });

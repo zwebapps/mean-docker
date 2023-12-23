@@ -88,9 +88,9 @@ export class LeagueManagementComponent implements OnInit {
           const leagueData = {
             "League Name": this.leagueForm.value.leagueName,
             "Age Limit": this.leagueForm.value.leagueAge,
-            "Short Code": this.leagueForm.value.shortCode,
-            Year: this.leagueForm.value.leagueYear,
-            competition: user.competition ? user.competition : Array(this.selectedCompetition),
+            "Short Code": this.selectedCompetition.shortCode,
+            Year: this.selectedCompetition.competitionYear,
+            competition: this.selectedCompetition?._id,
             user: {
               createdBy: user._id ? user._id : user.id
             }
@@ -113,10 +113,8 @@ export class LeagueManagementComponent implements OnInit {
         "League Name": this.leagueForm.value.leagueName,
         "Age Limit": this.leagueForm.value.leagueAge,
         "Short Code": this.selectedCompetition?.shortCode,
-        year: isNaN(Number(this.selectedCompetition?.competitionYear))
-          ? new Date().getFullYear()
-          : this.selectedCompetition?.competitionYear,
-        competition: user.competition.length > 0 ? user.competition : Array(this.selectedCompetition),
+        year: this.selectedCompetition?.competitionYear,
+        competition: this.selectedCompetition._id,
         user: {
           createdBy: user._id ? user._id : user.id
         }

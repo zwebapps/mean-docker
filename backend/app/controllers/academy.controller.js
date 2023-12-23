@@ -22,6 +22,8 @@ exports.createAcademy = async (req, resp, next) => {
               logo: req.body[i]["Logo"],
               color: req.body[i]["Color"],
               coach: [ObjectId(req.body[i].user["createdBy"])],
+              admin: ObjectId(req.body[i].user["admin"]),
+              shortcode: req.body[i]["Short Code"],
               competition: ObjectId(req.body[i]["competition"]),
               createdAt: new Date()
             });
@@ -45,8 +47,10 @@ exports.createAcademy = async (req, resp, next) => {
             academyName: req.body["Academy Name"],
             logo: req.body["Logo"],
             color: req.body["Color"],
+            shortcode: req.body["Short Code"],
             coach: [ObjectId(req.body.user["createdBy"])],
-            competition: ObjectId(req.body[i]["competition"]),
+            admin: ObjectId(req.body.user["admin"]),
+            competition: ObjectId(req.body["competition"]),
             createdAt: new Date()
           });
 

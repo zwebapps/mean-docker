@@ -9,8 +9,16 @@ import { StorageService } from "src/app/_services/storage.service";
 @Injectable()
 export class LeaguesEffects {
   user: any;
+  selectedCmp: any;
+  shortCode: any;
   constructor(private actions$: Actions, private leagueService: LeagueService, private storageService: StorageService) {
     this.user = this.storageService.getUser();
+    this.selectedCmp = this.storageService.getCompetition();
+    if (this.selectedCmp) {
+      this.shortCode = this.selectedCmp.shortcode;
+    } else {
+      this.shortCode = this.user?.shortcode || "yfl";
+    }
   }
 
   loadPlayers$ = createEffect(() =>

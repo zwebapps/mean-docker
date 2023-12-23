@@ -56,6 +56,7 @@ export class AcademyDetailComponent implements OnInit {
         this.notifier.notify("error", "Please try again!");
       }
     );
+    this.getCompetition();
   }
   onSubmit() {
     if (!this.teamForm.value.teamName) {
@@ -68,7 +69,8 @@ export class AcademyDetailComponent implements OnInit {
           "Team Name": this.teamForm.value.teamName,
           "Academy Id": this.academy._id,
           leagues: [],
-          competition: user.competition,
+          shortCode: this.selectedCompetition.shortCode,
+          competition: this.selectedCompetition._id,
           user: {
             createdBy: user.id
           }

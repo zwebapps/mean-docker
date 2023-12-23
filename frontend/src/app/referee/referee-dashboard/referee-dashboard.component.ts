@@ -92,7 +92,7 @@ export class RefereeDashboardComponent implements OnInit, AfterViewInit {
     // now get the leagues and map
     this.store.select(FixtureSelectors.getFixtures).subscribe((fixtures) => {
       if (Array.isArray(fixtures)) {
-        this.fixtures = fixtures.filter((fix) => fix.user_id === this.refereeDetails.id);
+        this.fixtures = fixtures.filter((fix) => fix.user_id._id === this.refereeDetails.id);
       } else {
         this.notifier.notify("error", "Fixtures not yet added");
       }
@@ -150,7 +150,7 @@ export class RefereeDashboardComponent implements OnInit, AfterViewInit {
         homeTeam: this.fixtureForm.value.homeTeam,
         awayTeam: this.fixtureForm.value.awayTeam,
         shortcode: loggedInRef?.shortcode,
-        competition: loggedInRef?.competition,
+        competition: loggedInRef?.competition[0]._id,
         user: {
           createdBy: loggedInRef?.id
         }
