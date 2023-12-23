@@ -73,10 +73,13 @@ exports.getDashboardContents = async (req, resp, next) => {
       })
         .populate(["coach"])
         .exec();
-      competitions = await Competition.find({})
+      competitions = await Competition.find({
+        organiser: ObjectId(userId),
+        shortcode: shortcode
+      })
         .populate(["organiser", "user_id"])
         .exec();
-      fixtures = await Fixture.find({}).populate([
+      fixtures = await Fixture.find({ user_id: ObjectId(userId) }).populate([
         "league",
         "homeTeam",
         "awayTeam",

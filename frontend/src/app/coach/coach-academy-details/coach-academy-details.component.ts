@@ -257,12 +257,11 @@ export class CoachAcademyDetailsComponent {
           : moment(this.playerForm.value.dob).format("YYYY-MM-DD");
 
       // let isIlligible = moment(this.selectedLeague.leagueAgeLimit).isSameOrBefore(this.playerForm.value.dob);
-      let isIlligible = moment(this.selectedLeague.leagueAgeLimit).isSameOrBefore(dateToCompare);
+      let isIlligible = moment(dateToCompare).isSameOrBefore(this.selectedLeague.leagueAgeLimit);
       if (!isIlligible) {
         this.notifier.notify("error", "You are not eligible for this league!");
         return;
       }
-
       const playerObj = {
         firstName: this.playerForm.value.firstName,
         surName: this.playerForm.value.surName,
@@ -279,7 +278,7 @@ export class CoachAcademyDetailsComponent {
         playingUp: this.playerPlayingUp,
         playingUpTeam: this.playerPlayingUpTeam,
         shortcode: this.coach.shortcode,
-        competition: this.coach.competition,
+        competition: this.coach.competition[0],
         user: {
           createdBy: this.coach._id
         }

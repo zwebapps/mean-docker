@@ -14,6 +14,15 @@ import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import * as countriesData from "../../../assets/countries/countries.json";
 import { PlayerService } from "../../_services/player.service";
 
+// importing actions
+import * as UserActions from "./../../_store/actions/users.actions";
+import * as TeamActions from "./../../_store/actions/teams.actions";
+import * as PlayerActions from "./../../_store/actions/players.actions";
+import * as LeagueActions from "./../../_store/actions/leagues.actions";
+import * as FixureActions from "./../../_store/actions/fixures.actions";
+import * as AcademyActions from "./../../_store/actions/academies.actions";
+import * as NotificationActions from "./../../_store/actions/notification.actions";
+
 @Component({
   selector: "app-admin-competition",
   templateUrl: "./admin-competition.component.html",
@@ -88,6 +97,7 @@ export class AdminCompetitionComponent {
     if (typeof window !== "undefined") {
       window.location.reload();
     }
+    this.getStoreData();
   }
 
   getCompetition() {
@@ -122,6 +132,9 @@ export class AdminCompetitionComponent {
       // console.log(competitionObj);
       this.updateCompetition(this.competitionToBeEdit._id, competitionObj);
       this.modalService.dismissAll();
+      if (typeof window !== "undefined") {
+        window.location.reload();
+      }
     }
   }
   get f() {
@@ -215,5 +228,15 @@ export class AdminCompetitionComponent {
   }
   getCountries() {
     this.countries = (countriesData as any).default;
+  }
+  getStoreData() {
+    this.store.dispatch(UserActions.loadUsers());
+    this.store.dispatch(TeamActions.loadTeams());
+    this.store.dispatch(LeagueActions.loadLeagues());
+    this.store.dispatch(FixureActions.loadFixtures());
+    this.store.dispatch(AcademyActions.loadAcademies());
+    this.store.dispatch(PlayerActions.loadPlayers());
+    this.store.dispatch(NotificationActions.loadNotifications());
+    this.store.dispatch(CompetitionActions.loadCompetitions());
   }
 }

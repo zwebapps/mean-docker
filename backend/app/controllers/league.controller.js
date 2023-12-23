@@ -40,6 +40,8 @@ exports.createLeague = async (req, resp, next) => {
       if (isValidated) {
         // check if the same eid is already in the database
         let league = await League.findOne({
+          shortcode: req.body["Short Code"],
+          user_id: ObjectId(req.body.user["createdBy"]),
           leagueName: req.body["League Name"]
         });
         if (!league) {

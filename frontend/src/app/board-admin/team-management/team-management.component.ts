@@ -92,12 +92,13 @@ export class TeamManagementComponent implements OnInit {
           const academyData = {
             "Academy Name": this.academyForm.value.academyName,
             "Academy User Name": this.academyForm.value.userName,
+            "Short Code": this.selectedCompetition.shortCode,
             Email: this.academyForm.value.emailAddress,
             Password: this.academyForm.value.password,
             contact: this.academyForm.value.mobileNumber,
             Logo: this.academyLogo,
             Color: this.academyForm.value.academyColor,
-            competition: user.competition.length > 0 ? user.competition : Array(this.selectedCompetition),
+            competition: this.selectedCompetition._id,
             user: {
               createdBy: user._id ? user._id : user.id
             }
@@ -109,8 +110,12 @@ export class TeamManagementComponent implements OnInit {
             email: this.academyForm.value.emailAddress,
             password: this.academyForm.value.password,
             contact: this.academyForm.value.mobileNumber,
-            shortcode: this.selectedCompetition.shortCode,
-            competition: user.competition ? user.competition : Array(this.selectedCompetition),
+            shortCode: this.selectedCompetition.shortCode,
+            competition: Array(this.selectedCompetition._id),
+            user: {
+              createdBy: user._id ? user._id : user.id,
+              admin: user._id ? user._id : user.id
+            },
             role: "coach"
           };
           // check if academy exists
@@ -149,7 +154,7 @@ export class TeamManagementComponent implements OnInit {
         academyName: this.academyForm.value.academyName,
         logo: this.academyLogo,
         color: this.academyForm.value.academyColor,
-        competition: this.storageService.getUser()?.competition
+        competition: this.selectedCompetition._id
       };
       this.academyService.updateAcademy(this.academyToEdit, academyData).subscribe(
         (res: any) => {

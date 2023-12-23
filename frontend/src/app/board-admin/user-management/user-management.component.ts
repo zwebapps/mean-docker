@@ -36,6 +36,7 @@ export class UserManagementComponent implements OnInit {
   public displayEditForm: boolean = false;
   public displayAddForm: boolean = false;
   public academies: any = [];
+  public selectedCompetition: any = {};
 
   constructor(
     private formBuilder: FormBuilder,
@@ -74,6 +75,7 @@ export class UserManagementComponent implements OnInit {
     this.getUsersFromStore();
     this.getAcademiesFromStore();
     this.getRoles();
+    this.getSelectedCompetition();
   }
 
   filterUsers() {
@@ -198,7 +200,11 @@ export class UserManagementComponent implements OnInit {
         password: this.userForm.value.password,
         email: this.userForm.value.email,
         role: this.userForm.value.role,
-        competition: this.loggedInUser?.competition
+        shortCode: this.loggedInUser?.shortcode,
+        competition: Array(this.selectedCompetition?._id),
+        user: {
+          createdBy: this.loggedInUser?._id
+        }
       };
       this.userService.createUser(userObj).subscribe(
         (result: any) => {
@@ -283,5 +289,8 @@ export class UserManagementComponent implements OnInit {
     this.userForm.reset();
     this.displayEditForm = false;
     this.displayAddForm = !this.displayAddForm;
+  }
+  getSelectedCompetition() {
+    this.selectedCompetition = this.storageService.getCompetition();
   }
 }
