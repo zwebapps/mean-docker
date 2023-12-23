@@ -1,17 +1,11 @@
 <div class="container-fluid">
-  <div class="row page-title-bar">
-    <div class="row academy-row" [style.background-color]="compSettings?.competitionBackground">
-      <div class="col-12 col-lg-2">
-        <div class="acedmy-plus m-auto">
-          <img [src]="getImg(selectedCompetition?.competitionLogo)" class="img-fluid" />
-          <br />
-        </div>
-      </div>
-      <div class="col-12 col-lg-10 academy-name">
-        <p>{{ selectedCompetition?.competitionName }}</p>
-      </div>
+  <div class="row academy-row" [style.background-color]="compSettings?.competitionBackground">
+    <div class="col-12 col-lg-2">
+      <div class="acedmy-plus m-auto"><img [src]="getImg(selectedCompetition?.competitionLogo)" class="img-fluid" /><br /></div>
     </div>
-    <hr />
+    <div class="col-12 col-lg-10 academy-name">
+      <p>{{ selectedCompetition?.competitionName }}</p>
+    </div>
   </div>
   <div class="row">
     <form
