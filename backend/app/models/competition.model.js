@@ -13,14 +13,17 @@ const Competition = mongoose.model(
     },
     shortCode: {
       type: String,
-      required: true,
-      unique: true
+      required: true
     },
     competitionLogo: {
       type: String,
       required: false
     },
     competitionSettings: {
+      type: String,
+      required: false
+    },
+    competitionDescription: {
       type: String,
       required: false
     },
@@ -35,7 +38,7 @@ const Competition = mongoose.model(
       required: false
     },
     competitionYear: {
-      type: Date,
+      type: String,
       default: "2023/2024",
       required: false
     },

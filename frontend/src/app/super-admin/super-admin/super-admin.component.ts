@@ -35,7 +35,7 @@ export class SuperAdminComponent implements OnInit {
   public displayAddCompetition: boolean = false;
   public listOfCompetitions: any = [];
   private notifier: NotifierService;
-  competitionForm: FormGroup;
+  public competitionForm: FormGroup;
   public closeResult: string = "";
   public submitted: boolean = false;
   public competitionLogo: any;
@@ -160,62 +160,57 @@ export class SuperAdminComponent implements OnInit {
       return;
     } else {
       const user = this.storageService.getUser();
-      // organiserDetail: JSON.stringify({
-      //   organiserFirstName: this.competitionForm.value.organiserFirstName,
-      //   organiserLastName: this.competitionForm.value.organiserLastName,
-      //   organiserContact: this.competitionForm.value.organiserContact,
-      //   organiserEmail: this.competitionForm.value.organiserEmail,
-      //   organiserPassword: this.competitionForm.value.organiserPassword,
-      //   organiserUserName: this.competitionForm.value.organiserUserName
-      // }),
-
       // user object
-      const userObj = {
-        firstname: this.competitionForm.value.organiserFirstName,
-        lastname: this.competitionForm.value.organiserLastName,
-        username: this.competitionForm.value.organiserUserName,
-        contact: this.competitionForm.value.organiserContact,
-        password: this.competitionForm.value.organiserPassword,
-        email: this.competitionForm.value.organiserEmail,
-        shortCode: this.competitionForm.value.shortCode,
-        competitionCountry: this.competitionForm.value.competitionCountry,
-        user: {
-          createdBy: user.id
-        },
-        role: "admin"
-      };
-      const competitionObj = {
-        shortCode: this.competitionForm.value.shortCode,
-        competitionSeason: this.competitionForm.value.competitionSeason,
-        competitionStart: this.competitionForm.value.competitionStart,
-        competitionEnd: this.competitionForm.value.competitionEnd,
-        competitionDescription: this.competitionForm.value.competitionDescription,
-        competitionLogo: this.competitionForm.value.competitionLogo,
-        competitionBackground: this.competitionForm.value.competitionBackground,
-        competitionColor: this.competitionForm.value.competitionColor,
-        competitionBorder: this.competitionForm.value.competitionBorder,
-        competitionName: this.competitionForm.value.competitionName,
-        competitionYear: this.competitionForm.value.competitionYear,
-        user: {
-          createdBy: user.id
-        }
+      const userObj: any = {};
+      if (this.competitionForm.value && this.competitionForm.value.organiserFirstName) {
+        userObj.firstname = this.competitionForm.value.organiserFirstName;
+      }
+      if (this.competitionForm.value && this.competitionForm.value.organiserLastName) {
+        userObj.lastname = this.competitionForm.value.organiserLastName;
+      }
+
+      if (this.competitionForm.value && this.competitionForm.value.organiserUserName) {
+        userObj.username = this.competitionForm.value.organiserUserName;
+      }
+
+      if (this.competitionForm.value && this.competitionForm.value.organiserContact) {
+        userObj.contact = this.competitionForm.value.organiserContact;
+      }
+
+      if (this.competitionForm.value && this.competitionForm.value.organiserPassword) {
+        userObj.password = this.competitionForm.value.organiserPassword;
+      }
+
+      if (this.competitionForm.value && this.competitionForm.value.organiserEmail) {
+        userObj.email = this.competitionForm.value.organiserEmail;
+      }
+
+      if (this.competitionForm.value && this.competitionForm.value.shortCode) {
+        userObj.shortCode = this.competitionForm.value.shortCode;
+      }
+
+      if (this.competitionForm.value && this.competitionForm.value.competitionCountry) {
+        userObj.competitionCountry = this.competitionForm.value.competitionCountry;
+      }
+
+      userObj.user = {
+        createdBy: user.id
       };
 
-      // this.competitions.value.forEach((competition: any) => {
-      //   competitions.push({
-      //     ...competitionObj,
-      //     ...competition
-      //   });
-      // });
+      userObj.role = "admin";
 
       if (this.displayEditCompetition) {
-        this.updateCompetition(this.competitionToBeEdit._id, competitionObj);
-        this.updateAdmin(this.competitionToBeEdit.user_id._id, { ...userObj });
+        const { competition } = this.competitionToBeEdit;
+        for (let i = 0; i < competition.length; i++) {
+          this.updateSingleCompetition(i);
+        }
+        this.updateAdmin(this.competitionToBeEdit._id, { ...userObj });
       } else {
         this.displayEditCompetition = false;
         this.createAdmin(userObj);
       }
     }
+    this.loadUsers();
   }
   createCompetittion(competitionObj: any) {
     let competitions: any = [];
@@ -228,14 +223,13 @@ export class SuperAdminComponent implements OnInit {
     this.competitionService.createCompetition(competitions).subscribe((res: any) => {
       if (res) {
         if (this.createdAdmin.competition) {
-          this.createdAdmin.competition.push(res.map((comp: any) => comp._id));
+          this.createdAdmin.competition = res.map((comp: any) => comp._id);
         }
         this.updateAdmin(this.createdAdmin._id, this.createdAdmin);
-        this.displayEditCompetition = false;
-        this.displayCompetitions = true;
+        this.notifier.notify("success", "Competition created successfully!");
+        this.addCompFormToggle();
         this.store.dispatch(CompetitionActions.loadCompetitions());
         this.competitionForm.reset();
-        this.notifier.notify("success", "Competition created successfully!");
       }
     });
   }
@@ -249,19 +243,34 @@ export class SuperAdminComponent implements OnInit {
       }
     });
   }
+  updateSingleCompetition(id: any) {
+    const { competition } = this.competitionToBeEdit;
+    const compId = competition[id]._id;
+    console.log(this.competitionForm.value.competitions[id], compId);
+    this.competitionService.updateCompetition(compId, this.competitionForm.value.competitions[id]).subscribe((res: any) => {
+      if (res) {
+        this.displayEditCompetition = false;
+        this.competitionForm.reset();
+        this.store.dispatch(CompetitionActions.loadCompetitions());
+        this.notifier.notify("success", "Competition updated successfully!");
+      }
+    });
+  }
   createAdmin(user: any) {
     const loggedInUser = this.storageService.getUser();
     this.userService.createUser(user).subscribe((res: any) => {
       if (!res.message) {
-        debugger;
         this.createdAdmin = res;
-        this.createCompetittion({
-          ...this.competitionForm.value,
-          organiser: res._id,
-          user: {
-            createdBy: loggedInUser.id
-          }
-        });
+        const { competitions } = this.competitionForm.value;
+        if (competitions) {
+          this.createCompetittion({
+            shortCode: res.shortcode,
+            organiser: res._id,
+            user: {
+              createdBy: loggedInUser.id
+            }
+          });
+        }
       } else {
         this.notifier.notify("error", res.message);
       }
@@ -270,8 +279,9 @@ export class SuperAdminComponent implements OnInit {
   updateAdmin(id: any, user: any) {
     this.userService.updateUser(id, user).subscribe((res: any) => {
       if (res) {
-        console.log(res);
+        this.notifier.notify("success", res.message);
       }
+      this.addCompFormToggle();
     });
   }
   getDescription(data: any) {
@@ -289,6 +299,9 @@ export class SuperAdminComponent implements OnInit {
     if (shortCode && shortCode.length > 2) {
       this.competitionService.getCompetitionByShortCode(shortCode).subscribe((res: any) => {
         if (!res.message) {
+          if (res.length > 0) {
+            this.notifier.notify("error", "Short code already exists");
+          }
           this.shortCodeExists = true;
         } else {
           this.shortCodeExists = false;
@@ -301,6 +314,9 @@ export class SuperAdminComponent implements OnInit {
     if (comp && comp.length > 2) {
       this.competitionService.getCompetitionByShortCode(comp).subscribe((res: any) => {
         if (!res.message) {
+          if (res.length > 0) {
+            this.notifier.notify("error", "Competition already exists");
+          }
           this.competitionExists = true;
         } else {
           this.competitionExists = false;
@@ -308,38 +324,29 @@ export class SuperAdminComponent implements OnInit {
       });
     }
   }
-  editCompetition(competiton: any) {
-    if (competiton) {
-      this.competitionToBeEdit = competiton;
-      const { organiser } = competiton;
+  editCompetition(compData: any) {
+    if (compData) {
+      const { competition } = compData;
+      this.removeCompetition(0);
+      if (Array.isArray(competition)) {
+        for (let i = 0; i < competition.length; i++) {
+          this.addcompetitions();
+        }
+      }
+      this.competitionToBeEdit = compData;
       this.displayEditCompetition = true;
-      // const organiserDetail = competiton.organiserDetail ? JSON.parse(competiton.organiserDetail) : {};
-      // const competitionSettings = competiton.competitionSettings ? JSON.parse(competiton.competitionSettings) : {};
-      this.competitionLogo = competiton.competitionLogo;
+      this.competitionLogo = compData.competitionLogo;
       this.addCompFormToggle();
       this.patchedValues = {
-        organiserFirstName: organiser.firstname,
-        organiserLastName: organiser.lastname,
-        organiserContact: organiser.contact,
-        organiserEmail: organiser.email,
-        shortCode: competiton?.shortCode,
-        organiserUserName: organiser.username,
-        organiserPassword: organiser.password,
-        competitionCountry: organiser?.competitionCountry ? organiser?.competitionCountry : "ae",
-        competitions: [
-          {
-            competitionBackground: "#ffffff",
-            competitionBorder: "#fefefe",
-            competitionColor: "#eeeeee",
-            competitionDescription: "Competition description",
-            competitionLogo: competiton?.competitionLogo,
-            competitionName: competiton?.competitionName,
-            competitionSeason: competiton?.competitionSeason,
-            competitionStart: competiton?.competitionStart ? new Date(competiton?.competitionStart).toISOString().slice(0, 10) : null,
-            competitionEnd: competiton?.competitionEnd ? new Date(competiton?.competitionEnd).toISOString().slice(0, 10) : null,
-            competitionYear: 2023
-          }
-        ]
+        organiserFirstName: compData?.firstname,
+        organiserLastName: compData?.lastname,
+        organiserContact: compData?.contact,
+        organiserEmail: compData?.email,
+        shortCode: compData?.shortcode,
+        organiserUserName: compData.username,
+        organiserPassword: compData.password,
+        competitionCountry: compData?.competitionCountry ? compData?.competitionCountry : "ae",
+        competitions: competition
       };
 
       this.competitionForm.controls.organiserFirstName.disable();
@@ -349,8 +356,8 @@ export class SuperAdminComponent implements OnInit {
       this.competitionForm.controls.organiserEmail.disable();
       this.competitionForm.controls.shortCode.disable();
       this.competitionForm.controls.organiserUserName.disable();
-      this.competitionForm.controls.organiserPassword.disable();
-      // this.competitionForm.patchValue(this.patchedValues);
+      // this.competitionForm.controls.organiserPassword.disable();
+      this.competitionForm.patchValue(this.patchedValues);
       console.log(this.competitionForm.value);
     }
   }

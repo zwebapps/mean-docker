@@ -46,10 +46,10 @@
       <div class="row">
         <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
           <label for="name" class="control-label">First name</label>
+          <!-- [(ngModel)]="patchedValues.organiserFirstName" -->
           <input
             type="text"
-            [value]=""
-            [(ngModel)]="patchedValues.organiserFirstName"
+            [value]="patchedValues?.organiserFirstName"
             class="form-control"
             placeholder="Organiser first name"
             formControlName="organiserFirstName"
@@ -205,19 +205,21 @@
         </div>
         <ng-container *ngFor="let competition of competitions.controls; let compIndex = index">
           <hr />
-          <span class="float-end" (click)="removeCompetition(compIndex)"> <i class="bi bi-trash"></i></span>
-          <ng-container [formGroup]="competition">
+          <div class="d-flex">
+            <span class="float-end" (click)="removeCompetition(compIndex)"> <i class="bi bi-trash"></i></span>
+            <span class="float-end" (click)="updateSingleCompetition(compIndex)"> <i class="bi bi-floppy"></i></span>
+          </div>
+          <ng-container [formGroup]="competition" *ngIf="competition">
             <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
               <label for="name" class="control-label">Competition</label>
               <div class="input-group">
+                <!-- [(ngModel)]="patchedValues.competitions && patchedValues.competitions[compIndex].competitionName" -->
                 <input
                   type="text"
                   class="form-control"
                   (blur)="verifyCompetition($event)"
                   [ngClass]="{ 'is-invalid': submitted && competition.controls['competitionName'].errors }"
-                  [(ngModel)]="
-                    patchedValues.competitions && patchedValues.competitions && patchedValues.competitions[compIndex].competitionName
-                  "
+                  [value]="patchedValues.competitions && patchedValues.competitions[compIndex].competitionName"
                   formControlName="competitionName"
                   placeholder="Competition Name"
                   aria-label="Text input with checkbox"
@@ -227,7 +229,7 @@
                   <input
                     type="number"
                     placeholder="Year"
-                    [(ngModel)]="patchedValues.competitions && patchedValues.competitions[compIndex].competitionYear"
+                    [value]="patchedValues.competitions && patchedValues.competitions[compIndex].competitionYear"
                     formControlName="competitionYear"
                     class="form-control"
                     [ngClass]="{ 'is-invalid': submitted && competition.controls['competitionYear'].errors }"
@@ -253,10 +255,9 @@
               <label for="name" class="control-label">Competition Description</label>
               <textarea
                 type="text"
-                [value]=""
                 class="form-control"
                 placeholder="Competition Description"
-                [(ngModel)]="patchedValues.competitions && patchedValues.competitions[compIndex].competitionDescription"
+                [value]="patchedValues.competitions && patchedValues.competitions[compIndex].competitionDescription"
                 formControlName="competitionDescription"
                 class="form-control"
               >

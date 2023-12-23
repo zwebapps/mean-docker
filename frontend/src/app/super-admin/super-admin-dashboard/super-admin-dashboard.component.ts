@@ -43,7 +43,10 @@ export class SuperAdminDashboardComponent implements OnInit {
         this.dashboardContents = res.data;
         this.mapDashboardContents();
       }
-    });
+    }),
+      (error: any) => {
+        this.notifier.notify("error", "Try again later");
+      };
   }
   mapDashboardContents() {
     if (Object.keys(this.dashboardContents).length > 0) {
