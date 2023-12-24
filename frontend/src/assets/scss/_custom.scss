@@ -29,6 +29,11 @@
   font-family: "bootstrap-icons";
 }
 
+.page-filter-bar{
+  margin-top: 50px;
+  margin-bottom: 20px;
+}
+
 .form-select {
   border-radius: 8px;
   border: 1px solid #D0D5DD;
@@ -37,6 +42,7 @@
 }
 
 .form-control {
+  min-height: 38px;
   border-radius: 8px;
   border: 1px solid #D0D5DD;
   background: #FFF;

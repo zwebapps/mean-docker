@@ -21,7 +21,7 @@
     <p>{{ academy?.academyName }}</p>
   </div>
 </div>
-
+<div class="container">
 <div class="row">
   <form class="d-flex mt-4 mb-4" [formGroup]="teamForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
     <div class="form-group d-flex col-12 col-lg-6">
@@ -48,6 +48,7 @@
     </div>
   </div> -->
   <app-admin-team-listing [teamsData]="teams" (delTeam)="onDelete($event)" (editTeam)="onTeamClick($event)"></app-admin-team-listing>
+</div>
 </div>
 <div style="position: absolute; bottom: 0; right: 0; background-color: transparent">
   <button class="btn btn-back" (click)="redirectTo()">Back</button>

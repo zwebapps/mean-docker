@@ -1,181 +1,59 @@
-// form {
-//   input.form-control {
-//     line-height: 40px;
-//     padding: 25px 20px 25px 0px;
-//     border-radius: 60px !important;
-//     border: 1px solid #000;
-//     background: hsl(0, 0%, 100%);
-//     width: 100%;
-//     text-align: center;
-//   }
-//   input::placeholder {
-//     color: rgba(0, 0, 0, 0.5);
-//     font-family: NotoSansRegular;
-//     font-size: 30px;
-//     font-style: normal;
-//     font-weight: 700;
-//     line-height: normal;
-//     margin-right: 5px;
-//     align-items: center;
-//   }
-//   button.btn-default {
-//     background: #000000;
-//     border-radius: 100%;
-//     width: 92px;
-//     height: 92px;
-//     color: white;
-//     line-height: 75px;
-//     b > i {
-//       font-size: 25px;
-//       font-weight: bold;
-//     }
-//   }
-// }
-
-// .league-lable {
-//   display: inline-flex;
-//   min-height: 53px;
-//   flex-direction: column;
-//   justify-content: center;
-//   flex-shrink: 0;
-//   background: #000000;
-//   border-radius: 30px;
-//   margin: 16px;
-//   width: 100%;
-//   .league-text {
-//     color: #fff;
-//     text-align: center;
-//     font-family: NotoSansRegular;
-//     font-size: 20px;
-//     font-style: normal;
-//     font-weight: 600;
-//     line-height: normal;
-//     button {
-//       visibility: hidden;
-//       position: relative;
-//       left: 22px;
-//     }
-//   }
-//   &:hover {
-//     .league-text {
-//       button {
-//         visibility: visible;
-//       }
-//     }
-//   }
-// }
-// @media (max-width: 1430px) {
-//   form {
-//     input.form-control {
-//       font-size: 15px !important;
-//     }
-//     input::placeholder {
-//       font-size: 15px;
-//     }
-//   }
-//   .league-lable {
-//     margin: 10px;
-//     .league-text {
-//       font-size: 14px;
-//       display: inline-table;
-//     }
-//     &:hover {
-//       .league-text {
-//         button {
-//           visibility: visible;
-//         }
-//       }
-//     }
-//   }
-// }
-// @media (max-width: 1316px) {
-//   form {
-//     input.form-control {
-//       font-size: 16px !important;
-//     }
-//     input::placeholder {
-//       font-size: 16px;
-//     }
-//   }
-//   .league-lable {
-//     margin: 10px;
-//     .league-text {
-//       font-size: 14px;
-//       display: inline-table;
-//     }
-//     &:hover {
-//       .league-text {
-//         button {
-//           visibility: visible;
-//         }
-//       }
-//     }
-//   }
-// }
-// @media (max-width: 1147px) {
-//   .league-lable {
-//     margin: 10px;
-//     .league-text {
-//       font-size: 16px;
-//       display: inline-table;
-//     }
-//     &:hover {
-//       .league-text {
-//         button {
-//           visibility: visible;
-//         }
-//       }
-//     }
-//   }
-// }
-// @media (max-width: 991px) {
-//   .league-submit-btn {
-//     justify-content: center;
-//   }
-// }
-
-// @media (max-width: 667px) {
-//   input.form-control {
-//     line-height: 16px;
-//     padding: 18px;
-//     border-radius: 19px !important;
-//     border: 1px solid #000;
-//     background: #fff;
-//     width: 100%;
-//   }
-//   input::placeholder {
-//     font-size: 18px !important;
-//     background-color: #fff;
-//   }
-
-//   button.btn-default {
-//     background: #000000;
-//     border-radius: 66px !important;
-//     color: white;
-//     margin: 0 auto;
-//     b > i {
-//       font-size: 15px;
-//       font-weight: bold;
-//     }
-//   }
-// }
-
 .academy-row {
-  background: #165baa;
-  padding: 1rem 2rem;
+  background: #165BAA;
+  padding: 1rem 0;
   justify-content: space-between;
   align-items: center;
+  margin-right: calc(-0.5 * var(--bs-gutter-x));
+  margin-left: calc(-0.5 * var(--bs-gutter-x));
   .academy-name {
     p {
       color: #fff;
-      font-family: "Anton", sans-serif;
+      font-family: 'Anton', sans-serif;
       font-size: 40px;
-      margin: 0 5px 0 0;
+      margin:0 5px 0 0;
     }
-    .academy-team {
-      color: #fff;
-      font-family: "Anton", sans-serif;
+    .academy-team{
+      color: #FFF;
+      font-family: 'Anton', sans-serif;
       font-size: 14px;
+    }
+  }
+  .acedmy-plus {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 120px;
+    height: 120px;
+    overflow: hidden;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .btn-default {
+      b > i.academy-plus-inner-text {
+        color: #ff5a5a;
+        font-size: 30px;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .academy-row {
+    align-items: center;
+    .acedmy-plus{
+      margin:0 auto;
+    }
+    .academy-name {
+      padding-top: 0px;
+      font-size: 16px;
+      p {
+        font-size: 16px;
+        text-align: center;
+        margin-top: 10px;
+      }
     }
   }
 }
@@ -206,20 +84,5 @@
     position: relative;
     float: right;
     bottom: 30px;
-  }
-}
-
-@media (max-width: 767px) {
-  .academy-row {
-    align-items: center;
-    .academy-name {
-      padding-top: 0px;
-      font-size: 16px;
-      p {
-        font-size: 16px;
-        text-align: center;
-        margin-top: 10px;
-      }
-    }
   }
 }
