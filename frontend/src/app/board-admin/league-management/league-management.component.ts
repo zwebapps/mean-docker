@@ -192,7 +192,12 @@ export class LeagueManagementComponent implements OnInit {
   getCompetitions() {
     this.selectedCompetition = this.storageService.getCompetition();
     if (this.selectedCompetition) {
-      this.compSettings = JSON.parse(this.selectedCompetition?.competitionSettings);
+      if (!this.selectedCompetition?.competitionSettings) {
+        this.notifier.notify("error", "Competition settings not found, please add it first !");
+      }
+      if (this.selectedCompetition?.competitionSettings) {
+        this.compSettings = JSON.parse(this.selectedCompetition?.competitionSettings);
+      }
     }
   }
   getLeaguesFromStore() {

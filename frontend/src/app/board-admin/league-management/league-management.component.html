@@ -84,6 +84,6 @@
     </div>
   </ng-container>
 </div> -->
-<div class="row p-3" *ngIf="leagues.length > 0">
+<div class="row p-3">
   <app-league-listing [leaguesData]="leagues" (delLeague)="onDeleteLeague($event)" (editLeague)="onEditLeague($event)"></app-league-listing>
 </div>

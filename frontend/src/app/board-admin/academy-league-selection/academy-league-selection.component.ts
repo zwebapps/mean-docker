@@ -83,7 +83,7 @@ export class AcademyLeagueSelectionComponent implements OnInit {
           const bNumber = parseInt(this.getLeagueNo(b?.leagueName));
 
           if (isNaN(aNumber) || isNaN(bNumber)) {
-            return a?.leagueName.localeCompare(b?.leagueName);
+            return a?.leagueName?.localeCompare(b?.leagueName);
           }
 
           return aNumber - bNumber;

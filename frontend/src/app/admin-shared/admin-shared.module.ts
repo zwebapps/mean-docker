@@ -32,6 +32,7 @@ import { AcademyListingComponent } from "./academy-listing/academy-listing.compo
 import { AdminTeamListingComponent } from "../board-admin/admin-team-listing/admin-team-listing.component";
 import { AdminSquadListingComponent } from "../board-admin/admin-squad-listing/admin-squad-listing.component";
 import { NotifierModule, NotifierOptions } from "angular-notifier";
+import { AdminAcademyTeamsComponent } from "../board-admin/admin-academy-teams/admin-academy-teams.component";
 
 /**
  * Custom angular notifier options
@@ -79,6 +80,7 @@ import { NotifierModule, NotifierOptions } from "angular-notifier";
 
 @NgModule({
   declarations: [
+    AdminAcademyTeamsComponent,
     AdminSquadListingComponent,
     AdminTeamListingComponent,
     LeagueListingComponent,
@@ -116,6 +118,7 @@ import { NotifierModule, NotifierOptions } from "angular-notifier";
     RouterModule
   ],
   exports: [
+    AdminAcademyTeamsComponent,
     AdminSquadListingComponent,
     AdminTeamListingComponent,
     LeagueListingComponent,

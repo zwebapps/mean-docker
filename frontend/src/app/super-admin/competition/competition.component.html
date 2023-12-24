@@ -15,6 +15,11 @@
       {{ row.firstname }} {{ row.lastname }}
     </ng-template>
   </ngx-datatable-column>
+  <ngx-datatable-column name="Username" prop="row">
+    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+      {{ row.username }}
+    </ng-template>
+  </ngx-datatable-column>
   <ngx-datatable-column name="Email" prop="row">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
       {{ row.email }}
