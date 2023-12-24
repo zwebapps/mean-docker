@@ -148,6 +148,12 @@ export class NavigationComponent implements OnInit, AfterViewInit {
       },
       error: (err) => {
         console.log(err);
+      },
+      complete: () => {
+        this.storageService.clean();
+        if (typeof window !== "undefined") {
+          window.location.reload();
+        }
       }
     });
   }

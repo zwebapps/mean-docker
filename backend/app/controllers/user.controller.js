@@ -122,9 +122,7 @@ exports.deleteUser = async (req, resp, next) => {
         .status(200)
         .json({ message: `No record found`, type: "error" });
     }
-    return resp
-      .status(200)
-      .json({ message: `User ${user.firstName} record deleted!` });
+    return resp.status(200).json({ message: `User deleted sucessfully!` });
   } catch (error) {
     next(error);
   }
@@ -160,7 +158,9 @@ exports.updateUser = async (req, resp, next) => {
 
     if (!fetchUser)
       return resp.status(404).json({ msg: "User record not found" });
-    req.body.password = bcrypt.hashSync(req.body.password, 8);
+    if (req.body.password && req.body.password.length < 15) {
+      req.body.password = bcrypt.hashSync(req.body.password, 8);
+    }
     fetchUser = {
       ...fetchUser._doc,
       ...req.body

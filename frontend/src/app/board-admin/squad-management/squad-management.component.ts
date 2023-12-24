@@ -47,7 +47,7 @@ export class SquadManagementComponent {
           const bNumber = parseInt(b?.academyName.split(" ")[1]);
 
           if (isNaN(aNumber) || isNaN(bNumber)) {
-            return a?.academyName.localeCompare(b?.academyName);
+            return a?.academyName?.localeCompare(b?.academyName);
           }
 
           return aNumber - bNumber;

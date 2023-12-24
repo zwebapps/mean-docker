@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     const { username, password } = this.form;
     try {
       this.ngxService.start();
-      this.authService.login(username, password).subscribe({
+      this.authService.login(username.trim(), password.trim()).subscribe({
         next: (data) => {
           this.ngxService.stop();
           this.storageService.setSession(data.token);
@@ -63,17 +63,20 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.redirectPage();
         },
         error: (err) => {
+          if (err) {
+            this.notifier.notify("error", "Login failed");
+          }
           this.ngxService.stop();
-          this.notifier.notify("error", "Login failed");
         },
         complete: () => {
           this.ngxService.stop();
-          this.notifier.notify("error", "login failed");
         }
       });
     } catch (err: any) {
       this.ngxService.stop();
-      this.notifier.notify("error", "login failed");
+      if (err) {
+        this.notifier.notify("error", "login failed");
+      }
     }
   }
 

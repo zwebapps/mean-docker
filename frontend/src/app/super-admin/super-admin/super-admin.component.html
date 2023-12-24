@@ -116,6 +116,12 @@
             <div *ngIf="f['organiserPassword'].errors['required']">
               <small>Password is required</small>
             </div>
+            <!-- <div *ngIf="f['organiserPassword'].errors['minlength']">
+              <small>Password minimum should be 6 characters</small>
+            </div> -->
+            <div *ngIf="f['organiserPassword'].errors['maxlength']">
+              <small>Password maximum should be 12 characters</small>
+            </div>
           </div>
         </div>
         <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
@@ -255,7 +261,9 @@
                   </div>
                 </div>
                 <div class="col-xs-12 col-md-3 col-lg-3 d-flex justify-content-end">
-                  <button class="btn btn-primary me-1" (click)="updateSingleCompetition(compIndex)"><i class="bi bi-floppy"></i></button>
+                  <button class="btn btn-primary me-1" (click)="updateSingleCompetition(compIndex)" *ngIf="displayEditCompetition">
+                    <i class="bi bi-floppy"></i>
+                  </button>
                   <button class="btn btn-danger" (click)="removeCompetition(compIndex)"><i class="bi bi-trash"></i></button>
                 </div>
               </div>

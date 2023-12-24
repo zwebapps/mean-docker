@@ -209,12 +209,12 @@ export class SuperAdminComponent implements OnInit {
       };
 
       userObj.role = "admin";
-
       if (this.displayEditCompetition) {
         const { competition } = this.competitionToBeEdit;
         for (let i = 0; i < competition.length; i++) {
           this.updateSingleCompetition(i);
         }
+
         this.updateAdmin(this.competitionToBeEdit._id, { ...userObj });
       } else {
         this.displayEditCompetition = false;
@@ -290,7 +290,7 @@ export class SuperAdminComponent implements OnInit {
   updateAdmin(id: any, user: any) {
     this.userService.updateUser(id, user).subscribe((res: any) => {
       if (res) {
-        this.notifier.notify("success", res.message);
+        this.notifier.notify("success", "Admin updated successfully!");
       }
       this.addCompFormToggle();
     });

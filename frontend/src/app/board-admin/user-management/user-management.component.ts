@@ -275,7 +275,7 @@ export class UserManagementComponent implements OnInit {
   getRoles() {
     this.userService.getAllRoles().subscribe((result: any) => {
       if (result) {
-        this.roles = result;
+        this.roles = result.filter((role: any) => role.name !== "admin" && role.name !== "superadmin");
       }
     });
   }
