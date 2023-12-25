@@ -19,6 +19,12 @@ export class SuperAdminDashboardComponent implements OnInit {
   topcards: topcard[];
   users: any = [];
   teams: any = [];
+  public filterByOptions: any = {
+    competition: null,
+    ageGroup: null,
+    compYear: null,
+    gender: null
+  };
   constructor(private store: Store, private dashboardService: DashboardService, notifier: NotifierService) {
     this.notifier = notifier;
     this.topcards = topcards;
@@ -49,6 +55,19 @@ export class SuperAdminDashboardComponent implements OnInit {
       };
   }
   mapDashboardContents() {
+    debugger;
+    console.log(this.filterByOptions);
+    this.dashboardContents["academies"] = this.dashboardContents["academies"].filter(
+      (item: any) => (this.filterByOptions.competition ? item.competition === this.filterByOptions.competition : true)
+
+      //  else if (this.filterByOptions.ageGroup) {
+      //   return item.ageGroup === this.filterByOptions.ageGroup;
+      // } else if (this.filterByOptions.compYear) {
+      //   return item.compYear === this.filterByOptions.compYear;
+      // } else if (this.filterByOptions.gender) {
+      //   return item.gender === this.filterByOptions.gender;
+      // }
+    );
     if (Object.keys(this.dashboardContents).length > 0) {
       Object.keys(this.dashboardContents).forEach((key) => {
         this.blogcards.push({
@@ -60,5 +79,33 @@ export class SuperAdminDashboardComponent implements OnInit {
         });
       });
     }
+  }
+  handleFilterByCompetitions(event: any) {
+    this.filterByOptions = {
+      ...this.filterByOptions,
+      ...event
+    };
+    this.getDashboardContents();
+  }
+  handleFilterByAgeGroup(event: any) {
+    this.filterByOptions = {
+      ...this.filterByOptions,
+      ...event
+    };
+    this.getDashboardContents();
+  }
+  handleFilterByYear(event: any) {
+    this.filterByOptions = {
+      ...this.filterByOptions,
+      ...event
+    };
+    this.getDashboardContents();
+  }
+  handleFilterByGender(event: any) {
+    this.filterByOptions = {
+      ...this.filterByOptions,
+      ...event
+    };
+    this.getDashboardContents();
   }
 }

@@ -7,7 +7,7 @@
         name="roles"
         aria-label="Default select"
         formControlName="competition"
-        (change)="filterCompetitions($event)"
+        (change)="filterByCompetitions($event)"
       >
         <option value="">Select the Competition</option>
         <ng-container *ngIf="dashboardContents['competitions']">
@@ -24,10 +24,10 @@
           id="container"
           name="years"
           aria-label="Default select"
-          formControlName="ageGroup"
-          (change)="ageGroup($event)"
+          formControlName="compYear"
+          (change)="filterByYear($event)"
         >
-          <option value="">Select the Age Group</option>
+          <option value="">Select the Year</option>
           <ng-container *ngFor="let year of [2023, 2024, 2025, 2026, 2027, 2028, 2029]">
             <option [value]="year">{{ year }}</option>
           </ng-container>
@@ -41,17 +41,17 @@
           id="container"
           name="years"
           aria-label="Default select"
-          formControlName="compYear"
-          (change)="compYear($event)"
+          formControlName="ageGroup"
+          (change)="filterByAgeGroup($event)"
         >
-          <option value="">Select the Year</option>
+          <option value="">Select Age Group</option>
           <ng-container *ngFor="let age of [5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]">
             <option [value]="age">{{ age }}</option>
           </ng-container>
         </select>
       </div>
     </div>
-    <div class="col-12 col-md-3 mb-3">
+    <div class="col-12 col-md-3 col-lg-3 mb-3">
       <div class="input-group">
         <select
           class="form-select"
@@ -59,7 +59,7 @@
           name="years"
           aria-label="Default select"
           formControlName="gender"
-          (change)="gender($event)"
+          (change)="filterByGender($event)"
         >
           <option value="">Select the Gender</option>
           <ng-container *ngFor="let gender of ['Male', 'Female']">

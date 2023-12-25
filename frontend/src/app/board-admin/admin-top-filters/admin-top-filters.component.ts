@@ -21,16 +21,21 @@ export class AdminTopFiltersComponent {
       gender: new FormControl("")
     });
   }
-  filterCompetitions(event: any) {
-    this.competitionsOut.emit();
+  filterByCompetitions(event: any) {
+    const competition: any = event.target.value;
+    this.competitionsOut.emit({ competition: competition });
   }
-  ageGroup(event: any) {
-    this.ageGroupOut.emit();
+  filterByAgeGroup(event: any) {
+    const ageGroup: any = event.target.value;
+    this.ageGroupOut.emit({ ageGroup: ageGroup });
   }
-  compYear(event: any) {
-    this.compYearOut.emit();
+  filterByYear(event: any) {
+    const year: any = event.target.value;
+    this.compYearOut.emit({ compYear: year });
   }
-  gender(event: any) {
-    this.genderOut.emit();
+  filterByGender(event: any) {
+    const gender: any = event.target.value;
+    // console.log(event);
+    this.genderOut.emit({ gender: gender });
   }
 }

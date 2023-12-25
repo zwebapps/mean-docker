@@ -8,7 +8,7 @@
               <img src="assets/images/dashboard/{{ blogcard.image }}" class="img-fluid" alt="Card image cap" />
             </div>
             <div class="col-12 col-lg-7" style="margin: auto">
-              <h2 class="card-title mt-2">{{ blogcard.title | titlecase }}</h2>
+              <h2 class="card-title mt-2">{{ getLabel(blogcard.title) | titlecase }}</h2>
               <p class="card-counter">
                 {{ blogcard.count }}
               </p>

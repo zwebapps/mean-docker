@@ -18,6 +18,7 @@ exports.getDashboardContents = async (req, resp, next) => {
     let leagues = [];
     let players = [];
     let teams = [];
+    let data = {};
     // coach
     if (role === "coach") {
       academies = await Academy.findOne({
@@ -71,7 +72,7 @@ exports.getDashboardContents = async (req, resp, next) => {
         user_id: ObjectId(userId),
         shortcode: shortcode
       })
-        .populate(["coach"])
+        .populate(["coach", "competition"])
         .exec();
       competitions = await Competition.find({
         organiser: ObjectId(userId),
@@ -144,16 +145,27 @@ exports.getDashboardContents = async (req, resp, next) => {
         });
       }
     }
-    return resp.status(200).json({
-      success: true,
-      data: {
-        teams,
+    if (role === "referee") {
+      data = {
         players,
+        teams,
         academies: Array.isArray(academies) ? academies : [academies],
         competitions,
         fixtures,
         leagues
-      },
+      };
+    } else {
+      data = {
+        players,
+        teams,
+        academies: Array.isArray(academies) ? academies : [academies],
+        competitions
+      };
+    }
+
+    return resp.status(200).json({
+      success: true,
+      data: data,
       message: "Dashboard data fetched successfully"
     });
   } catch (error) {
