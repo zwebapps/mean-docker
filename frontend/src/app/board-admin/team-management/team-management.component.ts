@@ -32,6 +32,7 @@ export class TeamManagementComponent implements OnInit {
   public selectedCompetition: any = {};
   public compSettings: any = {};
   public apiURL = environment.apiURL;
+  public displayTeamForm: boolean = false;
   academyForm = new FormGroup({
     academyName: new FormControl(""),
     academyLogo: new FormControl(""),
@@ -169,6 +170,9 @@ export class TeamManagementComponent implements OnInit {
         }
       );
     }
+  }
+  displayClubForm() {
+    this.displayTeamForm = !this.displayTeamForm;
   }
   onEditPatch(academy: any) {
     this.editAcademy = true;

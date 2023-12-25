@@ -15,13 +15,14 @@
     </div>
   </div>
 </div>
-  <div class="container">
+<div class="container">
   <div class="row">
     <form
       class="form-inline team-form justify-content-center mt-4 mb-4 pt-4"
       [formGroup]="academyForm"
       (ngSubmit)="onSubmit()"
       enctype="multipart/form-data"
+      *ngIf="displayTeamForm"
     >
       <div class="row justify-content-start">
         <div class="form-group col-12 col-lg-4">
@@ -155,7 +156,7 @@
           <div class="col-4 col-lg-2 mb-3">
             <button class="btn btn-white"><i class="bi bi-filter pe-3"></i>Filters</button>
           </div>
-          <div class="col-8 col-lg-10 mb-3">
+          <div class="col-8 col-lg-10 mb-3" (click)="displayClubForm()">
             <button class="btn btn-gradient"><i class="bi bi-plus pe-3"></i>Add Club</button>
           </div>
         </div>
@@ -186,7 +187,7 @@
       (editAcademy)="onEditPatch($event)"
     ></app-academy-listing>
   </div>
-<!-- <div style ="position: absolute; bottom: 0;right:0; background-color: transparent;">
+  <!-- <div style ="position: absolute; bottom: 0;right:0; background-color: transparent;">
   <button class="btn btn-back" (click)="redirectTo()">Back</button>
 </div> -->
 </div>
