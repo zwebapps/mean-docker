@@ -1,12 +1,44 @@
-<div class="row d-flex pt-5" *ngIf="academies">
-  <!-- <ng-container *ngFor="let academy of academies">
-    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
-      <div class="league-lable btn">
-        <span class="league-text" (click)="redirectTo(academy._id)">
-          {{ academy.academyName }}
-        </span>
-      </div>
+<div class="container">
+  <div class="row" *ngIf="academies">
+    <div class="page-filter-bar">
+      <form class="form-inline ps-0 pe-0" method="post" enctype="multipart/form-data">
+        <div class="row">
+          <div class="col-12 col-lg-9 d-flex justify-content-start">
+            <div class="col-4 col-lg-2 mb-3">
+              <button class="btn btn-white"><i class="bi bi-filter pe-3"></i>Filters</button>
+            </div>
+            <div class="col-8 col-lg-10 mb-3">
+            </div>
+          </div>
+          <div class="col-12 col-lg-3">
+            <div class="col-12 mb-3">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="validationTooltipUsernamePrepend"><i class="bi bi-search"></i></span>
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="validationTooltipUsername"
+                  placeholder="Search"
+                  aria-describedby="validationTooltipUsernamePrepend"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
-  </ng-container> -->
-  <app-admin-squad-listing [academiesData]="academies" (squadManagement)="redirectTo($event)"></app-admin-squad-listing>
+    <!-- <ng-container *ngFor="let academy of academies">
+      <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6">
+        <div class="league-lable btn">
+          <span class="league-text" (click)="redirectTo(academy._id)">
+            {{ academy.academyName }}
+          </span>
+        </div>
+      </div>
+    </ng-container> -->
+    <app-admin-squad-listing [academiesData]="academies" (squadManagement)="redirectTo($event)"></app-admin-squad-listing>
+  </div>  
 </div>
