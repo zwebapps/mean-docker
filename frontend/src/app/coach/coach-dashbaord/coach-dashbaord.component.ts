@@ -1,7 +1,6 @@
-import { Component, Input, OnChanges, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import * as PlayerSelectors from "../../_store/selectors/players.selectors";
-import * as TeamSelectors from "../../_store/selectors/teams.selectors";
 import { ActivatedRoute } from "@angular/router";
 import { StorageService } from "src/app/_services/storage.service";
 import { AcademyService } from "src/app/_services/academy.service";
