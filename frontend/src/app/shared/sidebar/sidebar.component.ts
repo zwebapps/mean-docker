@@ -72,7 +72,6 @@ export class SidebarComponent implements OnInit, OnChanges, AfterViewInit {
       } else {
         this.sidebarnavItems = userRoutes["routes"];
       }
-      debugger;
       this.sidebarnavItems = this.sidebarnavItems.map((item: any) => {
         return {
           ...item,
