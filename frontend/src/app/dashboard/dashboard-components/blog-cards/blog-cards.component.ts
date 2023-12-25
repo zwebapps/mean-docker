@@ -1,8 +1,33 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { StorageService } from "src/app/_services/storage.service";
-// import { DashboardService } from "src/app/_services/dashbaord.service";
-// import { NotifierService } from "angular-notifier";
 import { environment } from "src/environments/environment";
+
+const dashboardLabels: any = [
+  {
+    key: "teams",
+    label: "Teams"
+  },
+  {
+    key: "players",
+    label: "Total Players"
+  },
+  {
+    key: "academies",
+    label: "Academies"
+  },
+  {
+    key: "competitions",
+    label: "Competitions"
+  },
+  {
+    key: "fixtures",
+    label: "Fixtures"
+  },
+  {
+    key: "leagues",
+    label: "Leagues"
+  }
+];
 
 @Component({
   selector: "app-blog-cards",
@@ -21,4 +46,7 @@ export class BlogCardsComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+  getLabel(key: any) {
+    return dashboardLabels.find((dlabel: any) => dlabel.key === key)?.label;
+  }
 }

@@ -17,7 +17,7 @@ export const ROUTES: RouteUser[] = [
       },
       {
         path: "/superadmin/competitions",
-        title: "Competions",
+        title: "Competition Manager",
         icon: "bi bi-speedometer2",
         image: "assets/images/bashboard.png",
         active: "assets/images/bashbaord.png",
@@ -85,7 +85,7 @@ export const ROUTES: RouteUser[] = [
       },
       {
         path: "/admin/competitions",
-        title: "Competitions",
+        title: "Competition Manager",
         icon: "bi bi-speedometer2",
         image: "assets/images/bashboard.png",
         active: "assets/images/bashbaord.png",
@@ -95,19 +95,8 @@ export const ROUTES: RouteUser[] = [
         display: true
       },
       {
-        path: "/admin/users",
-        title: "Users Management",
-        icon: "bi bi-speedometer2",
-        image: "assets/images/squads.png",
-        active: "assets/images/squads.png",
-        class: "",
-        extralink: false,
-        submenu: [],
-        display: false
-      },
-      {
         path: "/admin/leagues",
-        title: "League/ Cup Management",
+        title: "League Management",
         icon: "bi bi-speedometer2",
         image: "assets/images/leagues.png",
         active: "assets/images/leagues.png",
@@ -139,8 +128,19 @@ export const ROUTES: RouteUser[] = [
         display: false
       },
       {
+        path: "/admin/users",
+        title: "Users Management",
+        icon: "bi bi-speedometer2",
+        image: "assets/images/squads.png",
+        active: "assets/images/squads.png",
+        class: "",
+        extralink: false,
+        submenu: [],
+        display: false
+      },
+      {
         path: "/admin/players",
-        title: "Players Management",
+        title: "All Players",
         icon: "bi bi-speedometer2",
         image: "assets/images/teams.png",
         active: "assets/images/teams.png",

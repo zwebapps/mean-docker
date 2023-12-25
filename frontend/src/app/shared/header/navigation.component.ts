@@ -6,7 +6,6 @@ import { AuthService } from "src/app/_services/auth.service";
 import { StorageService } from "src/app/_services/storage.service";
 import { UserService } from "src/app/_services/user.service";
 import { PLATFORM_ID } from "@angular/core";
-import { isPlatformBrowser } from "@angular/common";
 
 declare var $: any;
 
