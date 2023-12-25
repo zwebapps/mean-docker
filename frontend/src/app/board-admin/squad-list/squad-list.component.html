@@ -15,9 +15,9 @@
     </div>
   </div>
 </div>
-<div class="container">
+<div class="container pt-5">
 <div class="row">
-  <form class="p-3">
+  <form>
     <ng-container *ngFor="let coach of coaches">
       <div class="row">
         <div class="form-group col-12 col-lg-3 mb-3">
@@ -36,6 +36,7 @@
     </ng-container>
   </form>
 </div>
+<div class="page-filter-bar">
 <div class="row">
   <div class="col-12 col-lg-6">
     <div class="row page-title-bar">
@@ -74,6 +75,7 @@
       </form>
     </div>
   </div>
+</div>
 </div>
 <div class="row" *ngIf="showPlayerEditForm">
   <div class="col-12">
