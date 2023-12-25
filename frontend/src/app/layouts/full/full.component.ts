@@ -60,6 +60,9 @@ export class FullComponent implements OnInit, AfterViewInit {
   }
   ngAfterViewInit() {
     this.adminCompetition = this.storageService.getCompetition();
+    // if (typeof window !== "undefined") {
+    //   window.location.reload();
+    // }
     setTimeout(() => {
       this.expandLogo = false;
     });
