@@ -1,5 +1,10 @@
 <div class="container">
-  <app-admin-top-filters [dashboardContents]="dashboardContents"></app-admin-top-filters>
+  <app-admin-top-filters
+    (competitionsOut)="handleFilterByCompetitions($event)"
+    (ageGroupOut)="handleFilterByAgeGroup($event)"
+    (compYearOut)="handleFilterByYear($event)"
+    (genderOut)="handleFilterByGender($event)"
+  ></app-admin-top-filters>
   <app-blog-cards [dashboardContents]="dashboardContents" [blogcards]="blogcards"></app-blog-cards>
 </div>
 
