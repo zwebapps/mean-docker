@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { NotifierService } from "angular-notifier";
 import { DashboardService } from "../../_services/dashbaord.service";
@@ -22,13 +22,14 @@ import * as LeagueActions from "./../../_store/actions/leagues.actions";
 import * as FixureActions from "./../../_store/actions/fixures.actions";
 import * as AcademyActions from "./../../_store/actions/academies.actions";
 import * as NotificationActions from "./../../_store/actions/notification.actions";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "app-admin-competition",
   templateUrl: "./admin-competition.component.html",
   styleUrls: ["./admin-competition.component.scss"]
 })
-export class AdminCompetitionComponent {
+export class AdminCompetitionComponent implements OnInit, OnDestroy {
   countries: any = [];
   public blogcards: any = [];
   public dashboardContents: any = {};
@@ -54,7 +55,9 @@ export class AdminCompetitionComponent {
     private storageService: StorageService,
     private competitionService: CompetitionService,
     private modalService: NgbModal,
-    private playerService: PlayerService
+    private playerService: PlayerService,
+    private router: Router,
+    private activeRoute: ActivatedRoute
   ) {
     this.notifier = notifier;
     this.topcards = topcards;
@@ -94,9 +97,8 @@ export class AdminCompetitionComponent {
       this.selectedCompetition = event;
       this.storageService.setCompetition(this.selectedCompetition);
     }
-    if (typeof window !== "undefined") {
-      window.location.reload();
-    }
+    const user = this.storageService.getUser();
+    this.router.navigate([`${user.shortcode}/admin/leagues`]);
     this.getStoreData();
   }
 
@@ -238,5 +240,10 @@ export class AdminCompetitionComponent {
     this.store.dispatch(PlayerActions.loadPlayers());
     this.store.dispatch(NotificationActions.loadNotifications());
     this.store.dispatch(CompetitionActions.loadCompetitions());
+  }
+  ngOnDestroy() {
+    if (typeof window !== "undefined") {
+      window.location.reload();
+    }
   }
 }

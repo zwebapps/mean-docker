@@ -13,7 +13,7 @@ import { StorageService } from "src/app/_services/storage.service";
   imports: [RouterModule, CommonModule, NgIf],
   templateUrl: "./sidebar.component.html"
 })
-export class SidebarComponent implements OnInit, OnChanges {
+export class SidebarComponent implements OnInit, OnChanges, AfterViewInit {
   showMenu = "";
   showSubMenu = "";
   @Input() userRole: string = "ROLE_USER";
@@ -39,6 +39,11 @@ export class SidebarComponent implements OnInit, OnChanges {
       };
     });
     this.toggleSideMenue.emit();
+  }
+  ngAfterViewInit() {
+    if (this.storageService.getCompetition()) {
+      this.displayCoachMenu = true;
+    }
   }
   ngOnChanges() {
     console.log(this.selectedCompetition);
@@ -67,7 +72,12 @@ export class SidebarComponent implements OnInit, OnChanges {
       } else {
         this.sidebarnavItems = userRoutes["routes"];
       }
-      userRoutes["routes"].forEach((item: any) => (this.router.url.includes(item.path) ? (item.class = "active") : (item.class = "")));
+      this.sidebarnavItems = this.sidebarnavItems.map((item: any) => {
+        return {
+          ...item,
+          class: this.router.url.includes(item.path) ? (item.class = "active") : (item.class = "")
+        };
+      });
     }
   }
 }
