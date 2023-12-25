@@ -6,6 +6,7 @@ import { blogcard } from "src/app/dashboard/dashboard-components/blog-cards/blog
 import { topcard, topcards } from "src/app/dashboard/dashboard-components/top-cards/top-cards-data";
 import * as UserSelectors from "../../_store/selectors/users.selectors";
 import * as TeamSelectors from "../../_store/selectors/teams.selectors";
+import * as moment from "moment";
 
 @Component({
   selector: "app-super-admin-dashboard",
@@ -54,20 +55,48 @@ export class SuperAdminDashboardComponent implements OnInit {
         this.notifier.notify("error", "Try again later");
       };
   }
+  getAge(dob: string) {
+    const startDate: any = new Date();
+    const endDate: any = new Date(dob);
+    return Math.abs(moment.duration(endDate - startDate).years());
+  }
   mapDashboardContents() {
-    debugger;
-    console.log(this.filterByOptions);
-    this.dashboardContents["academies"] = this.dashboardContents["academies"].filter(
-      (item: any) => (this.filterByOptions.competition ? item.competition === this.filterByOptions.competition : true)
+    this.blogcards = [];
+    if (this.filterByOptions.competition) {
+      this.dashboardContents["academies"] = this.dashboardContents["academies"].filter((item: any) =>
+        this.filterByOptions.competition ? item.competition === this.filterByOptions.competition : true
+      );
+      this.dashboardContents["players"] = this.dashboardContents["players"].filter((item: any) =>
+        this.filterByOptions.competition ? item.competition && item.competition._id === this.filterByOptions.competition : true
+      );
 
-      //  else if (this.filterByOptions.ageGroup) {
-      //   return item.ageGroup === this.filterByOptions.ageGroup;
-      // } else if (this.filterByOptions.compYear) {
-      //   return item.compYear === this.filterByOptions.compYear;
-      // } else if (this.filterByOptions.gender) {
-      //   return item.gender === this.filterByOptions.gender;
-      // }
-    );
+      this.dashboardContents["competitions"] = this.dashboardContents["competitions"].filter((item: any) =>
+        this.filterByOptions.competition ? item._id === this.filterByOptions.competition : true
+      );
+
+      this.dashboardContents["teams"] = this.dashboardContents["teams"].filter((item: any) =>
+        this.filterByOptions.competition ? item.competition === this.filterByOptions.competition : true
+      );
+    }
+
+    if (this.filterByOptions.gender) {
+      this.dashboardContents["players"] = this.dashboardContents["players"].filter((item: any) =>
+        this.filterByOptions.gender ? item.gender && item.gender === this.filterByOptions.gender : true
+      );
+    }
+
+    if (this.filterByOptions.compYear) {
+      this.dashboardContents["competitions"] = this.dashboardContents["competitions"].filter((item: any) =>
+        this.filterByOptions.compYear ? item.competitionYear && item.competitionYear === this.filterByOptions.compYear : true
+      );
+    }
+
+    if (this.filterByOptions.ageGroup) {
+      this.dashboardContents["players"] = this.dashboardContents["players"].filter((item: any) =>
+        this.filterByOptions.ageGroup ? item.dob && this.getAge(item.dob) == this.filterByOptions.ageGroup : true
+      );
+    }
+
     if (Object.keys(this.dashboardContents).length > 0) {
       Object.keys(this.dashboardContents).forEach((key) => {
         this.blogcards.push({

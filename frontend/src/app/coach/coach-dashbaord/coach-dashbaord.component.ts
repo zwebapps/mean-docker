@@ -1,13 +1,13 @@
-import { Component, Input, OnChanges, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 import * as PlayerSelectors from "../../_store/selectors/players.selectors";
-import * as TeamSelectors from "../../_store/selectors/teams.selectors";
 import { ActivatedRoute } from "@angular/router";
 import { StorageService } from "src/app/_services/storage.service";
 import { AcademyService } from "src/app/_services/academy.service";
 import { TeamService } from "src/app/_services/team.service";
 import { environment } from "src/environments/environment";
 import { NotifierService } from "angular-notifier";
+import * as moment from "moment";
 
 import {
   ApexAxisChartSeries,
@@ -52,6 +52,12 @@ export class CoachDashbaordComponent implements OnInit {
   loggedInCoach: any;
   academy: any;
   apiURL = environment.apiURL;
+  public filterByOptions: any = {
+    competition: null,
+    ageGroup: null,
+    compYear: null,
+    gender: null
+  };
   constructor(
     private dashboardService: DashboardService,
     notifier: NotifierService,
@@ -111,7 +117,47 @@ export class CoachDashbaordComponent implements OnInit {
       }
     });
   }
+  getAge(dob: string) {
+    const startDate: any = new Date();
+    const endDate: any = new Date(dob);
+    return Math.abs(moment.duration(endDate - startDate).years());
+  }
   mapDashboardContents() {
+    this.blogcards = [];
+    if (this.filterByOptions.competition) {
+      this.dashboardContents["academies"] = this.dashboardContents["academies"].filter((item: any) =>
+        this.filterByOptions.competition ? item.competition === this.filterByOptions.competition : true
+      );
+      this.dashboardContents["players"] = this.dashboardContents["players"].filter((item: any) =>
+        this.filterByOptions.competition ? item.competition && item.competition._id === this.filterByOptions.competition : true
+      );
+
+      this.dashboardContents["competitions"] = this.dashboardContents["competitions"].filter((item: any) =>
+        this.filterByOptions.competition ? item._id === this.filterByOptions.competition : true
+      );
+
+      this.dashboardContents["teams"] = this.dashboardContents["teams"].filter((item: any) =>
+        this.filterByOptions.competition ? item.competition === this.filterByOptions.competition : true
+      );
+    }
+
+    if (this.filterByOptions.gender) {
+      this.dashboardContents["players"] = this.dashboardContents["players"].filter((item: any) =>
+        this.filterByOptions.gender ? item.gender && item.gender === this.filterByOptions.gender : true
+      );
+    }
+
+    if (this.filterByOptions.compYear) {
+      this.dashboardContents["competitions"] = this.dashboardContents["competitions"].filter((item: any) =>
+        this.filterByOptions.compYear ? item.competitionYear && item.competitionYear === this.filterByOptions.compYear : true
+      );
+    }
+
+    if (this.filterByOptions.ageGroup) {
+      this.dashboardContents["players"] = this.dashboardContents["players"].filter((item: any) =>
+        this.filterByOptions.ageGroup ? item.dob && this.getAge(item.dob) == this.filterByOptions.ageGroup : true
+      );
+    }
     if (Object.keys(this.dashboardContents).length > 0) {
       Object.keys(this.dashboardContents).forEach((key) => {
         this.blogcards.push({
@@ -123,5 +169,33 @@ export class CoachDashbaordComponent implements OnInit {
         });
       });
     }
+  }
+  handleFilterByCompetitions(event: any) {
+    this.filterByOptions = {
+      ...this.filterByOptions,
+      ...event
+    };
+    this.getDashboardContents();
+  }
+  handleFilterByAgeGroup(event: any) {
+    this.filterByOptions = {
+      ...this.filterByOptions,
+      ...event
+    };
+    this.getDashboardContents();
+  }
+  handleFilterByYear(event: any) {
+    this.filterByOptions = {
+      ...this.filterByOptions,
+      ...event
+    };
+    this.getDashboardContents();
+  }
+  handleFilterByGender(event: any) {
+    this.filterByOptions = {
+      ...this.filterByOptions,
+      ...event
+    };
+    this.getDashboardContents();
   }
 }

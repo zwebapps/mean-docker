@@ -105,7 +105,7 @@ exports.getDashboardContents = async (req, resp, next) => {
         user_id: ObjectId(userId),
         shortcode: shortcode
       })
-        .populate(["academy_id", "leagues", "user_id"])
+        .populate(["academy_id", "leagues", "user_id", "competition"])
         .exec();
       if (teams) {
         teams = JSON.parse(JSON.stringify(teams));

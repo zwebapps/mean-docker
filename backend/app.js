@@ -173,6 +173,10 @@ function initial() {
           password: bcrypt.hashSync("yfl2023", 8),
           email: "admin@yfl.com",
           roles: [ObjectId("6567914b7d2b0a879a8840cc")],
+          competition: [
+            ObjectId("65725988ee29b16ea6885a6b"),
+            ObjectId("6578bc1ef8716dd1219302e1")
+          ],
           createdBy: ObjectId("6567914b7d2b0a879a8840cc")
         }).save((err) => {
           if (err) {
@@ -198,6 +202,10 @@ function initial() {
           password: bcrypt.hashSync("yfl2023", 8),
           email: "admin@yfl.com",
           roles: [ObjectId("5895b74ca84c675de0d3338d")],
+          competition: [
+            ObjectId("65725988ee29b16ea6885a6b"),
+            ObjectId("6578bc1ef8716dd1219302e1")
+          ],
           createdBy: ObjectId("65847ca364f90bb9aacd7a49")
         }).save((err) => {
           if (err) {
