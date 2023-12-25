@@ -18,13 +18,13 @@
   <div class="container">
   <div class="row">
     <form
-      class="form-inline justify-content-center mt-4 mb-4"
+      class="form-inline team-form justify-content-center mt-4 mb-4 pt-4"
       [formGroup]="academyForm"
       (ngSubmit)="onSubmit()"
       enctype="multipart/form-data"
     >
       <div class="row justify-content-start">
-        <div class="form-group col-12 col-lg-4 mb-2">
+        <div class="form-group col-12 col-lg-4">
           <label for="name" class="control-label">Club Name</label>
           <input
             type="text"
@@ -34,7 +34,7 @@
             formControlName="academyName"
           />
         </div>
-        <div class="form-group col-12 col-lg-4 mb-2">
+        <div class="form-group col-12 col-lg-4">
           <label for="name" class="control-label">Club Badge</label>
           <input
             type="file"
@@ -46,7 +46,7 @@
             formControlName="academyLogo"
           />
         </div>
-        <div class="form-group col-12 col-lg-4 mb-2">
+        <div class="form-group col-12 col-lg-4">
           <label for="name" class="control-label">Banner Color</label>
           <input
             type="color"
@@ -56,29 +56,29 @@
             formControlName="academyColor"
           />
         </div>
-        <div class="form-group col-12 col-lg-4 mb-2">
+        <div class="form-group col-12 col-lg-4">
           <label for="coachName" class="control-label">Coach Name</label>
           <input type="text" class="form-control" placeholder="Coach Name" aria-label="coachName" formControlName="coachName" />
         </div>
-        <div class="form-group col-12 col-lg-4 mb-2">
+        <div class="form-group col-12 col-lg-4">
           <label for="userName" class="control-label">User Name</label>
           <input type="text" class="form-control" placeholder="User Name" aria-label="userName" formControlName="userName" />
         </div>
-        <div class="form-group col-12 col-lg-4 mb-2">
+        <div class="form-group col-12 col-lg-4">
           <label for="password" class="control-label">Password</label>
           <input type="password" class="form-control" placeholder="Password" aria-label="password" formControlName="password" />
         </div>
-        <div class="form-group col-12 col-lg-4 mb-2">
+        <div class="form-group col-12 col-lg-4">
           <label for="email" class="control-label">Email Address</label>
           <input type="email" class="form-control" placeholder="email" aria-label="email" formControlName="emailAddress" />
         </div>
-        <div class="form-group col-12 col-lg-4 mb-2">
+        <div class="form-group col-12 col-lg-4">
           <label for="mobileNumber" class="control-label">Mobile Number</label>
           <input type="email" class="form-control" placeholder="mobileNumber" aria-label="mobileNumber" formControlName="mobileNumber" />
         </div>
       </div>
       <div class="form-group col-12 col-lg-12 mb-2 text-center mt-2 p-4">
-        <button type="submit" class="btn btn-gradient col-lg-4 ms-1">Submit</button>
+        <button type="submit" class="btn btn-gradient col-lg-2 ms-1">Submit</button>
       </div>
     </form>
   </div>
@@ -130,9 +130,6 @@
     </div>
   </div> -->
   <div class="row mb-5">
-    <div>
-      <hr />
-    </div>
     <!-- <div>
     <div class="container">
       <div class="row" *ngIf="academies">

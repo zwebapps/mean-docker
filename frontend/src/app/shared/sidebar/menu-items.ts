@@ -107,7 +107,7 @@ export const ROUTES: RouteUser[] = [
       },
       {
         path: "/admin/academies",
-        title: "Club & Team Management",
+        title: "Club Management",
         icon: "bi bi-speedometer2",
         image: "assets/images/teams.png",
         active: "assets/images/teams.png",
@@ -129,7 +129,7 @@ export const ROUTES: RouteUser[] = [
       },
       {
         path: "/admin/users",
-        title: "Users Management",
+        title: "User Management",
         icon: "bi bi-speedometer2",
         image: "assets/images/squads.png",
         active: "assets/images/squads.png",
@@ -258,7 +258,7 @@ export const ROUTES: RouteUser[] = [
       },
       {
         path: "/referee/mangegames",
-        title: "Games Management",
+        title: "Game Management",
         icon: "bi bi-pause-btn",
         image: "assets/images/squads.png",
         active: "assets/images/squads.png",

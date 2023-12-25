@@ -34,7 +34,7 @@
           </div>
           <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
             <label for="name" class="control-label">Name</label>
-            <div class="input-group">
+            <div class="input-group competition-input-group">
               <input
                 type="text"
                 class="form-control"
@@ -185,14 +185,14 @@
     </div>
   </ng-template>
   <div class="row justify-content-center" *ngIf="dashboardContents['competitions']">
-    <div class="col-12 col-md-6 col-lg-4 m-2 p-2" *ngFor="let blogcard of dashboardContents['competitions']">
+    <div class="col-12 col-md-6 col-lg-4 m-4 mb-2 ps-0 pe-0" *ngFor="let blogcard of dashboardContents['competitions']">
       <div class="d-flex">
       <div class="card flex-fill" [ngClass]="{ 'selected': selectedCompetition && selectedCompetition._id === blogcard._id }">
         <div class="editBtn">
           <i class="bi bi-pencil-square" (click)="open(content, blogcard)"></i>
         </div>
-        <div class="row text-center" (click)="setCompetition(blogcard)">
-          <div class="col-4 img-square-wrapper">
+        <div class="row pe-0 ps-0" (click)="setCompetition(blogcard)">
+          <div class="col-4 img-square-wrapper text-center">
             <img src="{{ apiURL }}/static/{{ blogcard.competitionLogo }}" class="img-fluid" width="100" height="100" *ngIf="blogcard.competitionLogo" />
             <img src="assets/images/dashboard/teams.svg" class="img-fluid" alt="Card image cap" *ngIf="!blogcard.competitionLogo" />
           </div>

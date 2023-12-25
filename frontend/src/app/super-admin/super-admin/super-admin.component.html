@@ -1,11 +1,11 @@
 <notifier-container></notifier-container>
 <div class="container" *ngIf="displayCompetitions">
-  <div class="form-wrapper">
+  <div class="page-filter-bar">
     <form class="form-inline mt-5 ps-0 pe-0" method="post" enctype="multipart/form-data">
       <div class="row">
         <div class="col-12 col-lg-9 d-flex justify-content-start">
           <div class="col-4 col-lg-2 mb-3">
-            <button class="btn btn-white pe-2"><i class="bi bi-filter pe-3"></i>Filters</button>
+            <button class="btn btn-white"><i class="bi bi-filter pe-3"></i>Filters</button>
           </div>
           <div class="col-8 col-lg-10 mb-3">
             <button class="btn btn-gradient" (click)="addCompFormToggle()"><i class="bi bi-plus pe-3"></i>Add Competition</button>
@@ -42,12 +42,12 @@
   ></app-competition>
 </div>
 
-<div class="container p-5" *ngIf="displayAddCompetition">
+<div class="container" *ngIf="displayAddCompetition">
   <div class="modal-body">
-    <form class="form-inline" method="post" enctype="multipart/form-data" [formGroup]="competitionForm" (ngSubmit)="onSubmit()">
+    <form class="form-inline form-wrapped super-admin-form" method="post" enctype="multipart/form-data" [formGroup]="competitionForm" (ngSubmit)="onSubmit()">
       <div class="row">
         <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
-          <label for="name" class="control-label">First name</label>
+          <label for="name" class="control-label">First Name</label>
           <!-- [(ngModel)]="patchedValues.organiserFirstName" -->
           <input
             type="text"
@@ -65,12 +65,12 @@
           </div>
         </div>
         <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
-          <label for="name" class="control-label">Last name</label>
+          <label for="name" class="control-label">Surname</label>
           <input
             type="text"
             [value]=""
             class="form-control"
-            placeholder="Last name"
+            placeholder="Surname"
             [(ngModel)]="patchedValues.organiserLastName"
             formControlName="organiserLastName"
             class="form-control"
@@ -78,7 +78,7 @@
           />
           <div *ngIf="submitted && f['organiserLastName'].errors" class="invalid-feedback">
             <div *ngIf="f['organiserLastName'].errors['required']">
-              <small>Last name is required</small>
+              <small>Surname is required</small>
             </div>
           </div>
         </div>
@@ -217,7 +217,7 @@
               <div class="row justify-content-end align-items-end">
                 <div class="form-group col-xs-12 col-md-9 col-lg-9">
                   <label for="name" class="control-label">Competition</label>
-                  <div class="input-group">
+                  <div class="input-group competition-input-group">
                     <!-- [(ngModel)]="patchedValues.competitions && patchedValues.competitions[compIndex].competitionName" -->
                     <input
                       type="text"

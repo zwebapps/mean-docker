@@ -39,6 +39,20 @@
   border: 1px solid #D0D5DD;
   background: #FFF;
   box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  position: relative;
+  padding-right: 20px;
+}
+
+.form-select::after {
+  content: '';
+  position: absolute;
+  top: calc(50% - 3px); /* Adjust this value to vertically center the arrow */
+  right: 12px; /* Adjust this value to position the arrow as desired */
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 6px 6px 0 6px; /* Adjust this value to control the size of the arrow */
+  border-color: #000 transparent transparent transparent; /* Adjust this value to control the color of the arrow */
 }
 
 .form-control {
@@ -46,6 +60,7 @@
   border-radius: 8px;
   border: 1px solid #D0D5DD;
   background: #FFF;
+  overflow: hidden;
   box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
 }
 
@@ -122,4 +137,44 @@
   border: 1px solid #D0D5DD;
   background: #FFF;
   box-shadow: 0px 1.22px 2.44px 0px rgba(16, 24, 40, 0.05);
+}
+
+.form-wrapped{
+  padding:5% 0;
+  max-width: 816px;
+  margin: 0 auto;
+}
+
+label{
+  margin-bottom: 5px;
+}
+
+.input-group-append input{
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.input-group-prepend input, .input-group-prepend span{
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.competition-input-group  > .form-control:first-child,
+.competition-input-group  > .form-select:first-child,
+.competition-input-group  > .form-floating:first-child {
+  flex: 70%;
+}
+
+.competition-input-group  > .input-group-append,
+.competition-input-group  > .input-group-append,
+.competition-input-group  > .input-group-append {
+  flex: 30%;
+}
+
+.super-admin-form > .row > *{
+  margin-bottom:30px;
+}
+
+.team-form > .row > *{
+  margin-bottom:30px;
 }
