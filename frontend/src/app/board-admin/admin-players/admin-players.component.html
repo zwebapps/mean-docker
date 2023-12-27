@@ -1,8 +1,7 @@
 <div class="container">
 <div class="page-filter-bar">
-<div class="row">
-  <form [formGroup]="filterLeague" class="d-flex align-items-end ps-0 pe-0" (submit)="activatePlayers()">
-    <div class="form-group col-12 col-lg-3 pe-3">
+  <form [formGroup]="filterLeague" class="row d-flex align-items-end" (submit)="activatePlayers()">
+    <div class="form-group col-12 col-lg-3 mb-md-1">
       <label for="name" class="control-label">League</label>
       <select class="form-select" name="league" formControlName="league" aria-label="Default select" (change)="filterAllPlayers()">
         <option value="0" selected>Select League</option>
@@ -13,7 +12,7 @@
         </ng-container>
       </select>
     </div>
-    <div class="form-group col-12 col-lg-3 pe-3">
+    <div class="form-group col-12 col-lg-3 mb-md-1">
       <label for="academy" class="control-label">Academy</label>
       <select class="form-select" name="academy" formControlName="academy" aria-label="Default select" (change)="filterAllPlayers()">
         <option value="0" selected>Select Academy</option>
@@ -24,7 +23,7 @@
         </ng-container>
       </select>
     </div>
-    <div class="form-group col-12 col-lg-2 pe-3">
+    <div class="form-group col-12 col-lg-2 mb-md-1">
       <label for="academy" class="control-label">Team</label>
       <select class="form-select" name="team" formControlName="team" aria-label="Default select" (change)="filterAllPlayers()">
         <option value="0" selected>Select Team</option>
@@ -35,14 +34,13 @@
         </ng-container>
       </select>
     </div>
-    <div class="form-group col-12 col-lg-2 pe-3">
+    <div class="form-group col-12 col-lg-2 mb-md-1">
       <button class="btn btn-gradient" type="submit">Activate Players</button>
     </div>
-    <div class="form-group col-12 col-lg-2 pe-3">
+    <div class="form-group col-12 col-lg-2 mb-md-1">
       <button class="btn btn-gradient" type="button" (click)="exportPlayers()">Export Players</button>
     </div>
   </form>
-</div>
 </div>
 <div class="row">
   <app-admin-squad-list

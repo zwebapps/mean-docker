@@ -261,7 +261,8 @@
     </form>
   </div>
 </div>
-<div class="row page-filter-bar">
+<div class="page-filter-bar">
+  <div class="row">
   <div class="col-12 col-lg-6 mb-md-1">
     <button class="btn btn-gradient" (click)="toggleForm()"><i class="bi bi-plus pe-3"></i>Add New User</button>
   </div>
@@ -292,8 +293,9 @@
       </ng-container>
     </select>
   </div>
+  </div>
 </div>
-<div class="row p-3">
+<div class="row">
   <app-admin-data-table [users]="data" (delUser)="deleteUser($event)" (editUser)="editUser($event)"></app-admin-data-table>
 </div>
 </div>
