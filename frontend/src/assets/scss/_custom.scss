@@ -174,7 +174,7 @@ label{
   flex: 30%;
 }
 
-.super-admin-form > .row > *{
+.super-admin-form, .user-form > .row > *{
   margin-bottom:30px;
 }
 
@@ -218,4 +218,10 @@ label{
   border-radius: 100%;
   color: #EF4444;
   line-height: 17px;
+}
+
+@media (max-width: 768px) {
+  .mb-md-1 {
+    margin-bottom: 1rem;
+  }
 }

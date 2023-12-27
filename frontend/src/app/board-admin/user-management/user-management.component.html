@@ -1,9 +1,9 @@
 <div class="container">
-<div class="row p-2" *ngIf="displayAddForm">
-  <div class="col-lg-12 col-sm-12 form-border">
-    <form [formGroup]="userForm" class="justify-content-around" method="post" enctype="multipart/form-data" (ngSubmit)="onAddFormSubmit()">
-      <div class="row d-flex justify-content-start m-1">
-        <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+<div class="row" *ngIf="displayAddForm">
+  <div class="col-lg-12 col-sm-12 mt-5">
+    <form [formGroup]="userForm" class="user-form justify-content-around" method="post" enctype="multipart/form-data" (ngSubmit)="onAddFormSubmit()">
+      <div class="row d-flex justify-content-start">
+        <div class="form-group col-xs-6 col-md-3 col-lg-3">
           <label for="name" class="control-label">User Name</label>
           <input
             type="text"
@@ -20,7 +20,7 @@
             </div>
           </div>
         </div>
-        <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+        <div class="form-group col-xs-6 col-md-3 col-lg-3">
           <label for="name" class="control-label">First Name</label>
           <input
             type="text"
@@ -37,7 +37,7 @@
             </div>
           </div>
         </div>
-        <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+        <div class="form-group col-xs-6 col-md-3 col-lg-3">
           <label for="name" class="control-label">Last Name</label>
           <input
             type="text"
@@ -54,7 +54,7 @@
             </div>
           </div>
         </div>
-        <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+        <div class="form-group col-xs-6 col-md-3 col-lg-3">
           <label for="name" class="control-label">Contact No</label>
           <input
             type="text"
@@ -71,7 +71,7 @@
             </div>
           </div>
         </div>
-        <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+        <div class="form-group col-xs-6 col-md-3 col-lg-3">
           <label for="name" class="control-label">Email</label>
           <input
             type="email"
@@ -89,11 +89,11 @@
             </div>
           </div>
         </div>
-        <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+        <div class="form-group col-xs-6 col-md-3 col-lg-3">
           <label for="password" class="control-label">Password</label>
           <input type="password" value="" class="form-control" placeholder="Password" formControlName="password" class="form-control" />
         </div>
-        <div class="form-group col-xs-6 col-md-3 col-lg-3 p-2">
+        <div class="form-group col-xs-6 col-md-3 col-lg-3">
           <label for="container" class="control-label">Roles</label>
           <select
             class="form-select"
@@ -109,7 +109,7 @@
             </ng-container>
           </select>
         </div>
-        <div class="form-group col-xs-6 col-md-3 col-lg-3 me-3" *ngIf="toggleAcademySelection">
+        <div class="form-group col-xs-6 col-md-3 col-lg-3" *ngIf="toggleAcademySelection">
           <label for="container" class="control-label">Academy</label>
           <select class="form-select" id="container" name="roles" aria-label="Default select" formControlName="academy">
             <option value="">Select Academy</option>
@@ -262,10 +262,10 @@
   </div>
 </div>
 <div class="row page-filter-bar">
-  <div class="col-4 col-lg-6">
+  <div class="col-12 col-lg-6 mb-md-1">
     <button class="btn btn-gradient" (click)="toggleForm()"><i class="bi bi-plus pe-3"></i>Add New User</button>
   </div>
-  <div class="col-4 col-lg-3">
+  <div class="col-12 col-lg-3 mb-md-1">
     <input
       type="text"
       class="form-control"
@@ -276,7 +276,7 @@
       [ngModelOptions]="{ standalone: true }"
     />
   </div>
-  <div class="col-4 col-lg-3">
+  <div class="col-12 col-lg-3">
     <select
       class="form-select"
       id="container"
