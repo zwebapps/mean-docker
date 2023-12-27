@@ -75,4 +75,16 @@ export class AdminFixtureResultsComponent {
       }
     });
   }
+
+  // Filters
+  filters: string[] = [];
+  addFilter(filter: string) {
+    if (!this.filters.includes(filter)) {
+      this.filters.push(filter);
+    }
+  }
+
+  removeFilter(filter: string) {
+    this.filters = this.filters.filter(f => f !== filter);
+  }
 }

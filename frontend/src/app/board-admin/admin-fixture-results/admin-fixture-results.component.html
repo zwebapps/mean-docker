@@ -1,8 +1,65 @@
+<script>
+  $(document).ready(function() {
+      $('.filter-option').click(function(e) {
+          e.preventDefault();
+          var filter = $(this).data('filter');
+          $('.filter-pills').append('<div class="pill">' + filter + '<span class="close-icon">&times;</span></div>');
+      });
+
+      $(document).on('click', '.close-icon', function() {
+          $(this).parent('.pill').remove();
+      });
+  });
+</script>
 <div class="container">
-  <app-admin-fixture-listing
+  <div class="row">
+    <div class="page-filter-bar">
+      <form class="form-inline mt-5 ps-0 pe-0" method="post" enctype="multipart/form-data">
+        <div class="row">
+          <div class="col-12 col-lg-9 d-flex justify-content-start">
+              <div class="dropdown">
+                <button class="btn btn-white btn-filter dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="bi bi-filter pe-3"></i>Filters
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" (click)="addFilter('Date')">Date</a>
+                  <a class="dropdown-item" (click)="addFilter('Team')">Team</a>
+                  <a class="dropdown-item" (click)="addFilter('League')">League</a>
+                  <a class="dropdown-item" (click)="addFilter('MVP')">MVP</a>
+                </div>
+              </div>
+              <div class="filter-pills">
+                <div class="btn btn-white" *ngFor="let filter of filters">
+                  {{ filter }}
+                  <span class="close-icon" (click)="removeFilter(filter)">&times;</span>
+                </div>
+              </div>
+          </div>
+          <div class="col-12 col-lg-3">
+            <div class="col-12 mb-3">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="validationTooltipUsernamePrepend"><i class="bi bi-search"></i></span>
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="validationTooltipUsername"
+                  placeholder="Search"
+                  aria-describedby="validationTooltipUsernamePrepend"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <app-admin-fixture-listing
     [fixtures]="fixtures"
     (fixtureDetail)="getFixtureDetails($event)"
     (delFixture)="deleteFixture($event)"
     (editFixture)="updateFixture($event)"
   ></app-admin-fixture-listing>
+  </div>
 </div>
