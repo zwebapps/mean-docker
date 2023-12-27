@@ -64,7 +64,7 @@
 
 .ngx-datatable.material .datatable-header .datatable-header-cell{
   background:#F9FAFB;
-  }
+}
 
 .ngx-datatable.fixed-header .datatable-header .datatable-header-inner .datatable-header-cell .datatable-header-cell-label {
   color: #667085;
@@ -109,6 +109,11 @@
   border: 1px solid #D0D5DD !important;
   background: #FFF;
   box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+}
+
+.btn{
+  border-radius: 8px;
+  font-family: 'Anton', sans-serif;
 }
 
 .btn-filter::after{
@@ -182,6 +187,7 @@ label{
   flex-wrap: wrap;
   gap: 10px;
   margin-left: 10px;
+  margin-right: 10px;
   color: #344054;
   font-family: 'Anton', sans-serif;
   font-size: 16px;

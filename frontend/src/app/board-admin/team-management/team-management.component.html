@@ -150,15 +150,24 @@
   </div> -->
   </div>
   <div class="page-filter-bar">
-    <form class="form-inline mt-5 ps-0 pe-0" method="post" enctype="multipart/form-data">
+    <form class="form-inline ps-0 pe-0" method="post" enctype="multipart/form-data">
       <div class="row">
         <div class="col-12 col-lg-9 d-flex justify-content-start">
-          <div class="col-4 col-lg-2 mb-3">
-            <button class="btn btn-white"><i class="bi bi-filter pe-3"></i>Filters</button>
+          <div class="dropdown">
+            <button class="btn btn-white btn-filter dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="bi bi-filter pe-3"></i>Filters
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" (click)="addFilter('Club')">Club</a>
+            </div>
           </div>
-          <div class="col-8 col-lg-10 mb-3" (click)="displayClubForm()">
-            <button class="btn btn-gradient"><i class="bi bi-plus pe-3"></i>Add Club</button>
+          <div class="filter-pills">
+            <div class="btn btn-white" *ngFor="let filter of filters">
+              {{ filter }}
+              <span class="close-icon" (click)="removeFilter(filter)">&times;</span>
+            </div>
           </div>
+          <button class="btn btn-gradient" (click)="displayClubForm()"><i class="bi bi-plus pe-3"></i>Add Club</button>
         </div>
         <div class="col-12 col-lg-3">
           <div class="col-12 mb-3">

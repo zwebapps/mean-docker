@@ -231,4 +231,16 @@ export class TeamManagementComponent implements OnInit {
       this.compSettings = JSON.parse(this.selectedCompetition?.competitionSettings);
     }
   }
+
+  // Filters
+  filters: string[] = [];
+  addFilter(filter: string) {
+    if (!this.filters.includes(filter)) {
+      this.filters.push(filter);
+    }
+  }
+
+  removeFilter(filter: string) {
+    this.filters = this.filters.filter(f => f !== filter);
+  }
 }
