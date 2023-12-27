@@ -111,6 +111,16 @@
   box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
 }
 
+.btn-filter::after{
+  display: none;
+}
+
+.btn-filter{
+  color: #344054;
+  font-family: 'Anton', sans-serif;
+  font-size: 16px;
+}
+
 .btn-gradient, .btn-back{
   color:#fff;
   border: 1px solid #7280FF;
@@ -172,13 +182,13 @@ label{
   flex-wrap: wrap;
   gap: 10px;
   margin-left: 10px;
-  color: var(--Gray-700, #344054);
+  color: #344054;
   font-family: 'Anton', sans-serif;
   font-size: 16px;
 }
 
 .filter-pills .btn {
-  color: var(--Gray-700, #344054);
+  color: #344054;
   font-family: 'Anton', sans-serif;
   font-size: 16px;
   border-radius: 4px;
@@ -186,7 +196,6 @@ label{
   background: #FFF;
   box-shadow: 0px 1.22px 2.44px 0px rgba(16, 24, 40, 0.05);
   display: inline-flex;
-  padding:10px 15px;
   position: relative;
   height:38px;
 }
