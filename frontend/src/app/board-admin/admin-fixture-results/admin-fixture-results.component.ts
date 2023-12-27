@@ -1,22 +1,19 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
 import { Store } from "@ngrx/store";
 import { ColumnMode } from "@swimlane/ngx-datatable";
+import { NotifierService } from "angular-notifier";
+import { FixtureService } from "src/app/_services/fixture.service";
+import { StorageService } from "src/app/_services/storage.service";
 import { UserService } from "src/app/_services/user.service";
-import * as UserActions from "../../_store/actions/users.actions";
-import * as PlayerSelectors from "../../_store/selectors/players.selectors";
 import * as FixtureSelectors from "../../_store/selectors/fixures.selectors";
 import * as FixureActions from "../../_store/actions/fixures.actions";
-import { FixtureService } from "src/app/_services/fixture.service";
-import { NotifierService } from "angular-notifier";
-import * as moment from "moment";
-import { StorageService } from "src/app/_services/storage.service";
 
 @Component({
-  selector: "app-game-management",
-  templateUrl: "./game-management.component.html",
-  styleUrls: ["./game-management.component.scss"]
+  selector: "app-admin-fixture-results",
+  templateUrl: "./admin-fixture-results.component.html",
+  styleUrls: ["./admin-fixture-results.component.scss"]
 })
-export class GameManagementComponent implements OnInit {
+export class AdminFixtureResultsComponent {
   private notifier: NotifierService;
   @ViewChild("myTable") table: any;
   options = {};
@@ -28,10 +25,10 @@ export class GameManagementComponent implements OnInit {
   homeTeamSquad: any = [];
   awayTeamSquad: any = [];
   refereeDetails: any = {};
+  public admin: any = {};
   constructor(
     private store: Store,
     notifier: NotifierService,
-    private userService: UserService,
     private fixtureService: FixtureService,
     private storageService: StorageService
   ) {
@@ -40,11 +37,11 @@ export class GameManagementComponent implements OnInit {
   }
   ngOnInit(): void {
     // get ref details
-    this.refereeDetails = this.storageService.getUser();
+    this.admin = this.storageService.getUser();
     // now get the leagues and map
     this.store.select(FixtureSelectors.getFixtures).subscribe((fixtures) => {
       if (fixtures) {
-        this.fixtures = fixtures.filter((fix: any) => fix?.user_id?._id === this.refereeDetails.id);
+        this.fixtures = fixtures.filter((fix: any) => fix?.shortcode === this.admin.shortcode);
       }
     });
   }
@@ -54,18 +51,6 @@ export class GameManagementComponent implements OnInit {
 
   getFixtureDetails(event: any) {
     console.log(event);
-  }
-
-  edit(value: any) {
-    this.userService.deleteUser(value).subscribe(
-      (result: any) => {
-        console.log(result);
-        this.store.dispatch(UserActions.loadUsers());
-      },
-      (error) => {
-        this.notifier.notify("error", "Please try again!");
-      }
-    );
   }
 
   deleteFixture(value: any) {

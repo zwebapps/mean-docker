@@ -1,0 +1,8 @@
+<div class="container">
+  <app-admin-fixture-listing
+    [fixtures]="fixtures"
+    (fixtureDetail)="getFixtureDetails($event)"
+    (delFixture)="deleteFixture($event)"
+    (editFixture)="updateFixture($event)"
+  ></app-admin-fixture-listing>
+</div>

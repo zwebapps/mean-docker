@@ -31,6 +31,8 @@ import { NgApexchartsModule } from "ng-apexcharts";
 import { LeagueListingComponent } from "./league-listing/league-listing.component";
 import { AdminTeamListingComponent } from "./admin-team-listing/admin-team-listing.component";
 import { AdminSquadListingComponent } from "./admin-squad-listing/admin-squad-listing.component";
+import { AdminFixtureResultsComponent } from "./admin-fixture-results/admin-fixture-results.component";
+import { AdminFixtureListingComponent } from './admin-fixture-listing/admin-fixture-listing.component';
 
 /**
  * Custom angular notifier options
@@ -115,6 +117,10 @@ const adminRoutes: Routes = [
         component: AdminPlayersComponent
       },
       {
+        path: "results",
+        component: AdminFixtureResultsComponent
+      },
+      {
         path: "squads/academy/:id",
         component: SquadAcademyListComponent
       },
@@ -135,7 +141,7 @@ const adminRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [AdminPlayersComponent],
+  declarations: [AdminPlayersComponent, AdminFixtureResultsComponent, AdminFixtureListingComponent],
   imports: [
     NgbModule,
     AdminSharedModule,

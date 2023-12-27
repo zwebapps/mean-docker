@@ -148,6 +148,17 @@ export const ROUTES: RouteUser[] = [
         extralink: false,
         submenu: [],
         display: false
+      },
+      {
+        path: "/admin/results",
+        title: "Results",
+        icon: "bi bi-speedometer2",
+        image: "assets/images/teams.png",
+        active: "assets/images/teams.png",
+        class: "",
+        extralink: false,
+        submenu: [],
+        display: false
       }
     ]
   },
