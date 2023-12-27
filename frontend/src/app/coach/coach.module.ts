@@ -17,6 +17,7 @@ import { NgImageSliderModule } from "ng-image-slider";
 import { NgbDatepickerModule } from "@ng-bootstrap/ng-bootstrap";
 import { DashboardModule } from "../dashboard/dashboard.module";
 import { AdminSharedModule } from "../admin-shared/admin-shared.module";
+import { AcademyHeaderComponent } from './academy-header/academy-header.component';
 
 /**
  * Custom angular notifier options
@@ -68,7 +69,8 @@ const customNotifierOptions: NotifierOptions = {
     CoachDashbaordComponent,
     CoachAcademyDetailsComponent,
     CoachSquadListComponent,
-    ContactAdminComponent
+    ContactAdminComponent,
+    AcademyHeaderComponent
   ],
   imports: [
     AdminSharedModule,

@@ -27,8 +27,10 @@ exports.getDashboardContents = async (req, resp, next) => {
       })
         .populate("coach")
         .exec();
-      console.log(academies);
       competitions = await Competition.find({
+        _id: Array.isArray(competition)
+          ? ObjectId(competition[0]._id)
+          : ObjectId(competition._id),
         shortcode: shortcode
       })
         .populate(["organiser", "user_id"])
@@ -157,9 +159,9 @@ exports.getDashboardContents = async (req, resp, next) => {
     } else {
       data = {
         players,
-        teams,
+        competitions,
         academies: Array.isArray(academies) ? academies : [academies],
-        competitions
+        teams
       };
     }
 

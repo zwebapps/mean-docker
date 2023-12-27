@@ -1,20 +1,4 @@
-<div class="row academy-row" [style.background-color]="academy?.color">
-  <div class="col-12 col-lg-2">
-    <div class="acedmy-plus m-auto"><img [src]="getImg(academy?.logo)" class="img-fluid" /><br /></div>
-  </div>
-  <div class="col-12 col-lg-10 academy-name">
-    <p *ngIf="academy">{{ academy.academyName }}</p>
-  </div>
-</div>
-<!-- <div class="row d-flex justify-content-center" *ngIf="teams">
-  <ng-container *ngFor="let team of teams">
-    <div class="col-lg-3 col-md-4 col-sm-11 m-3">
-      <div class="league-lable btn w-100">
-        <span class="league-text" (click)="onTeamClick(team)">{{ team.teamName }}</span>
-      </div>
-    </div>
-  </ng-container>
-</div> -->
+<app-academy-header [academy]="academy"></app-academy-header>
 <div class="container">
   <div class="row">
     <form class="form-inline mt-5 ps-0 pe-0" method="post" enctype="multipart/form-data">
@@ -66,11 +50,8 @@
       </ngx-datatable-column>
       <ngx-datatable-column name="League/Group" prop="row">
         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-          <!-- {{ row.leagues | json }} -->
-          <ng-container *ngIf="row.leagues?.length > 0">
-            <ng-container *ngFor="let league of row.leagues">
-              <p>{{ league?.leagueName }}</p>
-            </ng-container>
+          <ng-container *ngIf="row.league">
+            <p>{{ row?.league?.leagueName }}</p>
           </ng-container>
         </ng-template>
       </ngx-datatable-column>

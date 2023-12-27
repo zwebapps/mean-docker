@@ -21,6 +21,7 @@ export class SidebarComponent implements OnInit, OnChanges, AfterViewInit {
   @Input({ required: false }) selectedCompetition: any = {};
   public sidebarnavItems: RouteInfo[] = [];
   public displayCoachMenu: boolean = false;
+
   // this is for the open close
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private storageService: StorageService) {}
@@ -57,7 +58,6 @@ export class SidebarComponent implements OnInit, OnChanges, AfterViewInit {
   }
   // End open close
   ngOnInit() {
-    console.log(this.activatedRoute.params, this.router.getCurrentNavigation());
     // get the query the params
     const user = this.storageService.getUser();
     if (user) {

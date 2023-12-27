@@ -65,6 +65,7 @@ export class CoachAcademyDetailsComponent {
   public playerPlayingUp: any = [];
   public playerPlayingUpTeam: any = [];
   public closeResult: string = "";
+  public teamDeails: any = {};
   public eidImages: any = {
     eidFront: null,
     eidBack: null
@@ -83,6 +84,7 @@ export class CoachAcademyDetailsComponent {
   selectedPlayingLeagues: any = [];
   selectedPlayingUpTeams: any = [];
   playerToEdit: any = {};
+  public coachCompetition: any = {};
 
   constructor(
     private formBuilder: FormBuilder,
@@ -107,6 +109,7 @@ export class CoachAcademyDetailsComponent {
       squadNo: new FormControl(""),
       dob: new FormControl(""),
       league: new FormControl(""),
+      team: new FormControl(""),
       playerEidNo: new FormControl(""),
       eidFront: new FormControl(""),
       eidBack: new FormControl(""),
@@ -120,12 +123,15 @@ export class CoachAcademyDetailsComponent {
       firstName: new FormControl(""),
       surName: new FormControl(""),
       league: new FormControl(""),
+      team: new FormControl(""),
       playingUp: new FormControl(""),
       playingUpTeam: new FormControl(""),
       dob: new FormControl("")
     });
   }
   ngOnInit() {
+    this.coachCompetition = this.storageService.getCompetition();
+    this.teamDeails = this.storageService.getTeam();
     this.dropdownSettings = {
       singleSelection: true,
       idField: "_id",
@@ -171,14 +177,16 @@ export class CoachAcademyDetailsComponent {
       surName: ["", [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
       squadNo: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(3)]],
       dob: ["", Validators.required],
-      league: ["", Validators.required],
+      league: [this.teamDeails?.league?.leagueName, Validators.required],
+      team: [this.teamDeails?.teamName, Validators.required],
       playerEidNo: [null, [Validators.required, Validators.pattern(eidPattern), Validators.maxLength(18)]],
       eidFront: ["", Validators.required],
       eidBack: ["", Validators.required],
       playingUp: [""],
       playingUpTeam: [""]
     });
-    // this.playerForm.controls.league.disable();
+    this.playerForm.controls.league.disable();
+    this.playerForm.controls.team.disable();
     // get the team id
     let teamId = this.activatedRoute.snapshot.params["id"];
     // Now get team by id
@@ -257,7 +265,7 @@ export class CoachAcademyDetailsComponent {
           : moment(this.playerForm.value.dob).format("YYYY-MM-DD");
 
       // let isIlligible = moment(this.selectedLeague.leagueAgeLimit).isSameOrBefore(this.playerForm.value.dob);
-      let isIlligible = moment(dateToCompare).isSameOrBefore(this.selectedLeague.leagueAgeLimit);
+      let isIlligible = moment(this.selectedLeague.leagueAgeLimit).isSameOrBefore(dateToCompare);
       if (!isIlligible) {
         this.notifier.notify("error", "You are not eligible for this league!");
         return;
@@ -333,7 +341,11 @@ export class CoachAcademyDetailsComponent {
         this.data = players.filter((player) => player.academy);
         this.data = this.data.filter(
           (player: any) =>
-            player.team && player.team._id === this.team._id && player.team.academy_id && player.team.academy_id === this.academy._id
+            player?.team &&
+            player?.team?._id === this.teamDeails._id &&
+            player?.academy?._id &&
+            player?.academy?._id === this.teamDeails?.academy_id?._id &&
+            player?.league?._id === this.teamDeails?.league?._id
         );
         this.dropEID = this.data;
       },
@@ -438,9 +450,6 @@ export class CoachAcademyDetailsComponent {
     });
 
     this.selectedLeague = lg;
-    this.playerForm.patchValue({
-      league: this.selectedLeague._id
-    });
 
     this.leagues = this.leagues.map((league: any) => {
       return {
@@ -586,6 +595,7 @@ export class CoachAcademyDetailsComponent {
   }
 
   togglePlayerForm() {
+    this.onCheckBox(this.teamDeails.league);
     this.displayAddPlayer = !this.displayAddPlayer;
     this.displayEditPlayer = false;
   }

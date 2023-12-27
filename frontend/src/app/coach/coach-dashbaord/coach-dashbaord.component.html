@@ -1,11 +1,4 @@
-<div class="row academy-row" [style.background-color]="academy?.color">
-  <div class="col-12 col-lg-2">
-    <div class="acedmy-plus m-auto"><img [src]="getImg(academy?.logo)" class="img-fluid" /><br /></div>
-  </div>
-  <div class="col-12 col-lg-10 academy-name">
-    <p *ngIf="academy">{{ academy.academyName }}</p>
-  </div>
-</div>
+<app-academy-header [academy]="academy"></app-academy-header>
 <div class="container ps-0 pe-0">
   <div class="row">
     <app-admin-top-filters
@@ -15,37 +8,5 @@
       (genderOut)="handleFilterByGender($event)"
     ></app-admin-top-filters>
   </div>
-  <!-- <div class="row justify-content-center mt-5">
-  <div class="col-sm-6 col-md-6 col-lg-3">
-    <div class="card-header text-center">Registered Players</div>
-    <div class="card">
-      <div class="card-body">
-        <div class="d-flex justify-content-center">
-          <div style="margin-top: 18%">
-            <h3 class="mb-0 font-weight-bold">{{ players.length }}</h3>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-12 col-md-12 col-lg-1"></div>
-  <div class="col-sm-6 col-md-6 col-lg-3">
-    <div class="card-header text-center">Registered Teams</div>
-    <div class="card">
-      <div class="card-body">
-        <div class="d-flex justify-content-center">
-          <div style="margin-top: 18%">
-            <h3 class="mb-0 font-weight-bold">{{ teams.length }}</h3>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-  <!-- <div class="container">
-  <div class="row">
-    <app-sales-summary [dashboardContents]="dashboardContents" [blogcards]="blogcards" [academy]="academy"></app-sales-summary>
-  </div>
-</div> -->
   <app-blog-cards [dashboardContents]="dashboardContents" [blogcards]="blogcards"></app-blog-cards>
 </div>

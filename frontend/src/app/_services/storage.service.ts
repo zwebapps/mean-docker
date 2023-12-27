@@ -8,6 +8,7 @@ import { isPlatformBrowser } from "@angular/common";
 const USER_KEY = "auth-user";
 const TOKEN = "token";
 const COMPETITITION = "Competition";
+const COACHTEAM = "coachTeam";
 
 @Injectable({
   providedIn: "root"
@@ -76,6 +77,21 @@ export class StorageService {
       let competition = window.sessionStorage.getItem(COMPETITITION);
       if (competition) {
         return JSON.parse(competition);
+      } else {
+        return null;
+      }
+    }
+  };
+  public setTeam = (team: any) => {
+    if (typeof window !== "undefined") {
+      window.sessionStorage.setItem(COACHTEAM, JSON.stringify(team));
+    }
+  };
+  public getTeam = () => {
+    if (typeof window !== "undefined") {
+      const team = window.sessionStorage.getItem(COACHTEAM);
+      if (team) {
+        return JSON.parse(team);
       } else {
         return null;
       }

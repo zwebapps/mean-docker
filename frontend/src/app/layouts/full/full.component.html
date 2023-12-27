@@ -62,7 +62,12 @@
       <b class="logo-icon">
         <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
         <!-- Light Logo icon -->
-        <img src="assets/images/logos/yfl.png" alt="homepage" class="dark-logo" />
+        <ng-container *ngIf="userRole !== 'ROLE_COACH'">
+          <img src="assets/images/logos/yfl.png" alt="homepage" class="dark-logo" />
+        </ng-container>
+        <ng-container *ngIf="userRole === 'ROLE_COACH' && adminCompetition?.competitionLogo">
+          <img src="{{ apiURL }}/static/{{ adminCompetition.competitionLogo }}" alt="homepage" class="dark-logo" />
+        </ng-container>
       </b>
     </a>
     <!-- ============================================================== -->

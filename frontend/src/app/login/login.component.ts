@@ -55,6 +55,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
             competition: data.competition,
             shortcode: data.shortcode
           });
+          // for coach need to save competition
+          if (data.roles.includes("ROLE_COACH")) {
+            this.storageService.setCompetition(Array.isArray(data.competition) ? data.competition[0] : data.competition);
+          }
 
           this.isLoginFailed = false;
           this.isLoggedIn = true;

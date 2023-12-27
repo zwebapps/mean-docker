@@ -182,52 +182,52 @@ exports.createPlayer = async (req, resp, next) => {
         req.body["eidNo"] && req.body["eidNo"].split("-").length === 4;
       if (isValidated) {
         // check if the same eid is already in the database
-        let player = await Player.findOne({ emiratesIdNo: req.body["eidNo"] });
-        if (!player) {
-          let playerNo = null;
-          let isNoExist = null;
-          do {
-            playerNo = await getNextSequence("item_id");
-            isNoExist = await Player.findOne({ playerNo: playerNo }).exec();
-          } while (isNoExist);
-          if (req.body["playingUp"]) {
-            req.body["playingUp"] = req.body["playingUp"].map((league) =>
-              ObjectId(league)
-            );
-          }
-
-          const playerData = new Player({
-            gender: req.body["gender"] ? req.body["gender"] : "Male",
-            firstName: req.body["firstName"],
-            lastName: req.body["surName"],
-            dob: new Date(req.body["dob"]),
-            squadNo: req.body["squadNo"],
-            league: ObjectId(req.body["league"]),
-            academy: ObjectId(req.body["academy"]),
-            team: ObjectId(req.body["team"]),
-            playerNo: playerNo,
-            playerImage: req.body["playerImage"],
-            emiratesIdNo: req.body["eidNo"],
-            eidFront: req.body["eidFront"],
-            eidBack: req.body["eidBack"],
-            playerStatus: req.body["status"],
-            user: ObjectId(req.body.user["createdBy"]),
-            playingUp: req.body["playingUp"],
-            playingUpTeam: req.body["playingUpTeam"],
-            mvp: req.body["mvp"] ? req.body["mvp"] : false,
-            shortcode: req.body.shortcode,
-            competition: ObjectId(req.body["competition"]),
-            createdAt: new Date()
-          });
-
-          const savedPlayer = await playerData.save();
-          resp.status(200).json({
-            player: savedPlayer,
-            message: "Player created successfully"
-          });
-        } else {
-          resp.status(200).json({ message: "Player already exists" });
+        // let player = await Player.findOne({ emiratesIdNo: req.body["eidNo"] });
+        // if (!player) {
+        let playerNo = null;
+        let isNoExist = null;
+        do {
+          playerNo = await getNextSequence("item_id");
+          isNoExist = await Player.findOne({ playerNo: playerNo }).exec();
+        } while (isNoExist);
+        if (req.body["playingUp"]) {
+          req.body["playingUp"] = req.body["playingUp"].map((league) =>
+            ObjectId(league)
+          );
         }
+
+        const playerData = new Player({
+          gender: req.body["gender"] ? req.body["gender"] : "Male",
+          firstName: req.body["firstName"],
+          lastName: req.body["surName"],
+          dob: new Date(req.body["dob"]),
+          squadNo: req.body["squadNo"],
+          league: ObjectId(req.body["league"]),
+          academy: ObjectId(req.body["academy"]),
+          team: ObjectId(req.body["team"]),
+          playerNo: playerNo,
+          playerImage: req.body["playerImage"],
+          emiratesIdNo: req.body["eidNo"],
+          eidFront: req.body["eidFront"],
+          eidBack: req.body["eidBack"],
+          playerStatus: req.body["status"],
+          user: ObjectId(req.body.user["createdBy"]),
+          playingUp: req.body["playingUp"],
+          playingUpTeam: req.body["playingUpTeam"],
+          mvp: req.body["mvp"] ? req.body["mvp"] : false,
+          shortcode: req.body.shortcode,
+          competition: ObjectId(req.body["competition"]),
+          createdAt: new Date()
+        });
+
+        const savedPlayer = await playerData.save();
+        resp.status(200).json({
+          player: savedPlayer,
+          message: "Player created successfully"
+        });
+        // } else {
+        //   resp.status(200).json({ message: "Player already exists" });
+        // }
       } else {
         resp.status(200).json({ message: "Emirates is not valid" });
       }
@@ -402,16 +402,46 @@ exports.updatePlayer = async (req, resp, next) => {
 
     if (!fetchPlayer)
       return resp.status(404).json({ msg: "Player record not found" });
+    let playerObj = {};
+    if (req.body.dob) {
+      playerObj = {
+        ...playerObj,
+        dob: new Date(req.body.dob)
+      };
+    }
+
+    if (req.body.academy) {
+      playerObj = {
+        ...playerObj,
+        academy: ObjectId(req.body.academy)
+      };
+    }
+    if (req.body.team) {
+      playerObj = {
+        ...playerObj,
+        team: ObjectId(req.body.team)
+      };
+    }
+
+    if (req.body.league) {
+      playerObj = {
+        ...playerObj,
+        league: ObjectId(req.body.league)
+      };
+    }
+
+    if (req.body.competition) {
+      playerObj = {
+        ...playerObj,
+        competition: ObjectId(req.body.competition)
+      };
+    }
+
     fetchPlayer = {
       ...fetchPlayer._doc,
-      ...req.body,
+      ...playerObj,
       playingUp: req.body.playingUp.map((league) => ObjectId(league)),
       playingUpTeam: req.body.playingUpTeam.map((team) => ObjectId(team)),
-      dob: new Date(req.body.dob),
-      academy: ObjectId(req.body.academy),
-      team: ObjectId(req.body.team),
-      league: ObjectId(req.body.league),
-      competition: ObjectId(req.body["competition"]),
       user: ObjectId(req.body.user.createdBy)
     };
 

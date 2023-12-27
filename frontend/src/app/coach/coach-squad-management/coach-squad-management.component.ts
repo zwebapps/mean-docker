@@ -46,12 +46,30 @@ export class CoachSquadManagementComponent implements OnInit {
   getTeamsByAcademy(academyId: string) {
     this.teamService.getTeamsByAcademy(academyId).subscribe((res: any) => {
       if (res) {
-        this.teams = res;
+        const mappedTeams: any = [];
+        // map team based on age group
+        res.forEach((team: any) => {
+          const { academy_id, competition, leagues, shortcode, teamName, user_id, _id } = team;
+          leagues.forEach((league: any) => {
+            mappedTeams.push({
+              academy_id,
+              competition,
+              league: league,
+              shortcode,
+              teamName,
+              user_id,
+              _id
+            });
+          });
+        });
+        this.teams = mappedTeams;
       }
     });
   }
 
   onTeamClick(team: any) {
+    // navigate to squad
+    this.storagService.setTeam(team);
     this.router.navigate([`${this.loggedInCoach.shortcode}/coach/squads/${team._id}`]);
   }
   getImg = (image: string) => {

@@ -1,15 +1,15 @@
 <div class="academy-row" [style.background-color]="academy?.color">
   <div class="container">
     <div class="row align-items-center">
-      <div class="col-12 col-lg-2">
-        <div class="acedmy-plus"><img [src]="getImg(academy?.logo)" class="img-fluid" /><br /></div>
+      <div class="col-12 col-lg-2" *ngIf="teamDeails">
+        <div class="acedmy-plus"><img [src]="getImg(teamDeails?.academy_id?.logo)" class="img-fluid" /><br /></div>
       </div>
-      <div class="col-12 col-lg-5 academy-name">
-        <p *ngIf="academy">{{ academy.academyName }}</p>
-        <p class="academy-team">TEAM: {{ team.teamName }}</p>
+      <div class="col-12 col-lg-5 academy-name" *ngIf="teamDeails">
+        <p>{{ teamDeails.teamName }}</p>
+        <p class="academy-team">{{ teamDeails?.league?.leagueName }}</p>
       </div>
-      <div class="col-12 col-lg-5 academy-name text-end">
-        <p *ngIf="academy">{{ academy.academyName }}</p>
+      <div class="col-12 col-lg-5 academy-name text-end" *ngIf="coachCompetition && coachCompetition?.competitionName">
+        <p *ngIf="academy">{{ coachCompetition?.competitionName }}</p>
         <p class="academy-team"></p>
       </div>
     </div>
@@ -266,15 +266,17 @@
           </div> -->
           <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
             <label for="league" class="control-label">League</label>
-            <ng-multiselect-dropdown
+            <input
+              type="text"
               [class]="'form-control'"
-              [placeholder]="'League'"
-              [settings]="dropdownLeagueSettings"
-              [data]="leagues"
-              (onSelect)="onLeagueSelect($event)"
-              (onSelectAll)="onSelectAll($event)"
-            >
-            </ng-multiselect-dropdown>
+              [placeholder]="League"
+              formControlName="league"
+              [value]="teamDeails?.league?.leagueName"
+            />
+          </div>
+          <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+            <label for="league" class="control-label">Team</label>
+            <input type="text" [class]="'form-control'" [placeholder]="Team" formControlName="team" [value]="teamDeails?.teamName" />
           </div>
           <!-- <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
             <label for="league" class="control-label">League</label>
@@ -307,8 +309,8 @@
               (keypress)="appendHiphen($event)"
               [ngClass]="{ 'is-invalid': submitted && f['playerEidNo'].errors }"
               size="18"
-              (blur)="playerbyEmirateId($event)"
             />
+            <!-- (blur)="playerbyEmirateId($event)" -->
             <div *ngIf="submitted && f['playerEidNo'].errors" class="invalid-feedback">
               <div *ngIf="f['playerEidNo'].errors['required']">
                 <small>Player EID no and pattern should is required</small>
@@ -422,7 +424,7 @@
               </select>
             </div>
           </div>
-          <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-3">
+          <div class="form-group col-12 col-12 col-md-3 col-lg-3 m-2">
             <label for="name" class="control-label">First Name</label>
             <input
               type="text"
@@ -434,7 +436,7 @@
               disabled
             />
           </div>
-          <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-3">
+          <div class="form-group col-12 col-12 col-md-3 col-lg-3 m-2">
             <label for="name" class="control-label">Last Name</label>
             <input
               type="text"
@@ -446,7 +448,7 @@
               disabled
             />
           </div>
-          <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-3">
+          <div class="form-group col-12 col-12 col-md-3 col-lg-3 m-2">
             <label for="name" class="control-label">Date of birth</label>
             <input
               type="text"
@@ -460,7 +462,7 @@
             />
           </div>
 
-          <div class="form-group col-sm-12 col-xs-12 col-md-4 col-lg-4 m-2">
+          <div class="form-group col-12 col-12 col-md-3 col-lg-3 m-2">
             <label for="playingup" class="control-label">Playing Up League</label>
             <ng-multiselect-dropdown
               [class]=""
@@ -474,7 +476,7 @@
             >
             </ng-multiselect-dropdown>
           </div>
-          <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+          <div class="form-group col-12 col-12 col-md-3 col-lg-3 m-2">
             <label for="playingup" class="control-label">Playing Up Team</label>
             <ng-multiselect-dropdown
               [class]=""
@@ -491,7 +493,7 @@
           <div class="row d-flex justify-content-center">
             <div class="form-group col-xs-12 col-md-3 col-lg-3 mt-2 align-items-end">
               <div class="ms-3 w-100 league-lable">
-                <button type="submit" class="btn btn-defaul col-12 text-white" [disabled]="playerExists">Update Player</button>
+                <button type="submit" class="btn btn-defaul col-12 text-white">Update Player</button>
               </div>
             </div>
           </div>

@@ -7,6 +7,7 @@ import { NgbCollapseModule } from "@ng-bootstrap/ng-bootstrap";
 import { StorageService } from "src/app/_services/storage.service";
 import { UserService } from "src/app/_services/user.service";
 import { PLATFORM_ID } from "@angular/core";
+import { environment } from "src/environments/environment";
 
 const roleNames = {
   ROLE_USER: "User",
@@ -37,6 +38,7 @@ export class FullComponent implements OnInit, AfterViewInit {
   public loggedInUser: any = {};
   public unreadNotifications: any = [];
   public adminCompetition: any = {};
+  public apiURL = environment.apiURL;
 
   Logo() {
     this.expandLogo = !this.expandLogo;
