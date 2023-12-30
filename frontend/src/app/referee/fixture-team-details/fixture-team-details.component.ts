@@ -1,8 +1,10 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { PlayerService } from "src/app/_services/player.service";
 import { environment } from "src/environments/environment";
 import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { NotifierService } from "angular-notifier";
+import { FixtureService } from "src/app/_services/fixture.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-fixture-team-details",
@@ -13,16 +15,27 @@ export class FixtureTeamDetailsComponent implements OnInit {
   private notifier: NotifierService;
   @Input() team: any;
   @Input() league: any;
+  @Input({ required: false }) fixture: any;
+  public mvpPlayer: any = null;
   apiURL = environment.apiURL;
   closeResult: string = "";
   public imgSrc: any = null;
   public players: any = [];
-  constructor(notifier: NotifierService, private modalService: NgbModal, private playerService: PlayerService) {
+  constructor(
+    notifier: NotifierService,
+    private modalService: NgbModal,
+    private playerService: PlayerService,
+    private fixtureService: FixtureService,
+    private router: Router
+  ) {
     this.notifier = notifier;
   }
   ngOnInit(): void {
     if (this.team) {
       this.getPlayersByTeam(this.team._id);
+    }
+    if (this.fixture) {
+      this.mvpPlayer = this.fixture.mvp;
     }
   }
 
@@ -70,13 +83,18 @@ export class FixtureTeamDetailsComponent implements OnInit {
     );
   }
   addMvp = (player: any) => {
-    this.playerService
-      .updateMVP(player._id, {
-        mvp: player.mvp
+    this.mvpPlayer = null;
+    this.fixtureService
+      .updateFixture(this.fixture._id, {
+        mvp: player?._id
       })
       .subscribe((res: any) => {
         if (res) {
-          this.notifier.notify("success", res.message);
+          this.mvpPlayer = res.mvp;
+          this.notifier.notify("success", "Fixture is updated successfully!");
+          if (typeof window !== "undefined") {
+            window.location.reload();
+          }
         }
       });
   };

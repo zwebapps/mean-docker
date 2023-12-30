@@ -41,6 +41,11 @@ const Fixture = mongoose.model(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User"
     },
+    mvp: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Player",
+      default: null
+    },
     shortcode: {
       type: String
     },

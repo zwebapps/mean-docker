@@ -1,9 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, ViewChild } from "@angular/core";
-import { Store } from "@ngrx/store";
 import { ColumnMode } from "@swimlane/ngx-datatable";
-import { UserService } from "src/app/_services/user.service";
-import * as PlayerSelectors from "../../_store/selectors/players.selectors";
-import { FixtureService } from "src/app/_services/fixture.service";
 import { NotifierService } from "angular-notifier";
 
 @Component({
@@ -31,7 +27,7 @@ export class RefereeSquadListingComponent implements OnInit, OnChanges {
   ColumnMode = ColumnMode;
   isEditable = {};
   fixtureUpdatedGoals = {};
-  constructor(notifier: NotifierService, private store: Store, private userService: UserService, private fixtureService: FixtureService) {
+  constructor(notifier: NotifierService) {
     notifier = notifier;
   }
 
@@ -43,9 +39,7 @@ export class RefereeSquadListingComponent implements OnInit, OnChanges {
   }
 
   edit(value: any) {
-    // this.userService.deleteUser(value).subscribe((result:any)  => {
     console.log(value);
-    // })
   }
   // Save row
   save(row: any, rowIndex: any) {
@@ -55,7 +49,6 @@ export class RefereeSquadListingComponent implements OnInit, OnChanges {
       ...this.fixtureUpdatedGoals[rowIndex]
     };
     this.editFixture.emit(fixtureObj);
-    // this.isEditable[rowIndex] = !this.isEditable[rowIndex];
   }
 
   addGoals($event: any, rowIndex: any, teamType: any) {
