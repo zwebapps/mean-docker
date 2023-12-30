@@ -21,7 +21,7 @@ export class AdminSquadListingComponent {
   constructor() {}
 
   ngOnInit(): void {
-    console.log("AdminSquadListingComponent", this.academiesData);
+    // console.log("AdminSquadListingComponent", this.academiesData);
   }
   sqManagement(value: any) {
     this.squadManagement.emit(value);
