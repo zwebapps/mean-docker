@@ -18,6 +18,7 @@ exports.createFixture = async (req, resp, next) => {
             user_id: ObjectId(req.body[i].user["createdBy"]),
             competition: ObjectId(req.body[i]["competition"]),
             shortcode: ObjectId(req.body[i].shortcode),
+            mvp: req.body[i]["mvp"] ? ObjectId(req.body[i]["mvp"]) : null,
             createdAt: new Date()
           });
           insertedFixtures.push(req.body[i]);
@@ -33,6 +34,7 @@ exports.createFixture = async (req, resp, next) => {
         league: ObjectId(req.body["league"]),
         user_id: ObjectId(req.body.user["createdBy"]),
         shortcode: req.body.shortcode,
+        mvp: req.body["mvp"] ? ObjectId(req.body["mvp"]) : null,
         competition: ObjectId(req.body.competition),
         createdAt: new Date()
       });
@@ -53,7 +55,8 @@ exports.getAllFixture = async (req, resp, next) => {
       "homeTeam",
       "awayTeam",
       "user_id",
-      "competition"
+      "competition",
+      "mvp"
     ]);
     resp
       .status(200)
@@ -68,7 +71,14 @@ exports.getFixtureById = async (req, resp, next) => {
   try {
     const fixture = await Fixture.find({
       _id: ObjectId(req.params.id)
-    }).populate(["league", "homeTeam", "awayTeam"]);
+    }).populate([
+      "league",
+      "homeTeam",
+      "awayTeam",
+      "competition",
+      "user_id",
+      "mvp"
+    ]);
     resp.status(200).json(fixture);
   } catch (error) {
     next(error);
@@ -79,7 +89,14 @@ exports.forShortCode = async (req, resp, next) => {
   try {
     const fixture = await Fixture.find({
       shortcode: req.params.shortcode
-    }).populate(["league", "homeTeam", "awayTeam", "competition", "user_id"]);
+    }).populate([
+      "league",
+      "homeTeam",
+      "awayTeam",
+      "competition",
+      "user_id",
+      "mvp"
+    ]);
     resp.status(200).json(fixture);
   } catch (error) {
     next(error);
@@ -89,7 +106,14 @@ exports.forCompetition = async (req, resp, next) => {
   try {
     const fixture = await Fixture.find({
       competition: ObjectId(req.params.competition)
-    }).populate(["league", "homeTeam", "awayTeam"]);
+    }).populate([
+      "league",
+      "homeTeam",
+      "awayTeam",
+      "competition",
+      "user_id",
+      "mvp"
+    ]);
     resp.status(200).json(fixture);
   } catch (error) {
     next(error);
@@ -108,14 +132,17 @@ exports.updateFixture = async (req, resp, next) => {
 
       fetchFixture = {
         ...fetchFixture._doc,
-        ...req.body
+        ...req.body,
+        mvp: req.body["mvp"] ? ObjectId(req.body["mvp"]) : null
       };
 
       const updatedFixture = await Fixture.findByIdAndUpdate(
         req.params.id,
         fetchFixture,
         { new: true }
-      );
+      )
+        .populate(["league", "homeTeam", "awayTeam", "user_id", "mvp"])
+        .exec();
 
       resp.status(200).json(updatedFixture);
     } else {

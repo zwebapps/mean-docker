@@ -159,10 +159,14 @@ export class CoachDashbaordComponent implements OnInit {
       );
     }
     if (Object.keys(this.dashboardContents).length > 0) {
+      // map dashboard contents
       Object.keys(this.dashboardContents).forEach((key) => {
         this.blogcards.push({
           title: key,
-          count: this.dashboardContents[key].length.toString(),
+          count:
+            key == "teams"
+              ? this.dashboardContents[key].reduce((sum: any, team: any) => sum + team.count, 0)
+              : this.dashboardContents[key].length.toString(),
           image: `${key}.svg`,
           bgcolor: "success",
           icon: "bi bi-wallet"

@@ -16,10 +16,20 @@
       <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
         <div class="row">
           <div class="col-lg-6 col-md-12 col-sm-12">
-            <app-fixture-team-details class="fixture-team-table" [league]="row.league" [team]="row.homeTeam"></app-fixture-team-details>
+            <app-fixture-team-details
+              class="fixture-team-table"
+              [league]="row.league"
+              [team]="row.homeTeam"
+              [fixture]="row"
+            ></app-fixture-team-details>
           </div>
           <div class="col-lg-6 col-md-12 col-sm-12">
-            <app-fixture-team-details class="fixture-team-table" [league]="row.league" [team]="row.awayTeam"></app-fixture-team-details>
+            <app-fixture-team-details
+              class="fixture-team-table"
+              [league]="row.league"
+              [team]="row.awayTeam"
+              [fixture]="row"
+            ></app-fixture-team-details>
           </div>
         </div>
       </ng-template>
@@ -39,12 +49,12 @@
         {{ row.league?.leagueName }}
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="Team 1" prop="row">
+    <ngx-datatable-column name="Home Team" prop="row">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
         {{ row.homeTeam?.teamName }}
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column prop="row">
+    <ngx-datatable-column name="Score" prop="row">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" id="competed">
         <mat-form-field class="justify-content-between d-flex">
           <input
@@ -67,12 +77,17 @@
         </mat-form-field>
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="Team 2" prop="row">
+    <ngx-datatable-column name="Away Team" prop="row">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
         {{ row.awayTeam?.teamName }}
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="Actions" prop="row" style="width: 275px !important">
+    <ngx-datatable-column name="Mvp" prop="row">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+        {{ row.mvp?.firstName }} {{ row.mvp?.lastName }}
+      </ng-template>
+    </ngx-datatable-column>
+    <!-- <ngx-datatable-column name="Actions" prop="row" style="width: 275px !important">
       <ng-template
         ngx-datatable-cell-template
         let-rowIndex="rowIndex"
@@ -94,7 +109,7 @@
           </button>
         </div>
       </ng-template>
-    </ngx-datatable-column>
+    </ngx-datatable-column> -->
     <ngx-datatable-footer>
       <ng-template
         ngx-datatable-footer-template

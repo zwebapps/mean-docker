@@ -27,6 +27,7 @@ export class AcademyDetailComponent implements OnInit {
     teamName: new FormControl("")
   });
   apiURL = environment.apiURL;
+  displayTeamForm: boolean = false;
   constructor(
     private storageService: StorageService,
     notifier: NotifierService,
@@ -81,6 +82,7 @@ export class AcademyDetailComponent implements OnInit {
             this.notifier.notify("success", "Team created successfully!");
             this.store.dispatch(TeamActions.loadTeams());
             this.teamForm.reset();
+            this.displayTeamForm = false;
           } else {
             this.notifier.notify("error", res.message);
           }
@@ -142,5 +144,8 @@ export class AcademyDetailComponent implements OnInit {
     if (this.selectedCompetition) {
       this.compSettings = JSON.parse(this.selectedCompetition?.competitionSettings);
     }
+  }
+  toggleTeamForm() {
+    this.displayTeamForm = !this.displayTeamForm;
   }
 }

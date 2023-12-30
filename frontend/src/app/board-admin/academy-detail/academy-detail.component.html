@@ -16,8 +16,8 @@
 <div class="academy-row" [style.background-color]="academy?.color">
   <div class="container">
     <div class="row align-items-center">
-      <div class="col-12 col-lg-2">
-        <div class="acedmy-plus"><img [src]="getImg(selectedCompetition?.competitionLogo)" class="img-fluid" /><br /></div>
+      <div class="col-12 col-lg-2" *ngIf="academy">
+        <div class="acedmy-plus"><img [src]="getImg(academy.logo)" class="img-fluid" /><br /></div>
       </div>
       <div class="col-12 col-lg-5 academy-name">
         <p>{{ academy?.academyName }}</p>
@@ -31,50 +31,50 @@
   </div>
 </div>
 <div class="container">
-<div class="row">
-  <form class="col-lg-6 mt-4 mb-4" [formGroup]="teamForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
-    <div class="form-group">
-      <label for="name" class="control-label">Team Name</label>
-      <div class="form-group d-flex justify-content-end">
-        <input type="text" class="form-control" placeholder="Add Name of Team" aria-label="league" formControlName="teamName" />
-        <button type="submit" class="btn btn-gradient col-lg-4 ms-1">Submit</button>
-      </div>
-  </div>
-  </form>
-</div>
-<div class="row">
-  <div class="page-filter-bar">
-    <form class="form-inline mt-5 ps-0 pe-0" method="post" enctype="multipart/form-data">
-      <div class="row">
-        <div class="col-12 col-lg-9 d-flex justify-content-start">
-          <div class="col-4 col-lg-2 mb-3">
-            <button class="btn btn-white"><i class="bi bi-filter pe-3"></i>Filters</button>
-          </div>
-          <div class="col-8 col-lg-10 mb-3">
-            <button class="btn btn-gradient"><i class="bi bi-plus pe-3"></i>Add Team(s) & League(s)</button>
-          </div>
-        </div>
-        <div class="col-12 col-lg-3">
-          <div class="col-12 mb-3">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text" id="validationTooltipUsernamePrepend"><i class="bi bi-search"></i></span>
-              </div>
-              <input
-                type="text"
-                class="form-control"
-                id="validationTooltipUsername"
-                placeholder="Search"
-                aria-describedby="validationTooltipUsernamePrepend"
-                required
-              />
-            </div>
-          </div>
+  <div class="row" [style.visibility]="displayTeamForm ? 'visible' : 'hidden'">
+    <form class="col-lg-6 mt-4 mb-4" [formGroup]="teamForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="name" class="control-label">Team Name</label>
+        <div class="form-group d-flex justify-content-end">
+          <input type="text" class="form-control" placeholder="Add Name of Team" aria-label="league" formControlName="teamName" />
+          <button type="submit" class="btn btn-gradient col-lg-4 ms-1">Add Team</button>
         </div>
       </div>
     </form>
   </div>
-  <!-- <div class="container">
+  <div class="row">
+    <div class="page-filter-bar">
+      <form class="form-inline mt-5 ps-0 pe-0" method="post" enctype="multipart/form-data">
+        <div class="row">
+          <div class="col-12 col-lg-9 d-flex justify-content-start">
+            <div class="col-4 col-lg-2 mb-3">
+              <button class="btn btn-white"><i class="bi bi-filter pe-3"></i>Filters</button>
+            </div>
+            <div class="col-8 col-lg-10 mb-3">
+              <button class="btn btn-gradient" (click)="toggleTeamForm()"><i class="bi bi-plus pe-3"></i>Add Team(s) & League(s)</button>
+            </div>
+          </div>
+          <div class="col-12 col-lg-3">
+            <div class="col-12 mb-3">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="validationTooltipUsernamePrepend"><i class="bi bi-search"></i></span>
+                </div>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="validationTooltipUsername"
+                  placeholder="Search"
+                  aria-describedby="validationTooltipUsernamePrepend"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- <div class="container">
     <div class="row" *ngIf="teams">
       <div class="league-lable btn col-lg-3 col-sm-6 mb-2 ms-1" *ngFor="let team of teams">
         <span class="league-text" (click)="onTeamClick(team)">{{ team.teamName }}</span>
@@ -84,8 +84,8 @@
       </div>
     </div>
   </div> -->
-  <app-admin-team-listing [teamsData]="teams" (delTeam)="onDelete($event)" (editTeam)="onTeamClick($event)"></app-admin-team-listing>
-</div>
+    <app-admin-team-listing [teamsData]="teams" (delTeam)="onDelete($event)" (editTeam)="onTeamClick($event)"></app-admin-team-listing>
+  </div>
 </div>
 <div style="position: absolute; bottom: 0; right: 0; background-color: transparent">
   <button class="btn btn-back" (click)="redirectTo()">Back</button>
