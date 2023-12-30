@@ -16,24 +16,25 @@
         margin-left: 20px;
         .logo-icon {
           height: 90px;
-          img{
-            height:100%;
+          img {
+            height: 100%;
           }
         }
       }
     }
   }
   .left-sidebar {
+    top: 120px;
     position: absolute;
   }
-#navbarSupportedContent {
+  #navbarSupportedContent {
     app-navigation {
       display: flex;
     }
   }
 }
-.topbartoggler{
-  background-color: #2185D0;
+.topbartoggler {
+  background-color: #2185d0;
   float: right;
   top: 15px;
   position: relative;
@@ -74,4 +75,3 @@
     margin-left: 277px !important;
   }
 }
-

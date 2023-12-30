@@ -6,7 +6,7 @@
   position: relative;
   z-index: 100;
   transition: $transitions;
-  border-bottom: 1.24px solid #CFCFCF;
+  border-bottom: 1.24px solid #cfcfcf;
   background: $topbar;
   height: $topbar-height;
   .navbar-collapse {
@@ -71,7 +71,7 @@ Topbar Responsive
       width: 100%;
       position: fixed;
       border-top: 1px solid $border-color;
-      background-color: #165BAA;
+      background-color: #165baa;
       padding-left: 10px;
       left: 0px;
       right: 0px;
@@ -84,7 +84,7 @@ Topbar Responsive
     }
     .navbar-nav > .nav-item > .nav-link {
       padding: 0 10px;
-      color:#fff !important;
+      color: #fff !important;
     }
     .navbar-header {
       display: flex;
@@ -118,10 +118,12 @@ Topbar Responsive
   }
 }
 
-
 @media (max-width: 991px) {
   .topbar .navbar-collapse {
     position: relative;
     top: 120px;
+  }
+  .topbar .top-navbar .navbar-header {
+    position: fixed;
   }
 }
