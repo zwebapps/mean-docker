@@ -1,120 +1,137 @@
-<ngx-datatable
-  #myTable
-  class="material fullscreen"
-  [rows]="fixtureProvided"
-  [columns]="columns"
-  [columnMode]="ColumnMode.force"
-  [footerHeight]="100"
-  [headerHeight]="50"
-  [limit]="10"
-  rowHeight="auto"
-  [scrollbarH]="true"
->
-  <!-- Row Detail Template -->
-  <ngx-datatable-row-detail [rowHeight]="'auto'" #myDetailRow (toggle)="onDetailToggle($event)">
-    <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
-      <div class="row">
-        <div class="col-lg-6 col-md-12 col-sm-12">
-          <app-fixture-team-details class="fixture-team-table" [league]="row.league" [team]="row.homeTeam"></app-fixture-team-details>
+<div class="row">
+  <ngx-datatable
+    #myTable
+    class="material fullscreen"
+    [rows]="fixtureProvided"
+    [columns]="columns"
+    [columnMode]="ColumnMode.force"
+    [footerHeight]="100"
+    [headerHeight]="50"
+    [limit]="10"
+    rowHeight="auto"
+    [scrollbarH]="true"
+  >
+    <!-- Row Detail Template -->
+    <ngx-datatable-row-detail [rowHeight]="'auto'" #myDetailRow (toggle)="onDetailToggle($event)">
+      <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+        <div class="row">
+          <div class="col-lg-6 col-md-12 col-sm-12">
+            <app-fixture-team-details
+              class="fixture-team-table"
+              [league]="row.league"
+              [team]="row.homeTeam"
+              [fixture]="row"
+            ></app-fixture-team-details>
+          </div>
+          <div class="col-lg-6 col-md-12 col-sm-12">
+            <app-fixture-team-details
+              class="fixture-team-table"
+              [league]="row.league"
+              [team]="row.awayTeam"
+              [fixture]="row"
+            ></app-fixture-team-details>
+          </div>
         </div>
-        <div class="col-lg-6 col-md-12 col-sm-12">
-          <app-fixture-team-details class="fixture-team-table" [league]="row.league" [team]="row.awayTeam"></app-fixture-team-details>
-        </div>
-      </div>
-    </ng-template>
-  </ngx-datatable-row-detail>
-  <!-- <ngx-datatable-column name="Fixture" prop="row" width="50">
-    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-      {{ rowIndex + 1 }}
-    </ng-template>
-  </ngx-datatable-column> -->
-  <ngx-datatable-column name="Fixture Date" prop="row" size="300">
-    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-      {{ row?.matchDate | date : "dd/MM/yyyy" }}
-    </ng-template>
-  </ngx-datatable-column>
-  <ngx-datatable-column name="League" prop="row">
-    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-      {{ row.league?.leagueName }}
-    </ng-template>
-  </ngx-datatable-column>
-  <ngx-datatable-column name="Team 1" prop="row">
-    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-      {{ row.homeTeam?.teamName }}
-    </ng-template>
-  </ngx-datatable-column>
-  <ngx-datatable-column prop="row">
-    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" id="competed">
-      <mat-form-field class="match-form-field justify-content-between d-flex">
-        <input
-          type="text"
-          style="width: 40px"
-          [value]="row.homeTeamGoals"
-          (keyup)="addGoals($event, rowIndex, 'homeTeamGoals')"
-          class="form-control"
-          [disabled]="!isEditable[rowIndex]"
-        />
-        <span>VS</span>
-        <input
-          type="text"
-          style="width: 40px"
-          [value]="row.awayTeamGoals"
-          (keyup)="addGoals($event, rowIndex, 'awayTeamGoals')"
-          class="form-control"
-          [disabled]="!isEditable[rowIndex]"
-        />
-      </mat-form-field>
-    </ng-template>
-  </ngx-datatable-column>
-  <ngx-datatable-column name="Team 2" prop="row">
-    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-      {{ row.awayTeam?.teamName }}
-    </ng-template>
-  </ngx-datatable-column>
-  <ngx-datatable-column name="Actions" prop="row" style="width: 275px !important">
-    <ng-template
-      ngx-datatable-cell-template
-      let-rowIndex="rowIndex"
-      let-value="value"
-      let-row="row"
-      class="d-flex"
-      let-expanded="expanded"
-    >
-      <div class="d-flex">
-        <button type="button" class="btn btn-info gtn-lg d-inline list-btn me-1" (click)="toggleExpandRow(row)" title="View Squad">
-          <i class="bi bi-eye-fill"></i>
-        </button>
-        <button type="button" class="btn btn-danger d-inline me-1" (click)="deleteFixture(row['_id'])">
-          <i class="bi bi-trash"></i>
-        </button>
-        <button type="button" class="btn btn-primary d-inline" (click)="this.isEditable[rowIndex] = !this.isEditable[rowIndex]">
-          <i class="fa fa-pencil" title="Modify" *ngIf="!this.isEditable[rowIndex]"></i>
-          <i class="fa fa-floppy-o" *ngIf="this.isEditable[rowIndex]" title="Save" (click)="save(row, rowIndex)"></i>
-        </button>
-      </div>
-    </ng-template>
-  </ngx-datatable-column>
-  <ngx-datatable-footer>
-    <ng-template
-      ngx-datatable-footer-template
-      let-rowCount="rowCount"
-      let-pageSize="pageSize"
-      let-selectedCount="selectedCount"
-      let-curPage="curPage"
-      let-offset="offset"
-    >
-      <datatable-pager
-        [pagerLeftArrowIcon]="'datatable-icon-left'"
-        [pagerRightArrowIcon]="'datatable-icon-right'"
-        [pagerPreviousIcon]="'datatable-icon-prev'"
-        [pagerNextIcon]="'datatable-icon-skip'"
-        [page]="curPage"
-        [size]="pageSize"
-        [count]="rowCount"
-        [hidden]="!(rowCount / pageSize > 1)"
-        (change)="table.onFooterPage($event)"
+      </ng-template>
+    </ngx-datatable-row-detail>
+    <!-- <ngx-datatable-column name="Fixture" prop="row" width="50">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+        {{ rowIndex + 1 }}
+      </ng-template>
+    </ngx-datatable-column> -->
+    <ngx-datatable-column name="Fixture Date" prop="row" size="300">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+        {{ row?.matchDate | date : "dd/MM/yyyy" }}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="League" prop="row">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+        {{ row.league?.leagueName }}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Home Team" prop="row">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+        {{ row.homeTeam?.teamName }}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Score" prop="row">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" id="competed">
+        <mat-form-field class="justify-content-between d-flex">
+          <input
+            type="text"
+            style="width: 40px"
+            [value]="row.homeTeamGoals"
+            (keyup)="addGoals($event, rowIndex, 'homeTeamGoals')"
+            class="form-control"
+            [disabled]="!isEditable[rowIndex]"
+          />
+          <sapn> VS</sapn>
+          <input
+            type="text"
+            style="width: 40px"
+            [value]="row.awayTeamGoals"
+            (keyup)="addGoals($event, rowIndex, 'awayTeamGoals')"
+            class="form-control"
+            [disabled]="!isEditable[rowIndex]"
+          />
+        </mat-form-field>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Away Team" prop="row">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+        {{ row.awayTeam?.teamName }}
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="Mvp" prop="row">
+      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
+        {{ row.mvp?.firstName }} {{ row.mvp?.lastName }}
+      </ng-template>
+    </ngx-datatable-column>
+    <!-- <ngx-datatable-column name="Actions" prop="row" style="width: 275px !important">
+      <ng-template
+        ngx-datatable-cell-template
+        let-rowIndex="rowIndex"
+        let-value="value"
+        let-row="row"
+        class="d-flex"
+        let-expanded="expanded"
       >
-      </datatable-pager>
-    </ng-template>
-  </ngx-datatable-footer>
-</ngx-datatable>
+        <div class="d-flex">
+          <button type="button" class="btn btn-info gtn-lg d-inline list-btn me-1" (click)="toggleExpandRow(row)" title="View Squad">
+            <i class="bi bi-eye-fill"></i>
+          </button>
+          <button type="button" class="btn btn-danger d-inline me-1" (click)="deleteFixture(row['_id'])">
+            <i class="bi bi-trash"></i>
+          </button>
+          <button type="button" class="btn btn-primary d-inline" (click)="this.isEditable[rowIndex] = !this.isEditable[rowIndex]">
+            <i class="fa fa-pencil" title="Modify" *ngIf="!this.isEditable[rowIndex]"></i>
+            <i class="fa fa-floppy-o" *ngIf="this.isEditable[rowIndex]" title="Save" (click)="save(row, rowIndex)"></i>
+          </button>
+        </div>
+      </ng-template>
+    </ngx-datatable-column> -->
+    <ngx-datatable-footer>
+      <ng-template
+        ngx-datatable-footer-template
+        let-rowCount="rowCount"
+        let-pageSize="pageSize"
+        let-selectedCount="selectedCount"
+        let-curPage="curPage"
+        let-offset="offset"
+      >
+        <datatable-pager
+          [pagerLeftArrowIcon]="'datatable-icon-left'"
+          [pagerRightArrowIcon]="'datatable-icon-right'"
+          [pagerPreviousIcon]="'datatable-icon-prev'"
+          [pagerNextIcon]="'datatable-icon-skip'"
+          [page]="curPage"
+          [size]="pageSize"
+          [count]="rowCount"
+          [hidden]="!(rowCount / pageSize > 1)"
+          (change)="table.onFooterPage($event)"
+        >
+        </datatable-pager>
+      </ng-template>
+    </ngx-datatable-footer>
+  </ngx-datatable>
+</div>
