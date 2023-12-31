@@ -135,7 +135,7 @@ export class LeagueManagementComponent implements OnInit {
 
   filterByName(str: any) {
     if (str) {
-      this.leagues = this.leagues.filter((league: any) => league.leagueName.toLowerCase().includes(str.toLowerCase()));
+      this.leagues = this.leagues.filter((league: any) => league?.leagueName?.toLowerCase().includes(str?.toLowerCase()));
     } else {
       this.getLeaguesFromStore();
     }

@@ -7,8 +7,7 @@
             <div class="col-4 col-lg-2 mb-3">
               <button class="btn btn-white"><i class="bi bi-filter pe-3"></i>Filters</button>
             </div>
-            <div class="col-8 col-lg-10 mb-3">
-            </div>
+            <div class="col-8 col-lg-10 mb-3"></div>
           </div>
           <div class="col-12 col-lg-3">
             <div class="col-12 mb-3">
@@ -22,6 +21,7 @@
                   id="validationTooltipUsername"
                   placeholder="Search"
                   aria-describedby="validationTooltipUsernamePrepend"
+                  (keyup)="filterClubs($event.target.value)"
                   required
                 />
               </div>
@@ -40,5 +40,5 @@
       </div>
     </ng-container> -->
     <app-admin-squad-listing [academiesData]="academies" (squadManagement)="redirectTo($event)"></app-admin-squad-listing>
-  </div>  
+  </div>
 </div>

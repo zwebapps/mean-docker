@@ -71,11 +71,14 @@
         </div>
         <div class="form-group col-12 col-lg-4">
           <label for="email" class="control-label">Email Address</label>
-          <input type="email" class="form-control" placeholder="email" aria-label="email" formControlName="emailAddress" />
+          <input type="email" class="form-control" placeholder="Email" aria-label="email" formControlName="emailAddress" />
         </div>
         <div class="form-group col-12 col-lg-4">
           <label for="mobileNumber" class="control-label">Mobile Number</label>
-          <input type="email" class="form-control" placeholder="mobileNumber" aria-label="mobileNumber" formControlName="mobileNumber" />
+          <input type="email" class="form-control" placeholder="Mobile No." aria-label="mobileNumber" formControlName="mobileNumber" />
+        </div>
+        <div class="form-group col-12 col-lg-4" style="height: 150px !important" *ngIf="editAcademy">
+          <img [src]="getImg(academyLogo)" width="120px" class="img-fluid" />
         </div>
       </div>
       <div class="form-group col-12 col-lg-12 mb-2 text-center mt-2 p-4">
@@ -154,7 +157,14 @@
       <div class="row">
         <div class="col-12 col-lg-9 d-flex justify-content-start mb-md-1">
           <div class="dropdown">
-            <button class="btn btn-white btn-filter dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button
+              class="btn btn-white btn-filter dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
               <i class="bi bi-filter pe-3"></i>Filters
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -183,6 +193,7 @@
                 id="validationTooltipUsername"
                 placeholder="Search"
                 aria-describedby="validationTooltipUsernamePrepend"
+                (keyup)="filterClubs($event.target.value)"
                 required
               />
             </div>

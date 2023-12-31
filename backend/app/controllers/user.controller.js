@@ -154,6 +154,7 @@ exports.UserByIdOrEID = async (req, resp, next) => {
 exports.updateUser = async (req, resp, next) => {
   try {
     const { id } = req.params;
+    let updatedUser = {};
     let fetchUser = await User.findOne({ _id: ObjectId(id) });
 
     if (!fetchUser)
@@ -161,9 +162,52 @@ exports.updateUser = async (req, resp, next) => {
     if (req.body.password && req.body.password.length < 15) {
       req.body.password = bcrypt.hashSync(req.body.password, 8);
     }
+
+    if (req.body["firstname"]) {
+      updatedUser = {
+        ...updatedUser,
+        firstname: req.body["firstname"]
+      };
+    }
+    if (req.body["lastname"]) {
+      updatedUser = {
+        ...updatedUser,
+        lastname: req.body["lastname"]
+      };
+    }
+
+    if (req.body["username"]) {
+      updatedUser = {
+        ...updatedUser,
+        username: req.body["username"]
+      };
+    }
+
+    if (req.body["contact"]) {
+      updatedUser = {
+        ...updatedUser,
+        contact: req.body["contact"]
+      };
+    }
+
+    if (req.body["password"]) {
+      updatedUser = {
+        ...updatedUser,
+        password: bcrypt.hashSync(req.body["password"], 8)
+      };
+    }
+
+    if (req.body["email"]) {
+      updatedUser = {
+        ...updatedUser,
+        email: req.body["email"]
+      };
+    }
+
     fetchUser = {
       ...fetchUser._doc,
-      ...req.body
+      ...req.body,
+      ...updatedUser
     };
 
     User.findByIdAndUpdate(

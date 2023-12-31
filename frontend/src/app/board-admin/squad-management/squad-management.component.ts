@@ -39,6 +39,14 @@ export class SquadManagementComponent {
   redirectTo(acadmeyId: any) {
     this.router.navigate([this.user.shortcode + "/admin/squads/academy/" + acadmeyId]);
   }
+
+  filterClubs(event: any) {
+    if (event) {
+      this.academies = this.academies.filter((academy: any) => academy?.academyName?.toLowerCase().includes(event.toLowerCase()));
+    } else {
+      this.getAcademiesFromStore();
+    }
+  }
   getAcademiesFromStore() {
     this.store.select(AcademySelectors.getAcademies).subscribe((academy) => {
       if (academy) {

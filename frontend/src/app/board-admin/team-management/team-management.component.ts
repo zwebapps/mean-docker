@@ -33,6 +33,7 @@ export class TeamManagementComponent implements OnInit {
   public compSettings: any = {};
   public apiURL = environment.apiURL;
   public displayTeamForm: boolean = false;
+  public coachTobeEdit: any = {};
   academyForm = new FormGroup({
     academyName: new FormControl(""),
     academyLogo: new FormControl(""),
@@ -151,6 +152,48 @@ export class TeamManagementComponent implements OnInit {
         }
       }
     } else {
+      let userData = {};
+      if (this.academyForm?.value?.password) {
+        userData = {
+          ...userData,
+          password: this.academyForm.value.password
+        };
+      }
+      if (this.academyForm?.value?.userName) {
+        userData = {
+          ...userData,
+          username: this.academyForm.value.userName.trim()
+        };
+      }
+      if (this.academyForm?.value?.coachName) {
+        userData = {
+          ...userData,
+          firstname: this.academyForm.value.coachName.trim().split(" ")[0],
+          lastname: this.academyForm.value.coachName.trim().split(" ")[1]
+        };
+      }
+
+      if (this.academyForm?.value?.emailAddress) {
+        userData = {
+          ...userData,
+          email: this.academyForm.value.emailAddress.trim()
+        };
+      }
+
+      if (this.academyForm?.value?.mobileNumber) {
+        userData = {
+          ...userData,
+          contact: this.academyForm.value.mobileNumber.trim()
+        };
+      }
+      if (Object.keys(userData).length > 0) {
+        this.userService.updateUser(this.coachTobeEdit._id, userData).subscribe((res) => {
+          if (res) {
+            console.log(res);
+            this.notifier.notify("success", "User is updated successfully!");
+          }
+        });
+      }
       const academyData = {
         academyName: this.academyForm.value.academyName,
         logo: this.academyLogo,
@@ -169,6 +212,7 @@ export class TeamManagementComponent implements OnInit {
           this.notifier.notify("error", "Please try again!");
         }
       );
+      this.displayClubForm();
     }
   }
   displayClubForm() {
@@ -177,19 +221,33 @@ export class TeamManagementComponent implements OnInit {
   onEditPatch(academy: any) {
     this.editAcademy = true;
     this.academyToEdit = academy._id;
+    if (academy.coach) {
+      this.coachTobeEdit = Array.isArray(academy.coach) ? academy.coach[0] : academy.coach;
+    }
     this.academyForm.patchValue({
       academyName: academy.academyName,
-      academyColor: academy.color
+      academyColor: academy.color,
+      coachName: `${this.coachTobeEdit?.firstname} ${this.coachTobeEdit?.lastname}`,
+      userName: this.coachTobeEdit?.username,
+      emailAddress: this.coachTobeEdit?.email,
+      mobileNumber: this.coachTobeEdit?.contact
     });
     this.academyLogo = academy.logo;
     console.log(this.academyForm.value);
+    this.displayClubForm();
   }
   makeAcademyUserName(academyName: any) {
     if (academyName) {
       return academyName.replace(/\s/g, "").toLowerCase();
     }
   }
-
+  filterClubs(event: any) {
+    if (event) {
+      this.academies = this.academies.filter((academy: any) => academy?.academyName?.toLowerCase().includes(event.toLowerCase()));
+    } else {
+      this.getAcademiesFromStore();
+    }
+  }
   academyDetails(id: string) {
     this.router.navigate([`${this.user.shortcode}/academies/academy/${id}`]);
   }
@@ -241,6 +299,6 @@ export class TeamManagementComponent implements OnInit {
   }
 
   removeFilter(filter: string) {
-    this.filters = this.filters.filter(f => f !== filter);
+    this.filters = this.filters.filter((f) => f !== filter);
   }
 }
