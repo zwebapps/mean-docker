@@ -47,7 +47,6 @@ export class SidebarComponent implements OnInit, OnChanges, AfterViewInit {
     }
   }
   ngOnChanges() {
-    console.log(this.selectedCompetition);
     if (this.storageService.getUser()) {
       // getting the roles
       this.userRole = this.storageService.getUser().roles[0];

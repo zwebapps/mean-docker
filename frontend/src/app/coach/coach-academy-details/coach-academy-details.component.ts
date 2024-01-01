@@ -9,7 +9,7 @@ import * as PlayerSelectors from "../../_store/selectors/players.selectors";
 import * as LeagueSelectors from "../../_store/selectors/leagues.selectors";
 import { TeamService } from "../../_services/team.service";
 import { NotifierService } from "angular-notifier";
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
 import { StorageService } from "src/app/_services/storage.service";
 import { PlayerService } from "src/app/_services/player.service";
 import { ConfirmationDialogService } from "src/app/_services/confirmation-dialog.service";
@@ -21,7 +21,6 @@ import * as moment from "moment";
 import { IDropdownSettings } from "ng-multiselect-dropdown";
 import { environment } from "src/environments/environment";
 import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
-const { read, write, utils } = XLSX;
 
 @Component({
   selector: "app-coach-academy-details",
@@ -66,6 +65,8 @@ export class CoachAcademyDetailsComponent {
   public playerPlayingUpTeam: any = [];
   public closeResult: string = "";
   public teamDeails: any = {};
+  public adminRecipientEmail: string = null;
+  public filters: string[] = [];
   public eidImages: any = {
     eidFront: null,
     eidBack: null
@@ -85,6 +86,7 @@ export class CoachAcademyDetailsComponent {
   selectedPlayingUpTeams: any = [];
   playerToEdit: any = {};
   public coachCompetition: any = {};
+  public adminDetail: any = {};
 
   constructor(
     private formBuilder: FormBuilder,
@@ -131,6 +133,9 @@ export class CoachAcademyDetailsComponent {
   }
   ngOnInit() {
     this.coachCompetition = this.storageService.getCompetition();
+    if (this.coachCompetition) {
+      this.getAdminDetails(this.coachCompetition.organiser);
+    }
     this.teamDeails = this.storageService.getTeam();
     this.dropdownSettings = {
       singleSelection: true,
@@ -348,6 +353,17 @@ export class CoachAcademyDetailsComponent {
             player?.league?._id === this.teamDeails?.league?._id
         );
         this.dropEID = this.data;
+        // add filter
+        if (this.filters.includes("Dob")) {
+          this.data = this.data.slice().sort((a: any, b: any) => (moment(a?.dob).isAfter(b.dob) ? 1 : -1));
+        } else {
+          this.data = this.data.slice().sort((a: any, b: any) => (moment(a?.dob).isAfter(b.dob) ? -1 : 1));
+        }
+        if (this.filters.includes("Name")) {
+          this.data = this.data.slice().sort((a: any, b: any) => (a?.firstName.localeCompare(b.firstName) ? 1 : -1));
+        } else {
+          this.data = this.data.slice().sort((a: any, b: any) => (a?.firstName.localeCompare(b.firstName) ? -1 : 1));
+        }
       },
       (err) => {
         this.notifier.notify("error", "Please try again!");
@@ -767,5 +783,24 @@ export class CoachAcademyDetailsComponent {
     } else {
       this.getPlayersFromStore();
     }
+  }
+  getAdminDetails(id: any) {
+    if (id) {
+      this.userService.getNotifyemail(id).subscribe((res) => {
+        if (!res.message) {
+          this.adminRecipientEmail = res;
+        }
+      });
+    }
+  }
+  removeFilter(filter: string) {
+    this.filters = this.filters.filter((f) => f !== filter);
+    this.getPlayersFromStore();
+  }
+  addFilter(filter: string) {
+    if (!this.filters.includes(filter)) {
+      this.filters.push(filter);
+    }
+    this.getPlayersFromStore();
   }
 }

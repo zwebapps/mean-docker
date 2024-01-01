@@ -24,6 +24,7 @@ export class CoachSquadManagementComponent implements OnInit {
   public academy: any;
   public teams: any = [];
   apiURL = environment.apiURL;
+  public filters: string[] = [];
   constructor(
     private academyService: AcademyService,
     private teamService: TeamService,
@@ -66,7 +67,13 @@ export class CoachSquadManagementComponent implements OnInit {
       }
     });
   }
-
+  filterTeams(event: any) {
+    if (event) {
+      this.teams = this.teams.filter((tm: any) => tm?.league?.leagueName?.toLowerCase().includes(event.toLowerCase()));
+    } else {
+      this.getTeamsByAcademy(this.academy._id);
+    }
+  }
   onTeamClick(team: any) {
     // navigate to squad
     this.storagService.setTeam(team);
@@ -75,4 +82,12 @@ export class CoachSquadManagementComponent implements OnInit {
   getImg = (image: string) => {
     return `${this.apiURL}/static/${image}`;
   };
+  removeFilter(filter: string) {
+    this.filters = this.filters.filter((f) => f !== filter);
+  }
+  addFilter(filter: string) {
+    if (!this.filters.includes(filter)) {
+      this.filters.push(filter);
+    }
+  }
 }

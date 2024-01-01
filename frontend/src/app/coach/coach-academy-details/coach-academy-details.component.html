@@ -504,9 +504,36 @@
   <div class="row page-filter-bar">
     <div class="col-lg-6">
       <div class="action-buttons d-flex justify-content-start gap-3">
-        <button class="btn btn-gradient"><i class="bi bi-filter pe-3"></i>Filters</button>
-        <button class="btn btn-gradient" (click)="togglePlayerForm()"><i class="bi bi-plus pe-3"></i>Add Player</button>
-        <button class="btn btn-gradient" (click)="open(content)">Contact Us</button>
+        <div class="col-6 col-lg-6 d-flex mb-md-1 justify-content-start">
+          <div class="dropdown">
+            <button
+              class="btn btn-white btn-filter dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <i class="bi bi-filter pe-3"></i>Filters
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" (click)="addFilter('Dob')">Dob</a>
+              <a class="dropdown-item" (click)="addFilter('Name')">Name</a>
+            </div>
+          </div>
+          <div class="filter-pills">
+            <div class="btn btn-white" *ngFor="let filter of filters">
+              {{ filter }}
+              <span class="close-icon" (click)="removeFilter(filter)">&times;</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-lg-6 d-flex mb-md-1 justify-content-start">
+          <div class="btn-group" role="group" aria-label="Basic example">
+            <button class="btn btn-gradient" (click)="togglePlayerForm()"><i class="bi bi-plus pe-3"></i>Add Player</button>
+            <button class="btn btn-gradient" (click)="open(content)">Contact Us</button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="col-lg-3">

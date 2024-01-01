@@ -43,6 +43,9 @@ export class UserService {
   getUserById(id: any): Observable<any> {
     return this.http.get(`${API_URL}/users/${id}`, { headers: this.headers });
   }
+  getNotifyemail(id: any): Observable<any> {
+    return this.http.get(`${API_URL}/users/notifyemail/${id}`, { headers: this.headers });
+  }
   deleteUser(id: any): Observable<any> {
     return this.http.post(`${API_URL}/users/delete/${id}`, { headers: this.headers });
   }

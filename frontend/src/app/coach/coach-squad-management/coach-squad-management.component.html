@@ -3,9 +3,30 @@
   <div class="row">
     <form class="form-inline mt-5 ps-0 pe-0" method="post" enctype="multipart/form-data">
       <div class="row">
-        <div class="col-12 col-lg-9 d-flex justify-content-start">
-          <div class="col-4 col-lg-2 mb-3">
-            <button class="btn btn-white"><i class="bi bi-filter pe-3"></i>Filters</button>
+        <div class="col-12 col-lg-9 d-flex mb-md-1 justify-content-start">
+          <div class="dropdown">
+            <button
+              class="btn btn-white btn-filter dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <i class="bi bi-filter pe-3"></i>Filters
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" (click)="addFilter('Date')">Date</a>
+              <a class="dropdown-item" (click)="addFilter('Team')">Team</a>
+              <a class="dropdown-item" (click)="addFilter('League')">League</a>
+              <a class="dropdown-item" (click)="addFilter('MVP')">MVP</a>
+            </div>
+          </div>
+          <div class="filter-pills">
+            <div class="btn btn-white" *ngFor="let filter of filters">
+              {{ filter }}
+              <span class="close-icon" (click)="removeFilter(filter)">&times;</span>
+            </div>
           </div>
         </div>
         <div class="col-12 col-lg-3">
@@ -19,6 +40,7 @@
                 class="form-control"
                 id="validationTooltipUsername"
                 placeholder="Search"
+                (keyup)="filterTeams($event.target.value)"
                 aria-describedby="validationTooltipUsernamePrepend"
                 required
               />
@@ -62,12 +84,12 @@
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column name="Actions" prop="row">
+      <!-- <ngx-datatable-column name="Actions" prop="row">
         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
           <button type="button" class="btn btn-primary me-1"><i class="bi bi-pencil-square"></i></button>
           <button type="button" class="btn btn-danger"><i class="bi bi-trash"></i></button>
         </ng-template>
-      </ngx-datatable-column>
+      </ngx-datatable-column> -->
       <ngx-datatable-footer *ngIf="true">
         <ng-template
           ngx-datatable-footer-template

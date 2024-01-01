@@ -57,6 +57,7 @@ app.use(
 const db = require("./app/models");
 const Role = db.role;
 const User = db.user;
+const Settings = db.settings;
 const Increment = db.increment;
 const uri =
   "mongodb://admin-user:admin-password@0.0.0.0:27017/mean-football?authSource=admin";
@@ -215,6 +216,26 @@ function initial() {
         });
       }
     });
+
+  //adding settings for email
+  Settings.estimatedDocumentCount((err, count) => {
+    if (!err && count === 0) {
+      new Settings({
+        settingsName: "notificationSettings",
+        settingsValue: JSON.stringify({
+          host: "sandbox.smtp.mailtrap.io",
+          port: 2525,
+          username: "fecdedfa52ee9f",
+          password: "a4b6757e3e5c20"
+        })
+      }).save((err) => {
+        if (err) {
+          console.log("error", err);
+        }
+        console.log("added Notification Settings");
+      });
+    }
+  });
 
   Increment.estimatedDocumentCount((err, count) => {
     if (!err && count === 0) {

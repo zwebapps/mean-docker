@@ -35,6 +35,11 @@ module.exports = function (app) {
   );
 
   app.get("/api/users/:id", authJwt.isAuthenticated, controller.UserByIdOrEID);
+  app.get(
+    "/api/users/notifyemail/:id",
+    authJwt.isAuthenticated,
+    controller.AdminEmailById
+  );
 
   app.post(
     "/api/users/update/:id",

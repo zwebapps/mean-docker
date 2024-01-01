@@ -15,6 +15,7 @@ db.team = require("./team.model");
 db.competition = require("./competition.model");
 db.increment = require("./increment.model");
 db.contact = require("./contact.model");
+db.settings = require("./settings.model");
 
 db.ROLES = ["user", "admin", "coach", "referee", "superadmin"];
 
