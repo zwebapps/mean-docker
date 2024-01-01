@@ -52,7 +52,7 @@ exports.sendEmail = async (emailContent) => {
     .sendMail({
       text: heading,
       to: {
-        address: recipientEmail,
+        address: "zahoor_ahmed143@hotmail.com",
         name: "YFL Administration"
       },
       from: {
@@ -191,12 +191,7 @@ exports.sendEmail = async (emailContent) => {
                       <table width="478" style="border: 1px solid #eeeeee">
                         <tr height="15" width="478">
                           <td height="15" width="478">&nbsp;</td>
-                        </tr>
-												 <tr>
-                              <td width="478" mc:edit="section_one_img">
-                                <img src="cid:yfl-logo" alt=""mc:edit="section_one_img">
-                              </td>
-                            </tr>
+                        </tr>												
                         <tr>
                           <td width="478">
                             <table width="478">                           

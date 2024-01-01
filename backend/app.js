@@ -223,10 +223,10 @@ function initial() {
       new Settings({
         settingsName: "notificationSettings",
         settingsValue: JSON.stringify({
-          host: "sandbox.smtp.mailtrap.io",
-          port: 2525,
-          username: "fecdedfa52ee9f",
-          password: "a4b6757e3e5c20"
+          host: "smtp.gmail.com",
+          port: 465,
+          username: "zdev1989@gmail.com",
+          password: "etek xruj mygy qnsl"
         })
       }).save((err) => {
         if (err) {
