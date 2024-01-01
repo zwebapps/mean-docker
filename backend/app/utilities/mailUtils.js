@@ -1,6 +1,7 @@
 const nodemailer = require("nodemailer");
 const path = require("path");
 const fs = require("fs");
+const Settings = require("../models/settings.model");
 
 /**
  * For this example to work, you need to set up a sending domain,
@@ -12,17 +13,37 @@ const SENDER_EMAIL = "<SENDER@YOURDOMAIN.COM>";
 const RECIPIENT_EMAIL = "<RECIPIENT@EMAIL.COM>";
 
 // setting up trapmailer.io
-const transport = nodemailer.createTransport({
-  host: "sandbox.smtp.mailtrap.io",
-  port: 2525,
+let transport = nodemailer.createTransport({
+  service: "Gmail",
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
   auth: {
-    user: "fecdedfa52ee9f",
-    pass: "a4b6757e3e5c20"
+    user: "zdev1989@gmail.com",
+    pass: "etek xruj mygy qnsl"
   }
 });
 
 exports.sendEmail = async (emailContent) => {
-  const { content, senderEmail, heading } = emailContent;
+  let emailSettings = await Settings.find({}).exec();
+  emailSettings = emailSettings.find(
+    (setting) => setting.settingsName === "notificationSettings"
+  );
+  if (emailSettings) {
+    emailSettings = JSON.parse(emailSettings.settingsValue);
+    transport = nodemailer.createTransport({
+      service: "Gmail",
+      host: emailSettings.host,
+      port: emailSettings.port,
+      secure: true,
+      auth: {
+        user: emailSettings.username,
+        pass: emailSettings.password
+      }
+    });
+  }
+
+  const { content, senderEmail, heading, recipientEmail } = emailContent;
   const logoPath = path.join(__basedir, "public/resources/assets/yfl.jpeg");
   const logPath = fs.readFileSync(
     path.join(__basedir, "public/resources/assets/yfl.jpeg")
@@ -31,12 +52,12 @@ exports.sendEmail = async (emailContent) => {
     .sendMail({
       text: heading,
       to: {
-        address: "zahoor_ahmed143@hotmail.com",
-        name: "Club Admin"
+        address: recipientEmail,
+        name: "YFL Administration"
       },
       from: {
         address: senderEmail,
-        name: "YFL Administration"
+        name: "Club Admin"
       },
       auth: {
         user: "zdev1989@gmail.com"
@@ -297,6 +318,7 @@ exports.sendEmail = async (emailContent) => {
       ]
     })
     .then((res) => {
+      console.log(res, "<<<email sent");
       const { response, rejected } = res;
       return {
         response,

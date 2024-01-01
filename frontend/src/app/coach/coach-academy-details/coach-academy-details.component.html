@@ -21,7 +21,7 @@
     <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
   </div>
   <div class="modal-body">
-    <app-contact-admin></app-contact-admin>
+    <app-contact-admin [adminRecipientEmail]="adminRecipientEmail"></app-contact-admin>
   </div>
   <div class="modal-footer">
     <!-- <div class="justify-content-center">

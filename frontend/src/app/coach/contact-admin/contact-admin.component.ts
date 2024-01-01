@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AngularEditorConfig } from "@kolkov/angular-editor";
@@ -13,6 +13,7 @@ import { UserService } from "src/app/_services/user.service";
   styleUrls: ["./contact-admin.component.scss"]
 })
 export class ContactAdminComponent implements OnInit {
+  @Input({ required: false }) adminRecipientEmail: any;
   notifier: NotifierService;
   public htmlContent: any = "Any content here";
   contactForm: FormGroup;
@@ -57,7 +58,7 @@ export class ContactAdminComponent implements OnInit {
   ) {
     this.notifier = notifier;
     this.contactForm = this.formBuilder.group({
-      senderEmail: ["", Validators.required],
+      senderEmail: ["zdev1989@gmail.com", Validators.required],
       heading: ["", Validators.required],
       content: ["", Validators.required],
       status: ["Pending"],
@@ -98,6 +99,7 @@ export class ContactAdminComponent implements OnInit {
   }
 
   submitContents = () => {
+    debugger;
     console.log(this.contactForm.value.content);
     this.contactForm.patchValue({
       user: this.user,
@@ -106,7 +108,7 @@ export class ContactAdminComponent implements OnInit {
       competition: this.user.competition
     });
     if (this.contactForm.valid) {
-      this.userService.createContact(this.contactForm.value).subscribe((res: any) => {
+      this.userService.createContact({ ...this.contactForm.value, recipientEmail: this.adminRecipientEmail }).subscribe((res: any) => {
         if (res) {
           this.notifier.notify("success", `Message sent successfully!`);
           this.contactForm.reset();

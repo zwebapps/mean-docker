@@ -256,7 +256,6 @@ exports.createContact = async (req, res) => {
       content: req.body["content"],
       user: ObjectId(req.body.user["id"]),
       shortcode: req.body["shortcode"],
-      competition: ObjectId(req.body.competition),
       status: "Pending",
       createdAt: new Date()
     });
