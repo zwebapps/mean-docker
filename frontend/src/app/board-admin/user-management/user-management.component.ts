@@ -101,6 +101,7 @@ export class UserManagementComponent implements OnInit {
         this.data = users.filter((user: any) => user.username !== this.loggedInUser.username);
         this.data = users.filter((user: any) => user.roles.some((role: any) => role.name !== "admin" && role.name !== "superadmin"));
         this.loadingIndicator = false;
+        this.data = users.filter((user: any) => user.shortcode === this.selectedCompetition.shortCode);
       },
       (error) => {
         this.notifier.notify("error", "Please try again!");

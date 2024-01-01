@@ -92,7 +92,7 @@ export class RefereeDashboardComponent implements OnInit, AfterViewInit {
     // now get the leagues and map
     this.store.select(FixtureSelectors.getFixtures).subscribe((fixtures) => {
       if (Array.isArray(fixtures)) {
-        this.fixtures = fixtures.filter((fix) => fix.user_id && fix.user_id?._id === this.refereeDetails.id);
+        this.fixtures = fixtures.filter((fix) => fix.user_id && fix.user_id?._id === this.refereeDetails.id && !fix?.deleted);
       } else {
         this.notifier.notify("error", "Fixtures not yet added");
       }
@@ -172,7 +172,7 @@ export class RefereeDashboardComponent implements OnInit, AfterViewInit {
     this.store.select(FixtureSelectors.getFixtures).subscribe((fixtures) => {
       if (Array.isArray(fixtures)) {
         // filter teams for referee
-        this.fixtures = fixtures.filter((fix: any) => fix?.user_id === this.refereeDetails.id);
+        this.fixtures = fixtures.filter((fix) => fix.user_id && fix.user_id?._id === this.refereeDetails.id && !fix?.deleted);
       }
     });
   }

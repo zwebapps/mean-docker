@@ -73,6 +73,9 @@ export class TeamManagementComponent implements OnInit {
         return a?.academyName?.localeCompare(b?.academyName);
       });
     });
+    if (this.selectedCompetition) {
+      this.academies = this.academies.filter((academy: any) => academy.shortcode === this.selectedCompetition.shortCode);
+    }
   }
   uploadLogo(event: any) {
     const file: File = event.target.files[0];

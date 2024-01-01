@@ -158,8 +158,8 @@ exports.updateFixture = async (req, resp, next) => {
 /* Delete fixture based on id*/
 exports.deleteFixture = async (req, resp, next) => {
   try {
-    const fixture = await Fixture.findByIdAndDelete({
-      _id: ObjectId(req.params.id)
+    const fixture = await Fixture.findByIdAndUpdate(ObjectId(req.params.id), {
+      deleted: true
     });
     resp
       .status(200)

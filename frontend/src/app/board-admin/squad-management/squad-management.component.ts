@@ -1,5 +1,4 @@
 import { Component } from "@angular/core";
-import * as AcademyActions from "../../_store/actions/academies.actions";
 // importing selectors
 import * as AcademySelectors from "../../_store/selectors/academies.selectors";
 import { Store } from "@ngrx/store";
@@ -20,6 +19,7 @@ export class SquadManagementComponent {
   teams: any = [];
   public academies: any = [];
   user: any;
+  public selectedCompetition: any = {};
   constructor(
     private storageService: StorageService,
     notifier: NotifierService,
@@ -34,6 +34,7 @@ export class SquadManagementComponent {
   }
 
   ngOnInit(): void {
+    this.getCompetitions();
     this.getAcademiesFromStore();
   }
   redirectTo(acadmeyId: any) {
@@ -57,10 +58,15 @@ export class SquadManagementComponent {
           if (isNaN(aNumber) || isNaN(bNumber)) {
             return a?.academyName?.localeCompare(b?.academyName);
           }
-
           return aNumber - bNumber;
         });
       }
+      if (this.selectedCompetition) {
+        this.academies = academy.slice().filter((academy: any) => academy.shortcode === this.selectedCompetition.shortCode);
+      }
     });
+  }
+  getCompetitions() {
+    this.selectedCompetition = this.storageService.getCompetition();
   }
 }

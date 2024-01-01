@@ -44,7 +44,11 @@ export class GameManagementComponent implements OnInit {
     // now get the leagues and map
     this.store.select(FixtureSelectors.getFixtures).subscribe((fixtures) => {
       if (fixtures) {
-        this.fixtures = fixtures.filter((fix: any) => fix?.user_id?._id === this.refereeDetails.id);
+        if (this.refereeDetails && this.refereeDetails.roles.includes("ROLE_REFEREE")) {
+          this.fixtures = fixtures.filter((fix: any) => fix?.user_id?._id === this.refereeDetails.id && !fix?.deleted);
+        } else {
+          this.fixtures = fixtures.filter((fix: any) => fix?.user_id?._id === this.refereeDetails.id);
+        }
       }
     });
   }

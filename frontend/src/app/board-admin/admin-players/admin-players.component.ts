@@ -44,6 +44,7 @@ export class AdminPlayersComponent {
   public coaches: any = [];
   public leagues: any = [];
   public eidDropdownSettings: IDropdownSettings = {};
+  public selectedCompetition: any = {};
   public dropEID: any = [];
   filterLeague: FormGroup;
   squadForm: FormGroup;
@@ -145,7 +146,7 @@ export class AdminPlayersComponent {
       playingUp: [""],
       playingUpTeam: [""]
     });
-
+    this.getSelectedCompetition();
     // this.playerForm.controls.league.disable();
     this.playerForm.controls.eidFront.disable();
     this.playerForm.controls.eidBack.disable();
@@ -442,6 +443,9 @@ export class AdminPlayersComponent {
                 player?.lastName?.toLowerCase().includes(this.searchByNameterm.toLowerCase())
             );
           }
+          if (this.selectedCompetition) {
+            this.players = this.players.filter((player: any) => player.shortcode === this.selectedCompetition.shortCode);
+          }
           this.dropEID = players;
         }
       }
@@ -476,6 +480,9 @@ export class AdminPlayersComponent {
         }
         if (!leagueId && !academy && !team) {
           this.players = players;
+        }
+        if (this.selectedCompetition) {
+          this.players = this.players.filter((player: any) => player.shortcode === this.selectedCompetition.shortCode);
         }
       }
     });
@@ -596,5 +603,8 @@ export class AdminPlayersComponent {
   }
   redirectTo() {
     this.router.navigate([`${this.user.shortcode}/admin/squads`]);
+  }
+  getSelectedCompetition() {
+    this.selectedCompetition = this.storageService.getCompetition();
   }
 }
