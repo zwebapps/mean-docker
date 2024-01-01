@@ -44,7 +44,13 @@
 
 <div class="container" *ngIf="displayAddCompetition">
   <div class="modal-body">
-    <form class="form-inline form-wrapped super-admin-form" method="post" enctype="multipart/form-data" [formGroup]="competitionForm" (ngSubmit)="onSubmit()">
+    <form
+      class="form-inline form-wrapped super-admin-form"
+      method="post"
+      enctype="multipart/form-data"
+      [formGroup]="competitionForm"
+      (ngSubmit)="onSubmit()"
+    >
       <div class="row">
         <div class="form-group col-xs-12 col-md-4 col-lg-6 p-2">
           <label for="name" class="control-label">First Name</label>
@@ -264,7 +270,7 @@
                   <button class="btn btn-primary me-1" (click)="updateSingleCompetition(compIndex)" *ngIf="displayEditCompetition">
                     <i class="bi bi-floppy"></i>
                   </button>
-                  <button class="btn btn-danger" (click)="removeCompetition(compIndex)"><i class="bi bi-trash"></i></button>
+                  <button class="btn btn-danger" (click)="removeCompetitions(compIndex)"><i class="bi bi-trash"></i></button>
                 </div>
               </div>
               <div class="form-group col-xs-12 col-md-12 col-lg-12 p-2 d-none">

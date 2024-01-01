@@ -99,7 +99,6 @@ export class ContactAdminComponent implements OnInit {
   }
 
   submitContents = () => {
-    debugger;
     console.log(this.contactForm.value.content);
     this.contactForm.patchValue({
       user: this.user,

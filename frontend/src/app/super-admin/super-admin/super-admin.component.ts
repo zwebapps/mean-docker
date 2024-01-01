@@ -364,7 +364,7 @@ export class SuperAdminComponent implements OnInit {
       this.competitionForm.controls.organiserFirstName.disable();
       this.competitionForm.controls.organiserLastName.disable();
       this.competitionForm.controls.organiserContact.disable();
-      this.competitionForm.controls.organiserEmail.disable();
+      // this.competitionForm.controls.organiserEmail.disable();
       this.competitionForm.controls.shortCode.disable();
       this.competitionForm.controls.organiserUserName.disable();
       // this.competitionForm.controls.organiserPassword.disable();
@@ -382,7 +382,7 @@ export class SuperAdminComponent implements OnInit {
     this.deleteUsers(_id);
     if (Array.isArray(competition)) {
       competition.forEach((comp: any) => {
-        this.removeCompetitions(comp._id);
+        // this.removeCompetitions(comp._id);
       });
     }
     this.loadUsers();
@@ -394,13 +394,17 @@ export class SuperAdminComponent implements OnInit {
       }
     });
   }
-  removeCompetitions(comp: any) {
-    this.competitionService.deleteCompetition(comp).subscribe((res: any) => {
-      if (res) {
-        this.notifier.notify("success", res.message);
-        this.getAllCompetitions();
-      }
-    });
+  removeCompetitions(compIndex: any) {
+    const { competition } = this.competitionToBeEdit;
+    console.log(competition[compIndex]);
+    if (competition[compIndex]) {
+      this.competitionService.deleteCompetition(competition[compIndex]?._id).subscribe((res: any) => {
+        if (res) {
+          this.notifier.notify("success", res.message);
+          this.getAllCompetitions();
+        }
+      });
+    }
   }
   filterCompetitions(text: any) {
     if (text.length > 0) {
