@@ -60,8 +60,8 @@ export class TeamManagementComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getAcademiesFromStore();
     this.getCompetition();
+    this.getAcademiesFromStore();
   }
   getImg = (image: string) => {
     return `${this.apiURL}/static/${image}`;
@@ -72,10 +72,10 @@ export class TeamManagementComponent implements OnInit {
       this.academies = academy.slice().sort((a, b) => {
         return a?.academyName?.localeCompare(b?.academyName);
       });
+      // if (this.selectedCompetition) {
+      //   this.academies = this.academies.filter((academy: any) => academy.shortcode === this.selectedCompetition.shortCode);
+      // }
     });
-    if (this.selectedCompetition) {
-      this.academies = this.academies.filter((academy: any) => academy.shortcode === this.selectedCompetition.shortCode);
-    }
   }
   uploadLogo(event: any) {
     const file: File = event.target.files[0];

@@ -213,9 +213,9 @@ export class LeagueManagementComponent implements OnInit {
             }
             return aNumber - bNumber;
           });
-          if (this.selectedCompetition) {
-            this.leagues = leagues.slice().filter((league) => league.shortcode === this.selectedCompetition.shortCode);
-          }
+          // if (this.selectedCompetition) {
+          //   this.leagues = leagues.slice().filter((league) => league.shortcode === this.selectedCompetition.shortCode);
+          // }
         }
       }
     });

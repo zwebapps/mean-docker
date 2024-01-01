@@ -27,6 +27,7 @@ export class AdminFixtureResultsComponent {
   awayTeamSquad: any = [];
   refereeDetails: any = {};
   public admin: any = {};
+  public selectedCompetition: any = {};
   // Filters
   public filters: string[] = [];
   constructor(
@@ -39,6 +40,7 @@ export class AdminFixtureResultsComponent {
     this.fetchFixtures();
   }
   ngOnInit(): void {
+    this.getSelectedCompetition();
     // get ref details
     this.admin = this.storageService.getUser();
     // now get the leagues and map
@@ -48,6 +50,9 @@ export class AdminFixtureResultsComponent {
     this.store.select(FixtureSelectors.getFixtures).subscribe((fixtures) => {
       if (fixtures) {
         this.fixtures = fixtures.filter((fix: any) => fix?.shortcode === this.admin.shortcode);
+        // if (this.selectedCompetition) {
+        //   this.fixtures = this.fixtures.filter((fix: any) => fix.shortcode === this.selectedCompetition.shortCode);
+        // }
       }
     });
   }
@@ -121,9 +126,11 @@ export class AdminFixtureResultsComponent {
       this.getFixturesFromStores();
     }
   }
-
   removeFilter(filter: string) {
     this.filters = this.filters.filter((f) => f !== filter);
     this.sortFixturesByType();
+  }
+  getSelectedCompetition() {
+    this.selectedCompetition = this.storageService.getCompetition();
   }
 }

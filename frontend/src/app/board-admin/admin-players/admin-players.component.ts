@@ -443,12 +443,12 @@ export class AdminPlayersComponent {
                 player?.lastName?.toLowerCase().includes(this.searchByNameterm.toLowerCase())
             );
           }
-          if (this.selectedCompetition) {
-            this.players = this.players.filter((player: any) => player.shortcode === this.selectedCompetition.shortCode);
-          }
           this.dropEID = players;
         }
       }
+      // if (this.selectedCompetition) {
+      //   this.players = this.players.filter((player: any) => player.shortcode === this.selectedCompetition.shortCode);
+      // }
     });
   }
   filterAllPlayers() {
@@ -481,9 +481,9 @@ export class AdminPlayersComponent {
         if (!leagueId && !academy && !team) {
           this.players = players;
         }
-        if (this.selectedCompetition) {
-          this.players = this.players.filter((player: any) => player.shortcode === this.selectedCompetition.shortCode);
-        }
+        // if (this.selectedCompetition) {
+        //   this.players = this.players.filter((player: any) => player.shortcode === this.selectedCompetition.shortCode);
+        // }
       }
     });
   }

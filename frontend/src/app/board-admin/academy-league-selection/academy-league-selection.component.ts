@@ -45,16 +45,10 @@ export class AcademyLeagueSelectionComponent implements OnInit {
   }
   ngOnInit(): void {
     // now get the leagues and map
-    this.getLeaguesFromLeague();
+    this.getLeaguesFromStore();
     let id = this.activatedRoute.snapshot.params["id"];
     this.getTeamsById(id);
-    // getting leagues
-    // this.store.select(LeagueSelectors.getLeagues).subscribe((leagues) => {
-    //   if (leagues) {
-    //     this.leagues = leagues;
-    //   }
-    // });
-    this.getLeaguesFromLeague();
+    this.getLeaguesFromStore();
   }
 
   getTeamsById = (teamID: any) => {
@@ -75,7 +69,7 @@ export class AcademyLeagueSelectionComponent implements OnInit {
       }
     });
   };
-  getLeaguesFromLeague = () => {
+  getLeaguesFromStore = () => {
     this.store.select(LeagueSelectors.getLeagues).subscribe((leagues) => {
       if (leagues) {
         this.leagues = leagues.slice().sort((a, b) => {

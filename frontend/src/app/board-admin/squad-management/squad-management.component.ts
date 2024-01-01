@@ -61,9 +61,9 @@ export class SquadManagementComponent {
           return aNumber - bNumber;
         });
       }
-      if (this.selectedCompetition) {
-        this.academies = academy.slice().filter((academy: any) => academy.shortcode === this.selectedCompetition.shortCode);
-      }
+      // if (this.selectedCompetition) {
+      //   this.academies = academy.slice().filter((academy: any) => academy.shortcode === this.selectedCompetition.shortCode);
+      // }
     });
   }
   getCompetitions() {

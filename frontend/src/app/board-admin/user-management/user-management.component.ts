@@ -60,6 +60,7 @@ export class UserManagementComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.getSelectedCompetition();
     // get logged in user
     this.loggedInUser = this.storageService.getUser();
     this.userForm = this.formBuilder.group({
@@ -75,7 +76,6 @@ export class UserManagementComponent implements OnInit {
     this.getUsersFromStore();
     this.getAcademiesFromStore();
     this.getRoles();
-    this.getSelectedCompetition();
   }
 
   filterUsers() {
@@ -101,7 +101,9 @@ export class UserManagementComponent implements OnInit {
         this.data = users.filter((user: any) => user.username !== this.loggedInUser.username);
         this.data = users.filter((user: any) => user.roles.some((role: any) => role.name !== "admin" && role.name !== "superadmin"));
         this.loadingIndicator = false;
-        this.data = users.filter((user: any) => user.shortcode === this.selectedCompetition.shortCode);
+        // if (this.selectedCompetition) {
+        //   this.data = this.data.filter((user: any) => user.shortcode === this.selectedCompetition.shortCode);
+        // }
       },
       (error) => {
         this.notifier.notify("error", "Please try again!");

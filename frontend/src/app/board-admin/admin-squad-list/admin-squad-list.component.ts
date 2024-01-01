@@ -7,6 +7,7 @@ import { NotifierService } from "angular-notifier";
 import { environment } from "src/environments/environment";
 import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { DomSanitizer } from "@angular/platform-browser";
+import { StorageService } from "src/app/_services/storage.service";
 
 @Component({
   selector: "app-admin-squad-list",
@@ -31,21 +32,27 @@ export class AdminSquadListComponent {
   public imgSrc: any = null;
   public closeResult: string = "";
   apiURL = environment.apiURL;
+  public selectedCompetition: any = {};
   constructor(
     private sanitizer: DomSanitizer,
     private modalService: NgbModal,
     private store: Store,
-    private userService: UserService,
+    private storageService: StorageService,
     notifier: NotifierService
   ) {
     this.notifier = notifier;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getSelectedCompetition();
+  }
 
   getPlayersFromStore() {
     this.store.select(PlayerSelectors.getPlayers).subscribe((players) => {
       this.players = players;
+      // if (this.selectedCompetition) {
+      //   this.players = this.players.filter((player: any) => player.shortcode === this.selectedCompetition.shortCode);
+      // }
     });
   }
 
@@ -99,5 +106,8 @@ export class AdminSquadListComponent {
   }
   appPlayer(id: any) {
     this.approvePlayer.emit(id);
+  }
+  getSelectedCompetition() {
+    this.selectedCompetition = this.storageService.getCompetition();
   }
 }
