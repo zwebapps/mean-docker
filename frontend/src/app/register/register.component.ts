@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../_services/auth.service';
-import { StorageService } from '../_services/storage.service';
-import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { AuthService } from "../_services/auth.service";
+import { StorageService } from "../_services/storage.service";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  selector: "app-register",
+  templateUrl: "./register.component.html",
+  styleUrls: ["./register.component.scss"]
 })
 export class RegisterComponent implements OnInit {
   form: any = {
@@ -18,12 +18,12 @@ export class RegisterComponent implements OnInit {
   };
   isSuccessful = false;
   isSignUpFailed = false;
-  errorMessage = '';
+  errorMessage = "";
   isLoggedIn = false;
 
-  constructor(private authService: AuthService, private storageService: StorageService, private router: Router) { }
+  constructor(private authService: AuthService, private storageService: StorageService, private router: Router) {}
 
-  ngOnInit () : void {
+  ngOnInit(): void {
     this.isLoggedIn = this.storageService.isLoggedIn();
 
     if (this.storageService.isLoggedIn()) {
@@ -35,12 +35,11 @@ export class RegisterComponent implements OnInit {
     const { firstname, lastname, username, email, password } = this.form;
 
     this.authService.register(firstname, lastname, username, email, password).subscribe({
-      next: data => {
-        console.log(data);
+      next: (data) => {
         this.isSuccessful = true;
         this.isSignUpFailed = false;
       },
-      error: err => {
+      error: (err) => {
         this.errorMessage = err.error.message;
         this.isSignUpFailed = true;
       }

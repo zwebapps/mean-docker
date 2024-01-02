@@ -39,7 +39,6 @@ export class CompetitionsEffects {
         } else {
           return this.competitionService.getCompetitions().pipe(
             map((data) => {
-              console.log(data);
               return Array.isArray(data)
                 ? CompetitionActions.loadCompetitionsSuccess({ data })
                 : CompetitionActions.loadCompetitionsSuccess({ data: [] });

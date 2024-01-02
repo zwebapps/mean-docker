@@ -266,10 +266,8 @@ export class CoachAcademyDetailsComponent {
     } else {
       let dateToCompare =
         this.playerForm.value.gender === "Female" || this.playerForm.value.limitedAbility
-          ? moment(moment(this.playerForm.value.dob).subtract(1, "year")).format("YYYY-MM-DD")
+          ? moment(moment(this.playerForm.value.dob).add(1, "year")).format("YYYY-MM-DD")
           : moment(this.playerForm.value.dob).format("YYYY-MM-DD");
-
-      // let isIlligible = moment(this.selectedLeague.leagueAgeLimit).isSameOrBefore(this.playerForm.value.dob);
       let isIlligible = moment(this.selectedLeague.leagueAgeLimit).isSameOrBefore(dateToCompare);
       if (!isIlligible) {
         this.notifier.notify("error", "You are not eligible for this league!");
@@ -459,6 +457,18 @@ export class CoachAcademyDetailsComponent {
       }
     );
   }
+
+  associatedLeaguesForSelectedTeam = (event: any) => {
+    const { league } = this.teamDeails;
+    if (league) {
+      let dateToCompare =
+        this.playerForm.value.gender === "Female" || this.playerForm.value.limitedAbility
+          ? moment(moment(league.leagueAgeLimit).add(1, "year")).format("YYYY-MM-DD")
+          : moment(league.leagueAgeLimit).format("YYYY-MM-DD");
+      this.dropleagues = this.leagues.filter((lg: any) => moment(lg.leagueAgeLimit).isSameOrBefore(dateToCompare) && league._id !== lg._id);
+    }
+  };
+
   onCheckBox(league: any) {
     const lg = this.leagues.find((leag: any) => leag._id === league._id);
     this.playerForm.patchValue({
@@ -756,17 +766,12 @@ export class CoachAcademyDetailsComponent {
     }
   };
   getMaxAgeLeagues = (value: any) => {
-    const dob = new Date(value);
-    let ageDifMs = Date.now() - dob.getTime();
-    let ageDate = new Date(ageDifMs);
-    let age = Math.abs(ageDate.getUTCFullYear() - 1970);
     if (this.selectedLeague) {
-      // filter on selected league and dob
-      this.dropleagues = this.leagues.filter(
-        (league: any) =>
-          moment(this.playerForm.controls.dob.value).isAfter(league.leagueAgeLimit) &&
-          moment(this.selectedLeague.leagueAgeLimit).isAfter(league.leagueAgeLimit)
-      );
+      let dateToCompare =
+        this.playerForm.value.gender === "Female" || this.playerForm.value.limitedAbility
+          ? moment(moment(this.playerForm.value.dob).add(1, "year")).format("YYYY-MM-DD")
+          : moment(this.playerForm.value.dob).format("YYYY-MM-DD");
+      this.dropleagues = this.leagues.filter((league: any) => moment(league.leagueAgeLimit).isSameOrBefore(dateToCompare));
     }
   };
   redirectTo() {

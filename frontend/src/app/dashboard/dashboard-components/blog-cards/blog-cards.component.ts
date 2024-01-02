@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { StorageService } from "src/app/_services/storage.service";
 import { environment } from "src/environments/environment";
+const coachCards = ["players", "teams"];
 
 const dashboardLabels: any = [
   {
@@ -38,7 +39,7 @@ export class BlogCardsComponent implements OnInit {
   @Input() blogcards: any;
   @Input() dashboardContents: any;
   apiURL = environment.apiURL;
-  public loggedInUser: any;
+  public loggedInUser: any = {};
   constructor(private storageService: StorageService) {
     if (this.storageService.getUser()) {
       this.loggedInUser = this.storageService.getUser();
@@ -46,6 +47,13 @@ export class BlogCardsComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+  displayForCoach(key: any) {
+    if (this.loggedInUser && this.loggedInUser.roles.includes("ROLE_COACH")) {
+      return coachCards.includes(key) ? true : false;
+    } else {
+      return true;
+    }
+  }
   getLabel(key: any) {
     return dashboardLabels.find((dlabel: any) => dlabel.key === key)?.label;
   }
