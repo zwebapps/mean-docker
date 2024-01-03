@@ -5,7 +5,9 @@ import { NotifierService } from "angular-notifier";
 import { AcademyService } from "src/app/_services/academy.service";
 import { StorageService } from "src/app/_services/storage.service";
 import { TeamService } from "src/app/_services/team.service";
+import * as TeamSelectors from "../../_store/selectors/teams.selectors";
 import { environment } from "src/environments/environment";
+import { Store } from "@ngrx/store";
 
 @Component({
   selector: "app-coach-squad-management",
@@ -14,6 +16,11 @@ import { environment } from "src/environments/environment";
 })
 export class CoachSquadManagementComponent implements OnInit {
   @ViewChild("myTable") table: any;
+  public dropdownList: any = ["Team", "League"];
+  dropdownObj: any = {
+    Team: [],
+    League: []
+  };
   options = {};
   columns: any = [{ prop: "firstname" }, { name: "lastname" }, { name: "username" }, { name: "email" }];
   loadingIndicator = true;
@@ -25,7 +32,10 @@ export class CoachSquadManagementComponent implements OnInit {
   public teams: any = [];
   apiURL = environment.apiURL;
   public filters: string[] = [];
+  public selectedLeagues: any = [];
+  public selectedTeams: any = [];
   constructor(
+    private store: Store,
     private academyService: AcademyService,
     private teamService: TeamService,
     private router: Router,
@@ -39,20 +49,27 @@ export class CoachSquadManagementComponent implements OnInit {
     this.academyService.getAcademyByCoachId(this.loggedInCoach.id).subscribe((res: any) => {
       if (res) {
         this.academy = res;
-        this.getTeamsByAcademy(res._id);
+        this.getTeamsByAcademyOnRender(res._id);
       }
     });
   }
   ngOnInit(): void {}
-  getTeamsByAcademy(academyId: string) {
-    this.teamService.getTeamsByAcademy(academyId).subscribe((res: any) => {
-      if (res) {
-        const mappedTeams: any = [];
-        // map team based on age group
-        res.forEach((team: any) => {
-          const { academy_id, competition, leagues, shortcode, teamName, user_id, _id } = team;
-          leagues.forEach((league: any) => {
-            mappedTeams.push({
+  getTeamsByAcademyOnRender(academyId: string) {
+    const mappedTeams: any = [];
+    this.store.select(TeamSelectors.getTeams).subscribe((teams) => {
+      let fetchedTeams = teams;
+      fetchedTeams = fetchedTeams.filter((stm) => stm?.academy_id?._id === academyId);
+      // map team based on age group
+      fetchedTeams.forEach((team: any) => {
+        const { academy_id, competition, leagues, shortcode, teamName, user_id, _id } = team;
+        leagues.forEach((league: any) => {
+          // check if exits already
+          if (!this.dropdownObj["League"].find((lg: any) => lg?._id === league?._id)) {
+            this.dropdownObj["League"].push(league);
+          }
+          // check if exits already
+          if (!this.dropdownObj["Team"].find((tm: any) => tm?._id === _id)) {
+            this.dropdownObj["Team"].push({
               academy_id,
               competition,
               league: league,
@@ -61,9 +78,55 @@ export class CoachSquadManagementComponent implements OnInit {
               user_id,
               _id
             });
+          }
+          mappedTeams.push({
+            academy_id,
+            competition,
+            league: league,
+            shortcode,
+            teamName,
+            user_id,
+            _id
           });
         });
-        this.teams = mappedTeams;
+      });
+      this.teams = mappedTeams;
+      // filter based on teams and leagues
+      if (this.selectedTeams.length > 0) {
+        this.teams = this.teams.filter((tm: any) => this.selectedTeams.includes(tm?._id));
+      }
+      if (this.selectedLeagues.length > 0) {
+        this.teams = this.teams.filter((tm: any) => this.selectedLeagues.includes(tm?.league?._id));
+      }
+    });
+  }
+  getTeamsByAcademy(academyId: string) {
+    const mappedTeams: any = [];
+    this.store.select(TeamSelectors.getTeams).subscribe((teams) => {
+      let fetchedTeams = teams;
+      fetchedTeams = fetchedTeams.filter((stm) => stm?.academy_id?._id === academyId);
+      // map team based on age group
+      fetchedTeams.forEach((team: any) => {
+        const { academy_id, competition, leagues, shortcode, teamName, user_id, _id } = team;
+        leagues.forEach((league: any) => {
+          mappedTeams.push({
+            academy_id,
+            competition,
+            league: league,
+            shortcode,
+            teamName,
+            user_id,
+            _id
+          });
+        });
+      });
+      this.teams = mappedTeams;
+      // filter based on teams and leagues
+      if (this.selectedTeams.length > 0) {
+        this.teams = this.teams.filter((tm: any) => this.selectedTeams.includes(tm?._id));
+      }
+      if (this.selectedLeagues.length > 0) {
+        this.teams = this.teams.filter((tm: any) => this.selectedLeagues.includes(tm?.league?._id));
       }
     });
   }
@@ -82,12 +145,41 @@ export class CoachSquadManagementComponent implements OnInit {
   getImg = (image: string) => {
     return `${this.apiURL}/static/${image}`;
   };
+
   removeFilter(filter: string) {
     this.filters = this.filters.filter((f) => f !== filter);
+    if (filter === "Team") {
+      this.selectedTeams = [];
+    }
+    if (filter === "League") {
+      this.selectedLeagues = [];
+    }
+    this.getTeamsByAcademy(this.academy?._id);
   }
+
   addFilter(filter: string) {
     if (!this.filters.includes(filter)) {
       this.filters.push(filter);
     }
+  }
+
+  filterByType(filterType: any, child: any) {
+    if (filterType === "Team") {
+      if (!this.selectedTeams.includes(child._id)) {
+        this.selectedTeams.push(child._id);
+      } else {
+        let index = this.selectedTeams.indexOf(child._id);
+        this.selectedTeams.splice(index, 1);
+      }
+    }
+    if (filterType === "League") {
+      if (!this.selectedLeagues.includes(child?._id)) {
+        this.selectedLeagues.push(child?._id);
+      } else {
+        let index = this.selectedLeagues.indexOf(child?._id);
+        this.selectedLeagues.splice(index, 1);
+      }
+    }
+    this.getTeamsByAcademy(this.academy?._id);
   }
 }
