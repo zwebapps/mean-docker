@@ -19,9 +19,10 @@
     <thead>
       <tr>
         <th>Name</th>
-        <th>Squad</th>
+        <th>Squad No.</th>
         <th>DOB</th>
-        <th>EID</th>
+        <th>EID Front</th>
+        <th>EID Back</th>
         <th>MVP</th>
       </tr>
     </thead>
@@ -31,10 +32,10 @@
         <td>{{ player.squadNo }}</td>
         <td>{{ player.dob | date : "dd.MM.yyyy" }}</td>
         <td>
-          <div class="d-flex">
-            <img src="{{ apiURL }}/static/{{ player.eidFront }}" width="100" (click)="open(content, player.eidFront)" />
-            <img src="{{ apiURL }}/static/{{ player.eidBack }}" width="100" (click)="open(content, player.eidBack)" />
-          </div>
+          <img src="assets/images/eid-front.svg" width="80" (click)="open(content, player.eidFront)" />
+        </td>
+        <td>
+          <img src="assets/images/eid-back.svg" width="80" (click)="open(content, player.eidBack)" />
         </td>
         <td>
           <input type="checkbox" [checked]="mvpPlayer?._id == player._id" (change)="addMvp(player)" />
