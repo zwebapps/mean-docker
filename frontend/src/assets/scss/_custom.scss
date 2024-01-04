@@ -226,6 +226,36 @@ label{
   line-height: 17px;
 }
 
+.fixture-team-table .city-heading h4{
+color: #667085;
+font-family: "Anton", sans-serif;
+font-size: 18px;
+margin:20px 0;
+}
+
+.fixture-team-table .table{
+  box-shadow: 0px 2.44px 4.881px -2.44px rgba(16, 24, 40, 0.05), 0px 4.881px 9.762px -2.44px rgba(16, 24, 40, 0.05);
+  margin-bottom: 20px;
+  border-radius: 10px;
+  overflow:hidden;
+}
+.fixture-team-table .table thead{
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  background: #F9FAFB;
+}
+.fixture-team-table .table thead th{
+  color: #667085;
+  font-family: "Anton", sans-serif;
+  font-size: 18px;
+  background:transparent;
+}
+.fixture-team-table .table tbody td{
+  background:#fff !important;
+  color: #101828;
+  font-family: "Anton", sans-serif;
+  font-size: 18px;
+}
+
 @media (max-width: 768px) {
   .mb-md-1 {
     margin-bottom: 1rem;
