@@ -34,14 +34,16 @@
                   {{ filter }}
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" *ngIf="dropdownObj[filter]">
                     <ng-container *ngFor="let child of dropdownObj[filter]">
-                      <a class="dropdown-item" (click)="filterByType(filter, child)">
-                        <div class="form-check">
-                          <input type="checkbox" class="form-check-input" id="dropdownCheck" />
-                          <label class="form-check-label" for="dropdownCheck">
-                            {{ filter === "Team" ? child["teamName"] : child["leagueName"] }}
-                          </label>
-                        </div>
-                      </a>
+                      <div class="dropdown-item">
+                        <input type="checkbox" class="form-check-input" id="dropdownCheck"
+                        [checked]="filter === 'Team' ? selectedTeams.includes(child._id) : selectedLeagues.includes(child?._id)"
+                        (change)="filterByType(filter, child)" />
+                        <label class="form-check-label" for="dropdownCheck">
+                          <a (click)="filterByType(filter, child)">
+                            {{ filter === 'Team' ? child['teamName'] : child['leagueName'] }}
+                          </a>
+                        </label>
+                      </div>
                     </ng-container>
                   </div>
                   <span class="close-icon" (click)="removeFilter(filter)">&times;</span>
