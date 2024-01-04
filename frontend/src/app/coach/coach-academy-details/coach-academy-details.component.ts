@@ -200,15 +200,6 @@ export class CoachAcademyDetailsComponent {
         if (!res.message) {
           this.academy = res.academy_id;
           this.team = res;
-          this.leagues = res.leagues;
-          if (this.leagues.length > 0) {
-            this.leagues = this.leagues.map((league: any) => {
-              return {
-                ...league,
-                selected: false
-              };
-            });
-          }
           this.getPlayersFromStore();
         } else {
           this.notifier.notify("Error", "Academy not found!");
@@ -218,7 +209,7 @@ export class CoachAcademyDetailsComponent {
         this.notifier.notify("Error", "Academy not found!");
       }
     );
-    // this.getLeaguesFromStore();
+    this.getLeaguesFromStore();
     this.getAcademiesFromStore();
     this.getTeamsFromStore();
     // get logged in coach
@@ -373,12 +364,7 @@ export class CoachAcademyDetailsComponent {
     this.store.select(LeagueSelectors.getLeagues).subscribe(
       (leagues) => {
         if (leagues) {
-          this.leagues = leagues.map((league: any) => {
-            return {
-              ...league,
-              selected: false
-            };
-          });
+          this.leagues = leagues.filter((lg) => lg?.shortcode === this.coach?.shortcode);
         }
       },
       (err) => {
@@ -484,7 +470,7 @@ export class CoachAcademyDetailsComponent {
       };
     });
     // filter leagues to display elder leagues
-    this.dropleagues = this.leagues.filter((league: any) => !league.selected);
+    this.dropleagues = this.leagues.filter((lg: any) => lg._id !== league._id);
     if (this.playerForm.controls.dob.valid) {
       // filter on selected league and dob
       this.dropleagues = this.leagues.filter(
@@ -509,8 +495,8 @@ export class CoachAcademyDetailsComponent {
     } else {
       this.playerPlayingUp.push(item._id);
     }
-    this.dropteams = this.teams.filter((team: any) => this.isLeagueAllowed(this.playerPlayingUp[0], team.leagues));
-    console.log(this.dropteams);
+    // this.dropteams = this.teams.filter((team: any) => this.isLeagueAllowed(this.playerPlayingUp[0], team.leagues));
+    this.dropteams = this.teams.filter((team: any) => team.leagues.some((lg: any) => this.playerPlayingUp.includes(lg?._id)));
     this.dropteams = this.dropteams.filter((team: any) => team.academy_id._id === this.academy._id);
   }
   isLeagueAllowed(playerPlayingUp: any, leagues: any) {

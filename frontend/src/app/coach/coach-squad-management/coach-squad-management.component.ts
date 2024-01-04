@@ -100,6 +100,15 @@ export class CoachSquadManagementComponent implements OnInit {
       }
     });
   }
+  isChecked(filterType: any, obj: any) {
+    if (filterType === "Team") {
+      return this.selectedTeams.includes(obj._id);
+    } else if (filterType === "League") {
+      return this.selectedLeagues.includes(obj?.league?._id);
+    } else {
+      return false;
+    }
+  }
   getTeamsByAcademy(academyId: string) {
     const mappedTeams: any = [];
     this.store.select(TeamSelectors.getTeams).subscribe((teams) => {

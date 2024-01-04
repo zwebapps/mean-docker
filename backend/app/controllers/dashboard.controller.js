@@ -43,7 +43,7 @@ exports.getDashboardContents = async (req, resp, next) => {
         shortcode: shortcode
       });
       players = await Player.find({
-        user: userId,
+        academy: ObjectId(academies._id),
         competition: Array.isArray(competition)
           ? competition[0]._id
           : competition._id,

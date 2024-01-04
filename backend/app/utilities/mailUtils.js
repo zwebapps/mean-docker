@@ -52,7 +52,7 @@ exports.sendEmail = async (emailContent) => {
     .sendMail({
       text: heading,
       to: {
-        address: "zahoor_ahmed143@hotmail.com",
+        address: recipientEmail,
         name: "YFL Administration"
       },
       from: {
