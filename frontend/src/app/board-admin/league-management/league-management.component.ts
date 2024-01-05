@@ -78,7 +78,6 @@ export class LeagueManagementComponent implements OnInit {
   }
 
   onSubmit() {
-    debugger;
     const user = this.storageService.getUser();
     if (!this.editLeague) {
       if (!this.leagueForm.value.leagueName) {
@@ -110,7 +109,6 @@ export class LeagueManagementComponent implements OnInit {
         }
       }
     } else {
-      debugger;
       const leagueData = {
         "League Name": this.leagueForm.value.leagueName,
         "Short Code": this.selectedCompetition?.shortCode,
