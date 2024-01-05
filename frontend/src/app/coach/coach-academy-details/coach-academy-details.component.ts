@@ -30,6 +30,11 @@ import { ModalDismissReasons, NgbModal } from "@ng-bootstrap/ng-bootstrap";
 export class CoachAcademyDetailsComponent {
   @ViewChild("myTable") table: any;
   @ViewChild("csvUpload") csvUploadVar: ElementRef;
+  public dropdownList: any = ["Team", "League"];
+  dropdownObj: any = {
+    Team: [],
+    League: []
+  };
   excelData: any = [
     [1, 2],
     [3, 4]
@@ -285,7 +290,6 @@ export class CoachAcademyDetailsComponent {
           createdBy: this.coach._id
         }
       };
-
       this.palyerService.createPlayer(playerObj).subscribe(
         (res: any) => {
           if (res) {
@@ -456,19 +460,12 @@ export class CoachAcademyDetailsComponent {
   };
 
   onCheckBox(league: any) {
-    const lg = this.leagues.find((leag: any) => leag._id === league._id);
     this.playerForm.patchValue({
       playingUp: ""
     });
 
-    this.selectedLeague = lg;
+    this.selectedLeague = league;
 
-    this.leagues = this.leagues.map((league: any) => {
-      return {
-        ...league,
-        selected: lg._id === league._id ? true : false
-      };
-    });
     // filter leagues to display elder leagues
     this.dropleagues = this.leagues.filter((lg: any) => lg._id !== league._id);
     if (this.playerForm.controls.dob.valid) {
@@ -598,6 +595,8 @@ export class CoachAcademyDetailsComponent {
       );
     }
 
+    this.editPlayerForm.controls.limitedAbility.disable();
+    this.editPlayerForm.controls.gender.disable();
     this.editPlayerForm.controls.firstName.disable();
     this.editPlayerForm.controls.surName.disable();
     this.editPlayerForm.controls.dob.disable();

@@ -24,7 +24,7 @@
       </ngx-datatable-column>
       <ngx-datatable-column name="Age Cut Off" prop="row">
         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-          {{ row?.leagueAgeLimit }}
+          {{ row?.leagueAgeLimit | date : "dd/MM/yyyy" }}
         </ng-template>
       </ngx-datatable-column>
       <ngx-datatable-column name="Competition" prop="row">
