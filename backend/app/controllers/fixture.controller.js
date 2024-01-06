@@ -40,7 +40,7 @@ exports.createFixture = async (req, resp, next) => {
       });
 
       const savedFixture = await fixtureData.save();
-      resp.status(200).json(savedFixture);
+      return resp.status(200).json(savedFixture);
     }
   } catch (error) {
     next(error);

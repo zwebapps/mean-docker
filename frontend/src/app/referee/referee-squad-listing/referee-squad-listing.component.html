@@ -21,6 +21,7 @@
               [league]="row.league"
               [team]="row.homeTeam"
               [fixture]="row"
+              (fetchUpdatedFixtures)="getUpdatedFixtures()"
             ></app-fixture-team-details>
           </div>
           <div class="col-lg-6 col-md-12 col-sm-12">
@@ -29,6 +30,7 @@
               [league]="row.league"
               [team]="row.awayTeam"
               [fixture]="row"
+              (fetchUpdatedFixtures)="getUpdatedFixtures()"
             ></app-fixture-team-details>
           </div>
         </div>

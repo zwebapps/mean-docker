@@ -27,13 +27,15 @@
   [limit]="10"
   rowHeight="auto"
   [scrollbarH]="true"
+  (sort)="statusComparator($event)"
+  [sorts]="[{ prop: 'firstName' }, { prop: 'emiratesIdNo' }, { prop: 'playerStatus' }, { prop: 'squadNo' }]"
 >
   <ngx-datatable-column name="Sr. no" prop="row">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
       {{ row?.playerNo + 1 }}
     </ng-template>
   </ngx-datatable-column>
-  <ngx-datatable-column name="Name" prop="row">
+  <ngx-datatable-column name="Name" prop="firstName">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
       {{ row.firstName }} {{ row.lastName }}
     </ng-template>
@@ -43,12 +45,12 @@
               {{row.lastName}}
 </ng-template>
 </ngx-datatable-column> -->
-  <ngx-datatable-column name="DOB" prop="row">
+  <ngx-datatable-column name="DOB" prop="dob">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
       {{ row.dob | date : "dd.MM.yyyy" }}
     </ng-template>
   </ngx-datatable-column>
-  <ngx-datatable-column name="Squad No" prop="row" size="50">
+  <ngx-datatable-column name="Squad No" prop="squadNo" size="50">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
       {{ row?.squadNo }}
     </ng-template>
@@ -63,31 +65,23 @@
       {{ row?.league?.leagueName }}
     </ng-template>
   </ngx-datatable-column>
-  <ngx-datatable-column name="EID Number" prop="row" width="200">
+  <ngx-datatable-column name="EID Number" prop="emiratesIdNo" width="200">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
       {{ row.emiratesIdNo }}
     </ng-template>
   </ngx-datatable-column>
   <ngx-datatable-column name="EID Front" prop="row">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" height="100">
-      <img
-        src="assets/images/eid-front.svg"
-        width="80"
-        (click)="open(content, row.eidFront)"
-      />
+      <img src="assets/images/eid-front.svg" width="80" (click)="open(content, row.eidFront)" />
     </ng-template>
   </ngx-datatable-column>
   <ngx-datatable-column name="EID Back" prop="row">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" height="200">
       <!-- <img src="{{ apiURL }}/static/{{ row.eidBack }}" width="100" (click)="open(content, row.eidBack)" /> -->
-      <img
-        src="assets/images/eid-back.svg"
-        width="80"
-        (click)="open(content, row.eidBack)"
-      />
+      <img src="assets/images/eid-back.svg" width="80" (click)="open(content, row.eidBack)" />
     </ng-template>
   </ngx-datatable-column>
-  <ngx-datatable-column name="Player Status" prop="row">
+  <ngx-datatable-column name="Player Status" prop="playerStatus">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
       <span *ngIf="row.playerStatus && row.playerStatus === 'Approved'" class="text-success text-center">
         <!-- {{ row.playerStatus }} -->

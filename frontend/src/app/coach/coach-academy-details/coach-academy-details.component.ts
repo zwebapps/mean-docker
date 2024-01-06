@@ -460,6 +460,7 @@ export class CoachAcademyDetailsComponent {
   };
 
   onCheckBox(league: any) {
+    this.getLeaguesFromStore();
     this.playerForm.patchValue({
       playingUp: ""
     });

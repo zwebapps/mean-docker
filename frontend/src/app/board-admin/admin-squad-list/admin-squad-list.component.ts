@@ -20,6 +20,7 @@ export class AdminSquadListComponent {
   @Output() delPlayer = new EventEmitter<string>();
   @Output() approvePlayer = new EventEmitter<string>();
   @Output() editPlayer = new EventEmitter<string>();
+  @Output() sorting = new EventEmitter();
   options = {};
   @Input() players: any = [];
   @Input() leagues: any = [];
@@ -109,5 +110,8 @@ export class AdminSquadListComponent {
   }
   getSelectedCompetition() {
     this.selectedCompetition = this.storageService.getCompetition();
+  }
+  statusComparator(row: any): void {
+    this.sorting.emit(row.newValue);
   }
 }

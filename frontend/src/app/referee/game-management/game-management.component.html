@@ -1,10 +1,11 @@
 <div class="container mt-5">
-<div class="row">
-  <app-referee-squad-listing
-    [fixtures]="fixtures"
-    (fixtureDetail)="getFixtureDetails($event)"
-    (delFixture)="deleteFixture($event)"
-    (editFixture)="updateFixture($event)"
-  ></app-referee-squad-listing>
-</div>
+  <div class="row">
+    <app-referee-squad-listing
+      [fixtures]="fixtures"
+      (fixtureDetail)="getFixtureDetails($event)"
+      (delFixture)="deleteFixture($event)"
+      (editFixture)="updateFixture($event)"
+      (fetUpdatedFixturesParent)="parentUpdateFixtures()"
+    ></app-referee-squad-listing>
+  </div>
 </div>

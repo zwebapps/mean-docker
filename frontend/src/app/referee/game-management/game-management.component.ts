@@ -41,6 +41,9 @@ export class GameManagementComponent implements OnInit {
   ngOnInit(): void {
     // get ref details
     this.refereeDetails = this.storageService.getUser();
+    this.getFixturesFromStore();
+  }
+  getFixturesFromStore() {
     // now get the leagues and map
     this.store.select(FixtureSelectors.getFixtures).subscribe((fixtures) => {
       if (fixtures) {
@@ -78,6 +81,7 @@ export class GameManagementComponent implements OnInit {
         if (result) {
           this.notifier.notify("success", "Fixture deleted successfully");
           this.fetchFixtures();
+          this.getFixturesFromStore();
         }
       },
       (error) => {
@@ -91,7 +95,12 @@ export class GameManagementComponent implements OnInit {
       if (result) {
         this.notifier.notify("success", "Fixture updated successfully");
         this.fetchFixtures();
+        this.getFixturesFromStore();
       }
     });
+  }
+  parentUpdateFixtures() {
+    this.fetchFixtures();
+    this.getFixturesFromStore();
   }
 }
