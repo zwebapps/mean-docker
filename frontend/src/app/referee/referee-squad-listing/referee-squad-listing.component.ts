@@ -13,6 +13,7 @@ export class RefereeSquadListingComponent implements OnInit, OnChanges {
   @Output() fixtureDetail = new EventEmitter<string>();
   @Output() delFixture = new EventEmitter<string>();
   @Output() editFixture = new EventEmitter();
+  @Output() fetUpdatedFixturesParent = new EventEmitter();
   private notifier: NotifierService;
   options = {};
   fixtureEdited = {
@@ -75,5 +76,8 @@ export class RefereeSquadListingComponent implements OnInit, OnChanges {
   }
   onDetailToggle(event: any) {
     console.log("Detail Toggled", event);
+  }
+  getUpdatedFixtures() {
+    this.fetUpdatedFixturesParent.emit();
   }
 }

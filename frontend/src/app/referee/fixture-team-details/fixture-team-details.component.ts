@@ -16,6 +16,7 @@ export class FixtureTeamDetailsComponent implements OnInit {
   @Input() team: any;
   @Input() league: any;
   @Input({ required: false }) fixture: any;
+  @Output() fetchUpdatedFixtures = new EventEmitter();
   public mvpPlayer: any = null;
   apiURL = environment.apiURL;
   closeResult: string = "";
@@ -93,7 +94,7 @@ export class FixtureTeamDetailsComponent implements OnInit {
           this.mvpPlayer = res.mvp;
           this.notifier.notify("success", "Fixture is updated successfully!");
           if (typeof window !== "undefined") {
-            window.location.reload();
+            this.fetchUpdatedFixtures.emit();
           }
         }
       });
