@@ -213,12 +213,12 @@ exports.updateUser = async (req, resp, next) => {
       };
     }
 
-    if (req.body["password"]) {
-      updatedUser = {
-        ...updatedUser,
-        password: bcrypt.hashSync(req.body["password"], 8)
-      };
-    }
+    // if (req.body["password"]) {
+    //   updatedUser = {
+    //     ...updatedUser,
+    //     password: bcrypt.hashSync(req.body["password"], 8)
+    //   };
+    // }
 
     if (req.body["email"]) {
       updatedUser = {

@@ -607,4 +607,30 @@ export class AdminPlayersComponent {
   getSelectedCompetition() {
     this.selectedCompetition = this.storageService.getCompetition();
   }
+  statusComparator(sortType: any): void {
+    console.log(sortType);
+    if (sortType === "asc") {
+      // Ascending sorting
+      this.players = this.players.slice().sort((playerA: any, playerB: any) => {
+        if (playerA.playerStatus < playerB.playerStatus) {
+          return -1; // playerA should be placed before playerB
+        } else if (playerA.playerStatus > playerB.playerStatus) {
+          return 1; // playerA should be placed after playerB
+        } else {
+          return 0; // playerA and playerB have the same status, maintain their original order
+        }
+      });
+    } else {
+      // Descending sorting
+      this.players = this.players.slice().sort((playerA: any, playerB: any) => {
+        if (playerA.playerStatus > playerB.playerStatus) {
+          return -1; // playerA should be placed before playerB
+        } else if (playerA.playerStatus < playerB.playerStatus) {
+          return 1; // playerA should be placed after playerB
+        } else {
+          return 0; // playerA and playerB have the same status, maintain their original order
+        }
+      });
+    }
+  }
 }
