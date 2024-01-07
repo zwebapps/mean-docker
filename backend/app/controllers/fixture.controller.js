@@ -50,7 +50,7 @@ exports.createFixture = async (req, resp, next) => {
 /* GET all fixture listing. */
 exports.getAllFixture = async (req, resp, next) => {
   try {
-    const fixture = await Fixture.find({}).populate([
+    const fixture = await Fixture.find({ deleted: false }).populate([
       "league",
       "homeTeam",
       "awayTeam",
@@ -70,7 +70,8 @@ exports.getAllFixture = async (req, resp, next) => {
 exports.getFixtureById = async (req, resp, next) => {
   try {
     const fixture = await Fixture.find({
-      _id: ObjectId(req.params.id)
+      _id: ObjectId(req.params.id),
+      deleted: false
     }).populate([
       "league",
       "homeTeam",
@@ -88,15 +89,19 @@ exports.getFixtureById = async (req, resp, next) => {
 exports.forShortCode = async (req, resp, next) => {
   try {
     const fixture = await Fixture.find({
-      shortcode: req.params.shortcode
-    }).populate([
-      "league",
-      "homeTeam",
-      "awayTeam",
-      "competition",
-      "user_id",
-      "mvp"
-    ]);
+      shortcode: req.params.shortcode,
+      deleted: false
+    })
+      .populate([
+        "league",
+        "homeTeam",
+        "awayTeam",
+        "competition",
+        "user_id",
+        "mvp"
+      ])
+      .sort({ createdAt: -1 })
+      .exec();
     resp.status(200).json(fixture);
   } catch (error) {
     next(error);
@@ -105,7 +110,8 @@ exports.forShortCode = async (req, resp, next) => {
 exports.forCompetition = async (req, resp, next) => {
   try {
     const fixture = await Fixture.find({
-      competition: ObjectId(req.params.competition)
+      competition: ObjectId(req.params.competition),
+      deleted: false
     }).populate([
       "league",
       "homeTeam",
@@ -124,7 +130,8 @@ exports.updateFixture = async (req, resp, next) => {
   try {
     if (req.params && req.params.id) {
       let fetchFixture = await Fixture.findOne({
-        _id: ObjectId(req.params.id)
+        _id: ObjectId(req.params.id),
+        deleted: false
       });
 
       if (!fetchFixture)
@@ -133,7 +140,9 @@ exports.updateFixture = async (req, resp, next) => {
       fetchFixture = {
         ...fetchFixture._doc,
         ...req.body,
-        mvp: req.body["mvp"] ? ObjectId(req.body["mvp"]) : null
+        mvp: req.body["mvp"]
+          ? ObjectId(req.body["mvp"])
+          : fetchFixture._doc["mvp"]
       };
 
       const updatedFixture = await Fixture.findByIdAndUpdate(

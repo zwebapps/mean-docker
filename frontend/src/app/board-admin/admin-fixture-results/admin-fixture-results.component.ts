@@ -40,6 +40,7 @@ export class AdminFixtureResultsComponent {
     this.fetchFixtures();
   }
   ngOnInit(): void {
+    this.store.dispatch(FixureActions.loadFixtures());
     this.getSelectedCompetition();
     // get ref details
     this.admin = this.storageService.getUser();

@@ -12,7 +12,8 @@ export class AdminTopFiltersComponent implements OnInit {
   @Output() ageGroupOut = new EventEmitter();
   @Output() compYearOut = new EventEmitter();
   @Output() genderOut = new EventEmitter();
-  public dashboardContents: any;
+  @Input({ required: false }) dashboardContents: any;
+  // public dashboardContents: any;
   topFilterForm: FormGroup;
   constructor(private dashboardService: DashboardService) {
     this.topFilterForm = new FormGroup({
@@ -23,7 +24,8 @@ export class AdminTopFiltersComponent implements OnInit {
     });
   }
   ngOnInit(): void {
-    this.getDashboardContents();
+    console.log(this.dashboardContents);
+    // this.getDashboardContents();
   }
   filterByCompetitions(event: any) {
     const competition: any = event.target.value;
