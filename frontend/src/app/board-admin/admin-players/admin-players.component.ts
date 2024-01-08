@@ -35,6 +35,7 @@ export class AdminPlayersComponent {
   reorderable = true;
   ColumnMode = ColumnMode;
   public teams: any = [];
+  public childTeams: any = [];
   public filterTeams: any = [];
   public teamsForFilter: any = [];
   private notifier: NotifierService;
@@ -43,13 +44,16 @@ export class AdminPlayersComponent {
   public currentTeam: any = {};
   public coaches: any = [];
   public leagues: any = [];
+  public dropleagues: any = [];
   public eidDropdownSettings: IDropdownSettings = {};
   public selectedCompetition: any = {};
   public dropEID: any = [];
+  displayEditPlayer: boolean = false;
   filterLeague: FormGroup;
   squadForm: FormGroup;
   displayAllPlayers: boolean = false;
   public playerForm: FormGroup;
+  public editPlayerForm: FormGroup;
   public dropdownSettings: IDropdownSettings = {};
   public dropdownTeamSettings: IDropdownSettings = {};
   public submitted: boolean = false;
@@ -76,15 +80,14 @@ export class AdminPlayersComponent {
   public eidNo: any = "";
   public selectedEIDs: any = [];
   public searchByNameterm: any = "";
+  public teamDeails: any = {};
   user: any;
   constructor(
     private storageService: StorageService,
     private playerService: PlayerService,
     private userService: UserService,
     notifier: NotifierService,
-    private teamService: TeamService,
     private store: Store,
-    private activatedRoute: ActivatedRoute,
     private formBuilder: FormBuilder,
     private router: Router
   ) {
@@ -133,7 +136,9 @@ export class AdminPlayersComponent {
     };
 
     const eidPattern = new RegExp("^\\d\\d\\d\\-\\d\\d\\d\\d\\-\\d\\d\\d\\d\\d\\d\\d\\-\\d$", "gm");
-    this.playerForm = this.formBuilder.group({
+    this.editPlayerForm = this.formBuilder.group({
+      gender: new FormControl("Male"),
+      limitedAbility: new FormControl(false),
       firstName: ["", Validators.required],
       surName: ["", [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
       squadNo: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(3)]],
@@ -148,8 +153,8 @@ export class AdminPlayersComponent {
     });
     this.getSelectedCompetition();
     // this.playerForm.controls.league.disable();
-    this.playerForm.controls.eidFront.disable();
-    this.playerForm.controls.eidBack.disable();
+    this.editPlayerForm.controls.eidFront.disable();
+    this.editPlayerForm.controls.eidBack.disable();
     this.getPlayersFromStore();
     this.getLeaguesFromStore();
     this.getTeamsFromStore();
@@ -167,7 +172,6 @@ export class AdminPlayersComponent {
     this.getPlayersFromStore();
   };
   activatePlayers = () => {
-    console.log(this.players);
     let selectedPlayers = this.players.filter((player: any) => player.playerStatus === "Pending");
     if (!selectedPlayers.length) {
       this.notifier.notify("error", "All players already activated!");
@@ -235,8 +239,8 @@ export class AdminPlayersComponent {
   getTeamsFromStore = () => {
     this.store.select(TeamSelectors.getTeams).subscribe((teams) => {
       if (Array.isArray(teams)) {
-        // filter teams for current academy
-        this.teams = teams.filter((team: any) => team.academy_id?._id === this.academy._id);
+        this.teams = teams;
+        this.childTeams = teams;
         this.filterTeams = teams;
       }
     });
@@ -244,12 +248,12 @@ export class AdminPlayersComponent {
   getLeaguesFromStore = () => {
     this.store.select(LeagueSelectors.getLeagues).subscribe((leagues) => {
       if (Array.isArray(leagues)) {
-        this.leagues = leagues;
+        this.leagues = leagues.filter((lg: any) => lg.shortcode === this.selectedCompetition.shortCode);
       }
     });
   };
   get f() {
-    return this.playerForm.controls;
+    return this.editPlayerForm.controls;
   }
 
   onItemSelect(item: any) {
@@ -283,71 +287,73 @@ export class AdminPlayersComponent {
     this.showPlayerEditForm = true;
     this.playerToEdit = this.players.find((player: any) => player._id === value);
     if (this.playerToEdit) {
+      let dateToCompare =
+        this.playerToEdit.gender === "Female" || this.playerToEdit.limitedAbility
+          ? moment(moment(this.playerToEdit.dob).add(1, "year")).format("YYYY-MM-DD")
+          : moment(this.playerToEdit.dob).format("YYYY-MM-DD");
       // filter leagues
-      this.playingUpleagues = this.leagues.filter(
-        (league: any) =>
-          moment(this.playerToEdit.dob).isAfter(league.leagueAgeLimit) &&
-          moment(this.playerToEdit.league.leagueAgeLimit).isAfter(league.leagueAgeLimit)
-      );
+      this.academy = this.playerToEdit.academy;
+      this.teams = this.teams.filter((tm: any) => tm?.academy_id?._id === this.academy._id);
+      this.playingUpleagues = this.leagues.filter((league: any) => moment(league.leagueAgeLimit).isSameOrBefore(dateToCompare));
       this.selectedPlayingUp = this.leagues.filter((leagues: any) => this.playerToEdit.playingUp.includes(leagues._id));
       if (this.playerToEdit.playingUpTeam && this.playerToEdit.playingUpTeam.length > 0) {
         this.selectedPlayingUpTeam = this.teams.filter((team: any) => this.playerToEdit.playingUpTeam.includes(team._id));
       }
-      this.playerForm.patchValue({
+
+      this.teamDeails = this.playerToEdit.team;
+      this.editPlayerForm.patchValue({
         firstName: this.playerToEdit.firstName,
         surName: this.playerToEdit.lastName,
         squadNo: this.playerToEdit.squadNo,
         dob: this.formatDate(this.playerToEdit.dob),
-        league: this.playerToEdit.league?._id,
-        team: this.playerToEdit.team?._id,
+        league: this.playerToEdit.league ? Array(this.playerToEdit.league) : [],
+        team: this.playerToEdit.team ? Array(this.playerToEdit.team) : [],
         playerEidNo: this.playerToEdit.emiratesIdNo,
         eidFront: this.playerToEdit.eidFront,
         eidBack: this.playerToEdit.eidBack
       });
       if (this.selectedPlayingUp.length > 0) {
-        this.playerForm.patchValue({
+        this.editPlayerForm.patchValue({
           playingUp: this.selectedPlayingUp
         });
       }
       if (this.playerPlayingUpTeam.length > 0) {
-        this.playerForm.patchValue({
+        this.editPlayerForm.patchValue({
           playingUpTeam: this.playerPlayingUpTeam
         });
       }
       this.eidNo = this.playerToEdit.emiratesIdNo;
-      // this.playerForm.controls.dob.disable();
+      this.editPlayerForm.controls.league.disable();
+      this.editPlayerForm.controls.team.disable();
+      this.editPlayerForm.controls.dob.disable();
     }
   };
   submitEditPlayer = () => {
-    let plSelectedLeague = this.leagues.find((league: any) => league._id === this.playerForm.value.league);
-    let isIlligible = moment(plSelectedLeague.leagueAgeLimit).isSameOrBefore(this.playerForm.value.dob);
-    if (!isIlligible) {
-      this.notifier.notify("error", "Player is not eligible for selected league!");
-      return;
-    }
     // emiratesIdNo is filled
-    if (this.playerForm.controls.playerEidNo.value) {
-      this.playerForm.get("playerEidNo").updateValueAndValidity();
+    if (this.editPlayerForm.controls.playerEidNo.value) {
+      this.editPlayerForm.get("playerEidNo").updateValueAndValidity();
     }
-    if (this.playerForm.controls.playingUp.value) {
-      this.playerForm.get("playingUp").updateValueAndValidity();
+    if (this.editPlayerForm.controls.playingUp.value) {
+      this.editPlayerForm.get("playingUp").updateValueAndValidity();
     }
-    if (this.playerForm.valid) {
+    if (this.editPlayerForm.valid) {
       const playerObj = {
-        firstName: this.playerForm.value.firstName,
-        surName: this.playerForm.value.surName,
-        dob: this.playerForm.value.dob,
-        league: this.playerForm.value.league,
-        team: this.playerForm.value.team,
-        squadNo: this.playerForm.value.squadNo,
-        emiratesIdNo: this.playerForm.value.playerEidNo,
+        firstName: this.editPlayerForm.value.firstName,
+        surName: this.editPlayerForm.value.surName,
+        dob: this.playerToEdit.dob,
+        squadNo: this.editPlayerForm.value.squadNo,
+        emiratesIdNo: this.editPlayerForm.value.playerEidNo,
         playerStatus: this.playerToEdit.playerStatus,
-        playingUp: this.selectedPlayingUp.map((league: any) => league._id),
-        playingUpTeam: this.selectedPlayingUpTeam.map((league: any) => league._id),
-        user: {
-          createdBy: this.playerToEdit.user?._id
-        }
+        playingUp:
+          this.editPlayerForm?.value?.playingUp.length > 0
+            ? this.editPlayerForm?.value?.playingUp.map((league: any) => league._id)
+            : this.playerToEdit?.playingUp.map((pl: any) => pl?._id),
+        playingUpTeam:
+          this.editPlayerForm?.value?.playingUpTeam.length > 0
+            ? this.editPlayerForm?.value?.playingUpTeam.map((tm: any) => tm._id)
+            : this.playerToEdit?.playingUpTeam.map((tm: any) => tm?._id)
       };
+
       this.playerService.updatePlayer(this.playerToEdit._id, playerObj).subscribe((result: any) => {
         console.log(result);
         if (result) {
@@ -624,9 +630,9 @@ export class AdminPlayersComponent {
       // Descending sorting
       this.players = this.players.slice().sort((playerA: any, playerB: any) => {
         if (playerA.playerStatus > playerB.playerStatus) {
-          return -1; // playerA should be placed before playerB
+          return 1; // playerA should be placed before playerB
         } else if (playerA.playerStatus < playerB.playerStatus) {
-          return 1; // playerA should be placed after playerB
+          return -1; // playerA should be placed after playerB
         } else {
           return 0; // playerA and playerB have the same status, maintain their original order
         }

@@ -89,8 +89,9 @@
       [limit]="10"
       rowHeight="auto"
       [scrollbarH]="true"
+      [sorts]="[{ prop: 'teamName' }]"
     >
-      <ngx-datatable-column name="Team Name" prop="row">
+      <ngx-datatable-column name="Team Name" prop="teamName">
         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
           <span onTeamClick="onTeamClick(row)">
             {{ row.teamName }}

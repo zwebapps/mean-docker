@@ -24,7 +24,7 @@ export class AdminSquadListComponent {
   options = {};
   @Input() players: any = [];
   @Input() leagues: any = [];
-  @Input() teams: any = [];
+  @Input({ required: false }) teams: any = [];
   @Input() leaguesFilter: any = [];
   columns: any = [{ prop: "firstname" }, { name: "lastname" }, { name: "username" }, { name: "email" }];
   loadingIndicator = true;

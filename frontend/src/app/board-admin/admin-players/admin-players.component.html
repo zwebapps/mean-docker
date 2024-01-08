@@ -42,6 +42,147 @@
       </div>
     </form>
   </div>
+  <div class="row" *ngIf="showPlayerEditForm">
+    <div class="form-wrapper">
+      <form
+        [formGroup]="editPlayerForm"
+        class="justify-content-around"
+        method="post"
+        enctype="multipart/form-data"
+        (ngSubmit)="submitEditPlayer()"
+      >
+        <div class="row justify-content-center">
+          <div class="form-group col-12 col-12 col-md-3 col-lg-3 m-2">
+            <label for="name" class="control-label">
+              <i class="bi bi-person-exclamation"></i> &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;Gender
+            </label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <button class="btn btn-outline-dark" type="button">
+                  <input
+                    class="btn btn-success"
+                    type="checkbox"
+                    value=""
+                    formControlName="limitedAbility"
+                    [checked]="false"
+                    (change)="leagueForUpPlay($event.target.value)"
+                  />
+                </button>
+              </div>
+
+              <select
+                class="form-select form-control"
+                name="gender"
+                aria-label="Default select"
+                (change)="leagueForUpPlay($event.target.value)"
+                formControlName="gender"
+              >
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group col-12 col-12 col-md-3 col-lg-3 m-2">
+            <label for="name" class="control-label">First Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              placeholder="First Name"
+              formControlName="firstName"
+              class="form-control"
+              disabled
+            />
+          </div>
+          <div class="form-group col-12 col-12 col-md-3 col-lg-3 m-2">
+            <label for="name" class="control-label">Last Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              placeholder="Last Name"
+              formControlName="surName"
+              class="form-control"
+              disabled
+            />
+          </div>
+          <div class="form-group col-12 col-12 col-md-3 col-lg-3 m-2">
+            <label for="name" class="control-label">Date of birth</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              placeholder="DOB"
+              formControlName="dob"
+              class="form-control"
+              (blur)="getMaxAgeLeagues($event.target.value)"
+              disabled
+            />
+          </div>
+          <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+            <label for="league" class="control-label">League</label>
+            <ng-multiselect-dropdown
+              [placeholder]="'League'"
+              [settings]="dropdownSettings"
+              [data]="leagues"
+              (onSelect)="onItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)"
+              formControlName="league"
+              [disabled]="true"
+            >
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+            <label for="league" class="control-label">Team</label>
+            <!-- <input type="text" [class]="'form-control'" [placeholder]="Team" formControlName="team" [value]="teamDeails?.teamName" /> -->
+            <ng-multiselect-dropdown
+              [class]=""
+              [placeholder]="'Team'"
+              [settings]="dropdownTeamSettings"
+              [data]="teams"
+              (onSelect)="onItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)"
+              formControlName="team"
+              [disabled]="true"
+            >
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+            <label for="playingup" class="control-label">Playing Up League</label>
+            <ng-multiselect-dropdown
+              [class]=""
+              [placeholder]="'Playing up league'"
+              [settings]="dropdownSettings"
+              [data]="leagues"
+              (onSelect)="onItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)"
+              formControlName="playingUp"
+            >
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+            <label for="playingup" class="control-label">Playing Up Team</label>
+            <ng-multiselect-dropdown
+              [class]=""
+              [placeholder]="'Playing up team'"
+              [settings]="dropdownTeamSettings"
+              [data]="dropteams"
+              (onSelect)="onTeamSelect($event)"
+              (onSelectAll)="onSelectAll($event)"
+              formControlName="playingUpTeam"
+            >
+            </ng-multiselect-dropdown>
+          </div>
+          <div class="row d-flex justify-content-center">
+            <div class="form-group col-xs-12 col-md-3 col-lg-3 mt-2 align-items-end">
+              <button type="submit" class="btn btn-gradient col-12">Update Player</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
   <div class="row">
     <app-admin-squad-list
       [players]="players"
@@ -49,6 +190,7 @@
       (approvePlayer)="approve($event)"
       [leaguesFilter]="leagues"
       [leagues]="leagues"
+      [teams]="childTeams"
       (editPlayer)="editPlayer($event)"
       (sorting)="statusComparator($event)"
     ></app-admin-squad-list>

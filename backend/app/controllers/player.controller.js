@@ -436,13 +436,18 @@ exports.updatePlayer = async (req, resp, next) => {
         competition: ObjectId(req.body.competition)
       };
     }
+    if (req.body.user && req.body.user.createdBy) {
+      playerObj = {
+        ...playerObj,
+        user: ObjectId(req.body.user.createdBy)
+      };
+    }
 
     fetchPlayer = {
       ...fetchPlayer._doc,
       ...playerObj,
       playingUp: req.body.playingUp.map((league) => ObjectId(league)),
-      playingUpTeam: req.body.playingUpTeam.map((team) => ObjectId(team)),
-      user: ObjectId(req.body.user.createdBy)
+      playingUpTeam: req.body.playingUpTeam.map((team) => ObjectId(team))
     };
 
     const updatedPlayer = await Player.findByIdAndUpdate(

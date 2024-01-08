@@ -487,7 +487,20 @@
               disabled
             />
           </div>
-
+          <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
+            <label for="playingup" class="control-label">Playing Up League</label>
+            <ng-multiselect-dropdown
+              [placeholder]="'Playing up league'"
+              [settings]="dropdownSettings"
+              [data]="dropleagues"
+              [(ngModel)]="selectedPlayingLeagues"
+              (onSelect)="onItemSelect($event)"
+              (onSelectAll)="onSelectAll($event)"
+              formControlName="playingUp"
+            >
+            </ng-multiselect-dropdown>
+          </div>
+          <!--
           <div class="form-group col-12 col-12 col-md-3 col-lg-3 m-2">
             <label for="playingup" class="control-label">Playing Up League</label>
             <ng-multiselect-dropdown
@@ -501,7 +514,7 @@
               formControlName="playingUp"
             >
             </ng-multiselect-dropdown>
-          </div>
+          </div> -->
           <div class="form-group col-12 col-12 col-md-3 col-lg-3 m-2">
             <label for="playingup" class="control-label">Playing Up Team</label>
             <ng-multiselect-dropdown
