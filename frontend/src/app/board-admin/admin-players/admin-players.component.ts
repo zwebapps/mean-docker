@@ -299,7 +299,6 @@ export class AdminPlayersComponent {
       if (this.playerToEdit.playingUpTeam && this.playerToEdit.playingUpTeam.length > 0) {
         this.selectedPlayingUpTeam = this.teams.filter((team: any) => this.playerToEdit.playingUpTeam.includes(team._id));
       }
-
       this.teamDeails = this.playerToEdit.team;
       this.editPlayerForm.patchValue({
         firstName: this.playerToEdit.firstName,
@@ -329,6 +328,7 @@ export class AdminPlayersComponent {
     }
   };
   submitEditPlayer = () => {
+    debugger;
     // emiratesIdNo is filled
     if (this.editPlayerForm.controls.playerEidNo.value) {
       this.editPlayerForm.get("playerEidNo").updateValueAndValidity();
@@ -351,7 +351,7 @@ export class AdminPlayersComponent {
         playingUpTeam:
           this.editPlayerForm?.value?.playingUpTeam.length > 0
             ? this.editPlayerForm?.value?.playingUpTeam.map((tm: any) => tm._id)
-            : this.playerToEdit?.playingUpTeam.map((tm: any) => tm?._id)
+            : this.playerToEdit?.playingUpTeam.map((tm: any) => (tm && tm._id ? tm._id : tm))
       };
 
       this.playerService.updatePlayer(this.playerToEdit._id, playerObj).subscribe((result: any) => {

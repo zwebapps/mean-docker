@@ -322,8 +322,8 @@
               (keypress)="appendHiphen($event)"
               [ngClass]="{ 'is-invalid': submitted && f['playerEidNo'].errors }"
               size="18"
+              (blur)="playerbyEmirateId($event)"
             />
-            <!-- (blur)="playerbyEmirateId($event)" -->
             <div *ngIf="submitted && f['playerEidNo'].errors" class="invalid-feedback">
               <div *ngIf="f['playerEidNo'].errors['required']">
                 <small>Player EID no and pattern should is required</small>
