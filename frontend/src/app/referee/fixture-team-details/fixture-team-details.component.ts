@@ -17,6 +17,7 @@ export class FixtureTeamDetailsComponent implements OnInit {
   @Input() league: any;
   @Input({ required: false }) fixture: any;
   @Output() fetchUpdatedFixtures = new EventEmitter();
+  @Input({ required: false }) hideMVP: boolean = false;
   public mvpPlayer: any = null;
   apiURL = environment.apiURL;
   closeResult: string = "";

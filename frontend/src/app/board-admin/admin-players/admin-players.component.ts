@@ -328,7 +328,6 @@ export class AdminPlayersComponent {
     }
   };
   submitEditPlayer = () => {
-    debugger;
     // emiratesIdNo is filled
     if (this.editPlayerForm.controls.playerEidNo.value) {
       this.editPlayerForm.get("playerEidNo").updateValueAndValidity();

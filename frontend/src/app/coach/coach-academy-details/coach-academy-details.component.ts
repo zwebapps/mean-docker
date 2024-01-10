@@ -621,14 +621,12 @@ export class CoachAcademyDetailsComponent {
 
   // if eid already exist
   playerbyEmirateId(event: any) {
-    debugger;
     const id = event.target.value;
     if (id && id.length > 17) {
       const pattern = new RegExp("^\\d\\d\\d\\-\\d\\d\\d\\d\\-\\d\\d\\d\\d\\d\\d\\d\\-\\d$", "gm");
       if (pattern.test(id)) {
         this.palyerService.getPlayerbyEmirateId(id).subscribe(
           (res) => {
-            debugger;
             if (res._id || res._emiratesIdNo) {
               this.playerExists = true;
               this.notifier.notify("error", "Player having this Emirates ID already exists!");
