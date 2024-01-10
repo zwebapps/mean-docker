@@ -15,8 +15,17 @@ import * as moment from "moment";
   styleUrls: ["./admin-fixture-results.component.scss"]
 })
 export class AdminFixtureResultsComponent {
-  private notifier: NotifierService;
   @ViewChild("myTable") table: any;
+  public selectedLeagues: any = [];
+  public selectedTeams: any = [];
+  public selectedMVP: any = [];
+  public dropdownList: any = ["Team", "League", "MVP"];
+  dropdownObj: any = {
+    Team: [],
+    League: [],
+    MVP: []
+  };
+  private notifier: NotifierService;
   options = {};
   fixtures: any = [];
   columns: any = [{ prop: "firstname" }, { name: "lastname" }, { name: "dob" }, { name: "email" }];
@@ -47,13 +56,70 @@ export class AdminFixtureResultsComponent {
     // now get the leagues and map
     this.getFixturesFromStores();
   }
+  isChecked(filterType: any, obj: any) {
+    if (filterType === "Team") {
+      return this.selectedTeams.includes(obj._id);
+    } else if (filterType === "League") {
+      return this.selectedLeagues.includes(obj?.league?._id);
+    } else if (filterType === "MVP") {
+      return this.selectedMVP.includes(obj?.mvp?._id);
+    } else {
+      return false;
+    }
+  }
+  removeFilter(filter: string) {
+    this.filters = this.filters.filter((f) => f !== filter);
+    if (filter === "Team") {
+      this.selectedTeams = [];
+    }
+    if (filter === "League") {
+      this.selectedLeagues = [];
+    }
+    if (filter === "MVP") {
+      this.selectedMVP = [];
+    }
+    this.getFixturesFromStores();
+  }
   getFixturesFromStores() {
     this.store.select(FixtureSelectors.getFixtures).subscribe((fixtures) => {
       if (fixtures) {
         this.fixtures = fixtures.filter((fix: any) => fix?.shortcode === this.admin.shortcode);
-        // if (this.selectedCompetition) {
-        //   this.fixtures = this.fixtures.filter((fix: any) => fix.shortcode === this.selectedCompetition.shortCode);
-        // }
+        if (this.fixtures.length > 0) {
+          this.fixtures.forEach((fixture: any) => {
+            // check if exits already
+            if (!this.dropdownObj["League"].find((lg: any) => lg?._id === fixture?.league?._id)) {
+              this.dropdownObj["League"].push(fixture?.league);
+            }
+            // check if exits already
+            if (!this.dropdownObj["Team"].find((tm: any) => tm?._id === fixture?.awayTeam?._id)) {
+              this.dropdownObj["Team"].push(fixture?.awayTeam);
+            }
+            // check if exits already
+            if (!this.dropdownObj["Team"].find((tm: any) => tm?._id === fixture?.homeTeam?._id)) {
+              this.dropdownObj["Team"].push(fixture?.homeTeam);
+            }
+            // check if exits already
+            if (fixture?.mvp) {
+              if (!this.dropdownObj["MVP"].find((tm: any) => fixture?.mvp?._id === tm?._id)) {
+                this.dropdownObj["MVP"].push(fixture?.mvp);
+              }
+            }
+            // filter based on teams and leagues
+            if (this.selectedTeams.length > 0) {
+              this.fixtures = fixtures.filter(
+                (tm: any) => this.selectedTeams.includes(tm?.awayTeam?._id) || this.selectedTeams.includes(tm?.homeTeam?._id)
+              );
+            }
+            if (this.selectedLeagues.length > 0) {
+              this.fixtures = fixtures.filter((tm: any) => this.selectedLeagues.includes(tm?.league?._id));
+            }
+
+            // filter based on teams and leagues
+            if (this.selectedMVP.length > 0) {
+              this.fixtures = fixtures.filter((tm: any) => this.selectedMVP.includes(tm?.mvp?._id));
+            }
+          });
+        }
       }
     });
   }
@@ -110,6 +176,7 @@ export class AdminFixtureResultsComponent {
     if (this.filters.includes("MVP")) {
       this.fixtures = this.fixtures.slice().sort((a: any, b: any) => a?.mvp?.firstName?.localeCompare(b?.mvp?.firstName));
     }
+    this.getFixturesFromStores();
   }
 
   filterClubs(event: any) {
@@ -127,10 +194,34 @@ export class AdminFixtureResultsComponent {
       this.getFixturesFromStores();
     }
   }
-  removeFilter(filter: string) {
-    this.filters = this.filters.filter((f) => f !== filter);
-    this.sortFixturesByType();
+  filterByType(filterType: any, child: any) {
+    if (filterType === "Team") {
+      if (!this.selectedTeams.includes(child._id)) {
+        this.selectedTeams.push(child._id);
+      } else {
+        let index = this.selectedTeams.indexOf(child._id);
+        this.selectedTeams.splice(index, 1);
+      }
+    }
+    if (filterType === "League") {
+      if (!this.selectedLeagues.includes(child?._id)) {
+        this.selectedLeagues.push(child?._id);
+      } else {
+        let index = this.selectedLeagues.indexOf(child?._id);
+        this.selectedLeagues.splice(index, 1);
+      }
+    }
+    if (filterType === "MVP") {
+      if (!this.selectedMVP.includes(child?._id)) {
+        this.selectedMVP.push(child?._id);
+      } else {
+        let index = this.selectedMVP.indexOf(child?._id);
+        this.selectedMVP.splice(index, 1);
+      }
+    }
+    this.getFixturesFromStores();
   }
+
   getSelectedCompetition() {
     this.selectedCompetition = this.storageService.getCompetition();
   }

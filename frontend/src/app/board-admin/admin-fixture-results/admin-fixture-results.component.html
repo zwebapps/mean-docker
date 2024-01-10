@@ -28,6 +28,63 @@
               <i class="bi bi-filter pe-3"></i>Filters
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <ng-container *ngFor="let drp of dropdownList">
+                <a class="dropdown-item" (click)="addFilter(drp)">{{ drp }}</a>
+              </ng-container>
+            </div>
+          </div>
+          <ng-container *ngFor="let filter of filters">
+            <div class="filter-pills">
+              <div class="dropdown">
+                <div
+                  class="btn btn-white btn-filter dropdown-toggle"
+                  id="dropdownMenuButton"
+                  data-bs-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  {{ filter }}
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" *ngIf="dropdownObj[filter]">
+                    <ng-container *ngFor="let child of dropdownObj[filter]">
+                      <div class="dropdown-item">
+                        <input
+                          type="checkbox"
+                          class="form-check-input"
+                          id="dropdownCheck"
+                          [checked]="isChecked(filter, child)"
+                          (change)="filterByType(filter, child)"
+                        />
+                        <label class="form-check-label" for="dropdownCheck">
+                          <a (click)="filterByType(filter, child)">
+                            <ng-template [ngIf]="filter === 'Team'">{{ child["teamName"] }}</ng-template>
+                            <ng-template [ngIf]="filter === 'League'">{{ child["leagueName"] }}</ng-template>
+                            <ng-template [ngIf]="filter === 'MVP'">
+                              {{ child["firstName"] + " " + child["lastName"] }}
+                            </ng-template>
+                          </a>
+                        </label>
+                      </div>
+                    </ng-container>
+                  </div>
+                  <span class="close-icon" (click)="removeFilter(filter)">&times;</span>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+        <!-- <div class="col-12 col-lg-9 d-flex mb-md-1 justify-content-start">
+          <div class="dropdown">
+            <button
+              class="btn btn-white btn-filter dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton"
+              data-bs-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <i class="bi bi-filter pe-3"></i>Filters
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
               <a class="dropdown-item" (click)="addFilter('Date')">Date</a>
               <a class="dropdown-item" (click)="addFilter('Team')">Team</a>
               <a class="dropdown-item" (click)="addFilter('League')">League</a>
@@ -40,7 +97,7 @@
               <span class="close-icon" (click)="removeFilter(filter)">&times;</span>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="col-12 col-lg-3">
           <div class="col-12 mb-3">
             <div class="input-group">
