@@ -28,18 +28,19 @@
     [limit]="10"
     rowHeight="auto"
     [scrollbarH]="true"
+    [sorts]="[{ prop: 'firstName' }, { prop: 'dob' }, { prop: 'squadNo' }, { prop: 'emiratesIdNo' }]"
   >
-    <ngx-datatable-column name="Name" prop="row">
+    <ngx-datatable-column name="Name" prop="firstName">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
         {{ row.firstName }} {{ row.lastName }}
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="DOB" prop="row">
+    <ngx-datatable-column name="DOB" prop="dob">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
         {{ row.dob | date : "dd.MM.yyyy" }}
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="Squad No." prop="row">
+    <ngx-datatable-column name="Squad No." prop="squadNo">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
         {{ row.squadNo }}
       </ng-template>
@@ -49,27 +50,19 @@
         {{ row.league?.leagueName }}
       </ng-template>
     </ngx-datatable-column>
-    <ngx-datatable-column name="EID No." prop="row">
+    <ngx-datatable-column name="EID No." prop="emiratesIdNo">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
         {{ row.emiratesIdNo }}
       </ng-template>
     </ngx-datatable-column>
     <ngx-datatable-column name="EID Front" prop="row">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-        <img
-          src="assets/images/eid-front.svg"
-          width="80"
-          (click)="open(content, row.eidFront)"
-        />
+        <img src="assets/images/eid-front.svg" width="80" (click)="open(content, row.eidFront)" />
       </ng-template>
     </ngx-datatable-column>
     <ngx-datatable-column name="EID Back" prop="row">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-        <img
-          src="assets/images/eid-back.svg"
-          width="80"
-          (click)="open(content, row.eidBack)"
-        />
+        <img src="assets/images/eid-back.svg" width="80" (click)="open(content, row.eidBack)" />
       </ng-template>
     </ngx-datatable-column>
     <ngx-datatable-column name="Status" prop="row">

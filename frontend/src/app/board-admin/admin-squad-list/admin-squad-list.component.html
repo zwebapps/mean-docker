@@ -28,9 +28,9 @@
   rowHeight="auto"
   [scrollbarH]="true"
   (sort)="statusComparator($event)"
-  [sorts]="[{ prop: 'firstName' }, { prop: 'emiratesIdNo' }, { prop: 'playerStatus' }, { prop: 'squadNo' }]"
+  [sorts]="[{ prop: 'playerNo' }, { prop: 'firstName' }, { prop: 'emiratesIdNo' }, { prop: 'playerStatus' }, { prop: 'squadNo' }]"
 >
-  <ngx-datatable-column name="Sr. no" prop="row">
+  <ngx-datatable-column name="Sr. no" prop="playerNo">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
       {{ row?.playerNo + 1 }}
     </ng-template>
@@ -55,11 +55,11 @@
       {{ row?.squadNo }}
     </ng-template>
   </ngx-datatable-column>
-  <!-- <ngx-datatable-column name="Squad No" prop="row" size="50">
+  <ngx-datatable-column name="Team" prop="row">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-      {{ row.squadNo }}
+      {{ row?.team?.teamName }}
     </ng-template>
-  </ngx-datatable-column> -->
+  </ngx-datatable-column>
   <ngx-datatable-column name="League" prop="row" width="200">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
       {{ row?.league?.leagueName }}

@@ -311,18 +311,19 @@ exports.playerByIdOrEID = async (req, resp, next) => {
   let pl = {};
   try {
     const { id } = req.params;
+    const { shortcode } = req;
     if (id.includes("-") && id.split("-").length === 4) {
       // check if emries id or normal id
-      pl = await Player.findOne({ emiratesIdNo: id })
+      pl = await Player.findOne({ emiratesIdNo: id, shortcode: shortcode })
         .populate(["user", "league", "academy", "team"])
         .exec();
     } else {
       // check if emries id or normal id
-      pl = await Player.find({ _id: ObjectId(id) })
+      pl = await Player.find({ _id: ObjectId(id), shortcode: shortcode })
         .populate(["user", "league", "academy", "team"])
         .exec();
     }
-    resp.status(200).json(pl ? pl : { message: "Player not found" });
+    return resp.status(200).json(pl ? pl : { message: "Player not found" });
   } catch (error) {
     next(error);
   }
@@ -354,6 +355,7 @@ exports.forShortCode = async (req, resp, next) => {
       // check if competition
       pl = await Player.find({ shortcode: shortcode })
         .populate(["user", "league", "academy", "team"])
+        .sort({ createdAt: -1 })
         .exec();
     }
     resp.status(200).json(pl ? pl : { message: "Player not found" });
@@ -370,6 +372,7 @@ exports.forCompetition = async (req, resp, next) => {
       // check if competition
       pl = await Player.find({ competition: ObjectId(req.params.competition) })
         .populate(["user", "league", "academy", "team"])
+        .sort({ createdAt: -1 })
         .exec();
     }
     resp.status(200).json(pl ? pl : { message: "Player not found" });
@@ -386,6 +389,7 @@ exports.playerByAcademy = async (req, resp, next) => {
       // check if emries id or normal id
       pl = await Player.find({ academy: ObjectId(id) })
         .populate(["user", "league", "academy", "team"])
+        .sort({ createdAt: -1 })
         .exec();
     }
     resp.status(200).json(pl ? pl : { message: "Player not found" });
@@ -403,6 +407,21 @@ exports.updatePlayer = async (req, resp, next) => {
     if (!fetchPlayer)
       return resp.status(404).json({ msg: "Player record not found" });
     let playerObj = {};
+
+    if (req.body.firstName) {
+      playerObj = {
+        ...playerObj,
+        firstName: req.body.firstName
+      };
+    }
+
+    if (req.body.surName) {
+      playerObj = {
+        ...playerObj,
+        lastName: req.body.surName
+      };
+    }
+
     if (req.body.dob) {
       playerObj = {
         ...playerObj,
@@ -436,13 +455,18 @@ exports.updatePlayer = async (req, resp, next) => {
         competition: ObjectId(req.body.competition)
       };
     }
+    if (req.body.user && req.body.user.createdBy) {
+      playerObj = {
+        ...playerObj,
+        user: ObjectId(req.body.user.createdBy)
+      };
+    }
 
     fetchPlayer = {
       ...fetchPlayer._doc,
       ...playerObj,
       playingUp: req.body.playingUp.map((league) => ObjectId(league)),
-      playingUpTeam: req.body.playingUpTeam.map((team) => ObjectId(team)),
-      user: ObjectId(req.body.user.createdBy)
+      playingUpTeam: req.body.playingUpTeam.map((team) => ObjectId(team))
     };
 
     const updatedPlayer = await Player.findByIdAndUpdate(

@@ -23,7 +23,7 @@
         <th>DOB</th>
         <th>EID Front</th>
         <th>EID Back</th>
-        <th>MVP</th>
+        <th *ngIf="!hideMVP">MVP</th>
       </tr>
     </thead>
     <tbody>
@@ -37,7 +37,7 @@
         <td>
           <img src="assets/images/eid-back.svg" width="80" (click)="open(content, player.eidBack)" />
         </td>
-        <td>
+        <td *ngIf="!hideMVP">
           <input type="checkbox" [checked]="mvpPlayer?._id == player._id" (change)="addMvp(player)" />
         </td>
       </tr>

@@ -11,11 +11,33 @@
     rowHeight="auto"
     [scrollbarH]="true"
   >
-    <!-- <ngx-datatable-column name="Fixture" prop="row" size="50">
-      <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
-        {{ rowIndex + 1 }}
+    <!-- Row Detail Template -->
+    <ngx-datatable-row-detail [rowHeight]="'auto'" #myDetailRow (toggle)="onDetailToggle($event)">
+      <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+        <div class="row">
+          <div class="col-lg-6 col-md-12 col-sm-12">
+            <app-fixture-team-details
+              class="fixture-team-table"
+              [league]="row.league"
+              [team]="row.homeTeam"
+              [fixture]="row"
+              (fetchUpdatedFixtures)="getUpdatedFixtures()"
+              [hideMVP]="true"
+            ></app-fixture-team-details>
+          </div>
+          <div class="col-lg-6 col-md-12 col-sm-12">
+            <app-fixture-team-details
+              class="fixture-team-table"
+              [league]="row.league"
+              [team]="row.awayTeam"
+              [fixture]="row"
+              (fetchUpdatedFixtures)="getUpdatedFixtures()"
+              [hideMVP]="true"
+            ></app-fixture-team-details>
+          </div>
+        </div>
       </ng-template>
-    </ngx-datatable-column> -->
+    </ngx-datatable-row-detail>
     <ngx-datatable-column name="Fixture Date" prop="row" size="300">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
         {{ row?.matchDate | date : "dd/MM/yyyy" }}
@@ -41,6 +63,9 @@
     </ngx-datatable-column>
     <ngx-datatable-column name="Actions" prop="row">
       <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row" class="d-flex">
+        <button type="button" class="btn btn-info gtn-lg d-inline list-btn me-1" (click)="toggleExpandRow(row)" title="View Squad">
+          <i class="bi bi-eye-fill"></i>
+        </button>
         <button type="button" class="btn btn-danger d-inline" (click)="delete(row['_id'])"><i class="bi bi-trash"></i></button>
         <!-- <button type="button" class="btn btn-outline-primary d-inline" style="margin-left:10px;"
           (click)="delete(row['_id'])"><i class="bi bi-arrow-up-right-circle-fill"></i>
