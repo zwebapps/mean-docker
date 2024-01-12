@@ -540,61 +540,8 @@
   </div>
   <div class="row page-filter-bar">
     <div class="col-lg-6">
-      <div class="action-buttons d-flex justify-content-start gap-3">
-        <div class="col-6 col-lg-6 d-flex mb-md-1 justify-content-start">
-          <div class="dropdown" style="display: none">
-            <button
-              class="btn btn-white btn-filter dropdown-toggle"
-              type="button"
-              id="dropdownMenuButton"
-              data-bs-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <i class="bi bi-filter pe-3"></i>Filters
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <ng-container *ngFor="let drp of dropdownList">
-                <a class="dropdown-item" (click)="addFilter(drp)">{{ drp }}</a>
-              </ng-container>
-            </div>
-          </div>
-          <ng-container *ngFor="let filter of filters">
-            <div class="filter-pills">
-              <div class="dropdown">
-                <div
-                  class="btn btn-white btn-filter dropdown-toggle"
-                  id="dropdownMenuButton"
-                  data-bs-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  {{ filter }}
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" *ngIf="dropdownObj[filter]">
-                    <ng-container *ngFor="let child of dropdownObj[filter]">
-                      <div class="dropdown-item">
-                        <input
-                          type="checkbox"
-                          class="form-check-input"
-                          id="dropdownCheck"
-                          [checked]="isChecked(filter, child)"
-                          (change)="filterByType(filter, child)"
-                        />
-                        <label class="form-check-label" for="dropdownCheck">
-                          <a (click)="filterByType(filter, child)">
-                            {{ filter === "Team" ? child["teamName"] : child["leagueName"] }}
-                          </a>
-                        </label>
-                      </div>
-                    </ng-container>
-                  </div>
-                  <span class="close-icon" (click)="removeFilter(filter)">&times;</span>
-                </div>
-              </div>
-            </div>
-          </ng-container>
-        </div>
-        <div class="col-6 col-lg-6 d-flex mb-md-1 justify-content-start">
+      <div class="action-buttons d-flex justify-content-start">
+        <div class="col-12 col-lg-12 d-flex mb-md-1 justify-content-start">
           <div class="btn-group" role="group" aria-label="Basic example">
             <button class="btn btn-gradient" (click)="togglePlayerForm()"><i class="bi bi-plus pe-3"></i>Add Player</button>
             <button class="btn btn-gradient" (click)="open(content)">Contact Us</button>
@@ -602,7 +549,7 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-3">
+    <div class="col-lg-3 mb-md-1">
       <div class="form-group">
         <input
           type="text"
