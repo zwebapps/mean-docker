@@ -9,13 +9,14 @@
   [limit]="10"
   rowHeight="auto"
   [scrollbarH]="true"
+  [sorts]="[{ prop: 'firstname' }, { prop: 'username' }]"
 >
-  <ngx-datatable-column name="Full Name" prop="row">
+  <ngx-datatable-column name="Full Name" prop="firstname">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
       {{ row.firstname }} {{ row.lastname }}
     </ng-template>
   </ngx-datatable-column>
-  <ngx-datatable-column name="User Name" prop="row">
+  <ngx-datatable-column name="User Name" prop="username">
     <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
       {{ row.username }}
     </ng-template>

@@ -46,7 +46,6 @@ export class SuperAdminDashboardComponent implements OnInit {
   getDashboardContents() {
     this.dashboardService.getDashboardContents().subscribe((res: any) => {
       if (res) {
-        // this.notifier.notify("success", res.message);
         this.dashboardContents = res.data;
         this.mapDashboardContents();
       }

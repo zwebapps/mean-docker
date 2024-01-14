@@ -11,6 +11,7 @@
       [limit]="10"
       rowHeight="auto"
       [scrollbarH]="true"
+      [sorts]="[{ prop: 'teamName' }]"
     >
       <ngx-datatable-column name="" prop="row" size="30">
         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">

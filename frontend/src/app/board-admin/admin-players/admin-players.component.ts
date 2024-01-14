@@ -194,14 +194,14 @@ export class AdminPlayersComponent {
       }
     );
   };
-  filterPlayersByName(event: any) {
-    const name = event.target.value;
+
+  filterPlayersByName(name: any) {
     if (name.length > 0) {
       this.searchByNameterm = name;
-      this.getPlayersFromStore();
+      this.filterAllPlayers();
     } else {
       this.searchByNameterm = "";
-      this.getPlayersFromStore();
+      this.filterAllPlayers();
     }
   }
   exportPlayers = () => {
@@ -483,12 +483,17 @@ export class AdminPlayersComponent {
         if (team) {
           this.players = this.players.filter((player: any) => player?.team?._id === team || player?.playingUpTeam?.includes(team));
         }
-        if (!leagueId && !academy && !team) {
+        // filter by name
+        if (this.searchByNameterm) {
+          this.players = this.players.filter(
+            (player: any) =>
+              player?.firstName?.toLowerCase().includes(this.searchByNameterm.toLowerCase()) ||
+              player?.lastName?.toLowerCase().includes(this.searchByNameterm.toLowerCase())
+          );
+        }
+        if (!leagueId && !academy && !team && !this.searchByNameterm) {
           this.players = players;
         }
-        // if (this.selectedCompetition) {
-        //   this.players = this.players.filter((player: any) => player.shortcode === this.selectedCompetition.shortCode);
-        // }
       }
     });
   }

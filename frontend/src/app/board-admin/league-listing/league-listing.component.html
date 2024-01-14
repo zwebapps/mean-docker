@@ -11,18 +11,19 @@
       [limit]="10"
       rowHeight="auto"
       [scrollbarH]="true"
+      [sorts]="[{ prop: 'leagueName' }, { prop: 'shortcode' }, { prop: 'leagueAgeLimit' }, { prop: 'year' }]"
     >
-      <ngx-datatable-column name="League/ Group Name" prop="row">
+      <ngx-datatable-column name="League/ Group Name" prop="leagueName">
         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
           {{ row?.leagueName }}
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Short Name" prop="row">
+      <ngx-datatable-column name="Short Name" prop="shortcode">
         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
           {{ row?.shortcode }}
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Age Cut Off" prop="row">
+      <ngx-datatable-column name="Age Cut Off" prop="leagueAgeLimit">
         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
           {{ row?.leagueAgeLimit | date : "dd/MM/yyyy" }}
         </ng-template>
@@ -32,7 +33,7 @@
           {{ getCompetitionName(row?.competition) }}
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column name="Year" prop="row">
+      <ngx-datatable-column name="Year" prop="year">
         <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value" let-row="row">
           {{ row?.year ? row?.year : 2024 }}
         </ng-template>
