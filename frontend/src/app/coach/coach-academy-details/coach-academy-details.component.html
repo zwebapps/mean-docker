@@ -309,29 +309,48 @@
             </select>
           </div> -->
           <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
-            <label for="playerEidNo" class="control-label">EID No</label>
-            <input
-              type="text"
-              [(ngModel)]="eidNo"
-              [value]="eidNo"
-              name="playerEidNo"
-              id="playerEidNo"
-              class="form-control"
-              placeholder="784-1234-1234567-1"
-              formControlName="playerEidNo"
-              (keypress)="appendHiphen($event)"
-              [ngClass]="{ 'is-invalid': submitted && f['playerEidNo'].errors }"
-              size="18"
-              (blur)="playerbyEmirateId($event)"
-            />
+            <label for="playerEidNo" class="control-label">
+              <i class="bi bi-passport"></i>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<span *ngIf="isPassport">Passport No</span>
+              <span *ngIf="!isPassport">EID No</span>
+            </label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <button class="btn btn-outline-dark" type="button">
+                  <input
+                    class="btn btn-success"
+                    type="checkbox"
+                    value=""
+                    formControlName="isPlayerPassport"
+                    [checked]="false"
+                    (change)="isPassportChecked($event.target.value)"
+                  />
+                </button>
+              </div>
+              <input
+                type="text"
+                [(ngModel)]="eidNo"
+                [value]="eidNo"
+                name="playerEidNo"
+                id="playerEidNo"
+                class="form-control"
+                [placeholder]="eidPlaceholder"
+                formControlName="playerEidNo"
+                (keypress)="appendHiphen($event)"
+                [ngClass]="{ 'is-invalid': submitted && f['playerEidNo'].errors }"
+                size="18"
+                (blur)="playerbyEmirateId($event)"
+              />
+            </div>
             <div *ngIf="submitted && f['playerEidNo'].errors" class="invalid-feedback">
               <div *ngIf="f['playerEidNo'].errors['required']">
-                <small>Player EID no and pattern should is required</small>
+                <small>Player ID no and pattern should is required</small>
               </div>
             </div>
           </div>
           <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
-            <label for="eidFront" class="control-label">EID Front</label>
+            <label for="eidFront" class="control-label"
+              ><span *ngIf="isPassport">Passport Front</span> <span *ngIf="!isPassport">EID Front</span></label
+            >
             <input
               type="file"
               value=""
@@ -352,7 +371,9 @@
             </div>
           </div>
           <div class="form-group col-sm-12 col-xs-12 col-md-3 col-lg-3 m-2">
-            <label for="eidBack" class="control-label">EID Back</label>
+            <label for="eidBack" class="control-label"
+              ><span *ngIf="isPassport">Passport Back</span> <span *ngIf="!isPassport">EID Back</span></label
+            >
             <input
               type="file"
               value=""
@@ -432,7 +453,7 @@
                     value=""
                     formControlName="limitedAbility"
                     [checked]="false"
-                    (change)="leagueForUpPlay($event.target.value)"
+                    (change)="associatedLeaguesForSelectedTeam($event.target.value)"
                   />
                 </button>
               </div>
@@ -441,7 +462,7 @@
                 class="form-select form-control"
                 name="gender"
                 aria-label="Default select"
-                (change)="leagueForUpPlay($event.target.value)"
+                (change)="associatedLeaguesForSelectedTeam($event.target.value)"
                 formControlName="gender"
               >
                 <option value="">Select Gender</option>

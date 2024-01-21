@@ -142,7 +142,7 @@ export class SquadListComponent implements OnInit {
       academy: ["", Validators.required],
       league: ["", Validators.required],
       team: ["", Validators.required],
-      playerEidNo: ["", [Validators.required, Validators.pattern(eidPattern), Validators.maxLength(18)]],
+      playerEidNo: ["", [Validators.required]],
       eidFront: ["", Validators.required],
       eidBack: ["", Validators.required],
       playingUp: [""],

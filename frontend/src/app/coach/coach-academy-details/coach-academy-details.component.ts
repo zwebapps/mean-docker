@@ -92,6 +92,8 @@ export class CoachAcademyDetailsComponent {
   playerToEdit: any = {};
   public coachCompetition: any = {};
   public adminDetail: any = {};
+  public isPassport: boolean = false;
+  public eidPlaceholder = "784-1234-1234567-1";
 
   constructor(
     private formBuilder: FormBuilder,
@@ -111,6 +113,7 @@ export class CoachAcademyDetailsComponent {
     this.playerForm = new FormGroup({
       gender: new FormControl("Male"),
       limitedAbility: new FormControl(false),
+      isPlayerPassport: new FormControl(false),
       firstName: new FormControl(""),
       surName: new FormControl(""),
       squadNo: new FormControl(""),
@@ -127,6 +130,7 @@ export class CoachAcademyDetailsComponent {
     this.editPlayerForm = new FormGroup({
       gender: new FormControl("Male"),
       limitedAbility: new FormControl(false),
+      isPlayerPassport: new FormControl(false),
       firstName: new FormControl(""),
       surName: new FormControl(""),
       league: new FormControl(""),
@@ -183,13 +187,14 @@ export class CoachAcademyDetailsComponent {
     this.playerForm = this.formBuilder.group({
       gender: ["Male"],
       limitedAbility: [false],
+      isPlayerPassport: [false],
       firstName: ["", Validators.required],
       surName: ["", [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
       squadNo: ["", [Validators.required, Validators.minLength(1), Validators.maxLength(3)]],
       dob: ["", Validators.required],
       league: [this.teamDeails?.league?.leagueName, Validators.required],
       team: [this.teamDeails?.teamName, Validators.required],
-      playerEidNo: [null, [Validators.required, Validators.pattern(eidPattern), Validators.maxLength(18)]],
+      playerEidNo: [null, [Validators.required]],
       eidFront: ["", Validators.required],
       eidBack: ["", Validators.required],
       playingUp: [""],
@@ -270,6 +275,7 @@ export class CoachAcademyDetailsComponent {
         return;
       }
       const playerObj = {
+        isPlayerPassport: this.playerForm.value.isPlayerPassport,
         firstName: this.playerForm.value.firstName,
         surName: this.playerForm.value.surName,
         dob: this.playerForm.value.dob,
@@ -563,6 +569,10 @@ export class CoachAcademyDetailsComponent {
   get f() {
     return this.playerForm.controls;
   }
+  isPassportChecked() {
+    this.isPassport = !this.isPassport;
+    this.eidPlaceholder = this.isPassport ? "00000000000" : "784-1234-1234567-1";
+  }
 
   getAge(dob: any) {
     const birth = new Date(new Date(dob).getFullYear(), new Date(dob).getMonth() - 1, new Date(dob).getDay());
@@ -710,23 +720,24 @@ export class CoachAcademyDetailsComponent {
   };
 
   appendHiphen(event: any) {
+    debugger;
     let value = event.target.value;
-    // let keyCode = event.keyCode;
-    // console.log(keyCode, "keyCode");
-    if (value.length === 3) {
-      if (value.charAt(value.length - 1) !== "-") {
-        this.eidNo = `${value}-`;
+    if (!this.isPassport) {
+      if (value.length === 3) {
+        if (value.charAt(value.length - 1) !== "-") {
+          this.eidNo = `${value}-`;
+        }
       }
-    }
-    if (value.length === 8) {
-      if (value.charAt(value.length - 1) !== "-") {
-        this.eidNo = `${value}-`;
+      if (value.length === 8) {
+        if (value.charAt(value.length - 1) !== "-") {
+          this.eidNo = `${value}-`;
+        }
       }
-    }
 
-    if (value.length === 16) {
-      if (value.charAt(value.length - 1) !== "-") {
-        this.eidNo = `${value}-`;
+      if (value.length === 16) {
+        if (value.charAt(value.length - 1) !== "-") {
+          this.eidNo = `${value}-`;
+        }
       }
     }
   }

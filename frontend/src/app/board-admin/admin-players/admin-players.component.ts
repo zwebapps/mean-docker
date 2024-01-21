@@ -145,7 +145,7 @@ export class AdminPlayersComponent {
       dob: ["", Validators.required],
       league: ["", Validators.required],
       team: ["", Validators.required],
-      playerEidNo: ["", [Validators.required, Validators.pattern(eidPattern), Validators.maxLength(18)]],
+      playerEidNo: ["", Validators.required],
       eidFront: ["", Validators.required],
       eidBack: ["", Validators.required],
       playingUp: [""],
@@ -161,6 +161,18 @@ export class AdminPlayersComponent {
     this.getAcademiesFromStore();
     this.setPlayersList();
   }
+
+  associatedLeaguesForSelectedTeam = (event: any) => {
+    const { league } = this.teamDeails;
+    if (league) {
+      let dateToCompare =
+        this.playerForm.value.gender === "Female" || this.playerForm.value.limitedAbility
+          ? moment(moment(league.leagueAgeLimit).add(1, "year")).format("YYYY-MM-DD")
+          : moment(league.leagueAgeLimit).format("YYYY-MM-DD");
+      this.dropleagues = this.leagues.filter((lg: any) => moment(lg.leagueAgeLimit).isSameOrBefore(dateToCompare) && league._id !== lg._id);
+    }
+  };
+
   setPlayersList = () => {
     this.displayAllPlayers = !this.displayAllPlayers;
     this.filterLeague.reset();
@@ -284,6 +296,7 @@ export class AdminPlayersComponent {
   };
 
   editPlayer = (value: any) => {
+    debugger;
     this.showPlayerEditForm = true;
     this.playerToEdit = this.players.find((player: any) => player._id === value);
     if (this.playerToEdit) {
@@ -296,9 +309,11 @@ export class AdminPlayersComponent {
       this.teams = this.teams.filter((tm: any) => tm?.academy_id?._id === this.academy._id);
       this.playingUpleagues = this.leagues.filter((league: any) => moment(league.leagueAgeLimit).isSameOrBefore(dateToCompare));
       this.selectedPlayingUp = this.leagues.filter((leagues: any) => this.playerToEdit.playingUp.includes(leagues._id));
-      if (this.playerToEdit.playingUpTeam && this.playerToEdit.playingUpTeam.length > 0) {
-        this.selectedPlayingUpTeam = this.teams.filter((team: any) => this.playerToEdit.playingUpTeam.includes(team._id));
-      }
+      debugger;
+      // if (this.playerToEdit.playingUpTeam && this.playerToEdit.playingUpTeam.length > 0) {
+      //   this.dropteams = this.teams.filter((team: any) => this.playerToEdit.playingUpTeam.includes(team._id));
+      // }
+      this.dropteams = this.teams;
       this.teamDeails = this.playerToEdit.team;
       this.editPlayerForm.patchValue({
         firstName: this.playerToEdit.firstName,
@@ -316,9 +331,9 @@ export class AdminPlayersComponent {
           playingUp: this.selectedPlayingUp
         });
       }
-      if (this.playerPlayingUpTeam.length > 0) {
+      if (this.selectedPlayingUp.length > 0) {
         this.editPlayerForm.patchValue({
-          playingUpTeam: this.playerPlayingUpTeam
+          playingUpTeam: this.teams.filter((tm: any) => this.playerToEdit.playingUpTeam.includes(tm._id))
         });
       }
       this.eidNo = this.playerToEdit.emiratesIdNo;

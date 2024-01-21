@@ -78,7 +78,7 @@
                     value=""
                     formControlName="limitedAbility"
                     [checked]="false"
-                    (change)="leagueForUpPlay($event.target.value)"
+                    (change)="associatedLeaguesForSelectedTeam($event.target.value)"
                   />
                 </button>
               </div>
@@ -87,7 +87,7 @@
                 class="form-select form-control"
                 name="gender"
                 aria-label="Default select"
-                (change)="leagueForUpPlay($event.target.value)"
+                (change)="associatedLeaguesForSelectedTeam($event.target.value)"
                 formControlName="gender"
               >
                 <option value="">Select Gender</option>
@@ -180,7 +180,7 @@
               [class]=""
               [placeholder]="'Playing up team'"
               [settings]="dropdownTeamSettings"
-              [data]="dropteams"
+              [data]="teams"
               (onSelect)="onTeamSelect($event)"
               (onSelectAll)="onSelectAll($event)"
               formControlName="playingUpTeam"

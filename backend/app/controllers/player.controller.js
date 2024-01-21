@@ -134,8 +134,10 @@ exports.createPlayer = async (req, resp, next) => {
     if (req.body && Array.isArray(req.body)) {
       let insertedPlayers = [];
       for (let i = 0; i < req.body.length; i++) {
-        const isValidated =
-          req.body[i]["eidNo"] && req.body[i]["eidNo"].split("-").length === 4;
+        const isValidated = req.body["isPlayerPassport"]
+          ? true
+          : req.body[i]["eidNo"] &&
+            req.body[i]["eidNo"].split("-").length === 4;
         if (isValidated) {
           let player = await Player.findOne({
             emiratesIdNo: req.body[i]["eidNo"]
@@ -178,8 +180,9 @@ exports.createPlayer = async (req, resp, next) => {
       resp.status(200).json(insertedPlayers);
     } else if (req.body && req.body["eidNo"]) {
       // validate emirates id
-      const isValidated =
-        req.body["eidNo"] && req.body["eidNo"].split("-").length === 4;
+      const isValidated = req.body["isPlayerPassport"]
+        ? true
+        : req.body["eidNo"] && req.body["eidNo"].split("-").length === 4;
       if (isValidated) {
         // check if the same eid is already in the database
         // let player = await Player.findOne({ emiratesIdNo: req.body["eidNo"] });
@@ -312,7 +315,7 @@ exports.playerByIdOrEID = async (req, resp, next) => {
   try {
     const { id } = req.params;
     const { shortcode } = req;
-    if (id.includes("-") && id.split("-").length === 4) {
+    if (id && id.length < 24) {
       // check if emries id or normal id
       pl = await Player.findOne({ emiratesIdNo: id, shortcode: shortcode })
         .populate(["user", "league", "academy", "team"])
