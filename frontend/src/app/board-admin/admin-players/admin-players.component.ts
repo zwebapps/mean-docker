@@ -296,7 +296,6 @@ export class AdminPlayersComponent {
   };
 
   editPlayer = (value: any) => {
-    debugger;
     this.showPlayerEditForm = true;
     this.playerToEdit = this.players.find((player: any) => player._id === value);
     if (this.playerToEdit) {
@@ -309,7 +308,6 @@ export class AdminPlayersComponent {
       this.teams = this.teams.filter((tm: any) => tm?.academy_id?._id === this.academy._id);
       this.playingUpleagues = this.leagues.filter((league: any) => moment(league.leagueAgeLimit).isSameOrBefore(dateToCompare));
       this.selectedPlayingUp = this.leagues.filter((leagues: any) => this.playerToEdit.playingUp.includes(leagues._id));
-      debugger;
       // if (this.playerToEdit.playingUpTeam && this.playerToEdit.playingUpTeam.length > 0) {
       //   this.dropteams = this.teams.filter((team: any) => this.playerToEdit.playingUpTeam.includes(team._id));
       // }

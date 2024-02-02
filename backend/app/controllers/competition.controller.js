@@ -46,10 +46,11 @@ exports.createCompetition = async (req, resp, next) => {
         user_id: ObjectId(req.body.user["createdBy"]),
         createdAt: new Date()
       });
-      await competitionData.save();
-      return resp
-        .status(200)
-        .json({ message: "Competition has been created successfully!" });
+      const addedComp = await competitionData.save();
+      return resp.status(200).json({
+        competition: addedComp,
+        message: "Competition has been created successfully!"
+      });
     }
   } catch (error) {
     return resp

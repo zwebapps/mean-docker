@@ -227,21 +227,27 @@ exports.updateUser = async (req, resp, next) => {
       };
     }
 
+    if (req.body.competition) {
+      updatedUser = {
+        ...updatedUser,
+        competition: req.body.competition.map((id) => ObjectId(id))
+      };
+    }
+
     fetchUser = {
       ...fetchUser._doc,
-      ...req.body,
       ...updatedUser
     };
 
-    User.findByIdAndUpdate(
+    const result = await User.findByIdAndUpdate(
       { _id: ObjectId(req.params.id) },
       {
         $set: fetchUser
       },
       { new: true }
-    ).then((updatedUser) => {
-      return resp.status(200).json(updatedUser);
-    });
+    );
+
+    return resp.status(200).json(result);
   } catch (error) {
     next(error);
   }

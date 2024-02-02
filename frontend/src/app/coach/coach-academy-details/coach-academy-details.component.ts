@@ -604,6 +604,7 @@ export class CoachAcademyDetailsComponent {
         (league: any) =>
           moment(player.dob).isAfter(league.leagueAgeLimit) && moment(player.league.leagueAgeLimit).isAfter(league.leagueAgeLimit)
       );
+      // this.dropteams = this.teams.filter((team: any) => this.playerToEdit?.academy?._id === team?.academy_id?._id);
     }
 
     this.editPlayerForm.controls.limitedAbility.disable();
@@ -720,7 +721,6 @@ export class CoachAcademyDetailsComponent {
   };
 
   appendHiphen(event: any) {
-    debugger;
     let value = event.target.value;
     if (!this.isPassport) {
       if (value.length === 3) {

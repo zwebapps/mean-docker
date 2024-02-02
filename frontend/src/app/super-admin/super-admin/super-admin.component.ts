@@ -214,7 +214,8 @@ export class SuperAdminComponent implements OnInit {
         for (let i = 0; i < competition.length; i++) {
           this.updateSingleCompetition(i);
         }
-
+        this.displayEditCompetition = false;
+        this.store.dispatch(CompetitionActions.loadCompetitions());
         this.updateAdmin(this.competitionToBeEdit._id, { ...userObj });
       } else {
         this.displayEditCompetition = false;
@@ -222,6 +223,7 @@ export class SuperAdminComponent implements OnInit {
       }
     }
     this.loadUsers();
+    this.reloadPage();
   }
   createCompetittion(competitionObj: any) {
     let competitions: any = [];
@@ -256,16 +258,45 @@ export class SuperAdminComponent implements OnInit {
   }
   updateSingleCompetition(id: any) {
     const { competition } = this.competitionToBeEdit;
-    const compId = competition[id]._id;
-    console.log(this.competitionForm.value.competitions[id], compId);
-    this.competitionService.updateCompetition(compId, this.competitionForm.value.competitions[id]).subscribe((res: any) => {
-      if (res) {
-        this.displayEditCompetition = false;
-        this.competitionForm.reset();
-        this.store.dispatch(CompetitionActions.loadCompetitions());
-        this.notifier.notify("success", "Competition updated successfully!");
-      }
-    });
+    if (competition[id]) {
+      const compId = competition[id]._id;
+      console.log(this.competitionForm.value.competitions[id], compId);
+      this.competitionService.updateCompetition(compId, this.competitionForm.value.competitions[id]).subscribe((res: any) => {
+        if (res) {
+          this.notifier.notify("success", "Competition updated successfully!");
+        }
+      });
+    } else {
+      const loggedInUser = this.storageService.getUser();
+      const { competitions } = this.competitionForm.value;
+      const comObj = {
+        ...competitions[id],
+        shortCode: this.competitionToBeEdit.shortcode,
+        organiser: this.competitionToBeEdit._id,
+        user: {
+          createdBy: loggedInUser.id
+        }
+      };
+      this.competitionService.createCompetition(comObj).subscribe((res: any) => {
+        if (res) {
+          if (this.createdAdmin.competition) {
+            const adminUser = {
+              email: this.createdAdmin.email,
+              firstname: this.createdAdmin.firstname,
+              lastname: this.createdAdmin.lastname,
+              competition: [res?.competition?._id, ...this.createdAdmin?.competition.map((comp: any) => comp._id)]
+            };
+
+            this.updateAdmin(this.createdAdmin._id, adminUser);
+            this.notifier.notify("success", "Competition created successfully!");
+            this.competitionForm.reset();
+            this.loadUsers();
+            this.store.dispatch(CompetitionActions.loadCompetitions());
+          }
+        }
+      });
+    }
+    this.reloadPage();
   }
   createAdmin(user: any) {
     const loggedInUser = this.storageService.getUser();
@@ -292,7 +323,6 @@ export class SuperAdminComponent implements OnInit {
       if (res) {
         this.notifier.notify("success", "Admin updated successfully!");
       }
-      this.addCompFormToggle();
     });
   }
   getDescription(data: any) {
@@ -335,6 +365,9 @@ export class SuperAdminComponent implements OnInit {
       });
     }
   }
+  converToJson(data) {
+    console.log(data);
+  }
   editCompetition(compData: any) {
     if (compData) {
       const { competition } = compData;
@@ -345,6 +378,7 @@ export class SuperAdminComponent implements OnInit {
         }
       }
       this.competitionToBeEdit = compData;
+      this.createdAdmin = compData;
       this.displayEditCompetition = true;
       this.competitionLogo = compData.competitionLogo;
       this.addCompFormToggle();
@@ -400,10 +434,26 @@ export class SuperAdminComponent implements OnInit {
     if (competition[compIndex]) {
       this.competitionService.deleteCompetition(competition[compIndex]?._id).subscribe((res: any) => {
         if (res) {
+          const adminUser = {
+            competition: [
+              ...this.createdAdmin?.competition
+                .filter((comp: any) => comp?._id !== competition[compIndex]?._id)
+                .map((comp: any) => comp._id)
+            ]
+          };
+          this.updateAdmin(this.createdAdmin._id, adminUser);
+          this.loadUsers();
+          this.store.dispatch(CompetitionActions.loadCompetitions());
+          this.addCompFormToggle();
           this.notifier.notify("success", res.message);
-          this.getAllCompetitions();
+          this.reloadPage();
         }
       });
+    }
+  }
+  reloadPage(): void {
+    if (typeof window !== "undefined") {
+      window.location.reload();
     }
   }
   filterCompetitions(text: any) {
