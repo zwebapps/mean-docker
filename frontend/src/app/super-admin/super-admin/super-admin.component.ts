@@ -428,18 +428,15 @@ export class SuperAdminComponent implements OnInit {
       }
     });
   }
-  removeCompetitions(compIndex: any) {
+  removeCompetitions(comp: any) {
+    const enterComp = comp.value;
     const { competition } = this.competitionToBeEdit;
-    console.log(competition[compIndex]);
-    if (competition[compIndex]) {
-      this.competitionService.deleteCompetition(competition[compIndex]?._id).subscribe((res: any) => {
+    const compIndex = competition.find((comp: any) => comp?.competitionName === enterComp?.competitionName)?._id;
+    if (compIndex) {
+      this.competitionService.deleteCompetition(compIndex).subscribe((res: any) => {
         if (res) {
           const adminUser = {
-            competition: [
-              ...this.createdAdmin?.competition
-                .filter((comp: any) => comp?._id !== competition[compIndex]?._id)
-                .map((comp: any) => comp._id)
-            ]
+            competition: [...this.createdAdmin?.competition.filter((comp: any) => comp?._id !== compIndex).map((comp: any) => comp._id)]
           };
           this.updateAdmin(this.createdAdmin._id, adminUser);
           this.loadUsers();
