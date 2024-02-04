@@ -296,7 +296,6 @@ export class SuperAdminComponent implements OnInit {
         }
       });
     }
-    this.reloadPage();
   }
   createAdmin(user: any) {
     const loggedInUser = this.storageService.getUser();
@@ -322,6 +321,7 @@ export class SuperAdminComponent implements OnInit {
     this.userService.updateUser(id, user).subscribe((res: any) => {
       if (res) {
         this.notifier.notify("success", "Admin updated successfully!");
+        this.reloadPage();
       }
     });
   }
