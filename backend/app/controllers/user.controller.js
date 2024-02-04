@@ -52,18 +52,20 @@ exports.forShortcode = (req, res) => {
 };
 
 exports.forCompetition = (req, res) => {
-  // get users
-  User.find({ competition: ObjectId(req.params.competition) })
-    .populate("roles")
-    .sort({ createdAt: -1 })
-    .exec((err, users) => {
-      if (err) {
-        return res.status(500).send({ message: err });
-      }
-      return res
-        .status(200)
-        .json(users.length > 0 ? users : { message: "No user found" });
-    });
+  if (req.params.competition) {
+    // get users
+    User.find({ competition: ObjectId(req.params.competition) })
+      .populate("roles")
+      .sort({ createdAt: -1 })
+      .exec((err, users) => {
+        if (err) {
+          return res.status(500).send({ message: err });
+        }
+        return res
+          .status(200)
+          .json(users.length > 0 ? users : { message: "No user found" });
+      });
+  }
 };
 
 exports.createUser = async (req, res) => {

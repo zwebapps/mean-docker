@@ -50,7 +50,7 @@ module.exports = function (app) {
   );
 
   app.get(
-    "/academy/forcompetition/:competition",
+    "/academy/forcompetition/:id",
     authJwt.isAuthenticated,
     academy.forCompetition
   );

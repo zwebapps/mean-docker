@@ -111,12 +111,14 @@ exports.forShortCode = async (req, resp, next) => {
 };
 exports.forCompetition = async (req, resp, next) => {
   try {
-    const league = await League.find({
-      competition: ObjectId(req.params.competition)
-    })
-      .populate(["user_id", "competition"])
-      .exec();
-    resp.status(200).json(league ? league : { message: "No league found" });
+    if (req.params.competition) {
+      const league = await League.find({
+        competition: ObjectId(req.params.competition)
+      })
+        .populate(["user_id", "competition"])
+        .exec();
+      resp.status(200).json(league ? league : { message: "No league found" });
+    }
   } catch (error) {
     next(error);
   }

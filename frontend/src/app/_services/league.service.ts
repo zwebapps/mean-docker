@@ -19,7 +19,7 @@ export class LeagueService {
     return this.http.get(`${API_URL}/league/all`, { headers: this.headers });
   }
   loadLeaguesByCompetition(competition: string): Observable<any> {
-    return this.http.get(`${API_URL}/leagues/forcompetition/${competition}`, { headers: this.headers });
+    return this.http.get(`${API_URL}/league/forcompetition/${competition}`, { headers: this.headers });
   }
   loadLeaguesByShortcode(shortcode: string): Observable<any> {
     return this.http.get(`${API_URL}/league/forshortcode/${shortcode}`, { headers: this.headers });

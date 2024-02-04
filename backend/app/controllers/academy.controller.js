@@ -105,7 +105,7 @@ exports.forCompetition = async (req, resp, next) => {
   try {
     if (req.params && req.params.id) {
       const academy = await Academy.find({
-        competition: ObjectId(req.params.competition)
+        competition: ObjectId(req.params.id)
       })
         .populate(["coach", "competition"])
         .exec();

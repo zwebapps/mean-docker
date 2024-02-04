@@ -27,7 +27,7 @@ export class PlayersEffects {
       map((action: any) => action.payload),
       mergeMap(() => {
         if (!this.user?.roles.includes("ROLE_SUPERADMIN")) {
-          return this.playerService.loadPlayersByShortcode(this.user.shortcode).pipe(
+          return this.playerService.loadPlayersByCompetition(this.selectedCmp?._id).pipe(
             map((data) =>
               Array.isArray(data) ? PlayersActions.loadPlayersSuccess({ data }) : PlayersActions.loadPlayersSuccess({ data: [] })
             ),

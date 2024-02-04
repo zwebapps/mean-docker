@@ -27,7 +27,7 @@ export class AcademiesEffects {
       map((action: any) => action.payload),
       mergeMap(() => {
         if (!this.user?.roles.includes("ROLE_SUPERADMIN")) {
-          return this.academyService.loadAcademiesByShortCode(this.user.shortcode).pipe(
+          return this.academyService.loadAcademiesByCompetition(this.selectedCmp?._id).pipe(
             map((data) =>
               Array.isArray(data) ? AcademiesActions.loadAcademiesSuccess({ data }) : AcademiesActions.loadAcademiesSuccess({ data: [] })
             ),

@@ -27,7 +27,7 @@ export class FixuresEffects {
       map((action: any) => action.payload),
       mergeMap(() => {
         if (!this.user?.roles.includes("ROLE_SUPERADMIN")) {
-          return this.fixtureService.loadFixturesByShortcode(this.user.shortcode).pipe(
+          return this.fixtureService.loadFixturesByCompetition(this.selectedCmp?._id).pipe(
             map((data) =>
               Array.isArray(data) ? FixturesActions.loadFixturesSuccess({ data }) : FixturesActions.loadFixturesSuccess({ data: [] })
             ),
