@@ -26,15 +26,22 @@ export class LeaguesEffects {
       ofType(LeagueActions.loadLeagues),
       map((action: any) => action.payload),
       mergeMap(() => {
-        if (!this.user?.roles.includes("ROLE_SUPERADMIN")) {
-          return this.leagueService.loadLeaguesByCompetition(this.selectedCmp?._id).pipe(
+        if (this.user?.roles.includes("ROLE_SUPERADMIN")) {
+          return this.leagueService.loadLeagues().pipe(
+            map((data) =>
+              Array.isArray(data) ? LeagueActions.loadLeaguesSuccess({ data }) : LeagueActions.loadLeaguesSuccess({ data: [] })
+            ),
+            catchError((error) => of(LeagueActions.loadLeaguesFailure({ error })))
+          );
+        } else if (this.user?.roles.includes("ROLE_REFEREE")) {
+          return this.leagueService.loadLeaguesByShortcode(this.user.shortcode).pipe(
             map((data) =>
               Array.isArray(data) ? LeagueActions.loadLeaguesSuccess({ data }) : LeagueActions.loadLeaguesSuccess({ data: [] })
             ),
             catchError((error) => of(LeagueActions.loadLeaguesFailure({ error })))
           );
         } else {
-          return this.leagueService.loadLeagues().pipe(
+          return this.leagueService.loadLeaguesByCompetition(this.selectedCmp?._id).pipe(
             map((data) =>
               Array.isArray(data) ? LeagueActions.loadLeaguesSuccess({ data }) : LeagueActions.loadLeaguesSuccess({ data: [] })
             ),

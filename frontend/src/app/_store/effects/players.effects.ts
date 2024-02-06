@@ -26,15 +26,22 @@ export class PlayersEffects {
       ofType(PlayersActions.loadPlayers),
       map((action: any) => action.payload),
       mergeMap(() => {
-        if (!this.user?.roles.includes("ROLE_SUPERADMIN")) {
-          return this.playerService.loadPlayersByCompetition(this.selectedCmp?._id).pipe(
+        if (this.user?.roles.includes("ROLE_SUPERADMIN")) {
+          return this.playerService.loadPlayers().pipe(
+            map((data) =>
+              Array.isArray(data) ? PlayersActions.loadPlayersSuccess({ data }) : PlayersActions.loadPlayersSuccess({ data: [] })
+            ),
+            catchError((error) => of(PlayersActions.loadPlayersFailure({ error })))
+          );
+        } else if (this.user?.roles.includes("ROLE_REFEREE")) {
+          return this.playerService.loadPlayersByShortcode(this.user.shortcode).pipe(
             map((data) =>
               Array.isArray(data) ? PlayersActions.loadPlayersSuccess({ data }) : PlayersActions.loadPlayersSuccess({ data: [] })
             ),
             catchError((error) => of(PlayersActions.loadPlayersFailure({ error })))
           );
         } else {
-          return this.playerService.loadPlayers().pipe(
+          return this.playerService.loadPlayersByCompetition(this.selectedCmp?._id).pipe(
             map((data) =>
               Array.isArray(data) ? PlayersActions.loadPlayersSuccess({ data }) : PlayersActions.loadPlayersSuccess({ data: [] })
             ),

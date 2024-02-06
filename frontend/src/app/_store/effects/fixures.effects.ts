@@ -26,15 +26,22 @@ export class FixuresEffects {
       ofType(FixturesActions.loadFixtures),
       map((action: any) => action.payload),
       mergeMap(() => {
-        if (!this.user?.roles.includes("ROLE_SUPERADMIN")) {
-          return this.fixtureService.loadFixturesByCompetition(this.selectedCmp?._id).pipe(
+        if (this.user?.roles.includes("ROLE_SUPERADMIN")) {
+          return this.fixtureService.loadFixtures().pipe(
+            map((data) =>
+              Array.isArray(data) ? FixturesActions.loadFixturesSuccess({ data }) : FixturesActions.loadFixturesSuccess({ data: [] })
+            ),
+            catchError((error) => of(FixturesActions.loadFixturesFailure({ error })))
+          );
+        } else if (this.user?.roles.includes("ROLE_REFEREE")) {
+          return this.fixtureService.loadFixturesByShortcode(this.user.shortcode).pipe(
             map((data) =>
               Array.isArray(data) ? FixturesActions.loadFixturesSuccess({ data }) : FixturesActions.loadFixturesSuccess({ data: [] })
             ),
             catchError((error) => of(FixturesActions.loadFixturesFailure({ error })))
           );
         } else {
-          return this.fixtureService.loadFixtures().pipe(
+          return this.fixtureService.loadFixturesByCompetition(this.selectedCmp?._id).pipe(
             map((data) =>
               Array.isArray(data) ? FixturesActions.loadFixturesSuccess({ data }) : FixturesActions.loadFixturesSuccess({ data: [] })
             ),

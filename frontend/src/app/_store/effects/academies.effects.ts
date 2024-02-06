@@ -26,15 +26,22 @@ export class AcademiesEffects {
       ofType(AcademiesActions.loadAcademies),
       map((action: any) => action.payload),
       mergeMap(() => {
-        if (!this.user?.roles.includes("ROLE_SUPERADMIN")) {
-          return this.academyService.loadAcademiesByCompetition(this.selectedCmp?._id).pipe(
+        if (this.user?.roles.includes("ROLE_SUPERADMIN")) {
+          return this.academyService.loadAcademies().pipe(
+            map((data) =>
+              Array.isArray(data) ? AcademiesActions.loadAcademiesSuccess({ data }) : AcademiesActions.loadAcademiesSuccess({ data: [] })
+            ),
+            catchError((error) => of(AcademiesActions.loadAcademiesFailure({ error })))
+          );
+        } else if (this.user?.roles.includes("ROLE_REFEREE")) {
+          return this.academyService.loadAcademiesByShortCode(this.user.shortcode).pipe(
             map((data) =>
               Array.isArray(data) ? AcademiesActions.loadAcademiesSuccess({ data }) : AcademiesActions.loadAcademiesSuccess({ data: [] })
             ),
             catchError((error) => of(AcademiesActions.loadAcademiesFailure({ error })))
           );
         } else {
-          return this.academyService.loadAcademies().pipe(
+          return this.academyService.loadAcademiesByCompetition(this.selectedCmp?._id).pipe(
             map((data) =>
               Array.isArray(data) ? AcademiesActions.loadAcademiesSuccess({ data }) : AcademiesActions.loadAcademiesSuccess({ data: [] })
             ),

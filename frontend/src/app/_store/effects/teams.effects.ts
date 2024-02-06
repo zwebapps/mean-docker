@@ -27,13 +27,18 @@ export class TeamsEffects {
       ofType(TeamsActions.loadTeams),
       map((action: any) => action.payload),
       mergeMap(() => {
-        if (!this.user?.roles.includes("ROLE_SUPERADMIN")) {
-          return this.teamService.loadTeamsByCompetition(this.selectedCmp?._id).pipe(
+        if (this.user?.roles.includes("ROLE_SUPERADMIN")) {
+          return this.teamService.loadTeams().pipe(
+            map((data) => (Array.isArray(data) ? TeamsActions.loadTeamsSuccess({ data }) : TeamsActions.loadTeamsSuccess({ data: [] }))),
+            catchError((error) => of(TeamsActions.loadTeamsFailure({ error })))
+          );
+        } else if (this.user?.roles.includes("ROLE_REFEREE")) {
+          return this.teamService.loadTeamsByShortcode(this.shortCode).pipe(
             map((data) => (Array.isArray(data) ? TeamsActions.loadTeamsSuccess({ data }) : TeamsActions.loadTeamsSuccess({ data: [] }))),
             catchError((error) => of(TeamsActions.loadTeamsFailure({ error })))
           );
         } else {
-          return this.teamService.loadTeams().pipe(
+          return this.teamService.loadTeamsByCompetition(this.selectedCmp?._id).pipe(
             map((data) => (Array.isArray(data) ? TeamsActions.loadTeamsSuccess({ data }) : TeamsActions.loadTeamsSuccess({ data: [] }))),
             catchError((error) => of(TeamsActions.loadTeamsFailure({ error })))
           );
