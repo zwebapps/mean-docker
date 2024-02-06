@@ -141,6 +141,7 @@ export class CoachAcademyDetailsComponent {
     });
   }
   ngOnInit() {
+    debugger;
     this.coachCompetition = this.storageService.getCompetition();
     if (this.coachCompetition) {
       this.getAdminDetails(this.coachCompetition.organiser);
@@ -590,6 +591,9 @@ export class CoachAcademyDetailsComponent {
     this.openConfirmationDialog(leagueId);
   }
   updatePlayer(player: any) {
+    this.getLeaguesFromStore();
+    this.getAcademiesFromStore();
+    this.getTeamsFromStore();
     this.playerToEdit = player;
     this.selectedPlayingLeagues = this.leagues.filter((league: any) => player.playingUp.includes(league._id));
     this.selectedPlayingUpTeams = this.teams.filter((team: any) => player.playingUpTeam.includes(team._id));
@@ -654,6 +658,7 @@ export class CoachAcademyDetailsComponent {
   }
 
   onChange(evt: any) {
+    debugger;
     if (!this.selectedLeague) {
       this.notifier.notify("error", "Please select a league!");
       this.resetCsvUploads();
