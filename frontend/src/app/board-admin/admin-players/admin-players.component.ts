@@ -227,6 +227,7 @@ export class AdminPlayersComponent {
         League: player?.league?.leagueName,
         Academy: player?.academy?.academyName,
         Team: player?.team?.teamName,
+        "Shirt Size/ Squad No": player?.squadNo,
         PlayingUpLeague: playingUpLeague.length ? playingUpLeague.map((plUpLeague: any) => plUpLeague?.leagueName).join(",") : "",
         PlayingUpTeam: playingUpTeam.length ? playingUpTeam.map((plTeam: any) => plTeam?.teamName).join(",") : ""
       });
