@@ -126,6 +126,7 @@ export class CoachAcademyDetailsComponent {
       playingUp: new FormControl(""),
       playingUpTeam: new FormControl("")
     });
+
     // edit form
     this.editPlayerForm = new FormGroup({
       gender: new FormControl("Male"),
@@ -201,6 +202,7 @@ export class CoachAcademyDetailsComponent {
       playingUp: [""],
       playingUpTeam: [""]
     });
+    this.playerForm.controls.limitedAbility.disable();
     this.playerForm.controls.league.disable();
     this.playerForm.controls.team.disable();
     // get the team id

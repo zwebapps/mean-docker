@@ -167,10 +167,9 @@
                   <input
                     class="btn btn-success"
                     type="checkbox"
-                    value=""
                     formControlName="limitedAbility"
-                    [checked]="false"
                     (change)="associatedLeaguesForSelectedTeam($event.target.value)"
+                    [disabled]="true"
                   />
                 </button>
               </div>
@@ -450,10 +449,10 @@
                   <input
                     class="btn btn-success"
                     type="checkbox"
-                    value=""
                     formControlName="limitedAbility"
                     [checked]="false"
                     (change)="associatedLeaguesForSelectedTeam($event.target.value)"
+                    [disabled]="true"
                   />
                 </button>
               </div>
