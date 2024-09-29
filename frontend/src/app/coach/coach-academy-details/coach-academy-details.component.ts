@@ -142,7 +142,6 @@ export class CoachAcademyDetailsComponent {
     });
   }
   ngOnInit() {
-    debugger;
     this.coachCompetition = this.storageService.getCompetition();
     if (this.coachCompetition) {
       this.getAdminDetails(this.coachCompetition.organiser);
@@ -251,6 +250,8 @@ export class CoachAcademyDetailsComponent {
         this.notifier.notify("error", "Please try again!");
       }
     );
+
+    this.associatedLeaguesForSelectedTeam();
   }
   getImg = (image: string) => {
     return `${this.apiURL}/static/${image}`;
@@ -457,14 +458,14 @@ export class CoachAcademyDetailsComponent {
     );
   }
 
-  associatedLeaguesForSelectedTeam = (event: any) => {
+  associatedLeaguesForSelectedTeam = () => {
     const { league } = this.teamDeails;
     if (league) {
       let dateToCompare =
         this.playerForm.value.gender === "Female" || this.playerForm.value.limitedAbility
           ? moment(moment(league.leagueAgeLimit).add(1, "year")).format("YYYY-MM-DD")
           : moment(league.leagueAgeLimit).format("YYYY-MM-DD");
-      this.dropleagues = this.leagues.filter((lg: any) => moment(lg.leagueAgeLimit).isSameOrBefore(dateToCompare) && league._id !== lg._id);
+      this.dropleagues = this.leagues.filter((lg: any) => moment(lg.leagueAgeLimit).isBefore(dateToCompare) && league._id !== lg._id);
     }
   };
 
@@ -660,7 +661,6 @@ export class CoachAcademyDetailsComponent {
   }
 
   onChange(evt: any) {
-    debugger;
     if (!this.selectedLeague) {
       this.notifier.notify("error", "Please select a league!");
       this.resetCsvUploads();
@@ -773,9 +773,9 @@ export class CoachAcademyDetailsComponent {
     if (this.selectedLeague) {
       let dateToCompare =
         this.playerForm.value.gender === "Female" || this.playerForm.value.limitedAbility
-          ? moment(moment(this.playerForm.value.dob).add(1, "year")).format("YYYY-MM-DD")
+          ? moment(moment(this.playerForm.value.dob).subtract(1, "year")).format("YYYY-MM-DD")
           : moment(this.playerForm.value.dob).format("YYYY-MM-DD");
-      this.dropleagues = this.leagues.filter((league: any) => moment(league.leagueAgeLimit).isSameOrBefore(dateToCompare));
+      this.dropleagues = this.leagues.filter((league: any) => moment(league.leagueAgeLimit).isBefore(dateToCompare));
     }
   };
   redirectTo() {
