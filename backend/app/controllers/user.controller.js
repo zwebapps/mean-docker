@@ -1,4 +1,4 @@
-const ObjectId = require("mongodb").ObjectId;
+const { ObjectId } = require("mongodb");
 const db = require("../models");
 const User = db.user;
 const Role = db.role;
@@ -54,7 +54,7 @@ exports.forShortcode = (req, res) => {
 exports.forCompetition = (req, res) => {
   if (req.params.competition) {
     // get users
-    User.find({ competition: ObjectId(req.params.competition) })
+    User.find({ competition: new ObjectId(req.params.competition) })
       .populate("roles")
       .sort({ createdAt: -1 })
       .exec((err, users) => {
@@ -95,10 +95,10 @@ exports.createUser = async (req, res) => {
             ? req.body["competitionCountry"]
             : "AE",
           competition: req.body.competition
-            ? req.body.competition.map((comp) => ObjectId(comp))
+            ? req.body.competition.map((comp) => new ObjectId(comp))
             : [],
-          roles: [ObjectId(role._id)],
-          createdBy: ObjectId(req.body.user["createdBy"])
+          roles: [new ObjectId(role._id)],
+          createdBy: new ObjectId(req.body.user["createdBy"])
         });
 
         const savedUser = await userData.save();
@@ -118,7 +118,9 @@ exports.createUser = async (req, res) => {
 
 exports.deleteUser = async (req, resp, next) => {
   try {
-    const user = await User.findByIdAndDelete({ _id: ObjectId(req.params.id) });
+    const user = await User.findByIdAndDelete({
+      _id: new ObjectId(req.params.id)
+    });
     if (!user) {
       return resp
         .status(200)
@@ -141,7 +143,7 @@ exports.UserByIdOrEID = async (req, resp, next) => {
       resp.status(200).json(users ? users : { message: "Users not found" });
     } else {
       // check if emries id or normal id
-      const userData = await User.findOne({ _id: ObjectId(id) })
+      const userData = await User.findOne({ _id: new ObjectId(id) })
         .populate("roles")
         .exec();
       resp
@@ -164,7 +166,7 @@ exports.AdminEmailById = async (req, resp, next) => {
       resp.status(200).json(users ? users : { message: "Users not found" });
     } else {
       // check if emries id or normal id
-      const userData = await User.findOne({ _id: ObjectId(id) })
+      const userData = await User.findOne({ _id: new ObjectId(id) })
         .populate("roles")
         .exec();
       resp
@@ -180,7 +182,7 @@ exports.updateUser = async (req, resp, next) => {
   try {
     const { id } = req.params;
     let updatedUser = {};
-    let fetchUser = await User.findOne({ _id: ObjectId(id) });
+    let fetchUser = await User.findOne({ _id: new ObjectId(id) });
 
     if (!fetchUser)
       return resp.status(404).json({ msg: "User record not found" });
@@ -232,7 +234,7 @@ exports.updateUser = async (req, resp, next) => {
     if (req.body.competition) {
       updatedUser = {
         ...updatedUser,
-        competition: req.body.competition.map((id) => ObjectId(id))
+        competition: req.body.competition.map((id) => new ObjectId(id))
       };
     }
 
@@ -242,7 +244,7 @@ exports.updateUser = async (req, resp, next) => {
     };
 
     const result = await User.findByIdAndUpdate(
-      { _id: ObjectId(req.params.id) },
+      { _id: new ObjectId(req.params.id) },
       {
         $set: fetchUser
       },
@@ -262,7 +264,7 @@ exports.createContact = async (req, res) => {
       senderEmail: req.body["senderEmail"],
       heading: heading,
       content: req.body["content"],
-      user: ObjectId(req.body.user["id"]),
+      user: new ObjectId(req.body.user["id"]),
       shortcode: req.body["shortcode"],
       status: "Pending",
       createdAt: new Date()
@@ -286,7 +288,7 @@ exports.updateContact = async (req, res) => {
     const { id } = req.params;
     // get users
     if (id) {
-      let fetchContact = await Contact.findOne({ _id: ObjectId(id) });
+      let fetchContact = await Contact.findOne({ _id: new ObjectId(id) });
 
       if (!fetchContact)
         return resp.status(404).json({ msg: "Content record not found" });
@@ -297,7 +299,7 @@ exports.updateContact = async (req, res) => {
       };
 
       Contact.findByIdAndUpdate(
-        { _id: ObjectId(id) },
+        { _id: new ObjectId(id) },
         {
           $set: fetchContact
         },
@@ -317,7 +319,7 @@ exports.updateContact = async (req, res) => {
 exports.contentDelete = async (req, resp, next) => {
   try {
     const content = await Contact.findByIdAndDelete({
-      _id: ObjectId(req.params.id)
+      _id: new ObjectId(req.params.id)
     });
     if (!content) {
       return resp
@@ -363,7 +365,7 @@ exports.contentForShortCode = async (req, res) => {
 exports.forContentsCompetition = async (req, res) => {
   const { competition } = req.params;
   // get users
-  const content = await Contact.find({ competition: ObjectId(competition) })
+  const content = await Contact.find({ competition: new ObjectId(competition) })
     .populate("user")
     .exec();
   if (content) {
@@ -380,7 +382,7 @@ exports.forContentsCompetition = async (req, res) => {
 exports.allContactsByIdCoach = async (req, res) => {
   const { id } = req.params;
   // get users
-  const content = await Contact.find({ user: ObjectId(id) })
+  const content = await Contact.find({ user: new ObjectId(id) })
     .populate("user")
     .exec();
   if (content) {

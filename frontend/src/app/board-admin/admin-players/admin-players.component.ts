@@ -540,7 +540,7 @@ export class AdminPlayersComponent {
           (res) => {
             if (res._id || res._emiratesIdNo) {
               this.playerExists = true;
-              // this.notifier.notify("error", "Player having this Emirates ID already exists!");
+              this.notifier.notify("error", "Player having this Emirates ID already exists!");
             } else {
               this.playerExists = false;
             }

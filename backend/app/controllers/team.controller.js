@@ -1,4 +1,4 @@
-const ObjectId = require("mongodb").ObjectId;
+const { ObjectId } = require("mongodb");
 const db = require("../models");
 const Team = db.team;
 
@@ -18,9 +18,9 @@ exports.createTeam = async (req, resp, next) => {
               teamName: req.body[i]["Team Name"],
               academy_id: req.body[i]["Academy Id"],
               leagues: [...req.body[i].leagues],
-              user_id: ObjectId(req.body[i].user["createdBy"]),
+              user_id: new ObjectId(req.body[i].user["createdBy"]),
               shortcode: req.body[i]["shortCode"],
-              competition: ObjectId(req.body[i]["competition"]),
+              competition: new ObjectId(req.body[i]["competition"]),
               createdAt: new Date()
             });
             insertedTeams.push(req.body[i]);
@@ -42,9 +42,9 @@ exports.createTeam = async (req, resp, next) => {
             teamName: req.body["Team Name"],
             academy_id: req.body["Academy Id"],
             leagues: [...req.body.leagues],
-            user_id: ObjectId(req.body.user["createdBy"]),
+            user_id: new ObjectId(req.body.user["createdBy"]),
             shortcode: req.body["shortCode"],
-            competition: ObjectId(req.body["competition"]),
+            competition: new ObjectId(req.body["competition"]),
             createdAt: new Date()
           });
 
@@ -83,7 +83,7 @@ exports.getTeamById = async (req, resp, next) => {
   try {
     const { id } = req.params;
     if (id) {
-      const team = await Team.findOne({ _id: ObjectId(id) })
+      const team = await Team.findOne({ _id: new ObjectId(id) })
         .populate(["academy_id", "leagues", "user_id"])
         .exec();
       resp.status(200).json(team ? team : { message: "No team found" });
@@ -115,7 +115,7 @@ exports.forCompetition = async (req, resp, next) => {
     const { competition } = req.params;
     if (competition) {
       const team = await Team.find({
-        competition: ObjectId(req.params.competition)
+        competition: new ObjectId(req.params.competition)
       })
         .populate(["academy_id", "leagues", "user_id"])
         .exec();
@@ -131,7 +131,7 @@ exports.getTeamByAcademyId = async (req, resp, next) => {
   try {
     const { id } = req.params;
     if (id) {
-      const team = await Team.find({ academy_id: ObjectId(req.params.id) })
+      const team = await Team.find({ academy_id: new ObjectId(req.params.id) })
         .populate(["academy_id", "leagues", "user_id"])
         .exec();
       resp
@@ -150,7 +150,7 @@ exports.updateTeam = async (req, resp, next) => {
   try {
     const { id } = req.params;
     if (id) {
-      let fetchTeam = await Team.find({ _id: ObjectId(id) })
+      let fetchTeam = await Team.find({ _id: new ObjectId(id) })
         .populate(["academy_id", "leagues", "user_id"])
         .exec();
 
@@ -181,7 +181,7 @@ exports.deleteTeam = async (req, resp, next) => {
   try {
     if (req.params && req.params.id) {
       const team = await Team.findByIdAndDelete({
-        _id: ObjectId(req.params.id)
+        _id: new ObjectId(req.params.id)
       });
       if (!team) {
         resp.status(200).send(`Team record not found!`);

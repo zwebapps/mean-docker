@@ -1,6 +1,6 @@
 const uploadFile = require("../middlewares/upload");
 const uploadFiles = require("../middlewares/uploads");
-const ObjectId = require("mongodb").ObjectId;
+const { ObjectId } = require("mongodb");
 const db = require("../models");
 const Player = db.player;
 const Increment = db.increment;
@@ -143,8 +143,8 @@ exports.createPlayer = async (req, resp, next) => {
             emiratesIdNo: req.body[i]["eidNo"]
           });
           if (req.body[i]["playingUp"]) {
-            req.body[i]["playingUp"] = req.body[i]["playingUp"].map((league) =>
-              ObjectId(league)
+            req.body[i]["playingUp"] = req.body[i]["playingUp"].map(
+              (league) => new ObjectId(league)
             );
           }
           if (!player) {
@@ -155,20 +155,20 @@ exports.createPlayer = async (req, resp, next) => {
               lastName: req.body[i]["surName"],
               dob: new Date(req.body[i]["dob"]),
               squadNo: req.body[i]["squadNo"],
-              league: ObjectId(req.body[i]["league"]),
-              academy: ObjectId(req.body[i]["academy"]),
-              team: ObjectId(req.body[i]["team"]),
+              league: new ObjectId(req.body[i]["league"]),
+              academy: new ObjectId(req.body[i]["academy"]),
+              team: new ObjectId(req.body[i]["team"]),
               playerNo: playerNo,
               playerImage: req.body[i]["playerImage"],
               emiratesIdNo: req.body[i]["eidNo"],
               eidFront: req.body[i]["eidFront"],
               eidBack: req.body[i]["eidBack"],
               playerStatus: req.body[i]["status"],
-              user: ObjectId(req.body[i].user["createdBy"]),
+              user: new ObjectId(req.body[i].user["createdBy"]),
               playingUp: req.body[i]["playingUp"],
               playingUpTeam: req.body[i]["playingUpTeam"],
               shortcode: req.body[i].shortcode,
-              competition: ObjectId(req.body[i]["competition"]),
+              competition: new ObjectId(req.body[i]["competition"]),
               mvp: req.body[i]["mvp"],
               createdAt: new Date()
             });
@@ -185,52 +185,52 @@ exports.createPlayer = async (req, resp, next) => {
         : req.body["eidNo"] && req.body["eidNo"].split("-").length === 4;
       if (isValidated) {
         // check if the same eid is already in the database
-        // let player = await Player.findOne({ emiratesIdNo: req.body["eidNo"] });
-        // if (!player) {
-        let playerNo = null;
-        let isNoExist = null;
-        do {
-          playerNo = await getNextSequence("item_id");
-          isNoExist = await Player.findOne({ playerNo: playerNo }).exec();
-        } while (isNoExist);
-        if (req.body["playingUp"]) {
-          req.body["playingUp"] = req.body["playingUp"].map((league) =>
-            ObjectId(league)
-          );
+        let player = await Player.findOne({ emiratesIdNo: req.body["eidNo"] });
+        if (!player) {
+          let playerNo = null;
+          let isNoExist = null;
+          do {
+            playerNo = await getNextSequence("item_id");
+            isNoExist = await Player.findOne({ playerNo: playerNo }).exec();
+          } while (isNoExist);
+          if (req.body["playingUp"]) {
+            req.body["playingUp"] = req.body["playingUp"].map(
+              (league) => new ObjectId(league)
+            );
+          }
+
+          const playerData = new Player({
+            gender: req.body["gender"] ? req.body["gender"] : "Male",
+            firstName: req.body["firstName"],
+            lastName: req.body["surName"],
+            dob: new Date(req.body["dob"]),
+            squadNo: req.body["squadNo"],
+            league: new ObjectId(req.body["league"]),
+            academy: new ObjectId(req.body["academy"]),
+            team: new ObjectId(req.body["team"]),
+            playerNo: playerNo,
+            playerImage: req.body["playerImage"],
+            emiratesIdNo: req.body["eidNo"],
+            eidFront: req.body["eidFront"],
+            eidBack: req.body["eidBack"],
+            playerStatus: req.body["status"],
+            user: new ObjectId(req.body.user["createdBy"]),
+            playingUp: req.body["playingUp"],
+            playingUpTeam: req.body["playingUpTeam"],
+            mvp: req.body["mvp"] ? req.body["mvp"] : false,
+            shortcode: req.body.shortcode,
+            competition: new ObjectId(req.body["competition"]),
+            createdAt: new Date()
+          });
+
+          const savedPlayer = await playerData.save();
+          resp.status(200).json({
+            player: savedPlayer,
+            message: "Player created successfully"
+          });
+        } else {
+          resp.status(200).json({ message: "Player already exists" });
         }
-
-        const playerData = new Player({
-          gender: req.body["gender"] ? req.body["gender"] : "Male",
-          firstName: req.body["firstName"],
-          lastName: req.body["surName"],
-          dob: new Date(req.body["dob"]),
-          squadNo: req.body["squadNo"],
-          league: ObjectId(req.body["league"]),
-          academy: ObjectId(req.body["academy"]),
-          team: ObjectId(req.body["team"]),
-          playerNo: playerNo,
-          playerImage: req.body["playerImage"],
-          emiratesIdNo: req.body["eidNo"],
-          eidFront: req.body["eidFront"],
-          eidBack: req.body["eidBack"],
-          playerStatus: req.body["status"],
-          user: ObjectId(req.body.user["createdBy"]),
-          playingUp: req.body["playingUp"],
-          playingUpTeam: req.body["playingUpTeam"],
-          mvp: req.body["mvp"] ? req.body["mvp"] : false,
-          shortcode: req.body.shortcode,
-          competition: ObjectId(req.body["competition"]),
-          createdAt: new Date()
-        });
-
-        const savedPlayer = await playerData.save();
-        resp.status(200).json({
-          player: savedPlayer,
-          message: "Player created successfully"
-        });
-        // } else {
-        //   resp.status(200).json({ message: "Player already exists" });
-        // }
       } else {
         resp.status(200).json({ message: "Emirates is not valid" });
       }
@@ -262,16 +262,16 @@ exports.bulkUploadPlayers = async (req, resp, next) => {
           lastName: fltPlayers[i]["Surname"],
           dob: new Date(fltPlayers[i]["DOB"]),
           squadNo: fltPlayers[i]["Squad Number"],
-          league: ObjectId(fltPlayers[i]["League"]),
-          academy: ObjectId(fltPlayers[i]["academy"]),
-          team: ObjectId(fltPlayers[i]["Team"]),
+          league: new ObjectId(fltPlayers[i]["League"]),
+          academy: new ObjectId(fltPlayers[i]["academy"]),
+          team: new ObjectId(fltPlayers[i]["Team"]),
           playerNo: fltPlayers[i]["Player ID Number"],
           playerImage: fltPlayers[i]["playerImage"],
           emiratesIdNo: fltPlayers[i]["EID No"],
           eidFront: fltPlayers[i]["EID Front Upload"],
           eidBack: fltPlayers[i]["EID Upload Back"],
           playerStatus: "Pending",
-          user: ObjectId(fltPlayers[i].User["id"]),
+          user: new ObjectId(fltPlayers[i].User["id"]),
           createdAt: new Date()
         });
         insertedPlayers.push(fltPlayers[i]);
@@ -322,7 +322,7 @@ exports.playerByIdOrEID = async (req, resp, next) => {
         .exec();
     } else {
       // check if emries id or normal id
-      pl = await Player.find({ _id: ObjectId(id), shortcode: shortcode })
+      pl = await Player.find({ _id: new ObjectId(id), shortcode: shortcode })
         .populate(["user", "league", "academy", "team"])
         .exec();
     }
@@ -339,7 +339,7 @@ exports.playerByTeam = async (req, resp, next) => {
     if (id) {
       // check if emries id or normal id
       pl = await Player.find({
-        $or: [{ team: ObjectId(id) }, { playingUpTeam: ObjectId(id) }]
+        $or: [{ team: new ObjectId(id) }, { playingUpTeam: new ObjectId(id) }]
       })
         .populate(["user", "league", "academy", "team"])
         .exec();
@@ -373,7 +373,9 @@ exports.forCompetition = async (req, resp, next) => {
     const { competition } = req.params;
     if (competition) {
       // check if competition
-      pl = await Player.find({ competition: ObjectId(req.params.competition) })
+      pl = await Player.find({
+        competition: new ObjectId(req.params.competition)
+      })
         .populate(["user", "league", "academy", "team"])
         .sort({ createdAt: -1 })
         .exec();
@@ -390,7 +392,7 @@ exports.playerByAcademy = async (req, resp, next) => {
     const { id } = req.params;
     if (id) {
       // check if emries id or normal id
-      pl = await Player.find({ academy: ObjectId(id) })
+      pl = await Player.find({ academy: new ObjectId(id) })
         .populate(["user", "league", "academy", "team"])
         .sort({ createdAt: -1 })
         .exec();
@@ -405,7 +407,7 @@ exports.playerByAcademy = async (req, resp, next) => {
 exports.updatePlayer = async (req, resp, next) => {
   try {
     const { id } = req.params;
-    let fetchPlayer = await Player.find({ _id: ObjectId(id) });
+    let fetchPlayer = await Player.find({ _id: new ObjectId(id) });
 
     if (!fetchPlayer)
       return resp.status(404).json({ msg: "Player record not found" });
@@ -435,41 +437,41 @@ exports.updatePlayer = async (req, resp, next) => {
     if (req.body.academy) {
       playerObj = {
         ...playerObj,
-        academy: ObjectId(req.body.academy)
+        academy: new ObjectId(req.body.academy)
       };
     }
     if (req.body.team) {
       playerObj = {
         ...playerObj,
-        team: ObjectId(req.body.team)
+        team: new ObjectId(req.body.team)
       };
     }
 
     if (req.body.league) {
       playerObj = {
         ...playerObj,
-        league: ObjectId(req.body.league)
+        league: new ObjectId(req.body.league)
       };
     }
 
     if (req.body.competition) {
       playerObj = {
         ...playerObj,
-        competition: ObjectId(req.body.competition)
+        competition: new ObjectId(req.body.competition)
       };
     }
     if (req.body.user && req.body.user.createdBy) {
       playerObj = {
         ...playerObj,
-        user: ObjectId(req.body.user.createdBy)
+        user: new ObjectId(req.body.user.createdBy)
       };
     }
 
     fetchPlayer = {
       ...fetchPlayer._doc,
       ...playerObj,
-      playingUp: req.body.playingUp.map((league) => ObjectId(league)),
-      playingUpTeam: req.body.playingUpTeam.map((team) => ObjectId(team))
+      playingUp: req.body.playingUp.map((league) => new ObjectId(league)),
+      playingUpTeam: req.body.playingUpTeam.map((team) => new ObjectId(team))
     };
 
     const updatedPlayer = await Player.findByIdAndUpdate(
@@ -488,7 +490,7 @@ exports.updatePlayer = async (req, resp, next) => {
 exports.upMvp = async (req, resp, next) => {
   try {
     const { id } = req.params;
-    let fetchPlayer = await Player.find({ _id: ObjectId(id) });
+    let fetchPlayer = await Player.find({ _id: new ObjectId(id) });
 
     if (!fetchPlayer)
       return resp.status(404).json({ msg: "Player record not found" });
@@ -517,7 +519,7 @@ exports.approveMulitplePlayers = async (req, resp, next) => {
     const players = req.body;
     let i = 0;
     while (i < players.length) {
-      let fetchPlayer = await Player.find({ _id: ObjectId(players[i]) });
+      let fetchPlayer = await Player.find({ _id: new ObjectId(players[i]) });
 
       if (fetchPlayer) {
         fetchPlayer = {
@@ -537,7 +539,7 @@ exports.approveMulitplePlayers = async (req, resp, next) => {
 exports.approvePlayer = async (req, resp, next) => {
   try {
     const { id } = req.params;
-    let fetchPlayer = await Player.find({ _id: ObjectId(id) });
+    let fetchPlayer = await Player.find({ _id: new ObjectId(id) });
 
     if (!fetchPlayer)
       return resp.status(404).json({ message: "Player record not found" });
@@ -561,7 +563,7 @@ exports.approvePlayer = async (req, resp, next) => {
 exports.deletePlayer = async (req, resp, next) => {
   try {
     const player = await Player.findByIdAndDelete({
-      _id: ObjectId(req.params.id)
+      _id: new ObjectId(req.params.id)
     });
     if (!player) {
       return resp

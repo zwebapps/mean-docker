@@ -1,4 +1,4 @@
-const ObjectId = require("mongodb").ObjectId;
+const { ObjectId } = require("mongodb");
 const db = require("../models");
 const Competition = db.competition;
 
@@ -22,7 +22,7 @@ exports.createCompetition = async (req, resp, next) => {
             competitionYear: req.body[i]["competitionYear"],
             competitionStart: req.body[i]["competitionStart"],
             competitionEnd: req.body[i]["competitionEnd"],
-            user_id: ObjectId(req.body[i].user["createdBy"]),
+            user_id: new ObjectId(req.body[i].user["createdBy"]),
             createdAt: new Date()
           });
           const savedCompetition = await competitionData.save();
@@ -43,7 +43,7 @@ exports.createCompetition = async (req, resp, next) => {
         competitionYear: req.body["competitionYear"],
         competitionStart: req.body["competitionStart"],
         competitionEnd: req.body["competitionEnd"],
-        user_id: ObjectId(req.body.user["createdBy"]),
+        user_id: new ObjectId(req.body.user["createdBy"]),
         createdAt: new Date()
       });
       const addedComp = await competitionData.save();
@@ -89,7 +89,7 @@ exports.forShortCode = async (req, resp, next) => {
 exports.getCompetitionById = async (req, resp, next) => {
   try {
     const competition = await Competition.find({
-      _id: ObjectId(req.params.id)
+      _id: new ObjectId(req.params.id)
     });
     resp.status(200).json(competition);
   } catch (error) {
@@ -126,7 +126,7 @@ exports.updateCompetition = async (req, resp, next) => {
   try {
     if (req.params && req.params.id) {
       let fetchCompetition = await Competition.find({
-        _id: ObjectId(req.params.id)
+        _id: new ObjectId(req.params.id)
       });
 
       if (!fetchCompetition)
@@ -158,7 +158,7 @@ exports.updateCompetition = async (req, resp, next) => {
 exports.deleteCompetition = async (req, resp, next) => {
   try {
     const competition = await Competition.findByIdAndDelete({
-      _id: ObjectId(req.params.id)
+      _id: new ObjectId(req.params.id)
     });
     resp.status(200).json({
       message: `Competition has been record deleted! ${competition.competitionName}`

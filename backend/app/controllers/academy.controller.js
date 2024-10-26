@@ -1,4 +1,4 @@
-const ObjectId = require("mongodb").ObjectId;
+const { ObjectId } = require("mongodb");
 const db = require("../models");
 const Academy = db.academy;
 const Team = db.team;
@@ -21,10 +21,10 @@ exports.createAcademy = async (req, resp, next) => {
               academyName: req.body[i]["Academy Name"],
               logo: req.body[i]["Logo"],
               color: req.body[i]["Color"],
-              coach: [ObjectId(req.body[i].user["createdBy"])],
-              admin: ObjectId(req.body[i].user["admin"]),
+              coach: [new ObjectId(req.body[i].user["createdBy"])],
+              admin: new ObjectId(req.body[i].user["admin"]),
               shortcode: req.body[i]["Short Code"],
-              competition: ObjectId(req.body[i]["competition"]),
+              competition: new ObjectId(req.body[i]["competition"]),
               createdAt: new Date()
             });
             insertedAcademies.push(req.body[i]);
@@ -48,9 +48,9 @@ exports.createAcademy = async (req, resp, next) => {
             logo: req.body["Logo"],
             color: req.body["Color"],
             shortcode: req.body["Short Code"],
-            coach: [ObjectId(req.body.user["createdBy"])],
-            admin: ObjectId(req.body.user["admin"]),
-            competition: ObjectId(req.body["competition"]),
+            coach: [new ObjectId(req.body.user["createdBy"])],
+            admin: new ObjectId(req.body.user["admin"]),
+            competition: new ObjectId(req.body["competition"]),
             createdAt: new Date()
           });
 
@@ -105,7 +105,7 @@ exports.forCompetition = async (req, resp, next) => {
   try {
     if (req.params && req.params.id) {
       const academy = await Academy.find({
-        competition: ObjectId(req.params.id)
+        competition: new ObjectId(req.params.id)
       })
         .populate(["coach", "competition"])
         .exec();
@@ -136,7 +136,9 @@ exports.getAllAcademys = async (req, resp, next) => {
 exports.getAcademyById = async (req, resp, next) => {
   try {
     if (req.params && req.params.id) {
-      const academy = await Academy.findOne({ _id: ObjectId(req.params.id) })
+      const academy = await Academy.findOne({
+        _id: new ObjectId(req.params.id)
+      })
         .populate(["coach", "competition"])
         .exec();
       resp.status(200).json(academy);
@@ -151,7 +153,9 @@ exports.getAcademyById = async (req, resp, next) => {
 exports.getAcademyByCoach = async (req, resp, next) => {
   try {
     if (req.params && req.params.id) {
-      const academy = await Academy.findOne({ coach: ObjectId(req.params.id) })
+      const academy = await Academy.findOne({
+        coach: new ObjectId(req.params.id)
+      })
         .populate(["coach", "competition"])
         .exec();
       if (academy) resp.status(200).json(academy);
@@ -166,7 +170,7 @@ exports.getAcademyByCoach = async (req, resp, next) => {
 exports.updateAcademyCoach = async (req, resp, next) => {
   try {
     const { id } = req.params;
-    let fetchAcademy = await Academy.findOne({ _id: ObjectId(id) })
+    let fetchAcademy = await Academy.findOne({ _id: new ObjectId(id) })
       .populate(["coach", "competition"])
       .exec();
     if (!fetchAcademy)
@@ -174,7 +178,7 @@ exports.updateAcademyCoach = async (req, resp, next) => {
     // updating academy
     fetchAcademy = {
       ...fetchAcademy,
-      coach: fetchAcademy.coach.push(ObjectId(req.body.coach))
+      coach: fetchAcademy.coach.push(new ObjectId(req.body.coach))
     };
 
     const updatedAcademy = await Academy.findByIdAndUpdate(
@@ -192,7 +196,7 @@ exports.updateAcademyCoach = async (req, resp, next) => {
 exports.updateAcademyCoach = async (req, resp, next) => {
   try {
     const { id } = req.params;
-    let fetchAcademy = await Academy.findOne({ _id: ObjectId(id) })
+    let fetchAcademy = await Academy.findOne({ _id: new ObjectId(id) })
       .populate(["coach", "competition"])
       .exec();
 
@@ -201,14 +205,14 @@ exports.updateAcademyCoach = async (req, resp, next) => {
     // coach already existing
     if (
       fetchAcademy.coach &&
-      fetchAcademy.coach.includes(ObjectId(req.body.coach))
+      fetchAcademy.coach.includes(new ObjectId(req.body.coach))
     ) {
-      let fetchAcademy = await Academy.findOne({ _id: ObjectId(id) });
+      let fetchAcademy = await Academy.findOne({ _id: new ObjectId(id) });
       fetchAcademy.coach = fetchAcademy.coach.filter(
-        (ch) => ObjectId(ch) !== ObjectId(req.body.coach)
+        (ch) => new ObjectId(ch) !== new ObjectId(req.body.coach)
       );
     } else {
-      fetchAcademy.coach.push(ObjectId(req.body.coach));
+      fetchAcademy.coach.push(new ObjectId(req.body.coach));
     }
 
     const updatedAcademy = await Academy.findByIdAndUpdate(
@@ -226,7 +230,7 @@ exports.updateAcademyCoach = async (req, resp, next) => {
 exports.updateAcademy = async (req, resp, next) => {
   try {
     const { id } = req.params;
-    let fetchAcademy = await Academy.findOne({ _id: ObjectId(id) })
+    let fetchAcademy = await Academy.findOne({ _id: new ObjectId(id) })
       .populate("coach")
       .exec();
 
@@ -256,10 +260,10 @@ exports.deleteAcademy = async (req, resp, next) => {
     if (req.params.id) {
       // delete all the teams under academy
       const teams = await Team.deleteMany({
-        academy_id: ObjectId(req.params.id)
+        academy_id: new ObjectId(req.params.id)
       });
       const academy = await Academy.findByIdAndDelete({
-        _id: ObjectId(req.params.id)
+        _id: new ObjectId(req.params.id)
       });
       if (!academy) {
         resp.status(200).json({ message: `No academy record found!` });

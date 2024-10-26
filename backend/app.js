@@ -2,7 +2,7 @@ const dotenv = require("dotenv");
 if (!process.env.DB_USERNAME) {
   dotenv.config();
 }
-const ObjectId = require("mongodb").ObjectId;
+const { ObjectId } = require("mongodb");
 const express = require("express");
 const bcrypt = require("bcryptjs");
 
@@ -63,10 +63,10 @@ const uri =
   "mongodb://admin-user:admin-password@0.0.0.0:27017/mean-football?authSource=admin";
 
 // const uri =
-//   "mongodb://admin-user:admin-password@yflpms.com:27017/mean-football?authSource=admin";
+//   "mongodb://admin:YFLFootball15!@5.180.182.206:27017/mean-football?authSource=admin";
 
 db.mongoose
-  .connect(environment.mongodb.uri, {
+  .connect(uri, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
@@ -114,7 +114,7 @@ function initial() {
     console.log(rest.deletedCount, "deleting all");
     Role.estimatedDocumentCount((err, count) => {
       new Role({
-        _id: ObjectId("6567914b7d2b0a879a8840cc"),
+        _id: new ObjectId("6567914b7d2b0a879a8840cc"),
         name: "superadmin"
       }).save((err) => {
         if (err) {
@@ -123,7 +123,7 @@ function initial() {
         console.log("added 'superadmin' to roles collection");
       });
       new Role({
-        _id: ObjectId("5895b74ca84c675de0d3338d"),
+        _id: new ObjectId("5895b74ca84c675de0d3338d"),
         name: "admin"
       }).save((err) => {
         if (err) {
@@ -133,7 +133,7 @@ function initial() {
       });
 
       new Role({
-        _id: ObjectId("5895b74da84c675de0d3338e"),
+        _id: new ObjectId("5895b74da84c675de0d3338e"),
         name: "coach"
       }).save((err) => {
         if (err) {
@@ -144,7 +144,7 @@ function initial() {
       });
 
       new Role({
-        _id: ObjectId("5895b74ea84c675de0d3338f"),
+        _id: new ObjectId("5895b74ea84c675de0d3338f"),
         name: "referee"
       }).save((err) => {
         if (err) {
@@ -164,7 +164,7 @@ function initial() {
     .then((users) => {
       if (!users) {
         new User({
-          _id: ObjectId("65847ca364f90bb9aacd7a49"),
+          _id: new ObjectId("65847ca364f90bb9aacd7a49"),
           firstname: "super",
           lastname: "admin",
           username: "yfldubai",
@@ -173,9 +173,9 @@ function initial() {
           contact: "+971553762217",
           password: bcrypt.hashSync("yfl2023", 8),
           email: "football@yfldubai.com",
-          roles: [ObjectId("6567914b7d2b0a879a8840cc")],
+          roles: [new ObjectId("6567914b7d2b0a879a8840cc")],
           competition: [],
-          createdBy: ObjectId("6567914b7d2b0a879a8840cc")
+          createdBy: new ObjectId("6567914b7d2b0a879a8840cc")
         }).save((err) => {
           if (err) {
             console.log("error", err);
@@ -190,7 +190,7 @@ function initial() {
     .then((users) => {
       if (!users) {
         new User({
-          _id: ObjectId("65847beb24b2f0563e89b307"),
+          _id: new ObjectId("65847beb24b2f0563e89b307"),
           firstname: "yfl",
           lastname: "admin",
           username: "football@yfl",
@@ -199,9 +199,9 @@ function initial() {
           competition: [],
           password: bcrypt.hashSync("yfl2023", 8),
           email: "football@yfldubai.com",
-          roles: [ObjectId("5895b74ca84c675de0d3338d")],
-          competition: [ObjectId("6578bc1ef8716dd1219302e1")],
-          createdBy: ObjectId("65847ca364f90bb9aacd7a49")
+          roles: [new ObjectId("5895b74ca84c675de0d3338d")],
+          competition: [new ObjectId("6578bc1ef8716dd1219302e1")],
+          createdBy: new ObjectId("65847ca364f90bb9aacd7a49")
         }).save((err) => {
           if (err) {
             console.log("error", err);

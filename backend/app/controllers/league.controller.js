@@ -1,4 +1,4 @@
-const ObjectId = require("mongodb").ObjectId;
+const { ObjectId } = require("mongodb");
 const db = require("../models");
 const League = db.league;
 
@@ -23,8 +23,8 @@ exports.createLeague = async (req, resp, next) => {
               leagueAgeLimit: req.body[i]["Age Limit"],
               shortcode: req.body[i]["Short Code"],
               year: req.body[i]["Year"],
-              user_id: ObjectId(req.body[i].user["createdBy"]),
-              competition: ObjectId(req.body[i].competition),
+              user_id: new ObjectId(req.body[i].user["createdBy"]),
+              competition: new ObjectId(req.body[i].competition),
               createdAt: new Date()
             });
             insertedLeagues.push(req.body[i]);
@@ -41,7 +41,7 @@ exports.createLeague = async (req, resp, next) => {
         // check if the same eid is already in the database
         let league = await League.findOne({
           shortcode: req.body["Short Code"],
-          user_id: ObjectId(req.body.user["createdBy"]),
+          user_id: new ObjectId(req.body.user["createdBy"]),
           leagueName: req.body["League Name"]
         });
         if (!league) {
@@ -50,8 +50,8 @@ exports.createLeague = async (req, resp, next) => {
             leagueAgeLimit: req.body["Age Limit"],
             shortcode: req.body["Short Code"],
             year: req.body["Year"],
-            user_id: ObjectId(req.body.user["createdBy"]),
-            competition: ObjectId(req.body.competition),
+            user_id: new ObjectId(req.body.user["createdBy"]),
+            competition: new ObjectId(req.body.competition),
             createdAt: new Date()
           });
 
@@ -90,7 +90,7 @@ exports.getLeagues = async (req, resp, next) => {
 /* Get League based on id*/
 exports.getLeagueById = async (req, resp, next) => {
   try {
-    const league = await League.find({ _id: ObjectId(req.params.id) })
+    const league = await League.find({ _id: new ObjectId(req.params.id) })
       .populate(["competition", "user_id"])
       .exec();
     resp.status(200).json(league ? league : { message: "No league found" });
@@ -113,7 +113,7 @@ exports.forCompetition = async (req, resp, next) => {
   try {
     if (req.params.competition) {
       const league = await League.find({
-        competition: ObjectId(req.params.competition)
+        competition: new ObjectId(req.params.competition)
       })
         .populate(["user_id", "competition"])
         .exec();
@@ -128,7 +128,7 @@ exports.forCompetition = async (req, resp, next) => {
 exports.updateLeague = async (req, resp, next) => {
   try {
     const { id } = req.params;
-    let fetchLeague = await League.find({ _id: ObjectId(id) });
+    let fetchLeague = await League.find({ _id: new ObjectId(id) });
 
     if (!fetchLeague)
       return resp.status(404).json({ message: "League record not found" });
@@ -153,7 +153,7 @@ exports.updateLeague = async (req, resp, next) => {
 exports.deleteLeague = async (req, resp, next) => {
   try {
     const league = await League.findByIdAndDelete({
-      _id: ObjectId(req.params.id)
+      _id: new ObjectId(req.params.id)
     });
     if (!league) {
       resp

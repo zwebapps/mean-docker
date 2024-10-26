@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const ObjectId = require("mongodb").ObjectId;
+const { ObjectId } = require("mongodb");
 const config = require("../config/auth.config.js");
 const db = require("../models");
 const User = db.user;
@@ -57,8 +57,8 @@ isAdmin = async (req, res, next) => {
     next();
     return;
   } else {
-    const reqUser = await User.findById(ObjectId(userId));
-    User.findById(ObjectId(req.userId)).exec((err, user) => {
+    const reqUser = await User.findById(new ObjectId(userId));
+    User.findById(new ObjectId(req.userId)).exec((err, user) => {
       if (err) {
         res.status(500).send({ message: err });
         return;

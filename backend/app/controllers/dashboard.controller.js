@@ -1,5 +1,5 @@
 const db = require("../models");
-const ObjectId = require("mongodb").ObjectId;
+const { ObjectId } = require("mongodb");
 const Academy = db.academy;
 const Team = db.team;
 const Competition = db.competition;
@@ -22,15 +22,15 @@ exports.getDashboardContents = async (req, resp, next) => {
     // coach
     if (role === "coach") {
       academies = await Academy.findOne({
-        coach: ObjectId(userId),
+        coach: new ObjectId(userId),
         shortcode: shortcode
       })
         .populate("coach")
         .exec();
       competitions = await Competition.find({
         _id: Array.isArray(competition)
-          ? ObjectId(competition[0]._id)
-          : ObjectId(competition._id),
+          ? new ObjectId(competition[0]._id)
+          : new ObjectId(competition._id),
         shortcode: shortcode
       })
         .populate(["organiser", "user_id"])
@@ -43,7 +43,7 @@ exports.getDashboardContents = async (req, resp, next) => {
         shortcode: shortcode
       });
       players = await Player.find({
-        academy: ObjectId(academies._id),
+        academy: new ObjectId(academies._id),
         competition: Array.isArray(competition)
           ? competition[0]._id
           : competition._id,
@@ -71,26 +71,22 @@ exports.getDashboardContents = async (req, resp, next) => {
       // admin
     } else if (role === "admin") {
       academies = await Academy.find({
-        user_id: ObjectId(userId),
+        user_id: new ObjectId(userId),
         shortcode: shortcode
       })
         .populate(["coach", "competition"])
         .exec();
       competitions = await Competition.find({
-        organiser: ObjectId(userId),
+        organiser: new ObjectId(userId),
         shortcode: shortcode
       })
         .populate(["organiser", "user_id"])
         .exec();
-      fixtures = await Fixture.find({ user_id: ObjectId(userId) }).populate([
-        "league",
-        "homeTeam",
-        "awayTeam",
-        "user_id",
-        "competition"
-      ]);
+      fixtures = await Fixture.find({ user_id: new ObjectId(userId) }).populate(
+        ["league", "homeTeam", "awayTeam", "user_id", "competition"]
+      );
       leagues = await League.find({
-        user_id: ObjectId(userId),
+        user_id: new ObjectId(userId),
         shortcode: shortcode
       });
       players = await Player.find({
@@ -104,7 +100,7 @@ exports.getDashboardContents = async (req, resp, next) => {
         .sort({ createdAt: -1 })
         .exec();
       teams = await Team.find({
-        user_id: ObjectId(userId),
+        user_id: new ObjectId(userId),
         shortcode: shortcode
       })
         .populate(["academy_id", "leagues", "user_id", "competition"])

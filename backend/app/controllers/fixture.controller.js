@@ -1,4 +1,4 @@
-const ObjectId = require("mongodb").ObjectId;
+const { ObjectId } = require("mongodb");
 const db = require("../models");
 const Fixture = db.fixture;
 
@@ -14,11 +14,11 @@ exports.createFixture = async (req, resp, next) => {
             matchDate: req.body[i]["matchDate"],
             homeTeam: req.body[i]["homeTeam"],
             awayTeam: req.body[i]["awayTeam"],
-            league: ObjectId(req.body[i]["league"]),
-            user_id: ObjectId(req.body[i].user["createdBy"]),
-            competition: ObjectId(req.body[i]["competition"]),
-            shortcode: ObjectId(req.body[i].shortcode),
-            mvp: req.body[i]["mvp"] ? ObjectId(req.body[i]["mvp"]) : null,
+            league: new ObjectId(req.body[i]["league"]),
+            user_id: new ObjectId(req.body[i].user["createdBy"]),
+            competition: new ObjectId(req.body[i]["competition"]),
+            shortcode: new ObjectId(req.body[i].shortcode),
+            mvp: req.body[i]["mvp"] ? new ObjectId(req.body[i]["mvp"]) : null,
             createdAt: new Date()
           });
           insertedFixtures.push(req.body[i]);
@@ -31,11 +31,11 @@ exports.createFixture = async (req, resp, next) => {
         matchDate: new Date(req.body["matchDate"]).toLocaleDateString(),
         homeTeam: req.body["homeTeam"],
         awayTeam: req.body["awayTeam"],
-        league: ObjectId(req.body["league"]),
-        user_id: ObjectId(req.body.user["createdBy"]),
+        league: new ObjectId(req.body["league"]),
+        user_id: new ObjectId(req.body.user["createdBy"]),
         shortcode: req.body.shortcode,
-        mvp: req.body["mvp"] ? ObjectId(req.body["mvp"]) : null,
-        competition: ObjectId(req.body.competition),
+        mvp: req.body["mvp"] ? new ObjectId(req.body["mvp"]) : null,
+        competition: new ObjectId(req.body.competition),
         createdAt: new Date()
       });
 
@@ -70,7 +70,7 @@ exports.getAllFixture = async (req, resp, next) => {
 exports.getFixtureById = async (req, resp, next) => {
   try {
     const fixture = await Fixture.find({
-      _id: ObjectId(req.params.id),
+      _id: new ObjectId(req.params.id),
       deleted: false
     }).populate([
       "league",
@@ -110,7 +110,7 @@ exports.forShortCode = async (req, resp, next) => {
 exports.forCompetition = async (req, resp, next) => {
   try {
     const fixture = await Fixture.find({
-      competition: ObjectId(req.params.competition),
+      competition: new ObjectId(req.params.competition),
       deleted: false
     }).populate([
       "league",
@@ -130,7 +130,7 @@ exports.updateFixture = async (req, resp, next) => {
   try {
     if (req.params && req.params.id) {
       let fetchFixture = await Fixture.findOne({
-        _id: ObjectId(req.params.id),
+        _id: new ObjectId(req.params.id),
         deleted: false
       });
 
@@ -141,7 +141,7 @@ exports.updateFixture = async (req, resp, next) => {
         ...fetchFixture._doc,
         ...req.body,
         mvp: req.body["mvp"]
-          ? ObjectId(req.body["mvp"])
+          ? new ObjectId(req.body["mvp"])
           : fetchFixture._doc["mvp"]
       };
 
@@ -167,9 +167,12 @@ exports.updateFixture = async (req, resp, next) => {
 /* Delete fixture based on id*/
 exports.deleteFixture = async (req, resp, next) => {
   try {
-    const fixture = await Fixture.findByIdAndUpdate(ObjectId(req.params.id), {
-      deleted: true
-    });
+    const fixture = await Fixture.findByIdAndUpdate(
+      new ObjectId(req.params.id),
+      {
+        deleted: true
+      }
+    );
     resp
       .status(200)
       .json({ message: `Fixture has been record deleted!`, fixture });
