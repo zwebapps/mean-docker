@@ -68,8 +68,13 @@ export class FixtureTeamDetailsComponent implements OnInit {
       (res: any) => {
         // || player?.playingUp.includes(this.league?._id) ||   player?.playingUpTeam.includes(id)
         if (Array.isArray(res)) {
+          // console.log(res.forEach((pl) => console.log(pl.playingUp)));
           // filters players based on league for which they are added or playing up also
-          this.players = res.filter((player) => player.team._id === id && player.league && player?.league?._id === this.league?._id);
+          this.players = res.filter(
+            (player) =>
+              (player.team._id === id && player.league && player?.league?._id === this.league?._id) ||
+              (player.playingUp && player?.playingUp.includes(this.league?._id))
+          );
           // console.log(this.players, "<<<players");
         } else {
           this.notifier.notify("error", "Players not found!");
