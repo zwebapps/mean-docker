@@ -313,16 +313,31 @@ exports.getAllPlayers = (req, res) => {
 exports.playerByIdOrEID = async (req, resp, next) => {
   let pl = {};
   try {
+    debugger;
+    console.log(req.competition);
     const { id } = req.params;
     const { shortcode } = req;
+    // get the competition from coach
+    const { _id } = Array.isArray(req.competition)
+      ? req.competition[0]
+      : req.competition;
+    console.log(_id);
     if (id && id.length < 24) {
       // check if emries id or normal id
-      pl = await Player.findOne({ emiratesIdNo: id, shortcode: shortcode })
+      pl = await Player.findOne({
+        emiratesIdNo: id,
+        shortcode: shortcode,
+        competition: new ObjectId(_id) // competition id
+      })
         .populate(["user", "league", "academy", "team"])
         .exec();
     } else {
       // check if emries id or normal id
-      pl = await Player.find({ _id: new ObjectId(id), shortcode: shortcode })
+      pl = await Player.find({
+        _id: new ObjectId(id),
+        shortcode: shortcode,
+        _id: new ObjectId(_id)
+      })
         .populate(["user", "league", "academy", "team"])
         .exec();
     }
