@@ -72,10 +72,24 @@ exports.createAcademy = async (req, resp, next) => {
 
 exports.getAcademyByName = async (req, resp, next) => {
   try {
-    if (req.body && req.body.name) {
-      const academy = await Academy.findOne({ academyName: req.body.name })
-        .populate("coach")
-        .exec();
+    debugger;
+    const { body } = req;
+    if (body && body.name) {
+      let academy = null;
+      if (body.competition) {
+        academy = await Academy.findOne({
+          academyName: req.body.name,
+          competition: new ObjectId(body.competition)
+        })
+          .populate("coach")
+          .exec();
+      } else {
+        console.log("req.body.name", req.body.name);
+        academy = await Academy.findOne({ academyName: req.body.name })
+          .populate("coach")
+          .exec();
+      }
+
       resp
         .status(200)
         .json(academy ? academy : { message: "No academy found" });

@@ -69,36 +69,40 @@ exports.forCompetition = (req, res) => {
 };
 
 exports.createUser = async (req, res) => {
+  const { body } = req;
   // get users
-  if (req.body && req.body["username"] && req.body["password"].length > 0) {
+  if (body && body["username"] && body["password"].length > 0) {
     // validate emirates id
-    const isValidated = req.body["username"] && req.body["username"].length > 0;
+    const isValidated = body["username"] && body["username"].length > 0;
+    // need to add competition
+    debugger;
     const isUsernameExists = await User.findOne({
-      username: req.body["username"]
+      username: body["username"],
+      competition: body["competition"]
     });
     if (isValidated && !isUsernameExists) {
       // check if the same eid is already in the database
-      let user = await User.findOne({ email: req.body["email"] });
+      let user = await User.findOne({ email: body["email"] });
       // get role by name
-      let role = await Role.findOne({ name: req.body["role"] });
+      let role = await Role.findOne({ name: body["role"] });
 
       if (!user) {
         const userData = new User({
-          firstname: req.body["firstname"],
-          lastname: req.body["lastname"],
-          username: req.body["username"],
-          contact: req.body["contact"],
-          password: bcrypt.hashSync(req.body["password"], 8),
-          email: req.body["email"],
-          shortcode: req.body["shortCode"],
-          competitionCountry: req.body["competitionCountry"]
-            ? req.body["competitionCountry"]
+          firstname: body["firstname"],
+          lastname: body["lastname"],
+          username: body["username"],
+          contact: body["contact"],
+          password: bcrypt.hashSync(body["password"], 8),
+          email: body["email"],
+          shortcode: body["shortCode"],
+          competitionCountry: body["competitionCountry"]
+            ? body["competitionCountry"]
             : "AE",
-          competition: req.body.competition
-            ? req.body.competition.map((comp) => new ObjectId(comp))
+          competition: body.competition
+            ? body.competition.map((comp) => new ObjectId(comp))
             : [],
           roles: [new ObjectId(role._id)],
-          createdBy: new ObjectId(req.body.user["createdBy"])
+          createdBy: new ObjectId(body.user["createdBy"])
         });
 
         const savedUser = await userData.save();
