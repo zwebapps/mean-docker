@@ -40,7 +40,8 @@ exports.createAcademy = async (req, resp, next) => {
       if (isValidated) {
         // check if the same eid is already in the database
         let academy = await Academy.findOne({
-          academyName: req.body["Academy Name"]
+          academyName: req.body["Academy Name"],
+          competition: new ObjectId(req.body["competition"])
         });
         if (!academy) {
           const academyData = new Academy({
@@ -72,7 +73,6 @@ exports.createAcademy = async (req, resp, next) => {
 
 exports.getAcademyByName = async (req, resp, next) => {
   try {
-    debugger;
     const { body } = req;
     if (body && body.name) {
       let academy = null;

@@ -124,34 +124,36 @@ export class TeamManagementComponent implements OnInit {
             role: "coach"
           };
           // check if academy exists
-          this.academyService.getAcademyByName({ name: this.academyForm.value.academyName }).subscribe((res: any) => {
-            if (!res.message) {
-              this.notifier.notify("error", "Academy Name already exists!");
-              return;
-            } else {
-              this.userService.createUser(userData).subscribe((user: any) => {
-                if (user) {
-                  // add owner for new academy.
-                  academyData.user = {
-                    createdBy: user._id
-                  };
-                  this.academyService.createAcademy(academyData).subscribe(
-                    (res: any) => {
-                      if (res._id) {
-                        this.notifier.notify("success", "Academy created successfully!");
-                        this.academyForm.reset();
-                        this.store.dispatch(AcademyActions.loadAcademies());
-                        this.store.dispatch(UserActions.loadUsers());
+          this.academyService
+            .getAcademyByName({ name: this.academyForm.value.academyName, competition: this.selectedCompetition._id })
+            .subscribe((res: any) => {
+              if (!res.message) {
+                this.notifier.notify("error", "Academy Name already exists!");
+                return;
+              } else {
+                this.userService.createUser(userData).subscribe((user: any) => {
+                  if (user) {
+                    // add owner for new academy.
+                    academyData.user = {
+                      createdBy: user._id
+                    };
+                    this.academyService.createAcademy(academyData).subscribe(
+                      (res: any) => {
+                        if (res._id) {
+                          this.notifier.notify("success", "Academy created successfully!");
+                          this.academyForm.reset();
+                          this.store.dispatch(AcademyActions.loadAcademies());
+                          this.store.dispatch(UserActions.loadUsers());
+                        }
+                      },
+                      (err: any) => {
+                        this.notifier.notify("error", "Please try again!");
                       }
-                    },
-                    (err: any) => {
-                      this.notifier.notify("error", "Please try again!");
-                    }
-                  );
-                }
-              });
-            }
-          });
+                    );
+                  }
+                });
+              }
+            });
         }
       }
     } else {

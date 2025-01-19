@@ -75,14 +75,22 @@ exports.createUser = async (req, res) => {
     // validate emirates id
     const isValidated = body["username"] && body["username"].length > 0;
     // need to add competition
-    debugger;
     const isUsernameExists = await User.findOne({
       username: body["username"],
-      competition: body["competition"]
+      competition: body["competition"][0]
     });
+    let user;
     if (isValidated && !isUsernameExists) {
-      // check if the same eid is already in the database
-      let user = await User.findOne({ email: body["email"] });
+      if (Array.isArray(body["competition"])) {
+        user = await User.findOne({
+          email: body["email"],
+          competition: body["competition"][0]
+        });
+      } else {
+        console.log(body["email"], "without competition");
+        user = await User.findOne({ email: body["email"] });
+      }
+
       // get role by name
       let role = await Role.findOne({ name: body["role"] });
 
