@@ -185,7 +185,11 @@ exports.createPlayer = async (req, resp, next) => {
         : req.body["eidNo"] && req.body["eidNo"].split("-").length === 4;
       if (isValidated) {
         // check if the same eid is already in the database
-        let player = await Player.findOne({ emiratesIdNo: req.body["eidNo"] });
+        let player = await Player.findOne({
+          emiratesIdNo: req.body["eidNo"],
+          shortcode: req.body.shortcode,
+          competition: new ObjectId(req.body["competition"])
+        });
         if (!player) {
           let playerNo = null;
           let isNoExist = null;
@@ -313,7 +317,6 @@ exports.getAllPlayers = (req, res) => {
 exports.playerByIdOrEID = async (req, resp, next) => {
   let pl = {};
   try {
-    debugger;
     console.log(req.competition);
     const { id } = req.params;
     const { shortcode } = req;
