@@ -15,7 +15,7 @@ Below is the architecture of the application while it is running.
 Clone repo, navigate to root folder and run ` docker-compose -f 'docker-compose.nginx.yml' up`
 
 ```
-  git clone https://github.com/nitin27may/mean-docker.git
+  git clone https://github.com/zwebapps/mean-docker.git
   cd mean-docker 
   docker-compose -f 'docker-compose.nginx.yml' up
 ```
@@ -102,7 +102,7 @@ Install latest [Docker Desktop](https://www.docker.com/products/docker-desktop)
   You can start the application in debug mode (database, api and frontend) using docker-compose:
 
   ```
-  git clone https://github.com/nitin27may/mean-docker.git
+  git clone https://github.com/zwebapps/mean-docker.git
   cd mean-docker
   
   docker-compose -f 'docker-compose.debug.yml' up
@@ -118,7 +118,7 @@ Install latest [Docker Desktop](https://www.docker.com/products/docker-desktop)
  ##### Using 2 containers (Express (frontend and api) and Mongo)
 
   ```
-    git clone https://github.com/nitin27may/mean-docker.git
+    git clone https://github.com/zwebapps/mean-docker.git
     cd mean-docker
     
     docker-compose -f 'docker-compose.yml' up
@@ -130,7 +130,7 @@ Install latest [Docker Desktop](https://www.docker.com/products/docker-desktop)
   It will run fronend and api on `http://localhost:3000`. you can also access mongodb on port 27017
  ##### Using 4 containers (Mongo,api, angular and nginx)
   ```
-    git clone https://github.com/nitin27may/mean-docker.git
+    git clone https://github.com/zwebapps/mean-docker.git
     cd mean-docker
 
     docker-compose -f 'docker-compose.nginx.yml' up
@@ -385,7 +385,7 @@ here, DOCKERHUB_USERNAME is your docker hub username and DOCKERHUB_TOKEN,  we ca
 Clone the project and run `npm install` in frontend and api folder.
 
 ```
-  git clone https://github.com/nitin27may/mean-docker.git
+  git clone https://github.com/zwebapps/mean-docker.git
 
   cd mean-docker/frontend
 
