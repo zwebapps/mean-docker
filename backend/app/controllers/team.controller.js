@@ -1,6 +1,37 @@
 const { ObjectId } = require("mongodb");
 const db = require("../models");
 const Team = db.team;
+const Player = db.player;
+
+const updateAssociatedPlayers = async ({
+  teamId,
+  academyId,
+  competitionId,
+  leagueId,
+  shortCode,
+  updateLeagueId
+}) => {
+  try {
+    const updatedPlayers = await Player.updateMany(
+      {
+        academy: new ObjectId(academyId),
+        competition: new ObjectId(competitionId),
+        league: new ObjectId(leagueId),
+        shortcode: shortCode,
+        team: new ObjectId(teamId)
+      },
+      {
+        $set: {
+          league: new ObjectId(updateLeagueId)
+        }
+      }
+    );
+    return updatedPlayers;
+  } catch (error) {
+    console.log(error);
+    return { updated: false };
+  }
+};
 
 /* Add new team*/
 exports.createTeam = async (req, resp, next) => {
@@ -149,25 +180,42 @@ exports.getTeamByAcademyId = async (req, resp, next) => {
 exports.updateTeam = async (req, resp, next) => {
   try {
     const { id } = req.params;
+    const { academy_id, competition, leagues, shortcode } = req.body;
     if (id) {
-      let fetchTeam = await Team.find({ _id: new ObjectId(id) })
+      let fetchTeam = await Team.findOne({ _id: new ObjectId(id) })
         .populate(["academy_id", "leagues", "user_id"])
+        .lean()
         .exec();
-
       if (!fetchTeam)
         return resp.status(404).json({ message: "Team record not found" });
-      fetchTeam = {
+      const updatePlz = {
+        teamId: fetchTeam._id,
+        academyId: academy_id._id,
+        competitionId: competition,
+        leagueId: fetchTeam.leagues[0]._id,
+        shortCode: shortcode,
+        updateLeagueId: leagues[0]
+      };
+
+      const fetchedTeam = {
         ...fetchTeam._doc,
         ...req.body
       };
 
       const updatedTeam = await Team.findByIdAndUpdate(
         req.params.id,
-        fetchTeam,
+        fetchedTeam,
         { new: true }
       );
 
-      resp.status(200).json(updatedTeam).status(200);
+      const updatedPlayers = await updateAssociatedPlayers(updatePlz);
+      resp
+        .status(200)
+        .json({
+          team: updatedTeam,
+          updatedPlayers: updatedPlayers.modifiedCount
+        })
+        .status(200);
     } else {
       resp.status(200).json({ message: "Malformed Id provided" });
     }
